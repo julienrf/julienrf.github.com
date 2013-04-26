@@ -1284,11 +1284,14 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sum</span>(xs: List[Int]) =
   xs.<span class="fu">fold</span>(<span class="dv">0</span>)((x, s) =&gt; x + s)</code></pre>
+<ul>
+<li><code>fold</code> was your poor man’s pattern matching mechanism</li>
+</ul>
 </div><div class="section slide level2" id="algebraic-data-types-and-data-abstraction">
 <h1><span class="header-section-number">11.12</span> Algebraic Data Types and Data Abstraction</h1>
 <p>Should you use algebraic data types or regular classes?</p>
 <ul>
-<li><p>Algebraic data types are <strong>closed types</strong> (they can not be extended), but this characteristic is what makes it easier to add now operations on a class hierarchy</p></li>
+<li><p>Algebraic data types are <strong>closed types</strong> (they can not be extended), but this characteristic is what makes it easier to add new operations on a type hierarchy</p></li>
 <li><p>Classes are <strong>open types</strong> (they can be extended), but you can not add a new operation on a class hierarchy without changing the whole hierarchy</p></li>
 </ul>
 </div>
