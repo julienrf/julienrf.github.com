@@ -569,7 +569,10 @@ res13: Int = <span class="dv">2</span></code></pre>
 }</code></pre>
 <ul>
 <li><p><code>Complex</code> is an <strong>abstract class</strong></p></li>
-<li><p>Its members are <strong>abstract</strong> (they have no body)</p></li>
+<li><p>Its members are <strong>abstract</strong> (they have no body)</p>
+<ul>
+<li>(Note that it could also have implemented members)</li>
+</ul></li>
 </ul>
 </div><div class="section slide level2" id="implementing-an-abstract-class">
 <h1><span class="header-section-number">5.13</span> Implementing an Abstract Class</h1>
@@ -625,7 +628,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <ul class="incremental">
 <li><p>You can declare <code>real</code> and <code>imag</code> members in the class constructor parameters list:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ComplexRectangular</span>(<span class="kw">val</span> real: Double, <span class="kw">val</span> imag: Double) <span class="kw">extends</span> Complex</code></pre></li>
-<li><p>Note that <code>def</code> members can not be declared as parameters</p></li>
+<li><p>Note that (currently) <code>def</code> members can not be declared as parameters</p></li>
 </ul>
 </div><div class="section slide level2" id="abstract-members-encapsulation-and-modularity">
 <h1><span class="header-section-number">5.17</span> Abstract Members, Encapsulation and Modularity</h1>
@@ -672,23 +675,46 @@ res13: Int = <span class="dv">2</span></code></pre>
 </ul>
 </div><div class="section slide level2" id="members-visibility">
 <h1><span class="header-section-number">5.21</span> Members Visibility</h1>
-<p>TODO</p>
+<p>You can reduce the visibility of the members of a class:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Foo {
+  <span class="kw">private</span> <span class="kw">def</span> foo = <span class="dv">42</span>
+  <span class="kw">protected</span> <span class="kw">def</span> bar: Int
+}</code></pre>
+<ul>
+<li><p><code>private</code> members are not visible outside of the class definition</p></li>
+<li><p><code>protected</code> members are not visible outside of the class definition except for subclasses</p></li>
+</ul>
+</div><div class="section slide level2" id="closing-a-class-hierarchy">
+<h1><span class="header-section-number">5.22</span> Closing a Class Hierarchy</h1>
+<p>You can forbid the specialization of a class or of its members:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Foo {
+  <span class="kw">final</span> <span class="kw">def</span> foo = <span class="dv">42</span>
+}
+
+<span class="kw">final</span> <span class="kw">class</span> Bar <span class="kw">extends</span> Foo</code></pre>
+<ul>
+<li><p><code>final</code> members can not be overriden</p></li>
+<li><p><code>final</code> classes can not be extended</p></li>
+</ul>
 </div><div class="section slide level2" id="standard-class-hierarchy">
-<h1><span class="header-section-number">5.22</span> Standard Class Hierarchy</h1>
+<h1><span class="header-section-number">5.23</span> Standard Class Hierarchy</h1>
 <div class="figure">
 <img src="ScalaClassHierarchy.png" alt="Scala Class Hierarchy" /><p class="caption">Scala Class Hierarchy</p>
 </div>
 </div><div class="section slide level2" id="any">
-<h1><span class="header-section-number">5.23</span> <code>Any</code></h1>
-<ul>
-<li><code>==</code>?</li>
-<li><code>equals</code>?</li>
-</ul>
+<h1><span class="header-section-number">5.24</span> <code>Any</code></h1>
+<p><code>Any</code> is the superclass of all classes</p>
+<p>It has at least two members that you should be aware of:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">final</span> <span class="kw">def</span> == (that: Any): Boolean
+<span class="kw">def</span> <span class="fu">equals</span>(that: Any): Boolean</code></pre>
+<p>First, note that these members exist in this class mostly for compatibility reasons with the Java language</p>
+<p>The <code>==</code> member allows you to compare any value with another value. It essentially delegates to <code>equals</code></p>
+<p>The default implementation of <code>equals</code> for classes compares the <strong>references</strong> <code>this</code> and <code>that</code></p>
 </div><div class="section slide level2" id="overloading">
-<h1><span class="header-section-number">5.24</span> Overloading</h1>
-<p>TODO</p>
+<h1><span class="header-section-number">5.25</span> Overloading</h1>
+<p>Several members with the same name can coexist, as long their type signature is different</p>
 </div><div class="section slide level2" id="recursive-types">
-<h1><span class="header-section-number">5.25</span> Recursive Types</h1>
+<h1><span class="header-section-number">5.26</span> Recursive Types</h1>
 <!-- TODO Motivating problem -->
 
 <p>A <strong>recursive type</strong> is a data type that may contain values of the same type</p>
@@ -703,7 +729,7 @@ res13: Int = <span class="dv">2</span></code></pre>
   <span class="fu">println</span>(ints.<span class="fu">next</span>.<span class="fu">next</span>.<span class="fu">next</span>.<span class="fu">value</span>)
 }</code></pre>
 </div><div class="section slide level2" id="recursive-types-2">
-<h1><span class="header-section-number">5.26</span> Recursive Types (2)</h1>
+<h1><span class="header-section-number">5.27</span> Recursive Types (2)</h1>
 <p>You can generate an infinite stream of zeros:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Zeros <span class="kw">extends</span> Ints {
   <span class="kw">val</span> value = <span class="dv">0</span>
@@ -712,7 +738,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 
 <span class="fu">printSomeInts</span>(<span class="kw">new</span> Zeros) <span class="co">// prints “0”, “0”</span></code></pre>
 </div><div class="section slide level2" id="recursive-types-3">
-<h1><span class="header-section-number">5.27</span> Recursive Types (3)</h1>
+<h1><span class="header-section-number">5.28</span> Recursive Types (3)</h1>
 <p>You can generate an infinite stream of successive numbers:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Succs</span>(<span class="kw">val</span> value: Int) <span class="kw">extends</span> Ints {
   <span class="kw">def</span> next = <span class="kw">new</span> <span class="fu">Succs</span>(value + <span class="dv">1</span>)
@@ -720,13 +746,16 @@ res13: Int = <span class="dv">2</span></code></pre>
 
 <span class="fu">printSomeInts</span>(<span class="kw">new</span> <span class="fu">Succs</span>(<span class="dv">0</span>)) <span class="co">// prints “0”, “3”</span></code></pre>
 </div><div class="section slide level2" id="exercise-4">
-<h1><span class="header-section-number">5.28</span> Exercise</h1>
+<h1><span class="header-section-number">5.29</span> Exercise</h1>
 <p>Implement an abstract data type representing a sequence of integers of arbitrary size:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> IntList {
   <span class="kw">def</span> <span class="fu">add</span>(n: Int): IntList
   <span class="kw">def</span> toString: String
 }</code></pre>
 <p>The <code>toString</code> method should return <code>&quot;Nil&quot;</code> for the empty sequence, and <code>&quot;1 :: 2 :: Nil&quot;</code> for the sequence {1, 2}</p>
+<ul class="incremental">
+<li>Hint: consider to special case of an <code>IntList</code>: an empty list (<code>Nil</code>) and a list constructor (<code>Cons</code>) containing a head element and a tail list</li>
+</ul>
 </div>
 <div class="section titleslide slide level1" id="higher-order-functions-and-function-literals"><h1><span class="header-section-number">6</span> Higher-Order Functions and Function Literals</h1></div><div class="section slide level2" id="abstract-over-computations">
 <h1><span class="header-section-number">6.1</span> Abstract Over Computations</h1>
@@ -815,12 +844,42 @@ res13: Int = <span class="dv">2</span></code></pre>
 <ul class="incremental">
 <li>Or use a <strong>tuple pattern</strong> to <em>deconstruct</em> a tuple</li>
 </ul>
-</div><div class="section slide level2" id="intersection-types">
-<h1><span class="header-section-number">7.4</span> Intersection Types</h1>
+</div><div class="section slide level2" id="components">
+<h1><span class="header-section-number">7.4</span> Components</h1>
+<p>You also saw how to implement a set of features in a single component using classes</p>
+<p>Is it possible to build a larger system by combining small components together?</p>
+<p>For instance, given the following class definitions:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Adding {
+  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
+}</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Multiplying {
+  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
+}</code></pre>
+<p>How to build calculator from these two components?</p>
 </div><div class="section slide level2" id="traits">
 <h1><span class="header-section-number">7.5</span> Traits</h1>
+<p><strong>Traits</strong> can encapsulate members and can be mixed together</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Adding {
+  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
+}
+
+<span class="kw">trait</span> Multiplying {
+  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
+}
+
+<span class="kw">trait</span> Calculator <span class="kw">extends</span> Adding <span class="kw">with</span> Multiplying</code></pre>
+<ul class="incremental">
+<li>A trait definition is like a class definition, except that traits can not have constructor parameters</li>
+<li>Traits can be mixed in another trait using <code>extends</code> or <code>with</code></li>
+</ul>
+</div><div class="section slide level2" id="traits-and-dynamic-dispatch">
+<h1><span class="header-section-number">7.6</span> Traits and Dynamic Dispatch</h1>
+<p>TODO</p>
 </div>
-<div class="section titleslide slide level1" id="string-interpolation"><h1><span class="header-section-number">8</span> String Interpolation</h1></div>
+<div class="section titleslide slide level1" id="string-interpolation"><h1><span class="header-section-number">8</span> String Interpolation</h1></div><div class="section slide level2" id="string-interpolation-1">
+<h1><span class="header-section-number">8.1</span> String Interpolation</h1>
+<p>TODO</p>
+</div>
 <div class="section titleslide slide level1" id="type-polymorphism"><h1><span class="header-section-number">9</span> Type Polymorphism</h1></div><div class="section slide level2" id="type-polymorphism-1">
 <h1><span class="header-section-number">9.1</span> Type Polymorphism</h1>
 <p>Until now, you saw only how to abstract over values</p>
@@ -1136,7 +1195,8 @@ res0: Boolean = <span class="kw">false</span>
 
 scala&gt; <span class="dv">1</span> == <span class="dv">1</span>
 res1: Boolean = <span class="kw">true</span></code></pre>
-<p>Is there a good reason for the first expression to return <code>false</code>?</p>
+<p>In the first expression we are comparing two different <strong>instances</strong>, that’s why we get <code>false</code></p>
+<p>But is there a good reason to return <code>false</code>?</p>
 </div><div class="section slide level2" id="a-type-as-a-space-of-possible-values">
 <h1><span class="header-section-number">11.2</span> A Type as a Space of Possible Values</h1>
 <p>Until now, we thought of types as a <strong>programmation interface</strong>: a list of available members for a given type name</p>
@@ -1258,9 +1318,15 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">SuperHero</span>(isSavingTheWorld: Boolean) <span class="kw">extends</span> Person
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Human</span>(state: State) <span class="kw">extends</span> Person</code></pre>
 <ul>
-<li>A <code>sealed</code> class can not be extended, except if the subclass is defined in the same source file</li>
+<li>A <code>case class</code> can not be extended</li>
+<li>A <code>sealed class</code> can not be extended, except if the subclass is defined in the same source file</li>
 <li>A <code>Person</code> can either be a <code>SuperHero</code> or a <code>Human</code>, but nothing else</li>
 </ul>
+<p>The <code>State</code> type could be implemented as follows:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">abstract</span> <span class="kw">class</span> State
+<span class="kw">case</span> <span class="kw">object</span> Sleeping <span class="kw">extends</span> State
+<span class="kw">case</span> <span class="kw">object</span> Eating <span class="kw">extends</span> State
+<span class="kw">case</span> <span class="kw">object</span> Working <span class="kw">extends</span> State</code></pre>
 </div><div class="section slide level2" id="pattern-matching">
 <h1><span class="header-section-number">11.9</span> Pattern Matching</h1>
 <p><strong>Pattern matching</strong> can be used to deconstruct algebraic data types:</p>
@@ -1295,8 +1361,213 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <li><p>Classes are <strong>open types</strong> (they can be extended), but you can not add a new operation on a class hierarchy without changing the whole hierarchy</p></li>
 </ul>
 </div>
-<div class="section titleslide slide level1" id="assignment-immutability"><h1><span class="header-section-number">12</span> Assignment, Immutability</h1></div><div class="section slide level2" id="motivating-problem">
-<h1><span class="header-section-number">12.1</span> Motivating Problem</h1>
+<div class="section titleslide slide level1" id="failure-handling"><h1><span class="header-section-number">12</span> Failure Handling</h1></div><div class="section slide level2" id="option">
+<h1><span class="header-section-number">12.1</span> Option</h1>
+<p>Say you want to add a <code>head</code> member to your <code>List[A]</code> type, that returns the first element of a list</p>
+<p>What should you return in the case of the empty list?</p>
+</div><div class="section slide level2" id="either-try-trycatchthrow">
+<h1><span class="header-section-number">12.2</span> Either, Try, <code>try</code>/<code>catch</code>/<code>throw</code></h1>
+</div>
+<div class="section titleslide slide level1" id="standard-collections"><h1><span class="header-section-number">13</span> Standard Collections</h1></div><div class="section slide level2" id="standard-collections-1">
+<h1><span class="header-section-number">13.1</span> Standard Collections</h1>
+<p>The Scala standard library provides several types making it easier to deal with collections of elements</p>
+<p>This section gives a slight overview of the standard collections. For more details see the <a href="http://scala-lang.org/api">API documentation</a></p>
+</div><div class="section slide level2" id="traversable">
+<h1><span class="header-section-number">13.2</span> <code>Traversable</code></h1>
+<p>The most general one is <code>Traversable[A]</code>, it provides methods to iterate on the elements of a collection, to transform a collection, to filter it, and a lot more:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>xs.foreach(f)</code></td>
+<td align="left">Applies the function <code>f</code> to every element of <code>xs</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs ++ ys</code></td>
+<td align="left">The concatenation of the elements of <code>xs</code> and <code>ys</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.size</code></td>
+<td align="left">The number of elements in <code>xs</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.map(f)</code></td>
+<td align="left">A collection obtained from applying <code>f</code> to every element of <code>xs</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.filter(p)</code></td>
+<td align="left">A collection obtained from filtering elements of <code>xs</code> that satisfy the predicate <code>p</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.take(n)</code></td>
+<td align="left">A collection containing the <code>n</code> first elements of <code>xs</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.find(p)</code></td>
+<td align="left">An optional value containing the first element of <code>xs</code> that satisfies <code>p</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.headOption</code></td>
+<td align="left">An optional value containing the first element of <code>xs</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.tailOption</code></td>
+<td align="left">An optional value containing the tail of <code>xs</code></td>
+</tr>
+</tbody>
+</table>
+</div><div class="section slide level2" id="iterable">
+<h1><span class="header-section-number">13.3</span> <code>Iterable</code></h1>
+<p><code>Iterable[A]</code> extends <code>Traversable[A]</code>, here are some of its new members:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>xs.iterator</code></td>
+<td align="left">An <code>Iterator[A]</code> over the elements of <code>xs</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.grouped(n)</code></td>
+<td align="left">An iterator that yields fixed-size chunks of <code>xs</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs zip ys</code></td>
+<td align="left">An iterable of pairs of corresponding elements of <code>xs</code> and <code>ys</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.zipWithIndex</code></td>
+<td align="left">An iterable of pairs of elements of <code>xs</code> with their indices</td>
+</tr>
+</tbody>
+</table>
+</div><div class="section slide level2" id="seq">
+<h1><span class="header-section-number">13.4</span> <code>Seq</code></h1>
+<p><code>Seq[A]</code> is an <code>Iterable[A]</code> which order of elements is deterministic. It adds the following members:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>x +: xs</code></td>
+<td align="left">A collection with the elements of <code>xs</code> prepended with <code>x</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs :+ x</code></td>
+<td align="left">A collection with the elements of <code>xs</code> followed by <code>x</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.get(n)</code></td>
+<td align="left">An optional value containing the <code>n</code><sup>th</sup> element of <code>xs</code> (0 indicates the first element)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.reverse</code></td>
+<td align="left">A collection with the elements of <code>xs</code> in reverse order</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.updated(n, x)</code></td>
+<td align="left">A copy of <code>xs</code> which <code>n</code><sup>th</sup> element has been replaced by <code>x</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.sorted</code></td>
+<td align="left">A collection with the elements of <code>xs</code> sorted</td>
+</tr>
+</tbody>
+</table>
+</div><div class="section slide level2" id="list-and-vector">
+<h1><span class="header-section-number">13.5</span> <code>List</code> and <code>Vector</code></h1>
+<p><code>List[A]</code> and <code>Vector[A]</code> are two implementations of <code>Seq[A]</code> with different performance characteristics:</p>
+<ul>
+<li><p><code>List[A]</code> has more efficient <code>head</code> and <code>tail</code> implementations</p></li>
+<li><p><code>Vector[A]</code> has more efficient <code>get</code> and <code>size</code> implementations</p></li>
+<li><p>If you want to do random access, you should use <code>Vector[A]</code></p></li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = <span class="dv">1</span> :: <span class="dv">2</span> :: <span class="dv">3</span> :: Nil <span class="co">// List</span>
+<span class="kw">val</span> ys = Vector(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
+</div><div class="section slide level2" id="set">
+<h1><span class="header-section-number">13.6</span> <code>Set</code></h1>
+<p>A <code>Set[A]</code> is an <code>Iterable[A]</code> that contains no duplicate elements. It adds the following members:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>xs + x</code></td>
+<td align="left">A set containing the elements of <code>xs</code> and <code>x</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs - x</code></td>
+<td align="left">A set containing the elements of <code>xs</code> without <code>x</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs.contains(x)</code></td>
+<td align="left">Tests if <code>x</code> is contained in <code>xs</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs &amp; ys</code></td>
+<td align="left">Intersection of <code>xs</code> and <code>ys</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs | ys</code></td>
+<td align="left">Union of <code>xs</code> and <code>ys</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.subsetOf(ys)</code></td>
+<td align="left">Tests if <code>xs</code> is a subset of <code>ys</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Set(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
+</div><div class="section slide level2" id="map">
+<h1><span class="header-section-number">13.7</span> <code>Map</code></h1>
+<p>A <code>Map[A, B]</code> is an <code>Iterable[(A, B)]</code> that contains <code>B</code> values indexed by <code>A</code> values. It adds the following members:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>xs.get(k)</code></td>
+<td align="left">An optional value containing the value associated with <code>k</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs + (k -&gt; x)</code></td>
+<td align="left">Adds a new value <code>x</code> associated with <code>k</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>xs - k</code></td>
+<td align="left">Removes the element associated with <code>k</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xs.keys</code></td>
+<td align="left">An iterable of the keys of <code>xs</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Map(<span class="st">&quot;foo&quot;</span> -&gt; <span class="dv">42</span>, <span class="st">&quot;bar&quot;</span> -&gt; <span class="dv">10</span>, <span class="st">&quot;baz&quot;</span> -&gt; <span class="dv">0</span>)</code></pre>
+</div>
+<div class="section titleslide slide level1" id="assignment-immutability"><h1><span class="header-section-number">14</span> Assignment, Immutability</h1></div><div class="section slide level2" id="motivating-problem">
+<h1><span class="header-section-number">14.1</span> Motivating Problem</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Foo {
   <span class="kw">def</span> bar: Int = …
 }</code></pre>
@@ -1305,30 +1576,20 @@ res1: Boolean = <span class="kw">true</span></code></pre>
   <span class="kw">override</span> <span class="kw">def</span> bar = ???
 }</code></pre>
 </div><div class="section slide level2" id="var">
-<h1><span class="header-section-number">12.2</span> <code>var</code></h1>
+<h1><span class="header-section-number">14.2</span> <code>var</code></h1>
 </div><div class="section slide level2" id="identity-and-state">
-<h1><span class="header-section-number">12.3</span> Identity and State</h1>
+<h1><span class="header-section-number">14.3</span> Identity and State</h1>
 </div><div class="section slide level2" id="pros-and-cons">
-<h1><span class="header-section-number">12.4</span> Pros and Cons</h1>
+<h1><span class="header-section-number">14.4</span> Pros and Cons</h1>
 </div><div class="section slide level2" id="immutability-when-possible">
-<h1><span class="header-section-number">12.5</span> Immutability When Possible</h1>
+<h1><span class="header-section-number">14.5</span> Immutability When Possible</h1>
 <blockquote>
 <p>Classes should be immutable unless there’s a very good reason to make them mutable….If a class cannot be made immutable, limit its mutability as much as possible.</p>
 </blockquote>
 <p>Joshua Bloch</p>
 </div>
-<div class="section titleslide slide level1" id="for-notation"><h1><span class="header-section-number">13</span> <code>for</code> Notation</h1></div><div class="section slide level2" id="section">
-<h1><span class="header-section-number">13.1</span> ???</h1>
-</div>
-<div class="section titleslide slide level1" id="standard-collections"><h1><span class="header-section-number">14</span> Standard Collections</h1></div><div class="section slide level2" id="collections">
-<h1><span class="header-section-number">14.1</span> Collections</h1>
-</div>
-<div class="section titleslide slide level1" id="failure-handling"><h1><span class="header-section-number">15</span> Failure Handling</h1></div><div class="section slide level2" id="option">
-<h1><span class="header-section-number">15.1</span> Option</h1>
-<p>Say you want to add a <code>head</code> member to your <code>List[A]</code> type, that returns the first element of a list</p>
-<p>What should you return in the case of the empty list?</p>
-</div><div class="section slide level2" id="either-try-trycatchthrow">
-<h1><span class="header-section-number">15.2</span> Either, Try, <code>try</code>/<code>catch</code>/<code>throw</code></h1>
+<div class="section titleslide slide level1" id="for-notation"><h1><span class="header-section-number">15</span> <code>for</code> Notation</h1></div><div class="section slide level2" id="section">
+<h1><span class="header-section-number">15.1</span> ???</h1>
 </div>
 <div class="section titleslide slide level1" id="typeclasses-implicit-parameters"><h1><span class="header-section-number">16</span> Typeclasses, Implicit Parameters</h1></div><div class="section slide level2" id="section-1">
 <h1><span class="header-section-number">16.1</span> ???</h1>
