@@ -154,7 +154,6 @@ area: Double = <span class="fl">314.159</span></code></pre>
 <li>What is the area of <em>any</em> circle, given its radius?</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">area</span>(radius: Double) = pi * radius * radius</code></pre>
-<p>Usage:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">circumference</span>(<span class="dv">10</span>)
 res7: Double = <span class="fl">62.8318</span>
 
@@ -180,7 +179,7 @@ res8: Double = <span class="fl">125.6636</span></code></pre>
 <p>Each significant piece of functionality in a program should be implemented in just one place in the source code.</p>
 <p>Where similar functions are carried out by distinct pieces of code, it is generally beneficial to combine them into one by <strong>abstracting</strong> out the varying parts.</p>
 </blockquote>
-<p>Benjamin C. Pierce, in Types and Programming Languages (2002)</p>
+<p>Benjamin C. Pierce. <em>Types and Programming Languages</em>. MIT Press 2002.</p>
 </div><div id="exercises" class="slide section level2">
 <h1><span class="header-section-number">3.8</span> Exercises</h1>
 <ul>
@@ -276,15 +275,24 @@ res9: Int = <span class="dv">24</span></code></pre>
 </div><div id="termination" class="slide section level2">
 <h1><span class="header-section-number">3.15</span> Termination</h1>
 <p>Is the evaluation process guaranteed to terminate?</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> loop: ??? = loop</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> loop: Nothing = loop</code></pre>
 <!--
 ## Linear and Tail Recursion
 
 TODO
 -->
 
+</div><div id="string-interpolation" class="slide section level2">
+<h1><span class="header-section-number">3.16</span> String Interpolation</h1>
+<p><strong>String interpolation</strong> is a mechanism to build strings from dynamic values:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">greet</span>(name: String) = s<span class="st">&quot;Hello, $name!&quot;</span></code></pre>
+<ul>
+<li><p>Prefix a string literal with <code>s</code></p></li>
+<li><p>Within the string, use <code>$&lt;name&gt;</code> to insert a value</p></li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">greet</span>(<span class="st">&quot;World&quot;</span>) <span class="co">// &quot;Hello, World!&quot;</span></code></pre>
 </div><div id="exercise" class="slide section level2">
-<h1><span class="header-section-number">3.16</span> Exercise</h1>
+<h1><span class="header-section-number">3.17</span> Exercise</h1>
 <ul>
 <li>Write a function <code>fib(n: Int): Int</code> that returns the <code>n</code><sup>th</sup> element of the Fibonacci sequence.</li>
 </ul>
@@ -303,7 +311,7 @@ res12: Int = <span class="dv">1</span>
 scala&gt; <span class="fu">fib</span>(<span class="dv">3</span>)
 res13: Int = <span class="dv">2</span></code></pre>
 </div><div id="exercise-1" class="slide section level2">
-<h1><span class="header-section-number">3.17</span> Exercise</h1>
+<h1><span class="header-section-number">3.18</span> Exercise</h1>
 <ul>
 <li>Write a function <code>sumInts(a: Int, b: Int): Int</code> that returns the sum of all the integers between <code>a</code> and <code>b</code></li>
 </ul>
@@ -418,11 +426,11 @@ res13: Int = <span class="dv">2</span></code></pre>
 </div>
 <div id="encapsulation-and-abstract-data-types" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Encapsulation and Abstract Data Types</h1></div><div id="exercise-2" class="slide section level2">
 <h1><span class="header-section-number">5.1</span> Exercise</h1>
-<h3 id="euler-problem-1"><span class="header-section-number">5.1.1</span> <a href="http://projecteuler.net/problem=1">Euler Problem #1</a></h3>
 <blockquote>
 <p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
 <p>Find the sum of all the multiples of 3 or 5 below 1000.</p>
 </blockquote>
+<p><a href="http://projecteuler.net/problem=1">Euler Problem #1</a></p>
 </div><div id="solution" class="slide section level2">
 <h1><span class="header-section-number">5.2</span> Solution</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> euler1: Int = <span class="fu">loop</span>(<span class="dv">1</span>, <span class="dv">0</span>)
@@ -629,12 +637,12 @@ res13: Int = <span class="dv">2</span></code></pre>
 <ul class="incremental">
 <li><p>You can declare <code>real</code> and <code>imag</code> members in the class constructor parameters list:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ComplexRectangular</span>(<span class="kw">val</span> real: Double, <span class="kw">val</span> imag: Double) <span class="kw">extends</span> Complex</code></pre></li>
-<li><p>Note that (currently) <code>def</code> members can not be declared as parameters</p></li>
+<li><p>Note that <code>def</code> members can not be declared as parameters</p></li>
 </ul>
 </div><div id="abstract-members-encapsulation-and-modularity" class="slide section level2">
 <h1><span class="header-section-number">5.17</span> Abstract Members, Encapsulation and Modularity</h1>
 <ul>
-<li><p>Abstract members achieve <strong>data abstraction</strong>, that is a kind of encapsulation</p></li>
+<li><p>Abstract members achieve encapsulation <em>via</em> <strong>data abstraction</strong></p></li>
 <li><p>Encapsulation allows the construction of <strong>abstraction layers</strong></p></li>
 <li><p>It is a key principle to achieve <strong>modularity</strong>: the underlying implementation can change without affecting users</p></li>
 </ul>
@@ -702,20 +710,11 @@ res13: Int = <span class="dv">2</span></code></pre>
 <div class="figure">
 <img src="ScalaClassHierarchy.png" alt="Scala Class Hierarchy" /><p class="caption">Scala Class Hierarchy</p>
 </div>
-</div><div id="any" class="slide section level2">
-<h1><span class="header-section-number">5.24</span> <code>Any</code></h1>
-<p><code>Any</code> is the superclass of all classes</p>
-<p>It has at least two members that you should be aware of:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">final</span> <span class="kw">def</span> == (that: Any): Boolean
-<span class="kw">def</span> <span class="fu">equals</span>(that: Any): Boolean</code></pre>
-<p>First, note that these members exist in this class mostly for compatibility reasons with the Java language</p>
-<p>The <code>==</code> member allows you to compare any value with another value. It essentially delegates to <code>equals</code></p>
-<p>The default implementation of <code>equals</code> for classes compares the <strong>references</strong> <code>this</code> and <code>that</code></p>
 </div><div id="overloading" class="slide section level2">
-<h1><span class="header-section-number">5.25</span> Overloading</h1>
+<h1><span class="header-section-number">5.24</span> Overloading</h1>
 <p>Several members with the same name can coexist, as long their type signature is different</p>
 </div><div id="recursive-types" class="slide section level2">
-<h1><span class="header-section-number">5.26</span> Recursive Types</h1>
+<h1><span class="header-section-number">5.25</span> Recursive Types</h1>
 <!-- TODO Motivating problem -->
 
 <p>A <strong>recursive type</strong> is a data type that may contain values of the same type</p>
@@ -730,7 +729,7 @@ res13: Int = <span class="dv">2</span></code></pre>
   <span class="fu">println</span>(ints.<span class="fu">next</span>.<span class="fu">next</span>.<span class="fu">next</span>.<span class="fu">value</span>)
 }</code></pre>
 </div><div id="recursive-types-2" class="slide section level2">
-<h1><span class="header-section-number">5.27</span> Recursive Types (2)</h1>
+<h1><span class="header-section-number">5.26</span> Recursive Types (2)</h1>
 <p>You can generate an infinite stream of zeros:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Zeros <span class="kw">extends</span> Ints {
   <span class="kw">val</span> value = <span class="dv">0</span>
@@ -739,7 +738,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 
 <span class="fu">printSomeInts</span>(<span class="kw">new</span> Zeros) <span class="co">// prints “0”, “0”</span></code></pre>
 </div><div id="recursive-types-3" class="slide section level2">
-<h1><span class="header-section-number">5.28</span> Recursive Types (3)</h1>
+<h1><span class="header-section-number">5.27</span> Recursive Types (3)</h1>
 <p>You can generate an infinite stream of successive numbers:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Succs</span>(<span class="kw">val</span> value: Int) <span class="kw">extends</span> Ints {
   <span class="kw">def</span> next = <span class="kw">new</span> <span class="fu">Succs</span>(value + <span class="dv">1</span>)
@@ -747,13 +746,13 @@ res13: Int = <span class="dv">2</span></code></pre>
 
 <span class="fu">printSomeInts</span>(<span class="kw">new</span> <span class="fu">Succs</span>(<span class="dv">0</span>)) <span class="co">// prints “0”, “3”</span></code></pre>
 </div><div id="exercise-4" class="slide section level2">
-<h1><span class="header-section-number">5.29</span> Exercise</h1>
+<h1><span class="header-section-number">5.28</span> Exercise</h1>
 <p>Implement an abstract data type representing a sequence of integers of arbitrary size:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> IntList {
   <span class="kw">def</span> <span class="fu">add</span>(n: Int): IntList
-  <span class="kw">def</span> toString: String
+  <span class="kw">def</span> <span class="fu">concat</span>(ns: IntList): IntList
 }</code></pre>
-<p>The <code>toString</code> method should return <code>&quot;Nil&quot;</code> for the empty sequence, and <code>&quot;1 :: 2 :: Nil&quot;</code> for the sequence {1, 2}</p>
+<p>Override the <code>toString</code> method to return <code>&quot;Nil&quot;</code> for the empty sequence, and <code>&quot;1 :: 2 :: Nil&quot;</code> for the sequence {1, 2}</p>
 <ul class="incremental">
 <li>Hint: consider two special cases of an <code>IntList</code>: an empty list (<code>Nil</code>) and a list constructor (<code>Cons</code>) containing a head element and a tail list</li>
 </ul>
@@ -766,13 +765,10 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li><p>Then add a method <code>product: Int</code> that returns the product of the elements of the list</p></li>
 </ul>
 <ul class="incremental">
-<li>Note the strong <strong>similarities</strong> between <code>sum</code> and <code>product</code></li>
+<li>Note the <strong>similarities</strong> between <code>sum</code> and <code>product</code></li>
 </ul>
 <ul class="incremental">
 <li>Can you write a more general function that could be reused to define <code>sum</code> and <code>product</code>?</li>
-</ul>
-<ul class="incremental">
-<li>TODO More on why it is difficult without higher-order functions</li>
 </ul>
 </div><div id="higher-order-functions" class="slide section level2">
 <h1><span class="header-section-number">6.2</span> Higher-Order Functions</h1>
@@ -796,6 +792,8 @@ res13: Int = <span class="dv">2</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum = <span class="fu">fold</span>(<span class="dv">0</span>, (n, s) =&gt; s + n)
 <span class="kw">def</span> product = <span class="fu">fold</span>(<span class="dv">1</span>, (n, p) =&gt; p * n)</code></pre></li>
 </ul></li>
+<li><p>Add a <code>foreach(f: Int =&gt; Unit): Unit</code> member, that applies the function <code>f</code> to each element of the list</p></li>
+<li><p>Add a <code>filter(p: Int =&gt; Boolean): IntList</code> member that returns a list containing all the elements satisfying <code>p</code></p></li>
 </ul>
 </div><div id="function-literals" class="slide section level2">
 <h1><span class="header-section-number">6.4</span> Function Literals</h1>
@@ -808,7 +806,25 @@ res13: Int = <span class="dv">2</span></code></pre>
 <span class="kw">def</span> product = <span class="fu">fold</span>(<span class="dv">1</span>, _ * _)</code></pre>
 </div><div id="currying-and-partial-application" class="slide section level2">
 <h1><span class="header-section-number">6.5</span> Currying and Partial Application</h1>
-<p>TODO</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
+
+<span class="fu">add</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="co">// 7</span></code></pre>
+<p>An equivalent computation could the following:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int) = (b: Int) =&gt; a + b
+
+<span class="fu">add</span>(<span class="dv">3</span>)(<span class="dv">4</span>) <span class="co">// 7</span></code></pre>
+<p>The first version takes two numbers as parameters and returns a number</p>
+<p>The second version takes one number as parameter and returns a function that takes the second number and returns their sum. We say that the second version is a <strong>curried</strong> function</p>
+</div><div id="currying-and-partial-application-2" class="slide section level2">
+<h1><span class="header-section-number">6.6</span> Currying and Partial Application (2)</h1>
+<p>Curried function can be partially applied:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">val</span> inc = <span class="fu">add</span>(<span class="dv">1</span>)
+inc: Int =&gt; Int = &lt;function1&gt;
+
+scala&gt; <span class="fu">inc</span>(<span class="dv">5</span>)
+res0: Int = <span class="dv">6</span></code></pre>
+<p>Alternatively, you can write the curried version using several <strong>parameters lists</strong>:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int)(b: Int) = a + b</code></pre>
 </div>
 <div id="composition-mechanisms" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Composition Mechanisms</h1></div><div id="functions-composition" class="slide section level2">
 <h1><span class="header-section-number">7.1</span> Functions Composition</h1>
@@ -896,16 +912,12 @@ res13: Int = <span class="dv">2</span></code></pre>
 <img src="Traits.png" alt="Traits Linearization" /><p class="caption">Traits Linearization</p>
 </div>
 </div>
-<div id="string-interpolation" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> String Interpolation</h1></div><div id="string-interpolation-1" class="slide section level2">
-<h1><span class="header-section-number">8.1</span> String Interpolation</h1>
-<p>TODO</p>
-</div>
-<div id="type-polymorphism" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Type Polymorphism</h1></div><div id="type-polymorphism-1" class="slide section level2">
-<h1><span class="header-section-number">9.1</span> Type Polymorphism</h1>
+<div id="type-polymorphism" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Type Polymorphism</h1></div><div id="type-polymorphism-1" class="slide section level2">
+<h1><span class="header-section-number">8.1</span> Type Polymorphism</h1>
 <p>Until now, you saw only how to abstract over values</p>
 <p>It is also possible to abstract over <strong>types</strong></p>
 </div><div id="exercise-7" class="slide section level2">
-<h1><span class="header-section-number">9.2</span> Exercise</h1>
+<h1><span class="header-section-number">8.2</span> Exercise</h1>
 <!-- FIXME Use `identity(n: Int): Int`, `identity(b: Boolean): Boolean` as an example? -->
 
 <ul>
@@ -920,7 +932,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li>Is it possible to write only one <code>fold</code> function that would work with both <code>Int</code> and <code>Boolean</code>?</li>
 </ul>
 </div><div id="polymorphic-functions" class="slide section level2">
-<h1><span class="header-section-number">9.3</span> Polymorphic Functions</h1>
+<h1><span class="header-section-number">8.3</span> Polymorphic Functions</h1>
 <p>Look at the type signatures of <code>fold</code> and <code>foldBool</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">(Int,     (Int, Int)     =&gt; Int)     =&gt; Int
 (Boolean, (Int, Boolean) =&gt; Boolean) =&gt; Boolean</code></pre>
@@ -929,7 +941,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <p>It always follows this pattern:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">(A, (Int, A) =&gt; A) =&gt; A</code></pre>
 </div><div id="polymorphic-functions-2" class="slide section level2">
-<h1><span class="header-section-number">9.4</span> Polymorphic Functions (2)</h1>
+<h1><span class="header-section-number">8.4</span> Polymorphic Functions (2)</h1>
 <p>Functions can have <strong>type parameters</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](z: A, op: (Int, A) =&gt; A): A</code></pre>
 <ul>
@@ -939,35 +951,34 @@ res13: Int = <span class="dv">2</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum = fold[Int](<span class="dv">0</span>, (n, s) =&gt; s + n)
 <span class="kw">def</span> <span class="fu">forAll</span>(p: Int =&gt; Boolean) = fold[Boolean](<span class="kw">true</span>, (n, b) =&gt; b &amp;&amp; <span class="fu">p</span>(n))</code></pre>
 <ul class="incremental">
-<li><p>Note that if you use the following signature you can help the type inference mechanism and omit the result type in most cases:</p>
+<li><p>Note that if you use the following signature you can help the type inference mechanism and omit the applied type in most cases:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](z: A)(op: (Int, A) =&gt; A): A</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum = <span class="fu">fold</span>(<span class="dv">0</span>)((n, s) =&gt; s + n)</code></pre></li>
 </ul>
 </div><div id="exercise-8" class="slide section level2">
-<h1><span class="header-section-number">9.5</span> Exercise</h1>
+<h1><span class="header-section-number">8.5</span> Exercise</h1>
 <ul>
-<li><p>Make <code>fold</code> polymorphic</p></li>
-<li><p>Rewrite <code>sum</code>, <code>product</code>, <code>forAll</code> and <code>hasEvenSize</code> in terms of <code>fold</code></p></li>
+<li>Make <code>fold</code> polymorphic</li>
 </ul>
 </div><div id="exercise-9" class="slide section level2">
-<h1><span class="header-section-number">9.6</span> Exercise</h1>
+<h1><span class="header-section-number">8.6</span> Exercise</h1>
 <ul>
 <li>Implement an abstract data type representing a list of <code>String</code> elements:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> StringList {
   <span class="kw">def</span> <span class="fu">add</span>(str: String): StringList
-  <span class="kw">def</span> toString: String
+  <span class="kw">def</span> <span class="fu">concat</span>(ss: StringList): StringList
 }</code></pre>
 <ul class="incremental">
 <li>Note the strong similarities with <code>IntList</code></li>
 <li>You want to abstract over the type of the elements of the list</li>
 </ul>
 </div><div id="type-constructors" class="slide section level2">
-<h1><span class="header-section-number">9.7</span> Type Constructors</h1>
+<h1><span class="header-section-number">8.7</span> Type Constructors</h1>
 <p>Types can have type parameters:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> List[A] {
   <span class="kw">def</span> <span class="fu">add</span>(element: A): List[A]
-  <span class="kw">def</span> toString: String
+  <span class="kw">def</span> <span class="fu">concat</span>(as: List[A]): List[A]
 }</code></pre>
 <ul class="incremental">
 <li><code>List</code> is a <strong>type constructor</strong>: it takes a type as parameter and yields another type
@@ -976,18 +987,18 @@ res13: Int = <span class="dv">2</span></code></pre>
 </ul></li>
 </ul>
 </div><div id="exercise-10" class="slide section level2">
-<h1><span class="header-section-number">9.8</span> Exercise</h1>
+<h1><span class="header-section-number">8.8</span> Exercise</h1>
 <ul>
 <li>Write a polymorphic <code>List[A]</code> data type:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> List[A] {
   <span class="kw">def</span> <span class="fu">add</span>(element: A): List[A]
+  <span class="kw">def</span> <span class="fu">concat</span>(as: List[A]): List[A]
   <span class="kw">def</span> fold[B](z: B)(op: (A, B) =&gt; B): B
-  <span class="kw">def</span> toString: String
 }</code></pre>
 </div><div id="type-quantification" class="slide section level2">
-<h1><span class="header-section-number">9.9</span> Type Quantification</h1>
-<p>Subtyping and universal types are two different mechanisms that let you write more general programs. Can you mix them together?</p>
+<h1><span class="header-section-number">8.9</span> Type Quantification</h1>
+<p>Subtyping and universal types are two different generalization mechanisms. Can you mix them together?</p>
 <p>Consider the following class hierarchy:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Animal {
   <span class="kw">def</span> fitness: Int
@@ -1004,7 +1015,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <span class="kw">trait</span> Giraffe <span class="kw">extends</span> Mammal</code></pre>
 <p>You want to write a function <code>selection</code>, that takes two animals as parameters and returns the one with the highest <code>fitness</code> value. What will its type signature be?</p>
 </div><div id="type-quantification-2" class="slide section level2">
-<h1><span class="header-section-number">9.10</span> Type Quantification (2)</h1>
+<h1><span class="header-section-number">8.10</span> Type Quantification (2)</h1>
 <p>A possible solution using subtyping is the following:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">selection</span>(a1: Animal, a2: Animal) =
   <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
@@ -1016,27 +1027,25 @@ res13: Int = <span class="dv">2</span></code></pre>
 </ul></li>
 </ul>
 </div><div id="type-quantification-3" class="slide section level2">
-<h1><span class="header-section-number">9.11</span> Type Quantification (3)</h1>
+<h1><span class="header-section-number">8.11</span> Type Quantification (3)</h1>
 <p>We could try to solve this issue using a universal type:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> selection[A](a1: A, a2: A): A =
   <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
-<p>But this solution does not compile: we can not access to the <code>fitness</code> member of <code>a1</code> and <code>a2</code> because <code>A</code> is not constrained to be a subtype of <code>Animal</code></p>
-</div><div id="type-quantification-4" class="slide section level2">
-<h1><span class="header-section-number">9.12</span> Type Quantification (4)</h1>
-<h3 id="upper-bound"><span class="header-section-number">9.12.1</span> Upper Bound</h3>
+<p>But this solution does not compile: we can not access the <code>fitness</code> member of <code>a1</code> and <code>a2</code> because <code>A</code> is not constrained to be a subtype of <code>Animal</code></p>
+</div><div id="upper-and-lower-bounds" class="slide section level2">
+<h1><span class="header-section-number">8.12</span> Upper and Lower Bounds</h1>
 <p>We can write a better solution using a <strong>bounded quantification</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> selection[A &lt;: Animal](a1: A, a2: A): A =
    <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
 <ul>
 <li><code>A &lt;: Animal</code> means “for all type <code>A</code> that is a subtype of <code>Animal</code>”, and we say that <code>Animal</code> is the <strong>upper bound</strong> of <code>A</code></li>
 </ul>
-<h3 id="lower-bound"><span class="header-section-number">9.12.2</span> Lower Bound</h3>
 <p>Similarly, you can constraint a type parameter <code>A</code> to have a <strong>lower bound</strong> <code>B</code>:</p>
 <ul>
 <li><code>A &gt;: B</code></li>
 </ul>
 </div><div id="variance" class="slide section level2">
-<h1><span class="header-section-number">9.13</span> Variance</h1>
+<h1><span class="header-section-number">8.13</span> Variance</h1>
 <p>Consider the following type modeling a zoo run containing an animal:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[A] {
   <span class="kw">def</span> get: A <span class="co">// Get the animal that lives in this run</span>
@@ -1045,7 +1054,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">isLargeEnough</span>(run: Run[Mammal]): Boolean = …</code></pre>
 <p>What happens if you pass it a <code>Run[Zebra]</code> as parameter?</p>
 </div><div id="variance-2" class="slide section level2">
-<h1><span class="header-section-number">9.14</span> Variance (2)</h1>
+<h1><span class="header-section-number">8.14</span> Variance (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">isLargeEnough</span>(zebraRun)
 &lt;console&gt;:<span class="dv">14</span>: error: <span class="kw">type</span> mismatch;
  found   : Run[Zebra]
@@ -1058,7 +1067,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li>It seems that <code>Run[Zebra]</code> should be a subtype of <code>Run[Mammal]</code></li>
 </ul>
 </div><div id="covariance" class="slide section level2">
-<h1><span class="header-section-number">9.15</span> Covariance</h1>
+<h1><span class="header-section-number">8.15</span> Covariance</h1>
 <p>More generally, <code>Run[A] &lt;: Run[B]</code> if <code>A &lt;: B</code></p>
 <p>We say that <code>A</code> is <strong>covariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[+A] {
@@ -1066,7 +1075,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Run[Zebra]</code> where a <code>Run[Mammal]</code> is expected</p>
 </div><div id="variance-3" class="slide section level2">
-<h1><span class="header-section-number">9.16</span> Variance (3)</h1>
+<h1><span class="header-section-number">8.16</span> Variance (3)</h1>
 <p>Consider the following type modeling a veterinary able to treat animals:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[A] {
   <span class="kw">def</span> <span class="fu">treat</span>(a: A)
@@ -1075,7 +1084,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">treatMammals</span>(vet: Vet[Mammal]) { … }</code></pre>
 <p>What happens if you pass it a <code>Vet[Animal]</code> as parameter?</p>
 </div><div id="variance-4" class="slide section level2">
-<h1><span class="header-section-number">9.17</span> Variance (4)</h1>
+<h1><span class="header-section-number">8.17</span> Variance (4)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">treatMammals</span>(animalVet)
 &lt;console&gt;:<span class="dv">14</span>: error: <span class="kw">type</span> mismatch;
  found   : Vet[Animal]
@@ -1088,7 +1097,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li>It seems that <code>Vet[Animal]</code> should be a subtype of <code>Vet[Mammal]</code></li>
 </ul>
 </div><div id="contravariance" class="slide section level2">
-<h1><span class="header-section-number">9.18</span> Contravariance</h1>
+<h1><span class="header-section-number">8.18</span> Contravariance</h1>
 <p>More generally, <code>Vet[A] &lt;: Vet[B]</code> if <code>A &gt;: B</code></p>
 <p>We say that <code>A</code> is <strong>contravariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[-A] {
@@ -1096,24 +1105,23 @@ res13: Int = <span class="dv">2</span></code></pre>
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Vet[Animal]</code> where a <code>Vet[Mammal]</code> is expected</p>
 </div><div id="variance-5" class="slide section level2">
-<h1><span class="header-section-number">9.19</span> Variance (5)</h1>
-<p>For a type constructor <code>F[X]</code>, variance annotations allow you to define the subtyping relation of a types <code>F[A]</code> and <code>F[B]</code> according to the subtyping relation of the types <code>A</code> and <code>B</code></p>
+<h1><span class="header-section-number">8.19</span> Variance (5)</h1>
+<p>For a type constructor <code>F[X]</code>, variance annotations allow you to define the subtyping relation of the types <code>F[A]</code> and <code>F[B]</code> according to the subtyping relation of the types <code>A</code> and <code>B</code></p>
 <p>By default, type parameters are <strong>invariant</strong></p>
 </div><div id="exercise-11" class="slide section level2">
-<h1><span class="header-section-number">9.20</span> Exercise</h1>
+<h1><span class="header-section-number">8.20</span> Exercise</h1>
 <ul>
-<li><p>Make the <code>List</code> class covariant</p></li>
-<li><p>An empty list of <code>Int</code> and an empty list of <code>String</code> could be represented by a same value. What would be its type? Define such a value, call it <code>Nil</code></p></li>
+<li>Make the <code>List</code> class covariant</li>
 </ul>
 </div>
-<div id="object-orientation" class="titleslide slide section level1"><h1><span class="header-section-number">10</span> Object Orientation</h1></div><div id="every-value-is-an-object" class="slide section level2">
-<h1><span class="header-section-number">10.1</span> Every Value is an Object</h1>
+<div id="object-orientation" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Object Orientation</h1></div><div id="every-value-is-an-object" class="slide section level2">
+<h1><span class="header-section-number">9.1</span> Every Value is an Object</h1>
 <p>Scala is a pure object-oriented language</p>
 <p>Every value is an object</p>
 <p>The type of each value is a class</p>
 </div><div id="functions-are-objects" class="slide section level2">
-<h1><span class="header-section-number">10.2</span> Functions are Objects</h1>
-<h3 id="definition"><span class="header-section-number">10.2.1</span> Definition</h3>
+<h1><span class="header-section-number">9.2</span> Functions are Objects</h1>
+<h3 id="definition"><span class="header-section-number">9.2.1</span> Definition</h3>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Function[-T, +R] {
   <span class="kw">def</span> <span class="fu">apply</span>(parameter: T): R
 }</code></pre>
@@ -1123,14 +1131,14 @@ res13: Int = <span class="dv">2</span></code></pre>
   <span class="kw">def</span> <span class="fu">apply</span>(x: Int) = x + <span class="dv">1</span>
 }</code></pre>
 </div><div id="functions-are-objects-2" class="slide section level2">
-<h1><span class="header-section-number">10.3</span> Functions are Objects (2)</h1>
-<h3 id="application"><span class="header-section-number">10.3.1</span> Application</h3>
+<h1><span class="header-section-number">9.3</span> Functions are Objects (2)</h1>
+<h3 id="application"><span class="header-section-number">9.3.1</span> Application</h3>
 <p><code>f(t1, t2, …)</code> is a shorthand for <code>f.apply(t1, t2, …)</code></p>
 <ul>
 <li>Note that the underlying value does not need to extend <code>Function</code>, it only needs to have an <code>apply</code> method</li>
 </ul>
 </div><div id="infix-notation-for-methods" class="slide section level2">
-<h1><span class="header-section-number">10.4</span> Infix Notation for Methods</h1>
+<h1><span class="header-section-number">9.4</span> Infix Notation for Methods</h1>
 <p>Methods with one parameter can be used like <strong>infix operators</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">xs add <span class="dv">3</span> <span class="co">// Equivalent to “xs.add(3)”</span></code></pre>
 <p>This is especially convenient when methods have symbolic names:</p>
@@ -1142,7 +1150,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 </ul></li>
 </ul>
 </div><div id="operators-precedence-rules" class="slide section level2">
-<h1><span class="header-section-number">10.5</span> Operators Precedence Rules</h1>
+<h1><span class="header-section-number">9.5</span> Operators Precedence Rules</h1>
 <p>Operators <strong>precedence</strong> depends on their <strong>first character</strong> and is given by the following list (highest first):</p>
 <ul>
 <li>all special characters (excepted those below)</li>
@@ -1157,30 +1165,30 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li>all letters</li>
 </ul>
 </div><div id="operators-associativity-rules" class="slide section level2">
-<h1><span class="header-section-number">10.6</span> Operators Associativity Rules</h1>
+<h1><span class="header-section-number">9.6</span> Operators Associativity Rules</h1>
 <p>Consider the following expression building the sequence <span class="math">{1, 2}</span>:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">empty[Int] add <span class="dv">2</span> add <span class="dv">1</span></code></pre>
-<p>Because lists are constructed by “pushing” elements in front, the result of this expression will be a list whose <strong>first</strong> element is <code>1</code></p>
+<pre class="sourceCode scala"><code class="sourceCode scala">(<span class="kw">new</span> Nil[Int]) add <span class="dv">2</span> add <span class="dv">1</span></code></pre>
+<p>Because lists are constructed by “pushing” elements in front, the result of this expression is a list whose <strong>first</strong> element is <code>1</code></p>
 <p>However, in the above expression this element appears in <strong>last</strong> position, which is not intuitive</p>
 <p>You would like to write an expression looking like the following, instead:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> add <span class="dv">2</span> add empty[Int]</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> add <span class="dv">2</span> <span class="fu">add</span> (<span class="kw">new</span> Nil[Int])</code></pre>
 </div><div id="operators-associativity-rules-2" class="slide section level2">
-<h1><span class="header-section-number">10.7</span> Operators Associativity Rules (2)</h1>
+<h1><span class="header-section-number">9.7</span> Operators Associativity Rules (2)</h1>
 <p>Operators <strong>associativity</strong> depends on their <strong>last character</strong></p>
 <p>By default they are <strong>left-associative</strong>: <code>empty[Int] add 2 add 1</code> is parenthesized as <code>(empty[Int] add 2) add 1</code></p>
 <p>If the operator name ends with character <code>:</code> or <code>=</code>, it becomes <strong>right-associative</strong></p>
 <p>If the <code>add</code> member was renamed to <code>::</code> you could write the following expression:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> :: <span class="dv">2</span> :: empty[Int]</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> :: <span class="dv">2</span> :: (<span class="kw">new</span> Nil[Int])</code></pre>
 <p>This expression would be parenthesized as <code>1 :: (2 :: empty[Int])</code></p>
 </div><div id="symbolic-vs-alphanumeric-names" class="slide section level2">
-<h1><span class="header-section-number">10.8</span> Symbolic vs Alphanumeric Names</h1>
+<h1><span class="header-section-number">9.8</span> Symbolic vs Alphanumeric Names</h1>
 <p>Consider the two equivalent programs:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">empty[Int] add <span class="dv">2</span> add <span class="dv">1</span></code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> :: <span class="dv">2</span> :: empty[Int]</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala">(<span class="kw">new</span> Nil[Int]) add <span class="dv">2</span> add <span class="dv">1</span></code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> :: <span class="dv">2</span> :: (<span class="kw">new</span> Nil[Int])</code></pre>
 <p>Symbolic names can make the code <strong>more readable</strong> by differentiating names referring to values and names referring to operators</p>
 <p>Symbolic names can make the code <strong>less readable</strong> because they may be less meaningful than alphanumeric names</p>
 </div><div id="singleton-objects" class="slide section level2">
-<h1><span class="header-section-number">10.9</span> Singleton Objects</h1>
+<h1><span class="header-section-number">9.9</span> Singleton Objects</h1>
 <p>Creating an object requires calling a constructor prefixed with the <code>new</code> keyword</p>
 <!-- TODO More on the motivation -->
 
@@ -1191,45 +1199,56 @@ res13: Int = <span class="dv">2</span></code></pre>
 <p><code>MyObject</code> is a value of type <code>MyObject.type</code> that can be used as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">println</span>(MyObject.<span class="fu">foo</span>)</code></pre>
 </div><div id="top-level-definitions" class="slide section level2">
-<h1><span class="header-section-number">10.10</span> Top-Level Definitions</h1>
+<h1><span class="header-section-number">9.10</span> Top-Level Definitions</h1>
 <p>Singleton objects and classes (or traits) are the only allowed top-level definitions</p>
 <p>Any other definition (<code>val</code>, <code>def</code>) must be nested within a top-level definition</p>
 </div><div id="companion-objects" class="slide section level2">
-<h1><span class="header-section-number">10.11</span> Companion Objects</h1>
+<h1><span class="header-section-number">9.11</span> Companion Objects</h1>
 <p>An object definition with the same name as a class and declared in the same file is called a <strong>companion object</strong> for this class</p>
 <p>A class and its companion object can access each other’s private members</p>
 <p>Companion objects are a good place to define functions related to their companion class (e.g. factory methods)</p>
 </div><div id="exercise-12" class="slide section level2">
-<h1><span class="header-section-number">10.12</span> Exercise</h1>
+<h1><span class="header-section-number">9.12</span> Exercise</h1>
 <ul>
 <li><p>Add the alias <code>++</code> for the <code>concat</code> member of <code>List</code></p></li>
 <li><p>Add the alias <code>::</code> for the <code>add</code> member of <code>List</code></p></li>
-<li><p>Make <code>Nil</code> a singleton object</p></li>
+<li><p>An empty list of <code>Int</code> and an empty list of <code>String</code> could be represented by a same value. What would be its type? Define such a value as a singleton object, call it <code>Nil</code></p></li>
 </ul>
 </div>
-<div id="algebraic-data-types" class="titleslide slide section level1"><h1><span class="header-section-number">11</span> Algebraic Data Types</h1></div><div id="structural-identity" class="slide section level2">
-<h1><span class="header-section-number">11.1</span> Structural Identity</h1>
+<div id="algebraic-data-types" class="titleslide slide section level1"><h1><span class="header-section-number">10</span> Algebraic Data Types</h1></div><div id="structural-identity" class="slide section level2">
+<h1><span class="header-section-number">10.1</span> Structural Identity</h1>
 <p>Consider the following REPL session:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="dv">1</span> :: <span class="dv">2</span> :: List.<span class="fu">empty</span>[Int] == <span class="dv">1</span> :: <span class="dv">2</span> :: List.<span class="fu">empty</span>[Int]
+<pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">import</span> julienrf.<span class="fu">course</span>.<span class="fu">_</span>
+<span class="kw">import</span> julienrf.<span class="fu">course</span>.<span class="fu">_</span>
+
+scala&gt; <span class="dv">1</span> :: <span class="dv">2</span> :: Nil == <span class="dv">1</span> :: <span class="dv">2</span> :: Nil
 res0: Boolean = <span class="kw">false</span>
 
 scala&gt; <span class="dv">1</span> == <span class="dv">1</span>
 res1: Boolean = <span class="kw">true</span></code></pre>
-<p>In the first expression we are comparing two different <strong>instances</strong>, that’s why we get <code>false</code></p>
-<p>But is there a good reason to return <code>false</code>?</p>
+<p>Why does the first expression return <code>false</code>?</p>
+</div><div id="section" class="slide section level2">
+<h1><span class="header-section-number">10.2</span> <code>==</code></h1>
+<p><code>Any</code> is the superclass of all classes</p>
+<p>It has at least two members that you should be aware of:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">final</span> <span class="kw">def</span> == (that: Any): Boolean
+<span class="kw">def</span> <span class="fu">equals</span>(that: Any): Boolean</code></pre>
+<p>First, note that these members exist in this class mostly for compatibility reasons with the Java language</p>
+<p>The <code>==</code> member allows you to compare any value with another value. It essentially delegates to <code>equals</code></p>
+<p>The default implementation of <code>equals</code> for classes compares the <strong>references</strong> <code>this</code> and <code>that</code></p>
 </div><div id="a-type-as-a-space-of-possible-values" class="slide section level2">
-<h1><span class="header-section-number">11.2</span> A Type as a Space of Possible Values</h1>
+<h1><span class="header-section-number">10.3</span> A Type as a Space of Possible Values</h1>
 <p>Until now, we thought of types as a <strong>programmation interface</strong>: a list of available members for a given type name</p>
 <p>E.g. type <code>Complex</code> has a <code>real</code> member</p>
 <p>Alternatively, you can think of types as <strong>sets of possible values</strong></p>
 <ul>
 <li>type <code>Boolean</code> has two possible values: <code>true</code> and <code>false</code></li>
-<li>a type <code>State</code> with three possible values: <code>Sleeping</code>, <code>Eating</code> and <code>Working</code></li>
 <li>type <code>Int</code> has 2<sup>32</sup> possible values</li>
+<li>a type <code>State</code> with three possible values: <code>Sleeping</code>, <code>Eating</code> and <code>Working</code></li>
 </ul>
 <p>Then, you can <strong>combine</strong> these sets to create new sets of values</p>
 </div><div id="product-types" class="slide section level2">
-<h1><span class="header-section-number">11.3</span> Product Types</h1>
+<h1><span class="header-section-number">10.4</span> Product Types</h1>
 <p>What are the possible values of a type aggregating a <code>Boolean</code> value <strong>and</strong> a <code>State</code> value?</p>
 <table>
 <thead>
@@ -1267,7 +1286,7 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 </table>
 <p>The number of values is equal to the <strong>product</strong> of the number of values of the <code>Boolean</code> and the <code>State</code> types</p>
 </div><div id="sum-types" class="slide section level2">
-<h1><span class="header-section-number">11.4</span> Sum Types</h1>
+<h1><span class="header-section-number">10.5</span> Sum Types</h1>
 <p>What are the possible values of a type containing either a <code>Boolean</code> value <strong>or</strong> a <code>State</code> value?</p>
 <table>
 <thead>
@@ -1301,19 +1320,19 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 </table>
 <p>The number of values is equal to the <strong>sum</strong> of the number of values of the <code>Boolean</code> and the <code>State</code> types</p>
 </div><div id="algebraic-data-types-1" class="slide section level2">
-<h1><span class="header-section-number">11.5</span> Algebraic Data Types</h1>
+<h1><span class="header-section-number">10.6</span> Algebraic Data Types</h1>
 <p><strong>Algebraic data types</strong> are defined as <em>sums</em> or <em>products</em> of other types</p>
 <p>A type is essentially a set of possible values</p>
 <p>In that case, it makes sense to assume that two instances of a type are the same if they represent the same value in the set of possible values</p>
 </div><div id="defining-list-as-an-algebraic-data-type" class="slide section level2">
-<h1><span class="header-section-number">11.6</span> Defining <code>List</code> as an Algebraic Data Type</h1>
+<h1><span class="header-section-number">10.7</span> Defining <code>List</code> as an Algebraic Data Type</h1>
 <p>A list is either:</p>
 <ul>
 <li><p>an empty list, <code>Nil</code> ;</p></li>
 <li><p>a <em>constructor</em>, <code>Cons(head, tail)</code>, containing a <code>head</code> element and a <code>tail</code> list (which is a <code>List</code> itself)</p></li>
 </ul>
 </div><div id="encoding-algebraic-data-types" class="slide section level2">
-<h1><span class="header-section-number">11.7</span> Encoding Algebraic Data Types</h1>
+<h1><span class="header-section-number">10.8</span> Encoding Algebraic Data Types</h1>
 <p><strong>case classes</strong> turn regular classes into <strong>product types</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Person</span>(isMarried: Boolean, state: State)</code></pre>
 <ul>
@@ -1332,7 +1351,7 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 </ul></li>
 </ul>
 </div><div id="encoding-algebraic-data-types-2" class="slide section level2">
-<h1><span class="header-section-number">11.8</span> Encoding Algebraic Data Types (2)</h1>
+<h1><span class="header-section-number">10.9</span> Encoding Algebraic Data Types (2)</h1>
 <p><strong>sealed classes</strong> and <strong>inheritance</strong> encode <strong>sum types</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">abstract</span> <span class="kw">class</span> Person
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">SuperHero</span>(isSavingTheWorld: Boolean) <span class="kw">extends</span> Person
@@ -1348,7 +1367,7 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <span class="kw">case</span> <span class="kw">object</span> Eating <span class="kw">extends</span> State
 <span class="kw">case</span> <span class="kw">object</span> Working <span class="kw">extends</span> State</code></pre>
 </div><div id="pattern-matching" class="slide section level2">
-<h1><span class="header-section-number">11.9</span> Pattern Matching</h1>
+<h1><span class="header-section-number">10.10</span> Pattern Matching</h1>
 <p><strong>Pattern matching</strong> can be used to deconstruct algebraic data types:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">isBusy</span>(person: Person) = person <span class="kw">match</span> {
   <span class="kw">case</span> <span class="fu">SuperHero</span>(isSavingTheWorld) =&gt;
@@ -1357,12 +1376,12 @@ res1: Boolean = <span class="kw">true</span></code></pre>
     state == Working
 }</code></pre>
 </div><div id="exercise-13" class="slide section level2">
-<h1><span class="header-section-number">11.10</span> Exercise</h1>
+<h1><span class="header-section-number">10.11</span> Exercise</h1>
 <ul>
 <li>Make <code>List</code> an algebraic data type</li>
 </ul>
 </div><div id="pattern-matching-vs-fold" class="slide section level2">
-<h1><span class="header-section-number">11.11</span> Pattern Matching vs Fold</h1>
+<h1><span class="header-section-number">10.12</span> Pattern Matching vs Fold</h1>
 <p>Consider the following programs:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sum</span>(xs: List[Int]) = xs <span class="kw">match</span> {
   <span class="kw">case</span> Nil =&gt; <span class="dv">0</span>
@@ -1374,23 +1393,23 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <li><code>fold</code> was your poor man’s pattern matching mechanism</li>
 </ul>
 </div><div id="algebraic-data-types-and-data-abstraction" class="slide section level2">
-<h1><span class="header-section-number">11.12</span> Algebraic Data Types and Data Abstraction</h1>
+<h1><span class="header-section-number">10.13</span> Algebraic Data Types and Data Abstraction</h1>
 <p>Should you use algebraic data types or regular classes?</p>
 <ul>
 <li><p>Algebraic data types are <strong>closed types</strong> (they can not be extended), but this characteristic is what makes it easier to add new operations on a type hierarchy</p></li>
 <li><p>Classes are <strong>open types</strong> (they can be extended), but you can not add a new operation on a class hierarchy without changing the whole hierarchy</p></li>
 </ul>
 </div>
-<div id="handling-failure" class="titleslide slide section level1"><h1><span class="header-section-number">12</span> Handling Failure</h1></div><div id="motivating-problem" class="slide section level2">
-<h1><span class="header-section-number">12.1</span> Motivating Problem</h1>
+<div id="handling-failure" class="titleslide slide section level1"><h1><span class="header-section-number">11</span> Handling Failure</h1></div><div id="motivating-problem" class="slide section level2">
+<h1><span class="header-section-number">11.1</span> Motivating Problem</h1>
 <ul>
-<li>Add a <code>head: A</code> member to your <code>List[A]</code> type, that returns the first element of a list</li>
+<li>Try to add a <code>head: A</code> member to your <code>List[A]</code> type, that returns the first element of a list</li>
 </ul>
 <ul class="incremental">
 <li>What should you return in case of the empty list?</li>
 </ul>
 </div><div id="option" class="slide section level2">
-<h1><span class="header-section-number">12.2</span> <code>Option</code></h1>
+<h1><span class="header-section-number">11.2</span> <code>Option</code></h1>
 <p>A list may have a head element, but that is not always the case</p>
 <p>The standard library defines the type <code>Option[A]</code> to model optional values</p>
 <p>An <code>Option[A]</code> value can either be:</p>
@@ -1399,10 +1418,10 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <li><p><code>None</code></p></li>
 </ul>
 </div><div id="option-2" class="slide section level2">
-<h1><span class="header-section-number">12.3</span> <code>Option</code> (2)</h1>
+<h1><span class="header-section-number">11.3</span> <code>Option</code> (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">safeDiv</span>(a: Int, b: Int): Option[Int] =
   <span class="kw">if</span> (b == <span class="dv">0</span>) None
-  <span class="kw">else</span> Some(a / B)</code></pre>
+  <span class="kw">else</span> Some(a / b)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> maybeQ = <span class="fu">safeDiv</span>(<span class="dv">42</span>, <span class="dv">10</span>)
 
 maybeQ <span class="kw">match</span> {
@@ -1412,16 +1431,47 @@ maybeQ <span class="kw">match</span> {
 
 <span class="fu">println</span>(q getOrElse <span class="st">&quot;Division by zero&quot;</span>)</code></pre>
 </div><div id="exercise-14" class="slide section level2">
-<h1><span class="header-section-number">12.4</span> Exercise</h1>
+<h1><span class="header-section-number">11.4</span> Exercise</h1>
 <ul>
 <li><p>Implement the following methods:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> head: Option[A]
-<span class="kw">def</span> tail: Option[List[A]]</code></pre></li>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> headOption: Option[A]
+<span class="kw">def</span> tailOption: Option[List[A]]</code></pre></li>
 </ul>
+</div><div id="common-patterns-with-optional-values" class="slide section level2">
+<h1><span class="header-section-number">11.5</span> Common Patterns With Optional Values</h1>
+<p>Use <code>map</code> to transform a successful value into another successful value, ignoring the <code>None</code> case:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">inc</span>(maybeN: Option[Int]): Option[Int] =
+  maybeN.<span class="fu">map</span>(n =&gt; n + <span class="dv">1</span>)
+
+<span class="kw">def</span> <span class="fu">toString</span>(maybeN: Option[Int]): Option[String] =
+  maybeN.<span class="fu">map</span>(_.<span class="fu">toString</span>)</code></pre>
+</div><div id="common-patterns-with-optional-values-2" class="slide section level2">
+<h1><span class="header-section-number">11.6</span> Common Patterns With Optional Values (2)</h1>
+<p>Use <code>filter</code> to turn a successful value into a failure if it does not satisfy a given predicate:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">even</span>(maybeN: Option[Int]): Option[Int] =
+  maybeN.<span class="fu">filter</span>(n =&gt; n % <span class="dv">2</span> == <span class="dv">0</span>)</code></pre>
+</div><div id="common-patterns-with-optional-values-3" class="slide section level2">
+<h1><span class="header-section-number">11.7</span> Common Patterns With Optional Values (3)</h1>
+<p>Use <code>flatMap</code> to transform a successful value into an optional value:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">inverse</span>(maybeN: Option[Int]): Option[Int] =
+  maybeN.<span class="fu">flatMap</span>(n =&gt; <span class="fu">safeDiv</span>(<span class="dv">1</span>, n))</code></pre>
+</div><div id="sequencing-computations-manipulating-optional-values" class="slide section level2">
+<h1><span class="header-section-number">11.8</span> Sequencing Computations Manipulating Optional Values</h1>
+<p><code>flatMap</code> and <code>map</code> are used to apply sequenced computations to optional values:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">foo</span>(maybeN: Option[Int]): Option[Int] =
+  maybeN.<span class="fu">flatMap</span> { n =&gt;
+    <span class="fu">safeDiv</span>(<span class="dv">1</span>, n).<span class="fu">flatMap</span> { q =&gt;
+      <span class="fu">intSqrt</span>(q).<span class="fu">map</span> { q2 =&gt;
+        q2 + <span class="dv">1</span>
+      }
+    }
+  }</code></pre>
+<p>(provided <code>intSqrt</code> has type signature <code>Int =&gt; Option[Int]</code> and returns a successful square root only of its parameter is a perfect square)</p>
+<p>(We will see a more expressive way of expressing such computations, soon)</p>
 </div><div id="either" class="slide section level2">
-<h1><span class="header-section-number">12.5</span> <code>Either</code></h1>
+<h1><span class="header-section-number">11.9</span> <code>Either</code></h1>
 <p>When using a optional value, getting <code>None</code> gives you no clue of why there is no value: all you know is that you have no value</p>
-<p>The <code>Either[A, B]</code> type can be useful to handle failures while keeping track of a reason of the failure</p>
+<p>The <code>Either[A, B]</code> type can be useful to handle failures while keeping track of a reason for the failure</p>
 <p>An <code>Either[A, B]</code> value can either be:</p>
 <ul>
 <li><p><code>Left(a)</code></p></li>
@@ -1429,7 +1479,7 @@ maybeQ <span class="kw">match</span> {
 </ul>
 <p>Conventionnaly the left case is used to store the failure information</p>
 </div><div id="either-2" class="slide section level2">
-<h1><span class="header-section-number">12.6</span> <code>Either</code> (2)</h1>
+<h1><span class="header-section-number">11.10</span> <code>Either</code> (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">safeDiv</span>(a: Int, b: Int): Either[String, Int] =
   <span class="kw">if</span> (b == <span class="dv">0</span>) <span class="fu">Left</span>(<span class="st">&quot;Division by zero&quot;</span>)
   <span class="kw">else</span> <span class="fu">Right</span>(a / b)</code></pre>
@@ -1439,19 +1489,19 @@ maybeQ <span class="kw">match</span> {
   <span class="kw">case</span> <span class="fu">Right</span>(q) =&gt; <span class="fu">println</span>(q)
   <span class="kw">case</span> <span class="fu">Left</span>(error) =&gt; <span class="fu">println</span>(error)
 }</code></pre>
-<!-- TODO?
+<!-- TODO
 
 ## Try, `try`/`catch`/`throw`
 
 -->
 
 </div>
-<div id="standard-collections" class="titleslide slide section level1"><h1><span class="header-section-number">13</span> Standard Collections</h1></div><div id="standard-collections-1" class="slide section level2">
-<h1><span class="header-section-number">13.1</span> Standard Collections</h1>
+<div id="standard-collections" class="titleslide slide section level1"><h1><span class="header-section-number">12</span> Standard Collections</h1></div><div id="standard-collections-1" class="slide section level2">
+<h1><span class="header-section-number">12.1</span> Standard Collections</h1>
 <p>The Scala standard library provides several types making it easier to deal with collections of elements</p>
 <p>This section gives a slight overview of the standard collections. For more details see the <a href="http://scala-lang.org/api">API documentation</a></p>
 </div><div id="traversable" class="slide section level2">
-<h1><span class="header-section-number">13.2</span> <code>Traversable</code></h1>
+<h1><span class="header-section-number">12.2</span> <code>Traversable</code></h1>
 <p>The most general one is <code>Traversable[A]</code>, it provides methods to iterate on the elements of a collection, to transform a collection, to filter it, and a lot more:</p>
 <table>
 <thead>
@@ -1478,29 +1528,33 @@ maybeQ <span class="kw">match</span> {
 <td align="left">A collection obtained from applying <code>f</code> to every element of <code>xs</code></td>
 </tr>
 <tr class="odd">
+<td align="left"><code>xs.flatMap(f)</code></td>
+<td align="left">A collection obtained from applying <code>f</code> to every element of <code>xs</code> and concatenating the results</td>
+</tr>
+<tr class="even">
 <td align="left"><code>xs.filter(p)</code></td>
 <td align="left">A collection obtained from filtering elements of <code>xs</code> that satisfy the predicate <code>p</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>xs.take(n)</code></td>
 <td align="left">A collection containing the <code>n</code> first elements of <code>xs</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>xs.find(p)</code></td>
 <td align="left">An optional value containing the first element of <code>xs</code> that satisfies <code>p</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>xs.headOption</code></td>
 <td align="left">An optional value containing the first element of <code>xs</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>xs.tailOption</code></td>
 <td align="left">An optional value containing the tail of <code>xs</code></td>
 </tr>
 </tbody>
 </table>
 </div><div id="iterable" class="slide section level2">
-<h1><span class="header-section-number">13.3</span> <code>Iterable</code></h1>
+<h1><span class="header-section-number">12.3</span> <code>Iterable</code></h1>
 <p><code>Iterable[A]</code> extends <code>Traversable[A]</code>, here are some of its new members:</p>
 <table>
 <thead>
@@ -1529,8 +1583,8 @@ maybeQ <span class="kw">match</span> {
 </tbody>
 </table>
 </div><div id="seq" class="slide section level2">
-<h1><span class="header-section-number">13.4</span> <code>Seq</code></h1>
-<p><code>Seq[A]</code> is an <code>Iterable[A]</code> which order of elements is deterministic. It adds the following members:</p>
+<h1><span class="header-section-number">12.4</span> <code>Seq</code></h1>
+<p><code>Seq[A]</code> is an <code>Iterable[A]</code> which order of elements is kept. It adds the following members:</p>
 <table>
 <thead>
 <tr class="header">
@@ -1566,7 +1620,7 @@ maybeQ <span class="kw">match</span> {
 </tbody>
 </table>
 </div><div id="list-and-vector" class="slide section level2">
-<h1><span class="header-section-number">13.5</span> <code>List</code> and <code>Vector</code></h1>
+<h1><span class="header-section-number">12.5</span> <code>List</code> and <code>Vector</code></h1>
 <p><code>List[A]</code> and <code>Vector[A]</code> are two implementations of <code>Seq[A]</code> with different performance characteristics:</p>
 <ul>
 <li><p><code>List[A]</code> has more efficient <code>head</code> and <code>tail</code> implementations</p></li>
@@ -1575,8 +1629,14 @@ maybeQ <span class="kw">match</span> {
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = <span class="dv">1</span> :: <span class="dv">2</span> :: <span class="dv">3</span> :: Nil <span class="co">// List</span>
 <span class="kw">val</span> ys = Vector(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
+</div><div id="range" class="slide section level2">
+<h1><span class="header-section-number">12.6</span> <code>Range</code></h1>
+<p><code>Range</code> is a useful implementation of <code>Seq[Int]</code> that efficiently represents a range of integer values</p>
+<p>The simplest way to generate a range is to use <code>to</code> and <code>until</code> methods of numeric values:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">(<span class="dv">1</span> to <span class="dv">3</span>).<span class="fu">foreach</span>(println) <span class="co">// prints “1”, “2”, “3”</span>
+(<span class="dv">0</span> until <span class="dv">3</span>).<span class="fu">map</span>(_ * <span class="dv">2</span>).<span class="fu">foreach</span>(println) <span class="co">// prints “0”, “2”, “4”</span></code></pre>
 </div><div id="set" class="slide section level2">
-<h1><span class="header-section-number">13.6</span> <code>Set</code></h1>
+<h1><span class="header-section-number">12.7</span> <code>Set</code></h1>
 <p>A <code>Set[A]</code> is an <code>Iterable[A]</code> that contains no duplicate elements. It adds the following members:</p>
 <table>
 <thead>
@@ -1614,7 +1674,7 @@ maybeQ <span class="kw">match</span> {
 </table>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Set(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
 </div><div id="map" class="slide section level2">
-<h1><span class="header-section-number">13.7</span> <code>Map</code></h1>
+<h1><span class="header-section-number">12.8</span> <code>Map</code></h1>
 <p>A <code>Map[A, B]</code> is an <code>Iterable[(A, B)]</code> that contains <code>B</code> values indexed by <code>A</code> values. It adds the following members:</p>
 <table>
 <thead>
@@ -1643,10 +1703,68 @@ maybeQ <span class="kw">match</span> {
 </tbody>
 </table>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Map(<span class="st">&quot;foo&quot;</span> -&gt; <span class="dv">42</span>, <span class="st">&quot;bar&quot;</span> -&gt; <span class="dv">10</span>, <span class="st">&quot;baz&quot;</span> -&gt; <span class="dv">0</span>)</code></pre>
+</div><div id="exercise-15" class="slide section level2">
+<h1><span class="header-section-number">12.9</span> Exercise</h1>
+<ul>
+<li>Add the following members to your <code>List[A]</code> data type:</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> size: Int
+<span class="kw">def</span> <span class="fu">take</span>(n: Int): List[A]
+<span class="kw">def</span> <span class="fu">drop</span>(n: Int): List[A]
+<span class="kw">def</span> map[B](f: A =&gt; B): List[B]
+<span class="kw">def</span> flatMap[B](f: A =&gt; List[B]): List[B]</code></pre>
+<ul>
+<li><p>Write a one-line solution to the Euler problem #1 using standard collections</p></li>
+<li><p>Write a function <code>isPrime(n: Int): Boolean</code> that tests if <code>n</code> is a prime number</p></li>
+</ul>
+</div>
+<div id="for-notation" class="titleslide slide section level1"><h1><span class="header-section-number">13</span> <code>for</code> Notation</h1></div><div id="exercise-16" class="slide section level2">
+<h1><span class="header-section-number">13.1</span> Exercise</h1>
+<ul>
+<li>Write a function <code>primes</code> that takes a parameter <code>n</code> and returns all pairs of integers <code>i</code> and <code>j</code> (with <code>1 &lt;= j &lt; i &lt; n</code>) such that <code>i + j</code> is prime</li>
+</ul>
+</div><div id="solution-1" class="slide section level2">
+<h1><span class="header-section-number">13.2</span> Solution</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">primes</span>(n: Int): Seq[(Int, Int)] =
+  (<span class="dv">1</span> until n).<span class="fu">flatMap</span> { i =&gt;
+    (<span class="dv">1</span> until i).<span class="fu">map</span> { j =&gt;
+      (i, j)
+    }.<span class="fu">filter</span>(p =&gt; <span class="fu">isPrime</span>(p.<span class="fu">_1</span>, p.<span class="fu">_2</span>))
+  }</code></pre>
+<ul class="incremental">
+<li><p>We nest <code>flatMap</code>, <code>map</code> and <code>filter</code> calls</p></li>
+<li><p>Do you remember the same pattern with optional values?</p></li>
+</ul>
+</div><div id="sequencing-computations" class="slide section level2">
+<h1><span class="header-section-number">13.3</span> Sequencing Computations</h1>
+<p>Actually, <code>flatMap</code> and <code>map</code> functions are very useful to sequence computations within a given <em>context</em> (optional values, collections, and much more)</p>
+<p>They are so common that Scala supports a more convenient syntax, the <strong><code>for</code> notation</strong>, that desugars to <code>flatMap</code>, <code>map</code> and <code>filter</code> calls</p>
+<p>For instance <code>primes</code> can be written as follows using the <code>for</code> notation:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">primes</span>(n: Int): Seq[(Int, Int)] =
+  <span class="kw">for</span> {
+    i &lt;- <span class="dv">1</span> until n
+    j &lt;- <span class="dv">1</span> until i
+    <span class="kw">if</span> <span class="fu">isPrime</span>(i + j)
+  } <span class="kw">yield</span> (i, j)</code></pre>
+</div><div id="translation-of-for" class="slide section level2">
+<h1><span class="header-section-number">13.4</span> Translation of <code>for</code></h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
+<p>is translated to:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">xs.<span class="fu">map</span>(x =&gt; x + <span class="dv">1</span>)</code></pre>
+</div><div id="translation-of-for-2" class="slide section level2">
+<h1><span class="header-section-number">13.5</span> Translation of <code>for</code> (2)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs; y &lt;- ys) <span class="kw">yield</span> (x, y)</code></pre>
+<p>is translated to:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">xs.<span class="fu">flatMap</span>(x =&gt; <span class="kw">for</span> (y &lt;- ys) <span class="kw">yield</span> (x, y))</code></pre>
+</div><div id="translation-of-for-3" class="slide section level2">
+<h1><span class="header-section-number">13.6</span> Translation of <code>for</code> (3)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs <span class="kw">if</span> x % <span class="dv">2</span> == <span class="dv">0</span>) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
+<p>is essentially translated to:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs.<span class="fu">filter</span>(x =&gt; x % <span class="dv">2</span> == <span class="dv">0</span>)) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
 </div>
 <div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">14</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
 <h1><span class="header-section-number">14.1</span> Motivating Problem: Random Number Generator</h1>
-<p>Try to implement the following generating random numbers:</p>
+<p>Try to implement the following random number generator:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
   <span class="kw">def</span> <span class="fu">next</span>(): Int = ???
 }</code></pre>
@@ -1748,27 +1866,24 @@ x = x + <span class="dv">10</span>
 <blockquote>
 <p>In addition to raising complications about computational models, programs written in imperative style are susceptible to bugs that cannot occur in functional programs.</p>
 </blockquote>
-<p>Harold Abelson <em>et. al.</em>, <em>Structure and Interpretation of Computer Programs</em>, 1993</p>
+<p>Harold Abelson <em>et. al.</em> <em>Structure and Interpretation of Computer Programs</em>. MIT Press 1993</p>
 <blockquote>
 <p>Classes should be immutable unless there’s a very good reason to make them mutable….If a class cannot be made immutable, limit its mutability as much as possible.</p>
 </blockquote>
-<p>Joshua Bloch, <em>Effective Java</em>, 2008</p>
+<p>Joshua Bloch. <em>Effective Java</em>. Addison Wesley 2008</p>
 </div>
-<div id="for-notation" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> <code>for</code> Notation</h1></div><div id="section" class="slide section level2">
-<h1><span class="header-section-number">15.1</span> ???</h1>
-</div>
-<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Type Classes and Implicit Parameters</h1></div><div id="motivating-problem-1" class="slide section level2">
-<h1><span class="header-section-number">16.1</span> Motivating Problem</h1>
+<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> Type Classes and Implicit Parameters</h1></div><div id="motivating-problem-1" class="slide section level2">
+<h1><span class="header-section-number">15.1</span> Motivating Problem</h1>
 <p>Remember the <code>sum</code> method of <code>IntList</code>?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sumInts</span>(xs: List[Int]): Int = xs.<span class="fu">fold</span>(<span class="dv">0</span>)(_ + _)</code></pre>
 <p>What if we want to compute the sum of a list of complex numbers?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sumComplexes</span>(zs: List[Complex]): Complex =
-  zs.<span class="fu">fold</span>(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))(_ + _)</code></pre>
+  zs.<span class="fu">fold</span>(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))(_ add _)</code></pre>
 <ul>
 <li>Can we abstract over the similarities of <code>sumInts</code> and <code>sumComplexes</code>?</li>
 </ul>
 </div><div id="motivating-problem-2" class="slide section level2">
-<h1><span class="header-section-number">16.2</span> Motivating Problem (2)</h1>
+<h1><span class="header-section-number">15.2</span> Motivating Problem (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A &lt;: Sumable[A]] {
   <span class="kw">def</span> + (that: A): A
 }
@@ -1777,27 +1892,27 @@ x = x + <span class="dv">10</span>
   as.<span class="fu">fold</span>(zero)(_ + _)</code></pre>
 <p>We can change the implementation of <code>Complex</code> to extend <code>Sumable[Complex]</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Complex <span class="kw">extends</span> Sumable[Complex] {
-  <span class="kw">def</span> + (that: Complex) = …
+  <span class="kw">def</span> + (that: Complex) = <span class="fu">add</span>(that)
   …
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
 <span class="fu">sum</span>(zs, <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))</code></pre>
 </div><div id="motivating-problem-3" class="slide section level2">
-<h1><span class="header-section-number">16.3</span> Motivating Problem (3)</h1>
+<h1><span class="header-section-number">15.3</span> Motivating Problem (3)</h1>
 <ul>
 <li><p>We can not change the implementation of <code>Int</code> to make it extend <code>Sumable[Int]</code></p></li>
 <li><p>Anyway, this <code>Sumable</code> trait captures only a part of the problem: we still need to manually supply the identity element corresponding to each type</p></li>
 </ul>
 </div><div id="almost-type-classes" class="slide section level2">
-<h1><span class="header-section-number">16.4</span> (Almost) Type Classes</h1>
+<h1><span class="header-section-number">15.4</span> (Almost) Type Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A] {
   <span class="kw">def</span> zero: A
   <span class="kw">def</span> <span class="fu">append</span>(a1: A, a2: A): A
 }</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A], Sumable: Sumable[A]) =
-  as.<span class="fu">fold</span>(Sumable.<span class="fu">zero</span>)(Sumable.<span class="fu">append</span>)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A], A: Sumable[A]) =
+  as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
 </div><div id="retroactive-extension" class="slide section level2">
-<h1><span class="header-section-number">16.5</span> Retroactive Extension</h1>
+<h1><span class="header-section-number">15.5</span> Retroactive Extension</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableInt = <span class="kw">new</span> Sumable[Int] {
   <span class="kw">val</span> zero = <span class="dv">0</span>
   <span class="kw">def</span> <span class="fu">append</span>(a1: Int, a2: Int) = a1 + a2
@@ -1805,15 +1920,15 @@ x = x + <span class="dv">10</span>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = List(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
 <span class="fu">sum</span>(xs, sumableInt)</code></pre>
 </div><div id="retroactive-extension-2" class="slide section level2">
-<h1><span class="header-section-number">16.6</span> Retroactive Extension (2)</h1>
+<h1><span class="header-section-number">15.6</span> Retroactive Extension (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableComplex = <span class="kw">new</span> Sumable[Complex] {
   <span class="kw">val</span> zero = <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>)
-  <span class="kw">def</span> <span class="fu">append</span>(a1: Complex, a2: Complex) = a1 + a2
+  <span class="kw">def</span> <span class="fu">append</span>(a1: Complex, a2: Complex) = a1.<span class="fu">add</span>(a2)
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
 <span class="fu">sum</span>(zs, sumableComplex)</code></pre>
 </div><div id="almost-type-classes-2" class="slide section level2">
-<h1><span class="header-section-number">16.7</span> (Almost) Type Classes (2)</h1>
+<h1><span class="header-section-number">15.7</span> (Almost) Type Classes (2)</h1>
 <ul>
 <li><p>The <code>Sumable[A]</code> trait captures everything we need to make a sum of a list of <code>A</code> (the identity element and the binary operation)</p></li>
 <li><p>However, we need to explicitly supply the instance corresponding to each type</p>
@@ -1823,9 +1938,9 @@ x = x + <span class="dv">10</span>
 </ul></li>
 </ul>
 </div><div id="implicit-parameters" class="slide section level2">
-<h1><span class="header-section-number">16.8</span> Implicit Parameters</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A])(<span class="kw">implicit</span> Sumable: Sumable[A]) =
-  as.<span class="fu">fold</span>(Sumable.<span class="fu">zero</span>)(Sumable.<span class="fu">append</span>)</code></pre>
+<h1><span class="header-section-number">15.8</span> Implicit Parameters</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A])(<span class="kw">implicit</span> A: Sumable[A]) =
+  as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
 <p><code>sum</code> takes an <strong>implicit parameter</strong> of type <code>Sumable[A]</code></p>
 <p>If you define <code>sumableInt</code> and <code>sumableComplex</code> as <strong>implicit values</strong> you can omit to supply them when calling <code>sum</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> sumableInt = …
@@ -1833,7 +1948,7 @@ x = x + <span class="dv">10</span>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">sum</span>(xs)
 <span class="fu">sum</span>(zs)</code></pre>
 </div><div id="implicit-parameters-2" class="slide section level2">
-<h1><span class="header-section-number">16.9</span> Implicit Parameters (2)</h1>
+<h1><span class="header-section-number">15.9</span> Implicit Parameters (2)</h1>
 <p>If you call a method without supplying its implicit parameters, the compiler tries to resolve them in the <strong>implicit scope</strong></p>
 <p>The implicit scope is basically built using (by order of priority, highest first):</p>
 <ul>
@@ -1841,20 +1956,38 @@ x = x + <span class="dv">10</span>
 <li><p>explicitly imported implicit values (e.g. <code>import path.to.some.Implicits._</code>),</p></li>
 <li><p>the implicit values of companion objects of the implicit parameter’s type</p></li>
 </ul>
+</div><div id="context-bounds" class="slide section level2">
+<h1><span class="header-section-number">15.10</span> Context Bounds</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A : Sumable](as: List[A]) = {
+  <span class="kw">val</span> A = implicitly[Sumable[A]]
+  xs.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)
+}</code></pre>
+<ul>
+<li><p><code>A : F</code> expands to an implicit parameter of type <code>F[A]</code></p></li>
+<li><p>We say that <code>F</code> is a <strong>context bound</strong> for <code>A</code></p></li>
+<li><p>You can retrieve an implicit parameter using the <code>implicitly</code> helper</p></li>
+<li><p>Sometimes the context bound notation is shorter than using an implicit parameter list</p></li>
+</ul>
 </div>
-<div id="named-parameters-and-default-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Named Parameters and Default Parameters</h1></div>
-<div id="lazy-vals-and-by-name-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Lazy vals and By-Name Parameters</h1></div><div id="by-name-parameters" class="slide section level2">
-<h1><span class="header-section-number">18.1</span> By-Name Parameters</h1>
+<div id="named-parameters-default-parameters-and-repeated-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Named Parameters, Default Parameters and Repeated Parameters</h1></div><div id="named-parameters" class="slide section level2">
+<h1><span class="header-section-number">16.1</span> Named Parameters</h1>
+</div><div id="default-parameters" class="slide section level2">
+<h1><span class="header-section-number">16.2</span> Default Parameters</h1>
+</div><div id="repeated-parameters" class="slide section level2">
+<h1><span class="header-section-number">16.3</span> Repeated Parameters</h1>
+</div>
+<div id="lazy-vals-and-by-name-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Lazy vals and By-Name Parameters</h1></div><div id="by-name-parameters" class="slide section level2">
+<h1><span class="header-section-number">17.1</span> By-Name Parameters</h1>
 <p>Remember the evaluation strategy for parameters?</p>
 </div>
-<div id="type-members" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Type Members</h1></div><div id="type" class="slide section level2">
-<h1><span class="header-section-number">19.1</span> <code>type</code></h1>
+<div id="type-members" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Type Members</h1></div><div id="type" class="slide section level2">
+<h1><span class="header-section-number">18.1</span> <code>type</code></h1>
 </div><div id="type-projection" class="slide section level2">
-<h1><span class="header-section-number">19.2</span> Type Projection</h1>
+<h1><span class="header-section-number">18.2</span> Type Projection</h1>
 </div><div id="path-dependent-types" class="slide section level2">
-<h1><span class="header-section-number">19.3</span> Path-Dependent Types</h1>
+<h1><span class="header-section-number">18.3</span> Path-Dependent Types</h1>
 </div><div id="summary-of-scala-abstraction-mechanisms" class="slide section level2">
-<h1><span class="header-section-number">19.4</span> Summary of Scala Abstraction Mechanisms</h1>
+<h1><span class="header-section-number">18.4</span> Summary of Scala Abstraction Mechanisms</h1>
 <table>
 <col width="12%" />
 <col width="36%" />
@@ -1883,9 +2016,10 @@ x = x + <span class="dv">10</span>
 </tbody>
 </table>
 </div>
-<div id="testing" class="titleslide slide section level1"><h1><span class="header-section-number">20</span> Testing</h1></div><div id="property-based-testing" class="slide section level2">
-<h1><span class="header-section-number">20.1</span> Property-Based Testing</h1>
+<div id="testing" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Testing</h1></div><div id="property-based-testing" class="slide section level2">
+<h1><span class="header-section-number">19.1</span> Property-Based Testing</h1>
 </div>
+<div id="extractors" class="titleslide slide section level1"><h1><span class="header-section-number">20</span> Extractors</h1></div>
 <div id="recommanded-lectures-and-references" class="titleslide slide section level1"><h1><span class="header-section-number">21</span> Recommanded Lectures and References</h1></div><div id="recommanded-lectures-and-references-1" class="slide section level2">
 <h1><span class="header-section-number">21.1</span> Recommanded Lectures and References</h1>
 <ul>
