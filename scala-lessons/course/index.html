@@ -131,7 +131,7 @@ res4: Double = <span class="fl">314.159</span></code></pre>
 </div><div id="naming" class="slide section level2">
 <h1><span class="header-section-number">3.4</span> Naming</h1>
 <ul>
-<li>Hopefully we can define <strong>names</strong> to refer to values:</li>
+<li>We can define <strong>names</strong> to refer to values:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">val</span> radius = <span class="dv">10</span>
 radius: Int = <span class="dv">10</span>
@@ -169,9 +169,9 @@ res8: Double = <span class="fl">125.6636</span></code></pre>
 <ul>
 <li><p>write literal expressions representing <strong>simple elements</strong> (<code>42</code>, <code>&quot;Hello &quot;</code>, etc.)</p></li>
 <li><p><strong>combine</strong> these expressions (using operators)</p></li>
-<li><p><strong>abstract</strong> over expressions, by introducing a name to refer to an expression</p></li>
+<li><p><strong>abstract</strong> over the value of expressions, by introducing a name to refer to an expression</p></li>
 </ul></li>
-<li><p>These means of composition and abstraction give you <strong>expression power</strong> to generalize programs and combine them</p></li>
+<li><p>These means of abstraction and composition give you <strong>expression power</strong> to generalize programs and combine them</p></li>
 </ul>
 </div><div id="abstraction-principle" class="slide section level2">
 <h1><span class="header-section-number">3.7</span> Abstraction Principle</h1>
@@ -355,7 +355,7 @@ res13: Int = <span class="dv">2</span></code></pre>
 <p><em>sbt-ize</em> your project:</p>
 <ul>
 <li>Create a directory <code>my-project</code> for your project</li>
-<li>Move your <code>Main.scala</code> file into a <code>my-project/src/main/</code> directory</li>
+<li>Move your <code>Main.scala</code> file into a <code>my-project/src/main/scala</code> directory</li>
 <li>Run it:
 <ul>
 <li><code>$ sbt run</code> (from <code>my-project/</code> directory)</li>
@@ -603,8 +603,8 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li><code>Complex</code> is a <strong>superclass</strong> of <code>ComplexRectangular</code></li>
 <li><code>ComplexRectangular</code> <strong>implements</strong> the abstract members of <code>Complex</code></li>
 </ul>
-</div><div id="implementating-an-abstract-class-2" class="slide section level2">
-<h1><span class="header-section-number">5.14</span> Implementating an Abstract Class (2)</h1>
+</div><div id="implementing-an-abstract-class-2" class="slide section level2">
+<h1><span class="header-section-number">5.14</span> Implementing an Abstract Class (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ComplexPolar</span>(r: Double, phi: Double) <span class="kw">extends</span> Complex {
 
   <span class="kw">def</span> real = r * math.<span class="fu">cos</span>(phi)
@@ -705,14 +705,16 @@ res13: Int = <span class="dv">2</span></code></pre>
 <li><p><code>final</code> members can not be overriden</p></li>
 <li><p><code>final</code> classes can not be extended</p></li>
 </ul>
+</div><div id="overloading" class="slide section level2">
+<h1><span class="header-section-number">5.23</span> Overloading</h1>
+<p>Several members with the same name can coexist, as long their type signature is different:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(that: Complex): Complex = …
+<span class="kw">def</span> <span class="fu">add</span>(real: Double): Complex = <span class="fu">add</span>(<span class="kw">new</span> <span class="fu">Complex</span>(real, <span class="dv">0</span>)</code></pre>
 </div><div id="standard-class-hierarchy" class="slide section level2">
-<h1><span class="header-section-number">5.23</span> Standard Class Hierarchy</h1>
+<h1><span class="header-section-number">5.24</span> Standard Class Hierarchy</h1>
 <div class="figure">
 <img src="ScalaClassHierarchy.png" alt="Scala Class Hierarchy" /><p class="caption">Scala Class Hierarchy</p>
 </div>
-</div><div id="overloading" class="slide section level2">
-<h1><span class="header-section-number">5.24</span> Overloading</h1>
-<p>Several members with the same name can coexist, as long their type signature is different</p>
 </div><div id="recursive-types" class="slide section level2">
 <h1><span class="header-section-number">5.25</span> Recursive Types</h1>
 <!-- TODO Motivating problem -->
@@ -809,15 +811,16 @@ res13: Int = <span class="dv">2</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
 
 <span class="fu">add</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="co">// 7</span></code></pre>
-<p>An equivalent computation could the following:</p>
+<p>An equivalent computation could be the following:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int) = (b: Int) =&gt; a + b
 
 <span class="fu">add</span>(<span class="dv">3</span>)(<span class="dv">4</span>) <span class="co">// 7</span></code></pre>
 <p>The first version takes two numbers as parameters and returns a number</p>
-<p>The second version takes one number as parameter and returns a function that takes the second number and returns their sum. We say that the second version is a <strong>curried</strong> function</p>
+<p>The second version takes one number as parameter and returns a function that takes the second number and returns their sum</p>
+<p>We say that the second version is a <strong>curried</strong> function</p>
 </div><div id="currying-and-partial-application-2" class="slide section level2">
 <h1><span class="header-section-number">6.6</span> Currying and Partial Application (2)</h1>
-<p>Curried function can be partially applied:</p>
+<p>Curried functions can be partially applied:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">val</span> inc = <span class="fu">add</span>(<span class="dv">1</span>)
 inc: Int =&gt; Int = &lt;function1&gt;
 
@@ -1329,7 +1332,7 @@ res1: Boolean = <span class="kw">true</span></code></pre>
 <p>A list is either:</p>
 <ul>
 <li><p>an empty list, <code>Nil</code> ;</p></li>
-<li><p>a <em>constructor</em>, <code>Cons(head, tail)</code>, containing a <code>head</code> element and a <code>tail</code> list (which is a <code>List</code> itself)</p></li>
+<li><p>a list constructor, <code>Cons(head, tail)</code>, containing a <code>head</code> element and a <code>tail</code> list (which is a <code>List</code> itself)</p></li>
 </ul>
 </div><div id="encoding-algebraic-data-types" class="slide section level2">
 <h1><span class="header-section-number">10.8</span> Encoding Algebraic Data Types</h1>
@@ -1969,25 +1972,42 @@ x = x + <span class="dv">10</span>
 <li><p>Sometimes the context bound notation is shorter than using an implicit parameter list</p></li>
 </ul>
 </div>
-<div id="named-parameters-default-parameters-and-repeated-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Named Parameters, Default Parameters and Repeated Parameters</h1></div><div id="named-parameters" class="slide section level2">
-<h1><span class="header-section-number">16.1</span> Named Parameters</h1>
-</div><div id="default-parameters" class="slide section level2">
-<h1><span class="header-section-number">16.2</span> Default Parameters</h1>
-</div><div id="repeated-parameters" class="slide section level2">
-<h1><span class="header-section-number">16.3</span> Repeated Parameters</h1>
+<div id="testing" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Testing</h1></div><div id="testing-1" class="slide section level2">
+<h1><span class="header-section-number">16.1</span> Testing</h1>
+<p>Testing is a practical way to check that your code does not something else than what it is expected to do</p>
+</div><div id="property-based-testing" class="slide section level2">
+<h1><span class="header-section-number">16.2</span> Property-Based Testing</h1>
+<p>Property-based testing allows you to express general properties on your code and to check them an arbitrarily generated data</p>
+</div><div id="scalacheck" class="slide section level2">
+<h1><span class="header-section-number">16.3</span> scalacheck</h1>
 </div>
-<div id="lazy-vals-and-by-name-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Lazy vals and By-Name Parameters</h1></div><div id="by-name-parameters" class="slide section level2">
-<h1><span class="header-section-number">17.1</span> By-Name Parameters</h1>
+<div id="named-parameters-default-parameters-and-repeated-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Named Parameters, Default Parameters and Repeated Parameters</h1></div><div id="named-parameters" class="slide section level2">
+<h1><span class="header-section-number">17.1</span> Named Parameters</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)</code></pre>
+<p>It is difficult to figure out what the above program does: what is the meaning of these numbers?</p>
+<p>Using <strong>named parameters</strong> can improve readability:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">Range</span>(start = <span class="dv">1</span>, end = <span class="dv">10</span>, step = <span class="dv">2</span>)</code></pre>
+</div><div id="default-parameters" class="slide section level2">
+<h1><span class="header-section-number">17.2</span> Default Parameters</h1>
+<p>TODO</p>
+</div><div id="repeated-parameters" class="slide section level2">
+<h1><span class="header-section-number">17.3</span> Repeated Parameters</h1>
+<p>TODO</p>
+</div>
+<div id="laziness" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Laziness</h1></div><div id="lazy-vals" class="slide section level2">
+<h1><span class="header-section-number">18.1</span> Lazy Vals</h1>
+</div><div id="by-name-parameters" class="slide section level2">
+<h1><span class="header-section-number">18.2</span> By-Name Parameters</h1>
 <p>Remember the evaluation strategy for parameters?</p>
 </div>
-<div id="type-members" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Type Members</h1></div><div id="type" class="slide section level2">
-<h1><span class="header-section-number">18.1</span> <code>type</code></h1>
+<div id="type-members" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Type Members</h1></div><div id="type" class="slide section level2">
+<h1><span class="header-section-number">19.1</span> <code>type</code></h1>
 </div><div id="type-projection" class="slide section level2">
-<h1><span class="header-section-number">18.2</span> Type Projection</h1>
+<h1><span class="header-section-number">19.2</span> Type Projection</h1>
 </div><div id="path-dependent-types" class="slide section level2">
-<h1><span class="header-section-number">18.3</span> Path-Dependent Types</h1>
+<h1><span class="header-section-number">19.3</span> Path-Dependent Types</h1>
 </div><div id="summary-of-scala-abstraction-mechanisms" class="slide section level2">
-<h1><span class="header-section-number">18.4</span> Summary of Scala Abstraction Mechanisms</h1>
+<h1><span class="header-section-number">19.4</span> Summary of Scala Abstraction Mechanisms</h1>
 <table>
 <col width="12%" />
 <col width="36%" />
@@ -2015,9 +2035,6 @@ x = x + <span class="dv">10</span>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="testing" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Testing</h1></div><div id="property-based-testing" class="slide section level2">
-<h1><span class="header-section-number">19.1</span> Property-Based Testing</h1>
 </div>
 <div id="extractors" class="titleslide slide section level1"><h1><span class="header-section-number">20</span> Extractors</h1></div>
 <div id="recommanded-lectures-and-references" class="titleslide slide section level1"><h1><span class="header-section-number">21</span> Recommanded Lectures and References</h1></div><div id="recommanded-lectures-and-references-1" class="slide section level2">
