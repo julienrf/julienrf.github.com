@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy" />
+  <title>Triskell Summer Seminar 2013</title>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js.gz"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Triskell Summer Seminar 2013</h1>
+  <p class="author">
+Julien Richard-Foy
+  </p>
+</div>
+<div class="section slide level1" id="energy-aware-software-engineering">
+<h1>Energy-aware Software Engineering</h1>
+</div>
+<div class="section slide level1" id="the-problem">
+<h1>The Problem</h1>
+<ul>
+<li><p>Energy becomes <em>scarce</em> and is <em>polluting</em></p></li>
+<li><p>Computers represent <em>15%</em> of our electricity bill <sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p></li>
+<li><p>Energy consumption is a <em>cross-cutting</em> and <em>non-functional</em> concern</p></li>
+<li><p>Experiments showed variations from <em>1 to 100</em> in energy consumption <sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup></p></li>
+<li><p>How to build energy-efficient softwares?</p></li>
+</ul>
+</div>
+<div class="section slide level1" id="solutions">
+<h1>Solutions</h1>
+<ul>
+<li><p><em>Embrace</em> diversity: generate software variants optimized according to their environment</p></li>
+<li><p>Compilers should help us designing efficient softwares</p></li>
+</ul>
+<pre><code>error: type mismatch;
+ found   : java.lang.String
+ required: Int</code></pre>
+<pre><code>error: type mismatch;
+ found   : 42 W
+ required: 1 W
+</code></pre>
+</div>
+<div class="section slide level1" id="thoughts">
+<h1>Thoughts?</h1>
+</div>
+<div class="footnotes slide">
+<hr />
+<ol>
+<li id="fn1"><p>http://ademe-et-vous.ademe.fr/le-magazine-n-50-indicateurs<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>http://greencodelab.fr/content/y-t-il-langages-plus-verts-que-dautres<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+</body>
+</html>
