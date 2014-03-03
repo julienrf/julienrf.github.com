@@ -1,0 +1,1 @@
+Index.PACKAGES = {"jsmessages" : [{"class" : "jsmessages\/JsMessages.html", "name" : "jsmessages.JsMessages"}], "jsmessages.api" : [{"class" : "jsmessages\/api\/JsMessages.html", "name" : "jsmessages.api.JsMessages"}]};
