@@ -199,7 +199,7 @@ Ok(jsMessages.all(<span class="std">Some</span>(<span class="lit">"window.Messag
 }</pre><p>Then use it in your JavaScript code as follows:</p><pre>alert(Messages(<span class="lit">'en'</span>, 'greeting<span class="lit">', '</span>World<span class="lit">'));</span></pre><p>Provided you have the following message in your <code>conf/messages</code> file:</p><pre>greeting=Hello {<span class="num">0</span>}!</pre><p>Note that, given a message key, the JavaScript function will search the corresponding message in the
 following locations, in order: the language (e.g. in the <code>conf/messages.fr-FR</code> file), the language
 country (e.g. <code>conf/messages.fr</code>), the application default messages (<code>conf/messages</code>) and the
-Play! default messages.</p><p>Note: This implementation does not handle quotes escaping in patterns (see
+Play! default messages.</p><p>Note: This implementation does not handle quotes escaping in patterns and subformats (see
 http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
 </p></div><dl class="paramcmts block"><dt class="param">namespace</dt><dd class="cmt"><p>Optional JavaScript namespace to use to put the function definition. If not set, this
                  function will just generate a function. Otherwise it will generate a function and
@@ -218,10 +218,40 @@ http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
         <span class="name">allMessages</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">All the messages of the application, as a map of (lang -&gt; map(key -&gt; message)).</p><div class="fullcomment"><div class="comment cmt"><p>All the messages of the application, as a map of (lang -&gt; map(key -&gt; message)).</p><p>The default implementation returns the Play! application messages. Override this lazy val to supply
-additional messages. As it is the case in Play!, JsMessages assumes that “default” messages are
+      <p class="shortcomment cmt">Messages for each available lang of the application.</p><div class="fullcomment"><div class="comment cmt"><p>Messages for each available lang of the application.</p><p>The message corresponding to a given key is found by searching in the
+following locations, in order: the language (e.g. in the <code>conf/messages.fr-FR</code> file), the language
+country (e.g. <code>conf/messages.fr</code>), the application default messages (<code>conf/messages</code>) and the
+Play! default messages.
+</p></div></div>
+    </li><li name="jsmessages.api.JsMessages#allMessagesData" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allMessagesData:Map[String,Map[String,String]]"></a>
+      <a id="allMessagesData:Map[String,Map[String,String]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allMessagesData</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">All the messages of the application, as a map of (lang -&gt; map(key -&gt; message)).</p><div class="fullcomment"><div class="comment cmt"><p>All the messages of the application, as a map of (lang -&gt; map(key -&gt; message)).</p><p>The default implementation uses the Play! application’s message files. Override this lazy val to supply
+additional or other messages. As it is the case in Play!, JsMessages assumes that “default” messages are
 indexed by the <code>&quot;default&quot;</code> and <code>&quot;default.play&quot;</code> language codes.
 </p></div></div>
+    </li><li name="jsmessages.api.JsMessages#allMessagesJson" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="allMessagesJson:play.api.libs.json.JsValue"></a>
+      <a id="allMessagesJson:JsValue"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allMessagesJson</span><span class="result">: <span class="extype" name="play.api.libs.json.JsValue">JsValue</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Same as <code>allMessages</code>, but as a JSON value.</p>
     </li><li name="jsmessages.api.JsMessages#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(namespace:Option[String])(implicitlang:play.api.i18n.Lang):play.api.templates.JavaScript"></a>
       <a id="apply(Option[String])(Lang):JavaScript"></a>
@@ -236,7 +266,7 @@ indexed by the <code>&quot;default&quot;</code> and <code>&quot;default.play&quo
       </h4>
       <p class="shortcomment cmt">Generates a JavaScript function computing localized messages in the given implicit <code>Lang</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing localized messages in the given implicit <code>Lang</code>.</p><p>For example:</p><pre><span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
 Ok(jsMessages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
-}</pre><p>Then use it in your JavaScript code as follows:</p><pre>alert(Messages('greeting<span class="lit">', '</span>World<span class="lit">'));</span></pre><p>Provided you have the following message in your <code>conf/messages</code> file:</p><pre>greeting=Hello {<span class="num">0</span>}!</pre><p>Note: This implementation does not handle quotes escaping in patterns (see
+}</pre><p>Then use it in your JavaScript code as follows:</p><pre>alert(Messages('greeting<span class="lit">', '</span>World<span class="lit">'));</span></pre><p>Provided you have the following message in your <code>conf/messages</code> file:</p><pre>greeting=Hello {<span class="num">0</span>}!</pre><p>Note: This implementation does not handle quotes escaping in patterns and subformats (see
 http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
 </p></div><dl class="paramcmts block"><dt class="param">namespace</dt><dd class="cmt"><p>Optional JavaScript namespace to use to put the function definition. If not set, this
                  function will just generate a function. Otherwise it will generate a function and assign
@@ -301,6 +331,34 @@ http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="jsmessages.api.JsMessages#filter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="filter(filter:String=&gt;Boolean):jsmessages.api.Option[String]=&gt;JavaScript"></a>
+      <a id="filter((String)⇒Boolean):Option[String]=&gt;JavaScript"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">filter</span><span class="params">(<span name="filter">filter: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="Option$u005BString$u005D$u0020$eq$greater$u0020JavaScript.html" class="extype" name="jsmessages.api.Option[String] =&gt; JavaScript">Option[String] =&gt; JavaScript</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Generates a JavaScript function computing localized messages filtering keys based on a predicated.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing localized messages filtering keys based on a predicated.</p><p>Example:</p><pre>jsMessages.filter(_.startsWith(<span class="lit">"error."</span>)(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>))</pre><p>See documentation of the <code>apply</code> method for client-side instructions.
+</p></div></div>
+    </li><li name="jsmessages.api.JsMessages#filterAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="filterAll(filter:String=&gt;Boolean):Option[String]=&gt;play.api.templates.JavaScript"></a>
+      <a id="filterAll((String)⇒Boolean):(Option[String])⇒JavaScript"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">filterAll</span><span class="params">(<span name="filter">filter: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: (<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]) ⇒ <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Generates a JavaScript function computing all messages filtering keys based on a predicated.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing all messages filtering keys based on a predicated.</p><p>Example:</p><pre>jsMessages.filterAll(_.startsWith(<span class="lit">"error."</span>)(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>))</pre><p>See documentation of the <code>all</code> method for client-side instructions.
+</p></div></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -356,6 +414,24 @@ http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="jsmessages.api.JsMessages#messages" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="messages(implicitlang:play.api.i18n.Lang):Map[String,String]"></a>
+      <a id="messages(Lang):Map[String,String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">messages</span><span class="params">(<span class="implicit">implicit </span><span name="lang">lang: <span class="extype" name="play.api.i18n.Lang">Lang</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">lang</dt><dd class="cmt"><p>Language to retrieve messages for</p></dd><dt>returns</dt><dd class="cmt"><p>The messages defined for the given language <code>lang</code>, as a map
+        of (key -&gt; message). The message corresponding to a given key is found by searching in the
+        following locations, in order: the language (e.g. in the <code>conf/messages.fr-FR</code> file), the language
+        country (e.g. <code>conf/messages.fr</code>), the application default messages (<code>conf/messages</code>) and the
+        Play! default messages.
+</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -396,38 +472,38 @@ http://docs.oracle.com/javase/7/docs/api/java/text/MessageFormat.html)
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="jsmessages.api.JsMessages#subset" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="subset(namespace:Option[String])(keys:String*)(implicitlang:play.api.i18n.Lang):play.api.templates.JavaScript"></a>
-      <a id="subset(Option[String])(String*)(Lang):JavaScript"></a>
+      <a id="subset(keys:String*):jsmessages.api.Option[String]=&gt;JavaScript"></a>
+      <a id="subset(String*):Option[String]=&gt;JavaScript"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">subset</span><span class="params">(<span name="namespace">namespace: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="lang">lang: <span class="extype" name="play.api.i18n.Lang">Lang</span></span>)</span><span class="result">: <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
+        <span class="name">subset</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="Option$u005BString$u005D$u0020$eq$greater$u0020JavaScript.html" class="extype" name="jsmessages.api.Option[String] =&gt; JavaScript">Option[String] =&gt; JavaScript</a></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Generates a JavaScript function computing localized messages for a given keys subset and language.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing localized messages for a given keys subset and language.</p><p>Example:</p><pre>jsMessages.subset(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>))(
-<span class="lit">"error.required"</span>,
-<span class="lit">"error.number"</span>
-)</pre><p>See documentation of the <code>apply</code> method for client-side instructions.
+      <p class="shortcomment cmt">Generates a JavaScript function computing localized messages for a given keys subset and language.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing localized messages for a given keys subset and language.</p><p>Example:</p><pre>jsMessages.subset(
+  <span class="lit">"error.required"</span>,
+  <span class="lit">"error.number"</span>
+)(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>))</pre><p>See documentation of the <code>apply</code> method for client-side instructions.
 </p></div></div>
     </li><li name="jsmessages.api.JsMessages#subsetAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="subsetAll(namespace:Option[String])(keys:String*):play.api.templates.JavaScript"></a>
-      <a id="subsetAll(Option[String])(String*):JavaScript"></a>
+      <a id="subsetAll(keys:String*):Option[String]=&gt;play.api.templates.JavaScript"></a>
+      <a id="subsetAll(String*):(Option[String])⇒JavaScript"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">subsetAll</span><span class="params">(<span name="namespace">namespace: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
+        <span class="name">subsetAll</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: (<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]) ⇒ <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Generates a JavaScript function computing all messages for a given keys subset, for all languages.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing all messages for a given keys subset, for all languages.</p><p>Example:</p><pre>jsMessages.subsetAll(<span class="std">Some</span>(<span class="lit">"window.MyMessages"</span>))(
-<span class="lit">"error.required"</span>,
-<span class="lit">"error.number"</span>
-)</pre><p>See documentation of the <code>all</code> method for client-side instructions.
+      <p class="shortcomment cmt">Generates a JavaScript function computing all messages for a given keys subset, for all languages.</p><div class="fullcomment"><div class="comment cmt"><p>Generates a JavaScript function computing all messages for a given keys subset, for all languages.</p><p>Example:</p><pre>jsMessages.subsetAll(
+  <span class="lit">"error.required"</span>,
+  <span class="lit">"error.number"</span>
+)(<span class="std">Some</span>(<span class="lit">"window.MyMessages"</span>))</pre><p>See documentation of the <code>all</code> method for client-side instructions.
 </p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
