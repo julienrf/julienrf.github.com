@@ -2,22 +2,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>JsMessages - jsmessages.JsMessages</title>
-          <meta name="description" content="JsMessages - jsmessages.JsMessages" />
-          <meta name="keywords" content="JsMessages jsmessages.JsMessages" />
+          <title>JsMessages - jsmessages.api.JsMessages</title>
+          <meta name="description" content="JsMessages - jsmessages.api.JsMessages" />
+          <meta name="keywords" content="JsMessages jsmessages.api.JsMessages" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../lib/template.js"></script>
-      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
       
       <script type="text/javascript">
          if(top === self) {
-            var url = '../index.html';
-            var hash = 'jsmessages.JsMessages';
+            var url = '../../index.html';
+            var hash = 'jsmessages.api.JsMessages$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -27,20 +27,20 @@
    	  </script>
     
         </head>
-        <body class="type">
+        <body class="value">
       <div id="definition">
-        <img src="../lib/class_big.png" />
-        <p id="owner"><a href="package.html" class="extype" name="jsmessages">jsmessages</a></p>
-        <h1>JsMessages</h1>
+        <a href="JsMessages.html" title="Go to companion"><img src="../../lib/object_to_class_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="jsmessages">jsmessages</a>.<a href="package.html" class="extype" name="jsmessages.api">api</a></p>
+        <h1><a href="JsMessages.html" title="Go to companion">JsMessages</a></h1>
       </div>
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">class</span>
+        <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">JsMessages</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">JsMessages</span>
       </span>
       </h4>
       
@@ -64,7 +64,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="jsmessages.JsMessages"><span>JsMessages</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="jsmessages.api.JsMessages"><span>JsMessages</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -184,6 +184,35 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li name="jsmessages.api.JsMessages#create" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="create(app:play.api.Application):jsmessages.api.JsMessages"></a>
+      <a id="create(Application):JsMessages"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">create</span><span class="params">(<span name="app">app: <span class="extype" name="play.api.Application">Application</span></span>)</span><span class="result">: <a href="JsMessages.html" class="extype" name="jsmessages.api.JsMessages">JsMessages</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Convenient alias for <code>default</code> for Java users</p>
+    </li><li name="jsmessages.api.JsMessages#default" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="default(implicitapp:play.api.Application):jsmessages.api.JsMessages"></a>
+      <a id="default(Application):JsMessages"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">default</span><span class="params">(<span class="implicit">implicit </span><span name="app">app: <span class="extype" name="play.api.Application">Application</span></span>)</span><span class="result">: <a href="JsMessages.html" class="extype" name="jsmessages.api.JsMessages">JsMessages</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a <code>JsMessages</code> instance using the <code>app</code> message files. Override this lazy val to supply
+additional or other messages. As it is the case in Play!, JsMessages assumes that “default” messages are
+indexed by the <code>&quot;default&quot;</code> and <code>&quot;default.play&quot;</code> language codes.
+</p></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -210,6 +239,20 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="jsmessages.api.JsMessages#filtering" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="filtering(filter:String=&gt;Boolean)(implicitapp:play.api.Application):jsmessages.api.JsMessages"></a>
+      <a id="filtering((String)⇒Boolean)(Application):JsMessages"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">filtering</span><span class="params">(<span name="filter">filter: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="app">app: <span class="extype" name="play.api.Application">Application</span></span>)</span><span class="result">: <a href="JsMessages.html" class="extype" name="jsmessages.api.JsMessages">JsMessages</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Example:</p><div class="fullcomment"><div class="comment cmt"><p>Example:</p><pre><span class="kw">val</span> jsMessages = JsMessages.filtering(_.startsWith(<span class="lit">"error."</span>))</pre></div><dl class="paramcmts block"><dt class="param">filter</dt><dd class="cmt"><p>a predicate to filter message keys</p></dd><dt class="param">app</dt><dd class="cmt"><p>the application to retrieve messages from</p></dd><dt>returns</dt><dd class="cmt"><p>a <code>JsMessages</code> instance using the <code>app</code> message files, keeping only messages which keys satisfy <code>filter</code>
+</p></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -226,45 +269,6 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li name="jsmessages.JsMessages#generate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="generate(namespace:String,lang:play.i18n.Lang):play.api.templates.JavaScript"></a>
-      <a id="generate(String,Lang):JavaScript"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">generate</span><span class="params">(<span name="namespace">namespace: <span class="extype" name="java.lang.String">String</span></span>, <span name="lang">lang: <span class="extype" name="play.i18n.Lang">Lang</span></span>)</span><span class="result">: <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
-      </span>
-      </h4>
-      
-    </li><li name="jsmessages.JsMessages#generate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="generate(namespace:String):play.api.templates.JavaScript"></a>
-      <a id="generate(String):JavaScript"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">generate</span><span class="params">(<span name="namespace">namespace: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
-      </span>
-      </h4>
-      
-    </li><li name="jsmessages.JsMessages#generateAll" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="generateAll(namespace:String):play.api.templates.JavaScript"></a>
-      <a id="generateAll(String):JavaScript"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">generateAll</span><span class="params">(<span name="namespace">namespace: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="play.api.templates.JavaScript">JavaScript</span></span>
-      </span>
-      </h4>
-      
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -343,6 +347,23 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="jsmessages.api.JsMessages#subset" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="subset(keys:String*)(implicitapp:play.api.Application):jsmessages.api.JsMessages"></a>
+      <a id="subset(String*)(Application):JsMessages"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">subset</span><span class="params">(<span name="keys">keys: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="app">app: <span class="extype" name="play.api.Application">Application</span></span>)</span><span class="result">: <a href="JsMessages.html" class="extype" name="jsmessages.api.JsMessages">JsMessages</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Example:</p><div class="fullcomment"><div class="comment cmt"><p>Example:</p><pre><span class="kw">val</span> jsMessages = JsMessages.subset(
+<span class="lit">"error.required"</span>,
+<span class="lit">"error.number"</span>
+)</pre></div><dl class="paramcmts block"><dt class="param">keys</dt><dd class="cmt"><p>the list of keys to keep</p></dd><dt class="param">app</dt><dd class="cmt"><p>the application to retrieve messages from</p></dd><dt>returns</dt><dd class="cmt"><p>a <code>JsMessages</code> instance using the <code>app</code> message files, keeping only messages which keys are in <code>keys</code>
+</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
