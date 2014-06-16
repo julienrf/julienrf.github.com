@@ -1,0 +1,1 @@
+Index.PACKAGES = {"julienrf" : [], "julienrf.play" : [], "julienrf.play.jsonp" : [{"object" : "julienrf\/play\/jsonp\/Jsonp$.html", "class" : "julienrf\/play\/jsonp\/Jsonp.html", "name" : "julienrf.play.jsonp.Jsonp"}, {"class" : "julienrf\/play\/jsonp\/JsonpJava.html", "name" : "julienrf.play.jsonp.JsonpJava"}]};
