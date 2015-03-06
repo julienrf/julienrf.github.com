@@ -47,13 +47,36 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"></div>
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
         
 
       <div id="mbrsel">
         <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
-        
-        
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="julienrf.forms"><span>forms</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
         <div id="visbl">
             <span class="filtertype">Visibility</span>
             <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
@@ -66,19 +89,70 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.Reads" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Reads[A]extendsProductwithSerializable"></a>
-      <a id="Reads[A]:Reads[A]"></a>
+              <ol><li name="julienrf.forms.Form" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Form[A]extendsAnyRef"></a>
+      <a id="Form[A]:Form[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Form.html"><span class="name">Form</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Form[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.FormData" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="FormData=Map[String,Seq[String]]"></a>
+      <a id="FormData:FormData"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">FormData</span><span class="result"> = <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@FormData=Map[String,Seq[String]]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.FormUi" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="FormUiextendsProductwithSerializable"></a>
+      <a id="FormUi:FormUi"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="Reads.html"><span class="name">Reads</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="path">path: <span class="extype" name="play.api.data.mapping.Path">Path</span></span>, <span name="rule">rule: <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="julienrf.forms.Reads.A">A</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="FormUi.html"><span class="name">FormUi</span></a><span class="params">(<span name="html">html: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scalatags.generic.Aliases.Modifier">scalatags.Text.Modifier</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@Reads[A]extendsProductwithSerializable" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.package@FormUiextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.Leaf" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Leaf[A]extendsForm[A]withProductwithSerializable"></a>
+      <a id="Leaf[A]:Leaf[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Leaf.html"><span class="name">Leaf</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.Leaf.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.Leaf.A">A</span>]</span>)</span><span class="result"> extends <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Leaf.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Leaf[A]extendsForm[A]withProductwithSerializable" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
@@ -90,19 +164,36 @@
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="julienrf.forms.Reads" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Reads"></a>
-      <a id="Reads:Reads"></a>
+              <ol><li name="julienrf.forms.Form" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Form"></a>
+      <a id="Form:Form"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Reads$.html"><span class="name">Reads</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="Form$.html"><span class="name">Form</span></a>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@Reads" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.package@Form" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.presenters" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="presenters"></a>
+      <a id="presenters:presenters"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="presenters/package.html"><span class="name">presenters</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@presenters" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
@@ -124,23 +215,6 @@
       </a>
     </span>
       
-    </li><li name="julienrf.forms.ui" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ui"></a>
-      <a id="ui:ui"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">package</span>
-      </span>
-      <span class="symbol">
-        <a href="ui/package.html"><span class="name">ui</span></a>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@ui" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
     </li></ol>
             </div>
 
@@ -150,7 +224,11 @@
         </div>
 
         <div id="inheritedMembers">
-        
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
         
         </div>
 
