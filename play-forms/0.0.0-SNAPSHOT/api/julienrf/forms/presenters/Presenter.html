@@ -52,10 +52,7 @@
           <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div><div class="toggleContainer block">
-            <span class="toggle">Known Subclasses</span>
-            <div class="subClasses hiddenContent"><a href="Input.html" class="extype" name="julienrf.forms.presenters.Input">Input</a>, <a href="Select.html" class="extype" name="julienrf.forms.presenters.Select">Select</a></div>
-          </div></div>
+        </div></div>
         
 
       <div id="mbrsel">
@@ -92,77 +89,23 @@
         <div id="allMembers">
         
 
-        <div id="types" class="types members">
-              <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.presenters.Presenter.Field" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="Field&lt;:Presenter.this.FieldLike"></a>
-      <a id="Field:Field"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">type</span>
-      </span>
-      <span class="symbol">
-        <span class="name">Field</span><span class="result"> &lt;: <a href="Presenter$FieldLike.html" class="extype" name="julienrf.forms.presenters.Presenter.FieldLike">FieldLike</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Presenter@Field&lt;:Presenter.this.FieldLike" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Presenter.FieldLike" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="FieldLikeextendsAnyRef"></a>
-      <a id="FieldLike:FieldLike"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="Presenter$FieldLike.html"><span class="name">FieldLike</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Presenter@FieldLikeextendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li></ol>
-            </div>
+        
 
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="julienrf.forms.presenters.Presenter#field" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="field(name:String,rule:julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]):Presenter.this.Field"></a>
-      <a id="field(String,Rule[(FormData,String),A]):Field"></a>
+              <ol><li name="julienrf.forms.presenters.Presenter#render" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="render(name:String,rule:julienrf.forms.rules.Rule[_,A],value:Option[String],errors:Seq[Throwable]):julienrf.forms.FormUi"></a>
+      <a id="render(String,Rule[_,A],Option[String],Seq[Throwable]):FormUi"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">field</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="rule">rule: <a href="../rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="../package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.presenters.Presenter.A">A</span>]</span>)</span><span class="result">: <a href="#Field&lt;:Presenter.this.FieldLike" class="extmbr" name="julienrf.forms.presenters.Presenter.Field">Field</a></span>
+        <span class="name">render</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="rule">rule: <a href="../rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[_, <span class="extype" name="julienrf.forms.presenters.Presenter.A">A</span>]</span>, <span name="value">value: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result">: <a href="../FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Presenter@field(name:String,rule:julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]):Presenter.this.Field" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Presenter#render" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="render(field:Presenter.this.Field):julienrf.forms.FormUi"></a>
-      <a id="render(Field):FormUi"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">render</span><span class="params">(<span name="field">field: <a href="#Field&lt;:Presenter.this.FieldLike" class="extmbr" name="julienrf.forms.presenters.Presenter.Field">Field</a></span>)</span><span class="result">: <a href="../FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Presenter@render(field:Presenter.this.Field):julienrf.forms.FormUi" title="Permalink" target="_top">
+      <a href="../../../index.html#julienrf.forms.presenters.Presenter@render(name:String,rule:julienrf.forms.rules.Rule[_,A],value:Option[String],errors:Seq[Throwable]):julienrf.forms.FormUi" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
