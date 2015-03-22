@@ -45,7 +45,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">FieldForm</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>)</span><span class="result"> extends <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">FieldForm</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>)</span><span class="result"> extends <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -90,7 +90,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="julienrf.forms.FieldForm#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(field:(String,julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]),presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.FieldForm[A]"></a>
+      <a id="&lt;init&gt;(field:(String,julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]),presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.FieldForm[A]"></a>
       <a id="&lt;init&gt;:FieldForm[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -98,10 +98,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">FieldForm</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>)</span>
+        <span class="name">FieldForm</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.FieldForm@&lt;init&gt;(field:(String,julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]),presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.FieldForm[A]" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.FieldForm@&lt;init&gt;(field:(String,julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]),presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.FieldForm[A]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
@@ -184,18 +184,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="julienrf.forms.FieldForm#bind" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="bind(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]"></a>
-      <a id="bind(FormData):Either[FormUi,A]"></a>
+      <a id="bind(data:julienrf.forms.FormData):ProductwithSerializablewithscala.util.Either[julienrf.forms.FormUi,A]"></a>
+      <a id="bind(FormData):ProductwithSerializablewithEither[FormUi,A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">bind</span><span class="params">(<span name="data">data: <a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>
+        <span class="name">bind</span><span class="params">(<span name="data">data: <a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a></span>)</span><span class="result">: <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span> with <span class="extype" name="scala.util.Either">Either</span>[<a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.FieldForm@bind(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.FieldForm@bind(data:julienrf.forms.FormData):ProductwithSerializablewithscala.util.Either[julienrf.forms.FormUi,A]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
@@ -240,6 +240,23 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="julienrf.forms.FieldForm#codec" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]"></a>
+      <a id="codec:Codec[FieldData,A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">codec</span><span class="result">: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.FieldForm@codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="julienrf.forms.FieldForm#empty" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="empty:julienrf.forms.FormUi"></a>
       <a id="empty:FormUi"></a>
@@ -275,18 +292,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="julienrf.forms.FieldForm#field" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="field:(String,julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A])"></a>
-      <a id="field:(String,Rule[(FormData,String),A])"></a>
+      <a id="field:(String,julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])"></a>
+      <a id="field:(String,Codec[FieldData,A])"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">field</span><span class="result">: (<span class="extype" name="scala.Predef.String">String</span>, <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>
+        <span class="name">field</span><span class="result">: (<span class="extype" name="scala.Predef.String">String</span>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.FieldForm@field:(String,julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A])" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.FieldForm@field:(String,julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
@@ -446,23 +463,6 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.FieldForm@presenter:julienrf.forms.presenters.Presenter[A]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.FieldForm#rule" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="rule:julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]"></a>
-      <a id="rule:Rule[(FormData,String),A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">rule</span><span class="result">: <a href="rules/Rule.html" class="extype" name="julienrf.forms.rules.Rule">Rule</a>[(<a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a>, <span class="extype" name="scala.Predef.String">String</span>), <span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.FieldForm@rule:julienrf.forms.rules.Rule[(julienrf.forms.FormData,String),A]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
