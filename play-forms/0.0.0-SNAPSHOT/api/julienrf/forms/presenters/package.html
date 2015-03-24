@@ -66,7 +66,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.presenters.Field" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="julienrf.forms.presenters.Field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Field[A]extendsProductwithSerializable"></a>
       <a id="Field[A]:Field[A]"></a>
       <h4 class="signature">
@@ -75,14 +75,16 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="Field.html"><span class="name">Field</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="Field.html"><span class="name">Field</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.presenters.package@Field[A]extendsProductwithSerializable" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Form field.</p><div class="fullcomment"><div class="comment cmt"><p>Form field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.
+</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl></div>
     </li><li name="julienrf.forms.presenters.InputType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="InputType[A]extendsProductwithSerializable"></a>
       <a id="InputType[A]:InputType[A]"></a>
@@ -134,7 +136,7 @@
       </a>
     </span>
       
-    </li><li name="julienrf.forms.presenters.Presenter" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+    </li><li name="julienrf.forms.presenters.Presenter" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="Presenter[A]extendsAnyRef"></a>
       <a id="Presenter[A]:Presenter[A]"></a>
       <h4 class="signature">
@@ -150,7 +152,9 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Defines how to render a form field.</p><div class="fullcomment"><div class="comment cmt"><p>Defines how to render a form field.</p><p>The <code>A</code> type parameter can be used to define type-level computations to derive information from the field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field to render.
+</p></dd></dl></div>
     </li></ol>
             </div>
 

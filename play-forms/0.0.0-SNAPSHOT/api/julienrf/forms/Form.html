@@ -51,12 +51,13 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>An HTML form with one or more fields. It provides the following features:</p><ul><li>decode the form data to an <code>A</code> value ;</li><li>display an empty (not filled) form to the client ;</li><li>display a filled form with and without validation errors.</li></ul><p>See the <a href="Form$.html" class="extype" name="julienrf.forms.Form">companion object’s documentation</a> to know how to create a <code>Form[A]</code> value.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
             <span class="toggle">Known Subclasses</span>
-            <div class="subClasses hiddenContent"><a href="Form$$Apply.html" class="extype" name="julienrf.forms.Form.Apply">Apply</a>, <a href="FieldForm.html" class="extype" name="julienrf.forms.FieldForm">FieldForm</a>, <a href="Form$$InMap.html" class="extype" name="julienrf.forms.Form.InMap">InMap</a></div>
+            <div class="subClasses hiddenContent"><a href="Form$$Apply.html" class="extype" name="julienrf.forms.Form.Apply">Apply</a>, <a href="Form$$FieldForm.html" class="extype" name="julienrf.forms.Form.FieldForm">FieldForm</a>, <a href="Form$$InMap.html" class="extype" name="julienrf.forms.Form.InMap">InMap</a></div>
           </div></div>
         
 
@@ -98,23 +99,26 @@
 
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="julienrf.forms.Form#bind" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="bind(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]"></a>
-      <a id="bind(FormData):Either[FormUi,A]"></a>
+              <ol><li name="julienrf.forms.Form#decode" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="decode(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]"></a>
+      <a id="decode(FormData):Either[FormUi,A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">bind</span><span class="params">(<span name="data">data: <a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a>, <span class="extype" name="julienrf.forms.Form.A">A</span>]</span>
+        <span class="name">decode</span><span class="params">(<span name="data">data: <a href="package.html#FormData=Map[String,Seq[String]]" class="extmbr" name="julienrf.forms.FormData">FormData</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a>, <span class="extype" name="julienrf.forms.Form.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.Form@bind(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.Form@decode(data:julienrf.forms.FormData):Either[julienrf.forms.FormUi,A]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Attempts to decode the form data to an <code>A</code> value.</p><div class="fullcomment"><div class="comment cmt"><p>Attempts to decode the form data to an <code>A</code> value.
+</p></div><dl class="paramcmts block"><dt class="param">data</dt><dd class="cmt"><p>Form data</p></dd><dt>returns</dt><dd class="cmt"><p>a <code>Right</code> value containing the decoded value, or a <code>Left</code> value presenting the form (filled with the form
+        data and showing validation errors).
+</p></dd></dl></div>
     </li><li name="julienrf.forms.Form#empty" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="empty:julienrf.forms.FormUi"></a>
       <a id="empty:FormUi"></a>
@@ -131,7 +135,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Presents the form (with empty — not filled — fields).</p>
     </li><li name="julienrf.forms.Form#keys" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="keys:Seq[String]"></a>
       <a id="keys:Seq[String]"></a>
@@ -148,24 +152,27 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
-    </li><li name="julienrf.forms.Form#unbind" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="unbind(a:A):julienrf.forms.FormUi"></a>
-      <a id="unbind(A):FormUi"></a>
+      <p class="shortcomment cmt">All the keys of <code>this</code> <code>Form</code>
+</p>
+    </li><li name="julienrf.forms.Form#render" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="render(a:A):julienrf.forms.FormUi"></a>
+      <a id="render(A):FormUi"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">unbind</span><span class="params">(<span name="a">a: <span class="extype" name="julienrf.forms.Form.A">A</span></span>)</span><span class="result">: <a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a></span>
+        <span class="name">render</span><span class="params">(<span name="a">a: <span class="extype" name="julienrf.forms.Form.A">A</span></span>)</span><span class="result">: <a href="FormUi.html" class="extype" name="julienrf.forms.FormUi">FormUi</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.Form@unbind(a:A):julienrf.forms.FormUi" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.Form@render(a:A):julienrf.forms.FormUi" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Presents the form (with fields pre-filled with data of the specified value).</p><div class="fullcomment"><div class="comment cmt"><p>Presents the form (with fields pre-filled with data of the specified value).
+</p></div><dl class="paramcmts block"><dt class="param">a</dt><dd class="cmt"><p>value to fill the form with
+</p></dd></dl></div>
     </li></ol>
             </div>
 

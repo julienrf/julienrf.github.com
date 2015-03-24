@@ -45,11 +45,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Form field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.
+</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -89,8 +91,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="julienrf.forms.presenters.Field#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(name:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.presenters.Field[A]"></a>
+              <ol><li name="julienrf.forms.presenters.Field#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.presenters.Field[A]"></a>
       <a id="&lt;init&gt;:Field[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -98,14 +100,14 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Field</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span>
+        <span class="name">Field</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Field@&lt;init&gt;(name:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.presenters.Field[A]" title="Permalink" target="_top">
+      <a href="../../../index.html#julienrf.forms.presenters.Field@&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.presenters.Field[A]" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -222,7 +224,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">the codec of the field.</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -256,7 +258,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">the validation errors associated to the field.</p>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -314,23 +316,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="julienrf.forms.presenters.Field#name" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="name:String"></a>
-      <a id="name:String"></a>
+    </li><li name="julienrf.forms.presenters.Field#key" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="key:String"></a>
+      <a id="key:String"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">name</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">key</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.Field@name:String" title="Permalink" target="_top">
+      <a href="../../../index.html#julienrf.forms.presenters.Field@key:String" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">the key of the field.</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -415,7 +417,7 @@
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">the value of the field.</p>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

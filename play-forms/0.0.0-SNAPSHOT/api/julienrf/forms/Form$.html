@@ -51,7 +51,17 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>You can create a form using the <a href="#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" class="extmbr" name="julienrf.forms.Form#field">field</a> method or by combining forms together. forms can be
+combined in ways that allow you to reuse both the decoding logic and the associated
+form presentation (the HTML markup) of smaller forms to build larger forms.</p><p>For instance, consider the following <code>Place</code> class definition that defines an abstract representation of your form data:</p><pre><span class="kw">case</span> <span class="kw">class</span> Place(name: <span class="std">String</span>, position: Position)
+<span class="kw">case</span> <span class="kw">class</span> Position(latitude: BigDecimal, longitude: BigDecimal)</pre><p>You can first create two <code>Form[BigDecimal]</code> values for the <code>latitude</code> and <code>longitude</code> fields as follows:</p><pre><span class="kw">val</span> latitudeForm = Form.field(<span class="lit">"latitude"</span>, Codec.bigDecimal)(Input.input)
+<span class="kw">val</span> longitudeForm = Form.field(<span class="lit">"longitude"</span>, Codec.bigDecimal)(Input.input)</pre><p>You can then combine them to build a <code>Form[Position]</code> as follows:</p><pre><span class="kw">import</span> play.api.libs.functional.syntax._
+
+<span class="kw">val</span> positionForm = (latitudeForm ~ longitudeForm)(Position.apply, unlift(Position.unapply))</pre><p>Finally, you can combine the <code>positionForm</code> with a <code>nameForm</code> (whose definition has been elided for the sake of brevity)
+to build a <code>Form[Place]</code> as follows:</p><pre><span class="kw">val</span> placeForm = (
+  nameForm ~
+  Form.form(<span class="lit">"position"</span>, positionForm)
+)(Place.apply, unlift(Place.unapply))</pre></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -93,7 +103,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.Form.Apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="julienrf.forms.Form.Apply" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Apply[A,B]extendsForm[play.api.libs.functional.~[A,B]]withProductwithSerializable"></a>
       <a id="Apply[A,B]:Apply[A,B]"></a>
       <h4 class="signature">
@@ -109,8 +119,25 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
-    </li><li name="julienrf.forms.Form.InMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="julienrf.forms.Form.FieldForm" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FieldForm[A]extendsForm[A]withProductwithSerializable"></a>
+      <a id="FieldForm[A]:FieldForm[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Form$$FieldForm.html"><span class="name">FieldForm</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Form.FieldForm.A">A</span>]</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.Form.FieldForm.A">A</span>]</span>)</span><span class="result"> extends <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Form.FieldForm.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.Form$@FieldForm[A]extendsForm[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="julienrf.forms.Form.InMap" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="InMap[A,B]extendsForm[B]withProductwithSerializable"></a>
       <a id="InMap[A,B]:InMap[A,B]"></a>
       <h4 class="signature">
@@ -126,7 +153,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li></ol>
             </div>
 
@@ -259,8 +286,8 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="julienrf.forms.Form#field" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="field[A](name:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]"></a>
+    </li><li name="julienrf.forms.Form#field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]"></a>
       <a id="field[A](String,Codec[FieldData,A])(Presenter[A]):Form[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -268,14 +295,16 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>)</span><span class="params">(<span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>)</span><span class="result">: <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>
+        <span class="name">field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>)</span><span class="params">(<span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>)</span><span class="result">: <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Form.field.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.Form$@field[A](name:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.Form$@field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Creates a form with one field.</p><div class="fullcomment"><div class="comment cmt"><p>Creates a form with one field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>the type of the data decoded by the returned form.
+</p></dd><dt class="param">key</dt><dd class="cmt"><p>field key. Each field within a form must have a unique key.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the <code>Codec</code> to use to decode and encode the <code>A</code> value.</p></dd><dt class="param">presenter</dt><dd class="cmt"><p>the <code>Presenter</code> to use to render the returned form.</p></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -299,7 +328,7 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="julienrf.forms.Form#form" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="julienrf.forms.Form#form" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="form[A](key:String,fa:julienrf.forms.Form[A]):julienrf.forms.Form[A]"></a>
       <a id="form[A](String,Form[A]):Form[A]"></a>
       <h4 class="signature">
@@ -315,7 +344,10 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Prefixes the fields of the specified form.</p><div class="fullcomment"><div class="comment cmt"><p>Prefixes the fields of the specified form.</p><pre><span class="kw">val</span> fooForm = Form.field(<span class="lit">"foo"</span>, Codec.text)(Input.input)
+<span class="kw">val</span> prefixedForm = Form.form(<span class="lit">"bar"</span>, fooForm)
+assert(prefixedForm.keys == <span class="std">Seq</span>(<span class="lit">"bar.foo"</span>))</pre></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>the prefix to prepend to all the fields of the <code>fa</code> form.</p></dd><dt class="param">fa</dt><dd class="cmt"><p>the form whose fields are to be prepended by the prefix
+</p></dd></dl></div>
     </li><li name="julienrf.forms.Form#formInstances" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="formInstances:play.api.libs.functional.InvariantFunctor[julienrf.forms.Form]withplay.api.libs.functional.FunctionalCanBuild[julienrf.forms.Form]"></a>
       <a id="formInstances:InvariantFunctor[Form]withFunctionalCanBuild[Form]"></a>
@@ -332,7 +364,7 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">TODO
+      <p class="shortcomment cmt">Typeclass instances
 </p>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>

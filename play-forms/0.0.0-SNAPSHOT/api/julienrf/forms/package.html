@@ -47,7 +47,9 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The library is built around three abstractions: <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a> and
+<a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>.</p><p>A <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a> combines several <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codecs</a> and <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenters</a> to define:</p><ul><li>how to decode the form data ;</li><li>how to display an empty (not filled) form ;</li><li>how to display a filled form with and without validation errors.
+</li></ul></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -106,24 +108,7 @@
       </a>
     </span>
       
-    </li><li name="julienrf.forms.FieldForm" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="FieldForm[A]extendsForm[A]withProductwithSerializable"></a>
-      <a id="FieldForm[A]:FieldForm[A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a href="FieldForm.html"><span class="name">FieldForm</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="field">field: (<span class="extype" name="scala.Predef.String">String</span>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.FieldForm.A">A</span>])</span>, <span name="presenter">presenter: <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>]</span>)</span><span class="result"> extends <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>[<span class="extype" name="julienrf.forms.FieldForm.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@FieldForm[A]extendsForm[A]withProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.Form" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+    </li><li name="julienrf.forms.Form" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="Form[A]extendsAnyRef"></a>
       <a id="Form[A]:Form[A]"></a>
       <h4 class="signature">
@@ -139,7 +124,8 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">An HTML form with one or more fields.</p><div class="fullcomment"><div class="comment cmt"><p>An HTML form with one or more fields. It provides the following features:</p><ul><li>decode the form data to an <code>A</code> value ;</li><li>display an empty (not filled) form to the client ;</li><li>display a filled form with and without validation errors.</li></ul><p>See the <a href="Form$.html" class="extype" name="julienrf.forms.Form">companion object’s documentation</a> to know how to create a <code>Form[A]</code> value.
+</p></div></div>
     </li><li name="julienrf.forms.FormData" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="FormData=Map[String,Seq[String]]"></a>
       <a id="FormData:FormData"></a>
@@ -181,7 +167,7 @@
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="julienrf.forms.Form" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="julienrf.forms.Form" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Form"></a>
       <a id="Form:Form"></a>
       <h4 class="signature">
@@ -197,7 +183,17 @@
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">You can create a form using the <a href="Form$.html#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" class="extmbr" name="julienrf.forms.Form#field">field</a> method or by combining forms together.</p><div class="fullcomment"><div class="comment cmt"><p>You can create a form using the <a href="Form$.html#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" class="extmbr" name="julienrf.forms.Form#field">field</a> method or by combining forms together. forms can be
+combined in ways that allow you to reuse both the decoding logic and the associated
+form presentation (the HTML markup) of smaller forms to build larger forms.</p><p>For instance, consider the following <code>Place</code> class definition that defines an abstract representation of your form data:</p><pre><span class="kw">case</span> <span class="kw">class</span> Place(name: <span class="std">String</span>, position: Position)
+<span class="kw">case</span> <span class="kw">class</span> Position(latitude: BigDecimal, longitude: BigDecimal)</pre><p>You can first create two <code>Form[BigDecimal]</code> values for the <code>latitude</code> and <code>longitude</code> fields as follows:</p><pre><span class="kw">val</span> latitudeForm = Form.field(<span class="lit">"latitude"</span>, Codec.bigDecimal)(Input.input)
+<span class="kw">val</span> longitudeForm = Form.field(<span class="lit">"longitude"</span>, Codec.bigDecimal)(Input.input)</pre><p>You can then combine them to build a <code>Form[Position]</code> as follows:</p><pre><span class="kw">import</span> play.api.libs.functional.syntax._
+
+<span class="kw">val</span> positionForm = (latitudeForm ~ longitudeForm)(Position.apply, unlift(Position.unapply))</pre><p>Finally, you can combine the <code>positionForm</code> with a <code>nameForm</code> (whose definition has been elided for the sake of brevity)
+to build a <code>Form[Place]</code> as follows:</p><pre><span class="kw">val</span> placeForm = (
+  nameForm ~
+  Form.form(<span class="lit">"position"</span>, positionForm)
+)(Place.apply, unlift(Place.unapply))</pre></div></div>
     </li><li name="julienrf.forms.codecs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="codecs"></a>
       <a id="codecs:codecs"></a>
