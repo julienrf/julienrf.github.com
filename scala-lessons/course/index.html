@@ -1391,8 +1391,219 @@ res0: Int = <span class="dv">6</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> images = Seq(<span class="fu">Circle</span>(<span class="dv">50</span>), <span class="fu">Circle</span>(<span class="dv">60</span>))
 <span class="fu">stack</span>(images: _*)</code></pre>
 </div>
-<div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
-<h1><span class="header-section-number">15.1</span> Motivating Problem: Random Number Generator</h1>
+<div id="extensibility-and-modularity" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> Extensibility and Modularity</h1></div><div id="motivation-5" class="slide section level2">
+<h1><span class="header-section-number">15.1</span> Motivation</h1>
+<p>Your game of life implementation hard codes the rules of the game</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
+  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
+}</code></pre>
+<ul>
+<li>How to abstract over the rules in a way that we can easily plug a given set of rules in a given world?</li>
+</ul>
+</div><div id="st-solution-method-parameter" class="slide section level2">
+<h1><span class="header-section-number">15.2</span> 1st Solution: Method Parameter</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
+  <span class="kw">def</span> <span class="fu">next</span>(world: World, rules: (Cell, Int) =&gt; Cell): World = ???
+}</code></pre>
+<ul>
+<li><code>rules</code> is a function taking a cell and its alive neighbours as parameter and returning the cell at the next generation</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> life = { (cell: Cell, aliveNeighbours: Int) =&gt; 
+  <span class="kw">val</span> alive =
+    <span class="kw">if</span> (cell.<span class="fu">isAlive</span>) aliveNeighbours == <span class="dv">2</span> || aliveNeighbours == <span class="dv">3</span>
+    <span class="kw">else</span> aliveNeighbours == <span class="dv">3</span>
+  <span class="fu">Cell</span>(isAlive = alive)
+}
+GameOfLife.<span class="fu">next</span>(…, life)</code></pre>
+</div><div id="nd-solution-class-definition" class="slide section level2">
+<h1><span class="header-section-number">15.3</span> 2nd Solution: Class Definition</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">GameOfLife</span>(rules: (Cell, Seq[Cell]) =&gt; Cell) {
+  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
+}</code></pre>
+<ul>
+<li>Given this <strong>class definition</strong>, <code>GameOfLife</code> is now also a type</li>
+<li>Its constructor has one parameter of type <code>(Cell, Seq[Cell] =&gt; Cell)</code></li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> gameOfLife = <span class="kw">new</span> <span class="fu">GameOfLife</span>(life)
+gameOfLife.<span class="fu">next</span>(…)</code></pre>
+<ul>
+<li>An object of type <code>GameOfLife</code> can be created using <code>new</code></li>
+</ul>
+</div><div id="rd-solution-trait-definition" class="slide section level2">
+<h1><span class="header-section-number">15.4</span> 3rd Solution: Trait Definition</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> GameOfLife {
+  <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]): Cell
+  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ??? <span class="co">// code calling `rules`</span>
+}</code></pre>
+<ul>
+<li>With this <strong>trait definition</strong>, <code>GameOfLife</code> has no constructor anymore</li>
+<li>It has an <strong>abstract method</strong>, <code>rules</code></li>
+</ul>
+</div><div id="rd-solution-trait-definition-2" class="slide section level2">
+<h1><span class="header-section-number">15.5</span> 3rd Solution: Trait Definition (2)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Life <span class="kw">extends</span> GameOfLife {
+  <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]) = {
+    <span class="kw">val</span> alive =
+      <span class="kw">if</span> (cell.<span class="fu">isAlive</span>) aliveNeighbours == <span class="dv">2</span> || aliveNeighbours == <span class="dv">3</span>
+      <span class="kw">else</span> aliveNeighbours == <span class="dv">3</span>
+    <span class="fu">Cell</span>(isAlive = alive)
+  }
+}</code></pre>
+<ul>
+<li>The <code>Life</code> object <strong>implements</strong> the <code>GameOfLife</code> trait</li>
+<li>The <code>next</code> method is <strong>inherited</strong> from the trait</li>
+<li>Unlike “sealed” trait, a simple trait can have an unlimited number of implementations</li>
+</ul>
+</div><div id="dynamic-method-dispatch" class="slide section level2">
+<h1><span class="header-section-number">15.6</span> Dynamic Method Dispatch</h1>
+<p>Consider the following program:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">run</span>(game: GameOfLife, world: World) = game.<span class="fu">next</span>(world)</code></pre>
+<ul>
+<li>At runtime, the implementation of the concrete type of <code>game</code> (<code>Life</code> or another one) is called</li>
+<li>This process is named <strong>dynamic method dispatch</strong></li>
+</ul>
+</div><div id="abstract-members-encapsulation-and-modularity" class="slide section level2">
+<h1><span class="header-section-number">15.7</span> Abstract Members, Encapsulation and Modularity</h1>
+<ul>
+<li><p>Abstract members achieve <strong>encapsulation</strong></p></li>
+<li><p>Encapsulation allows the construction of <strong>abstraction layers</strong></p></li>
+<li><p>It is a key principle to achieve <strong>modularity</strong>: the underlying implementation can change without affecting users</p></li>
+</ul>
+</div><div id="specialization" class="slide section level2">
+<h1><span class="header-section-number">15.8</span> Specialization</h1>
+<p><code>GameOfLife</code> is more <strong>general</strong> than <code>Life</code></p>
+<p>You could also say that <code>Life</code> is more <strong>specialized</strong> than <code>GameOfLife</code></p>
+<p>When specializing a type, you can:</p>
+<ul>
+<li>Implement abstract members</li>
+<li>Add new members</li>
+<li>Redefine non-abstract members</li>
+</ul>
+<p>A subclass <strong>conforms</strong> to its superclass, so it can be used everywhere the superclass is needed</p>
+</div><div id="adding-a-member-to-a-base-class" class="slide section level2">
+<h1><span class="header-section-number">15.9</span> Adding a Member to a Base Class</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> SemiGroup {
+  <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = a + b
+}
+
+<span class="kw">trait</span> Monoid <span class="kw">extends</span> SemiGroup {
+  <span class="kw">def</span> zero = <span class="dv">0</span>
+}
+
+<span class="kw">trait</span> Group <span class="kw">extends</span> Monoid {
+  <span class="kw">def</span> <span class="fu">inverse</span>(a: Int) = -a
+}</code></pre>
+</div><div id="redefining-a-member-of-a-base-class" class="slide section level2">
+<h1><span class="header-section-number">15.10</span> Redefining a Member of a Base Class</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> LoggingSemiGroup <span class="kw">extends</span> SemiGroup {
+  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = {
+    <span class="fu">println</span>(s<span class="st">&quot;Calling append($a, $b)&quot;</span>)
+    <span class="kw">super</span>.<span class="fu">append</span>(a, b)
+  }
+}</code></pre>
+<ul>
+<li>Redefine a member using <code>override</code></li>
+<li>You can still refer to the base implementation using <code>super</code></li>
+</ul>
+</div><div id="members-visibility" class="slide section level2">
+<h1><span class="header-section-number">15.11</span> Members Visibility</h1>
+<p>You can control the visibility of the members of a class:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Foo {
+  <span class="kw">private</span> <span class="kw">def</span> foo = <span class="dv">42</span>
+  <span class="kw">protected</span> <span class="kw">def</span> bar: Int
+}</code></pre>
+<ul>
+<li><code>private</code> members are not visible outside of the class definition</li>
+<li><code>protected</code> members are not visible outside of the class definition except for subclasses</li>
+</ul>
+</div><div id="closing-a-class-hierarchy" class="slide section level2">
+<h1><span class="header-section-number">15.12</span> Closing a Class Hierarchy</h1>
+<p>You can forbid the specialization of a class or of its members:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Foo {
+  <span class="kw">final</span> <span class="kw">def</span> foo = <span class="dv">42</span>
+}
+
+<span class="kw">final</span> <span class="kw">class</span> Bar <span class="kw">extends</span> Foo</code></pre>
+<ul>
+<li><code>final</code> members can not be overriden</li>
+<li><code>final</code> classes can not be extended</li>
+</ul>
+</div><div id="overloading" class="slide section level2">
+<h1><span class="header-section-number">15.13</span> Overloading</h1>
+<p>Several members with the same name can coexist, as long their type signature is different:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(that: Complex): Complex = …
+<span class="kw">def</span> <span class="fu">add</span>(real: Double): Complex = <span class="fu">add</span>(<span class="kw">new</span> <span class="fu">Complex</span>(real, <span class="dv">0</span>)</code></pre>
+</div><div id="traits-classes-objects-abstract-members-and-parameters" class="slide section level2">
+<h1><span class="header-section-number">15.14</span> Traits, Classes, Objects, Abstract Members and Parameters</h1>
+<ul>
+<li>Traits, classes and objects are different “flavours” of type definition</li>
+<li>Objects corresponds to the special case of a type with just one value</li>
+<li>Traits and classes generalize several values
+<ul>
+<li>Traits can have abstract members</li>
+<li>Classes can have constructor parameters</li>
+</ul></li>
+</ul>
+</div><div id="case-classes-vs-classes" class="slide section level2">
+<h1><span class="header-section-number">15.15</span> Case Classes vs Classes</h1>
+<ul>
+<li>Should you use algebraic data types or regular classes?
+<ul>
+<li>Algebraic data types are closed types (they can not be extended), but this characteristic is what makes it easier to add new operations on a type hierarchy</li>
+<li>Classes are open types (they can be extended), but you can not add a new operation on a class hierarchy without changing the whole hierarchy</li>
+</ul></li>
+</ul>
+</div><div id="components" class="slide section level2">
+<h1><span class="header-section-number">15.16</span> Components</h1>
+<p>You saw how to implement a set of features in a single component using classes</p>
+<p>Is it possible to build a larger system by combining small components together?</p>
+<p>For instance, given the following class definitions:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Adding {
+  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
+}</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Multiplying {
+  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
+}</code></pre>
+<p>How to build calculator from these two components?</p>
+</div><div id="traits" class="slide section level2">
+<h1><span class="header-section-number">15.17</span> Traits</h1>
+<p>Traits can encapsulate members and can be mixed together</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Adding {
+  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
+}
+
+<span class="kw">trait</span> Multiplying {
+  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
+}
+
+<span class="kw">trait</span> Calculator <span class="kw">extends</span> Adding <span class="kw">with</span> Multiplying</code></pre>
+<ul class="incremental">
+<li>Traits can be mixed in other traits or classes using <code>extends</code> and <code>with</code></li>
+</ul>
+</div><div id="traits-and-dynamic-dispatch" class="slide section level2">
+<h1><span class="header-section-number">15.18</span> Traits and Dynamic Dispatch</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Simple {
+  <span class="kw">def</span> value = <span class="dv">7</span>
+}
+
+<span class="kw">trait</span> Double <span class="kw">extends</span> Simple {
+  <span class="kw">override</span> <span class="kw">def</span> value = <span class="kw">super</span>.<span class="fu">value</span> * <span class="dv">2</span>
+}
+
+<span class="kw">trait</span> Triple <span class="kw">extends</span> Simple {
+  <span class="kw">override</span> <span class="kw">def</span> value = <span class="kw">super</span>.<span class="fu">value</span> * <span class="dv">3</span>
+}</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> mixin = <span class="kw">new</span> Simple <span class="kw">with</span> Double <span class="kw">with</span> Triple
+<span class="fu">println</span>(mixin.<span class="fu">value</span>) <span class="co">// What is printed?</span></code></pre>
+<p>Which implementation of the <code>value</code> member is called?</p>
+</div><div id="traits-and-dynamic-dispatch-2" class="slide section level2">
+<h1><span class="header-section-number">15.19</span> Traits and Dynamic Dispatch (2)</h1>
+<div class="figure">
+<img src="Traits.png" alt="Traits Linearization" /><p class="caption">Traits Linearization</p>
+</div>
+</div>
+<div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
+<h1><span class="header-section-number">16.1</span> Motivating Problem: Random Number Generator</h1>
 <p>Try to implement the following random number generator:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> next: Int = ???</code></pre>
 <blockquote>
@@ -1406,7 +1617,7 @@ res0: Int = <span class="dv">6</span></code></pre>
 <li>The <code>next</code> method is impossible to implement!</li>
 </ul>
 </div><div id="motivating-problem-random-number-generator-1" class="slide section level2">
-<h1><span class="header-section-number">15.2</span> Motivating Problem: Random Number Generator</h1>
+<h1><span class="header-section-number">16.2</span> Motivating Problem: Random Number Generator</h1>
 <p>By changing the <code>next</code> signature, a possible implementation would be the following:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">next</span>(x: Int) = <span class="dv">22695477</span> * x + <span class="dv">1</span></code></pre>
 <p>But users would be required to <em>remember</em> each value to get the next one:</p>
@@ -1415,14 +1626,14 @@ res0: Int = <span class="dv">6</span></code></pre>
 <span class="kw">val</span> x2 = <span class="fu">next</span>(x1)
 <span class="fu">println</span>(x2)</code></pre>
 </div><div id="assignment" class="slide section level2">
-<h1><span class="header-section-number">15.3</span> Assignment</h1>
-<p>A <code>var</code> definition associates a value with a name, like <code>val</code> does, but you can <strong>assign</strong> later a new value to this name:</p>
+<h1><span class="header-section-number">16.3</span> Assignment</h1>
+<p>A <strong><code>var</code> definition</strong> associates a value with a name, like <code>val</code> does, but you can later <strong>assign</strong> a new value to this name:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">var</span> x = <span class="dv">10</span>
 <span class="fu">println</span>(x) <span class="co">// “10”</span>
 x = x + <span class="dv">10</span>
 <span class="fu">println</span>(x) <span class="co">// “20”</span></code></pre>
 </div><div id="imperative-loops" class="slide section level2">
-<h1><span class="header-section-number">15.4</span> Imperative Loops</h1>
+<h1><span class="header-section-number">16.4</span> Imperative Loops</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">fact</span>(n: Int) = {
   <span class="kw">var</span> result = <span class="dv">1</span>
   <span class="kw">var</span> i = <span class="dv">2</span>
@@ -1433,7 +1644,7 @@ x = x + <span class="dv">10</span>
   result
 }</code></pre>
 </div><div id="stateful-computations" class="slide section level2">
-<h1><span class="header-section-number">15.5</span> Stateful Computations</h1>
+<h1><span class="header-section-number">16.5</span> Stateful Computations</h1>
 <p><code>next</code> can be implemented as follows using a <code>var</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">var</span> x = <span class="dv">1</span>
 <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1444,7 +1655,7 @@ x = x + <span class="dv">10</span>
 <li>The <code>x</code> var contains the random number generator’s <strong>state</strong></li>
 </ul>
 </div><div id="stateful-classes" class="slide section level2">
-<h1><span class="header-section-number">15.6</span> Stateful Classes</h1>
+<h1><span class="header-section-number">16.6</span> Stateful Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
   <span class="kw">private</span> <span class="kw">var</span> x = <span class="dv">1</span>
   <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1460,7 +1671,7 @@ x = x + <span class="dv">10</span>
 </ul></li>
 </ul>
 </div><div id="stateful-classes-1" class="slide section level2">
-<h1><span class="header-section-number">15.7</span> Stateful Classes</h1>
+<h1><span class="header-section-number">16.7</span> Stateful Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
   <span class="kw">private</span> <span class="kw">var</span> x = <span class="dv">1</span>
   <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1477,7 +1688,7 @@ x = x + <span class="dv">10</span>
 <li>The <code>RNG</code> class <strong>encapsulates</strong> its state</li>
 </ul>
 </div><div id="benefits-of-assignment" class="slide section level2">
-<h1><span class="header-section-number">15.8</span> Benefits of Assignment</h1>
+<h1><span class="header-section-number">16.8</span> Benefits of Assignment</h1>
 <ul>
 <li><p><strong>Stateful objects</strong> help keeping code modular</p>
 <ul>
@@ -1485,7 +1696,7 @@ x = x + <span class="dv">10</span>
 </ul></li>
 </ul>
 </div><div id="identity-and-state" class="slide section level2">
-<h1><span class="header-section-number">15.9</span> Identity and State</h1>
+<h1><span class="header-section-number">16.9</span> Identity and State</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG</code></pre>
 <p>Are <code>rng1</code> and <code>rng2</code> the same objects? At first glance they seem to be the same…</p>
@@ -1495,7 +1706,7 @@ x = x + <span class="dv">10</span>
 <p><code>rng1</code> and <code>rng2</code> have distinct <strong>effects</strong>, they are not equals in a sense that we can not substitute one by the other</p>
 <p>The introduction of assignment leads to the loss of <strong>referential transparency</strong> and makes reasonning about programs drastically more difficult</p>
 </div><div id="classes-vs-case-classes-identity" class="slide section level2">
-<h1><span class="header-section-number">15.10</span> Classes vs Case Classes: Identity</h1>
+<h1><span class="header-section-number">16.10</span> Classes vs Case Classes: Identity</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG
 rng1 == rng2</code></pre>
@@ -1509,14 +1720,14 @@ barbell1 == barbell2</code></pre>
 <li><code>true</code></li>
 </ul>
 </div><div id="stateful-objects-aliasing-and-copying" class="slide section level2">
-<h1><span class="header-section-number">15.11</span> Stateful Objects, Aliasing and Copying</h1>
+<h1><span class="header-section-number">16.11</span> Stateful Objects, Aliasing and Copying</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <p>Giving two different names to the <em>same</em> object can be confusing: applying a method on <code>rng1</code> will have an effect on <code>rng2</code>!</p>
 <p>Stateful objects force you to distinguish between the intents of <strong>aliasing</strong> and <strong>copying</strong></p>
 <p>This problem does not exist with <strong>immutable objects</strong></p>
 </div><div id="classes-vs-case-classes-aliasing" class="slide section level2">
-<h1><span class="header-section-number">15.12</span> Classes vs Case Classes: Aliasing</h1>
+<h1><span class="header-section-number">16.12</span> Classes vs Case Classes: Aliasing</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> barbell1 = <span class="fu">Barbell</span>(<span class="dv">20</span>, <span class="dv">150</span>)
@@ -1525,7 +1736,7 @@ barbell1 == barbell2</code></pre>
 <li>Immutable objects (ie. defined by case classes) can be freely aliased (it is actually a <strong>good practice</strong> to reduce the memory consumption)</li>
 </ul>
 </div><div id="pure-functions-and-side-effects" class="slide section level2">
-<h1><span class="header-section-number">15.13</span> Pure Functions and Side-Effects</h1>
+<h1><span class="header-section-number">16.13</span> Pure Functions and Side-Effects</h1>
 <p>Without assignment, the following declaration has only one possible implementation:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> mystery[A](a: A): A</code></pre>
 <ul class="incremental">
@@ -1539,7 +1750,7 @@ barbell1 == barbell2</code></pre>
 <li><p>Without assignment the type signature of a computation tells a lot about its behavior</p></li>
 </ul>
 </div><div id="immutability-when-possible" class="slide section level2">
-<h1><span class="header-section-number">15.14</span> Immutability When Possible</h1>
+<h1><span class="header-section-number">16.14</span> Immutability When Possible</h1>
 <blockquote>
 <p>In addition to raising complications about computational models, programs written in imperative style are susceptible to bugs that cannot occur in functional programs.</p>
 </blockquote>
@@ -1549,7 +1760,7 @@ barbell1 == barbell2</code></pre>
 </blockquote>
 <p>Joshua Bloch. <em>Effective Java</em>. Addison Wesley 2008</p>
 </div><div id="safe-usage-of-vars" class="slide section level2">
-<h1><span class="header-section-number">15.15</span> Safe Usage of Vars</h1>
+<h1><span class="header-section-number">16.15</span> Safe Usage of Vars</h1>
 <ul>
 <li>As long as side-effects are not observable from the outside, using a var is safe:</li>
 </ul>
@@ -1560,208 +1771,6 @@ barbell1 == barbell2</code></pre>
   }
   result
 }</code></pre>
-</div>
-<div id="extensibility-and-modularity" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Extensibility and Modularity</h1></div><div id="motivation-5" class="slide section level2">
-<h1><span class="header-section-number">16.1</span> Motivation</h1>
-<p>Your game of life implementation hard codes the rules of the game</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
-  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
-}</code></pre>
-<ul>
-<li>How to abstract over the rules in a way that we can easily plug a given set of rules in a given world?</li>
-</ul>
-</div><div id="st-solution-method-parameter" class="slide section level2">
-<h1><span class="header-section-number">16.2</span> 1st Solution: Method Parameter</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
-  <span class="kw">def</span> <span class="fu">next</span>(world: World, rules: (Cell, Int) =&gt; Cell): World = ???
-}</code></pre>
-<ul>
-<li><code>rules</code> is a function taking a cell and its alive neighbours as parameter and returning the cell at the next generation</li>
-</ul>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> life = { (cell: Cell, aliveNeighbours: Int) =&gt; 
-  <span class="kw">val</span> alive =
-    <span class="kw">if</span> (cell.<span class="fu">isAlive</span>) aliveNeighbours == <span class="dv">2</span> || aliveNeighbours == <span class="dv">3</span>
-    <span class="kw">else</span> aliveNeighbours == <span class="dv">3</span>
-  <span class="fu">Cell</span>(isAlive = alive)
-}
-GameOfLife.<span class="fu">next</span>(…, life)</code></pre>
-</div><div id="nd-solution-class-definition" class="slide section level2">
-<h1><span class="header-section-number">16.3</span> 2nd Solution: Class Definition</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">GameOfLife</span>(rules: (Cell, Seq[Cell]) =&gt; Cell) {
-  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
-}</code></pre>
-<ul>
-<li>Given this <strong>class definition</strong>, <code>GameOfLife</code> is now also a type</li>
-<li>Its constructor has one parameter of type <code>(Cell, Seq[Cell] =&gt; Cell)</code></li>
-</ul>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> gameOfLife = <span class="kw">new</span> <span class="fu">GameOfLife</span>(life)
-gameOfLife.<span class="fu">next</span>(…)</code></pre>
-<ul>
-<li>An object of type <code>GameOfLife</code> can be created using <code>new</code></li>
-</ul>
-</div><div id="rd-solution-trait-definition" class="slide section level2">
-<h1><span class="header-section-number">16.4</span> 3rd Solution: Trait Definition</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> GameOfLife {
-  <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]): Cell
-  <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ??? <span class="co">// code calling `rules`</span>
-}</code></pre>
-<ul>
-<li>With this <strong>trait definition</strong>, <code>GameOfLife</code> has no constructor anymore</li>
-<li>It has an <strong>abstract method</strong>, <code>rules</code></li>
-</ul>
-</div><div id="rd-solution-trait-definition-2" class="slide section level2">
-<h1><span class="header-section-number">16.5</span> 3rd Solution: Trait Definition (2)</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Life <span class="kw">extends</span> GameOfLife {
-  <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]) = {
-    <span class="kw">val</span> alive =
-      <span class="kw">if</span> (cell.<span class="fu">isAlive</span>) aliveNeighbours == <span class="dv">2</span> || aliveNeighbours == <span class="dv">3</span>
-      <span class="kw">else</span> aliveNeighbours == <span class="dv">3</span>
-    <span class="fu">Cell</span>(isAlive = alive)
-  }
-}</code></pre>
-<ul>
-<li>The <code>Life</code> object <strong>implements</strong> the <code>GameOfLife</code> trait</li>
-<li>The <code>next</code> method is <strong>inherited</strong> from the trait</li>
-<li>Unlike “sealed” trait, a simple trait can have an unlimited number of implementations</li>
-</ul>
-</div><div id="dynamic-method-dispatch" class="slide section level2">
-<h1><span class="header-section-number">16.6</span> Dynamic Method Dispatch</h1>
-<p>Consider the following program:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">run</span>(game: GameOfLife, world: World) = game.<span class="fu">next</span>(world)</code></pre>
-<ul>
-<li>At runtime, the implementation of the concrete type of <code>game</code> (<code>Life</code> or another one) is called</li>
-<li>This process is named <strong>dynamic method dispatch</strong></li>
-</ul>
-</div><div id="abstract-members-encapsulation-and-modularity" class="slide section level2">
-<h1><span class="header-section-number">16.7</span> Abstract Members, Encapsulation and Modularity</h1>
-<ul>
-<li><p>Abstract members achieve <strong>encapsulation</strong></p></li>
-<li><p>Encapsulation allows the construction of <strong>abstraction layers</strong></p></li>
-<li><p>It is a key principle to achieve <strong>modularity</strong>: the underlying implementation can change without affecting users</p></li>
-</ul>
-</div><div id="specialization" class="slide section level2">
-<h1><span class="header-section-number">16.8</span> Specialization</h1>
-<p><code>GameOfLife</code> is more <strong>general</strong> than <code>Life</code></p>
-<p>You could also say that <code>Life</code> is more <strong>specialized</strong> than <code>GameOfLife</code></p>
-<p>When specializing a type, you can:</p>
-<ul>
-<li>Implement abstract members</li>
-<li>Add new members</li>
-<li>Redefine non-abstract members</li>
-</ul>
-<p>A subclass <strong>conforms</strong> to its superclass, so it can be used everywhere the superclass is needed</p>
-</div><div id="adding-a-member-to-a-base-class" class="slide section level2">
-<h1><span class="header-section-number">16.9</span> Adding a Member to a Base Class</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> SemiGroup {
-  <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = a + b
-}
-
-<span class="kw">trait</span> Monoid <span class="kw">extends</span> SemiGroup {
-  <span class="kw">def</span> zero = <span class="dv">0</span>
-}
-
-<span class="kw">trait</span> Group <span class="kw">extends</span> Monoid {
-  <span class="kw">def</span> <span class="fu">inverse</span>(a: Int) = -a
-}</code></pre>
-</div><div id="redefining-a-member-of-a-base-class" class="slide section level2">
-<h1><span class="header-section-number">16.10</span> Redefining a Member of a Base Class</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> LoggingSemiGroup <span class="kw">extends</span> SemiGroup {
-  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = {
-    <span class="fu">println</span>(s<span class="st">&quot;Calling append($a, $b)&quot;</span>)
-    <span class="kw">super</span>.<span class="fu">append</span>(a, b)
-  }
-}</code></pre>
-<ul>
-<li>Redefine a member using <code>override</code></li>
-<li>You can still refer to the base implementation using <code>super</code></li>
-</ul>
-</div><div id="members-visibility" class="slide section level2">
-<h1><span class="header-section-number">16.11</span> Members Visibility</h1>
-<p>You can control the visibility of the members of a class:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Foo {
-  <span class="kw">private</span> <span class="kw">def</span> foo = <span class="dv">42</span>
-  <span class="kw">protected</span> <span class="kw">def</span> bar: Int
-}</code></pre>
-<ul>
-<li><code>private</code> members are not visible outside of the class definition</li>
-<li><code>protected</code> members are not visible outside of the class definition except for subclasses</li>
-</ul>
-</div><div id="closing-a-class-hierarchy" class="slide section level2">
-<h1><span class="header-section-number">16.12</span> Closing a Class Hierarchy</h1>
-<p>You can forbid the specialization of a class or of its members:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Foo {
-  <span class="kw">final</span> <span class="kw">def</span> foo = <span class="dv">42</span>
-}
-
-<span class="kw">final</span> <span class="kw">class</span> Bar <span class="kw">extends</span> Foo</code></pre>
-<ul>
-<li><code>final</code> members can not be overriden</li>
-<li><code>final</code> classes can not be extended</li>
-</ul>
-</div><div id="overloading" class="slide section level2">
-<h1><span class="header-section-number">16.13</span> Overloading</h1>
-<p>Several members with the same name can coexist, as long their type signature is different:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(that: Complex): Complex = …
-<span class="kw">def</span> <span class="fu">add</span>(real: Double): Complex = <span class="fu">add</span>(<span class="kw">new</span> <span class="fu">Complex</span>(real, <span class="dv">0</span>)</code></pre>
-</div><div id="traits-classes-objects-abstract-members-and-parameters" class="slide section level2">
-<h1><span class="header-section-number">16.14</span> Traits, Classes, Objects, Abstract Members and Parameters</h1>
-<ul>
-<li>Traits, classes and objects are different “flavours” of type definition</li>
-<li>Objects corresponds to the special case of a type with just one value</li>
-<li>Traits and classes generalize several values
-<ul>
-<li>Traits can have abstract members</li>
-<li>Classes can have constructor parameters</li>
-</ul></li>
-</ul>
-</div><div id="components" class="slide section level2">
-<h1><span class="header-section-number">16.15</span> Components</h1>
-<p>You saw how to implement a set of features in a single component using classes</p>
-<p>Is it possible to build a larger system by combining small components together?</p>
-<p>For instance, given the following class definitions:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Adding {
-  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
-}</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Multiplying {
-  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
-}</code></pre>
-<p>How to build calculator from these two components?</p>
-</div><div id="traits" class="slide section level2">
-<h1><span class="header-section-number">16.16</span> Traits</h1>
-<p>Traits can encapsulate members and can be mixed together</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Adding {
-  <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
-}
-
-<span class="kw">trait</span> Multiplying {
-  <span class="kw">def</span> <span class="fu">mul</span>(a: Int, b: Int) = a * b
-}
-
-<span class="kw">trait</span> Calculator <span class="kw">extends</span> Adding <span class="kw">with</span> Multiplying</code></pre>
-<ul class="incremental">
-<li>Traits can be mixed in other traits or classes using <code>extends</code> and <code>with</code></li>
-</ul>
-</div><div id="traits-and-dynamic-dispatch" class="slide section level2">
-<h1><span class="header-section-number">16.17</span> Traits and Dynamic Dispatch</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Simple {
-  <span class="kw">def</span> value = <span class="dv">7</span>
-}
-
-<span class="kw">trait</span> Double <span class="kw">extends</span> Simple {
-  <span class="kw">override</span> <span class="kw">def</span> value = <span class="kw">super</span>.<span class="fu">value</span> * <span class="dv">2</span>
-}
-
-<span class="kw">trait</span> Triple <span class="kw">extends</span> Simple {
-  <span class="kw">override</span> <span class="kw">def</span> value = <span class="kw">super</span>.<span class="fu">value</span> * <span class="dv">3</span>
-}</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> mixin = <span class="kw">new</span> Simple <span class="kw">with</span> Double <span class="kw">with</span> Triple
-<span class="fu">println</span>(mixin.<span class="fu">value</span>) <span class="co">// What is printed?</span></code></pre>
-<p>Which implementation of the <code>value</code> member is called?</p>
-</div><div id="traits-and-dynamic-dispatch-2" class="slide section level2">
-<h1><span class="header-section-number">16.18</span> Traits and Dynamic Dispatch (2)</h1>
-<div class="figure">
-<img src="Traits.png" alt="Traits Linearization" /><p class="caption">Traits Linearization</p>
-</div>
 </div>
 <div id="type-polymorphism" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Type Polymorphism</h1></div><div id="type-polymorphism-1" class="slide section level2">
 <h1><span class="header-section-number">17.1</span> Type Polymorphism</h1>
