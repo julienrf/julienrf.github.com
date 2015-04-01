@@ -90,14 +90,35 @@ Julien Richard-Foy, Zengularity
 <span class="kw">scala&gt;</span> </code></pre>
 <p>(Check that <a href="http://www.scala-sbt.org">sbt</a> is installed on your system)</p>
 </div>
-<div id="values-and-types" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Values and Types</h1></div><div id="what-is-a-program-made-of" class="slide section level2">
-<h1><span class="header-section-number">3.1</span> What is a program made of?</h1>
+<div id="recommanded-lectures-and-references" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Recommanded Lectures and References</h1></div><div id="recommanded-lectures-and-references-1" class="slide section level2">
+<h1><span class="header-section-number">3.1</span> Recommanded Lectures and References</h1>
+<ul>
+<li><p><em><a href="http://underscore.io/training/courses/creative-scala/">Creative Scala</a></em>. Underscore Consulting LLP.</p></li>
+<li><p><em><a href="https://www.coursera.org/course/progfun">Functional Programming Principles in Scala</a></em>. Martin Odersky,</p></li>
+<li><p><em><a href="http://www.manning.com/bjarnason/">Functional Programming in Scala</a></em>. Paul Chiusano and Rúnar Bjarnason. Manning 2013.</p></li>
+<li><p><em><a href="http://mitpress.mit.edu/books/structure-and-interpretation-computer-programs">Structure and Interpretation of Computer Programs</a></em>. Harold Abelson and Gerald Jay Sussman, with Julie Sussman. MIT Press 1996,</p></li>
+</ul>
+</div><div id="recommanded-lectures-and-references-2" class="slide section level2">
+<h1><span class="header-section-number">3.2</span> Recommanded Lectures and References (2)</h1>
+<ul>
+<li><p><em><a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a></em>. Martin Odersky, Lex Spoon and Bill Venners. Artima 2010,</p></li>
+<li><p><em><a href="http://www.manning.com/suereth/">Scala in Depth</a></em>. Joshua D. Suereth. Manning 2012,</p></li>
+</ul>
+</div><div id="recommanded-lectures-and-references-3" class="slide section level2">
+<h1><span class="header-section-number">3.3</span> Recommanded Lectures and References (3)</h1>
+<ul>
+<li><p><em><a href="http://lamp.epfl.ch/teaching/progp">Programming and Principles</a></em>. Marting Odersky. EPFL,</p></li>
+<li><p><em><a href="http://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a></em>. Benjamin Pierce. MIT Press 2002,</p></li>
+<li><p><em><a href="http://www.cs.cmu.edu/~rwh/plbook/book.pdf">Practical Foundations for Programming Languages</a></em>. Robert Harper. Cambridge University Press 2012. # Values and Types</p></li>
+</ul>
+</div><div id="what-is-a-program-made-of" class="slide section level2">
+<h1><span class="header-section-number">3.4</span> What is a program made of?</h1>
 <ul>
 <li><p>A program is the <strong>expression</strong> of the solution of a given <strong>problem</strong></p></li>
 <li><p>We need a way to define and refer to the elements of the <strong>problem domain</strong></p></li>
 </ul>
 </div><div id="the-simplest-program-elements-literal-values" class="slide section level2">
-<h1><span class="header-section-number">3.2</span> The Simplest Program Elements: Literal Values</h1>
+<h1><span class="header-section-number">3.5</span> The Simplest Program Elements: Literal Values</h1>
 <blockquote>
 <p>What is “the answer to life the universe and everything”?</p>
 </blockquote>
@@ -112,7 +133,7 @@ res1: String = Julien</code></pre>
 <li><code>42</code> and <code>&quot;Julien&quot;</code> are <strong>values</strong> composed of a single <strong>literal value</strong>.</li>
 </ul>
 </div><div id="compound-values-operators" class="slide section level2">
-<h1><span class="header-section-number">3.3</span> Compound Values: Operators</h1>
+<h1><span class="header-section-number">3.6</span> Compound Values: Operators</h1>
 <blockquote>
 <p>How many is three plus two?</p>
 </blockquote>
@@ -127,7 +148,7 @@ res3: String = Hello world!</code></pre>
 <li>Values can be combined using <strong>operators</strong> to build more complex values.</li>
 </ul>
 </div><div id="compound-values-method-calls" class="slide section level2">
-<h1><span class="header-section-number">3.4</span> Compound Values: Method Calls</h1>
+<h1><span class="header-section-number">3.7</span> Compound Values: Method Calls</h1>
 <blockquote>
 <p>What is the size of the text “Hello world!”?</p>
 </blockquote>
@@ -145,7 +166,7 @@ res5: scala.<span class="fu">collection</span>.<span class="fu">immutable</span>
 <li>Methods can have <strong>parameters</strong>. They are supplied between parentheses.</li>
 </ul>
 </div><div id="operators-are-methods" class="slide section level2">
-<h1><span class="header-section-number">3.5</span> Operators Are Methods</h1>
+<h1><span class="header-section-number">3.8</span> Operators Are Methods</h1>
 <p>Actually, operators are just methods with symbolic names:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="dv">3</span>.+(<span class="dv">2</span>)
 res6: Int = <span class="dv">5</span></code></pre>
@@ -156,13 +177,13 @@ res7: scala.<span class="fu">collection</span>.<span class="fu">immutable</span>
 <li>The <strong>unification</strong> of methods and operators makes the language simpler.</li>
 </ul>
 </div><div id="exercises" class="slide section level2">
-<h1><span class="header-section-number">3.6</span> Exercises</h1>
+<h1><span class="header-section-number">3.9</span> Exercises</h1>
 <ul>
 <li><p>Use the <code>abs</code> method to get the absolute value of <code>-42</code>.</p></li>
 <li><p>Use the <code>toUpperCase</code> method to get the text “Hello world!” in upper case.</p></li>
 </ul>
 </div><div id="raising-the-abstraction-level-non-literal-values" class="slide section level2">
-<h1><span class="header-section-number">3.7</span> Raising the Abstraction Level: Non-Literal Values</h1>
+<h1><span class="header-section-number">3.10</span> Raising the Abstraction Level: Non-Literal Values</h1>
 <p>Until now you worked essentially with numbers and text. But how to define things of a higher-level like <strong>images</strong>?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">Circle</span>(<span class="dv">42</span>)
 res8: doodle.<span class="fu">core</span>.<span class="fu">Circle</span> = <span class="fu">Circle</span>(<span class="fl">42.0</span>)</code></pre>
@@ -170,7 +191,7 @@ res8: doodle.<span class="fu">core</span>.<span class="fu">Circle</span> = <span
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; Rectangle(<span class="dv">30</span>, <span class="dv">50</span>)
 res9: doodle.<span class="fu">core</span>.<span class="fu">Rectangle</span> = Rectangle(<span class="fl">30.0</span>, <span class="fl">50.0</span>)</code></pre>
 </div><div id="manipulating-images-display-and-layout" class="slide section level2">
-<h1><span class="header-section-number">3.8</span> Manipulating Images: Display and Layout</h1>
+<h1><span class="header-section-number">3.11</span> Manipulating Images: Display and Layout</h1>
 <ul>
 <li>Show an image with <code>draw</code>:</li>
 </ul>
@@ -183,7 +204,7 @@ res10: doodle.<span class="fu">core</span>.<span class="fu">Image</span> = <span
 
 scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <span class="dv">100</span>) beside <span class="fu">Circle</span>(<span class="dv">30</span>))</code></pre>
 </div><div id="types" class="slide section level2">
-<h1><span class="header-section-number">3.9</span> Types</h1>
+<h1><span class="header-section-number">3.12</span> Types</h1>
 <ul>
 <li>All values have a <strong>type</strong>:
 <ul>
@@ -196,7 +217,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 </ul></li>
 </ul>
 </div><div id="types-guide-you" class="slide section level2">
-<h1><span class="header-section-number">3.10</span> Types Guide You</h1>
+<h1><span class="header-section-number">3.13</span> Types Guide You</h1>
 <ul>
 <li>Type checking forbids you to combine values in a wrong way:</li>
 </ul>
@@ -215,13 +236,13 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>Type checking happens during the first step: errors are detected early.</li>
 </ul>
 </div><div id="some-common-types" class="slide section level2">
-<h1><span class="header-section-number">3.11</span> Some Common Types</h1>
+<h1><span class="header-section-number">3.14</span> Some Common Types</h1>
 <p><code>Int</code> : a 32-bit signed integer</p>
 <p><code>Double</code> : a 64-bit IEEE-754 floating point number (e.g. <code>12.34</code>).</p>
 <p><code>Boolean</code> : boolean values (<code>true</code> and <code>false</code>)</p>
 <p><code>String</code> : text</p>
 </div><div id="the-type-meaning-the-absence-of-meaningful-value" class="slide section level2">
-<h1><span class="header-section-number">3.12</span> The Type Meaning the Absence of (Meaningful) Value</h1>
+<h1><span class="header-section-number">3.15</span> The Type Meaning the Absence of (Meaningful) Value</h1>
 <ul>
 <li>Methods like <code>println</code> or <code>draw</code> return no meaningful value</li>
 <li>Instead, they perform some <strong>side-effects</strong></li>
@@ -229,7 +250,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>There is only one value of type <code>Unit</code>: <code>()</code></li>
 </ul>
 </div><div id="exercise" class="slide section level2">
-<h1><span class="header-section-number">3.13</span> Exercise</h1>
+<h1><span class="header-section-number">3.16</span> Exercise</h1>
 <ul>
 <li>Draw an exclamation mark.</li>
 </ul>
@@ -237,7 +258,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="exclamation.png" />
 </div>
 </div><div id="exercise-1" class="slide section level2">
-<h1><span class="header-section-number">3.14</span> Exercise</h1>
+<h1><span class="header-section-number">3.17</span> Exercise</h1>
 <ul>
 <li>Draw a barbell.</li>
 </ul>
@@ -245,12 +266,12 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="barbell.png" />
 </div>
 </div><div id="manipulating-images-colors" class="slide section level2">
-<h1><span class="header-section-number">3.15</span> Manipulating Images: Colors</h1>
+<h1><span class="header-section-number">3.18</span> Manipulating Images: Colors</h1>
 <p>Use <code>fillColor</code> to fill an image with a given color:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">draw</span>(Rectangle(<span class="dv">30</span>, <span class="dv">80</span>) fillColor Color.<span class="fu">black</span>)</code></pre>
 <p>Examples of available colors are <code>red</code>, <code>blue</code>, <code>green</code>, <code>black</code>, <code>white</code>, <code>gray</code> and <code>brown</code>.</p>
 </div><div id="exercise-2" class="slide section level2">
-<h1><span class="header-section-number">3.16</span> Exercise</h1>
+<h1><span class="header-section-number">3.19</span> Exercise</h1>
 <ul>
 <li>Add colors to your barbell.</li>
 </ul>
@@ -2160,23 +2181,6 @@ barbell1 == barbell2</code></pre>
 <li><p>We say that <code>F</code> is a <strong>context bound</strong> for <code>A</code></p></li>
 <li><p>You can retrieve an implicit parameter using the <code>implicitly</code> helper</p></li>
 <li><p>Sometimes the context bound notation is shorter than using an implicit parameter list</p></li>
-</ul>
-</div>
-<div id="recommanded-lectures-and-references" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Recommanded Lectures and References</h1></div><div id="recommanded-lectures-and-references-1" class="slide section level2">
-<h1><span class="header-section-number">19.1</span> Recommanded Lectures and References</h1>
-<ul>
-<li><p><em><a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a></em>. Martin Odersky, Lex Spoon and Bill Venners. Artima 2010,</p></li>
-<li><p><em><a href="https://www.coursera.org/course/progfun">Functional Programming Principles in Scala</a></em>. Martin Odersky,</p></li>
-<li><p><em><a href="http://mitpress.mit.edu/books/structure-and-interpretation-computer-programs">Structure and Interpretation of Computer Programs</a></em>. Harold Abelson and Gerald Jay Sussman, with Julie Sussman. MIT Press 1996,</p></li>
-<li><p><em><a href="http://www.manning.com/suereth/">Scala in Depth</a></em>. Joshua D. Suereth. Manning 2012,</p></li>
-<li><p><em><a href="http://www.manning.com/bjarnason/">Functional Programming in Scala</a></em>. Paul Chiusano and Rúnar Bjarnason. Manning 2013.</p></li>
-</ul>
-</div><div id="recommanded-lectures-and-references-2" class="slide section level2">
-<h1><span class="header-section-number">19.2</span> Recommanded Lectures and References (2)</h1>
-<ul>
-<li><p><em><a href="http://lamp.epfl.ch/teaching/progp">Programming and Principles</a></em>. Marting Odersky. EPFL,</p></li>
-<li><p><em><a href="http://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a></em>. Benjamin Pierce. MIT Press 2002,</p></li>
-<li><p><em><a href="http://www.cs.cmu.edu/~rwh/plbook/book.pdf">Practical Foundations for Programming Languages</a></em>. Robert Harper. Cambridge University Press 2012.</p></li>
 </ul>
 </div>
 </body>
