@@ -109,16 +109,17 @@ Julien Richard-Foy, Zengularity
 <ul>
 <li><p><em><a href="http://lamp.epfl.ch/teaching/progp">Programming and Principles</a></em>. Marting Odersky. EPFL,</p></li>
 <li><p><em><a href="http://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a></em>. Benjamin Pierce. MIT Press 2002,</p></li>
-<li><p><em><a href="http://www.cs.cmu.edu/~rwh/plbook/book.pdf">Practical Foundations for Programming Languages</a></em>. Robert Harper. Cambridge University Press 2012. # Values and Types</p></li>
+<li><p><em><a href="http://www.cs.cmu.edu/~rwh/plbook/book.pdf">Practical Foundations for Programming Languages</a></em>. Robert Harper. Cambridge University Press 2012.</p></li>
 </ul>
-</div><div id="what-is-a-program-made-of" class="slide section level2">
-<h1><span class="header-section-number">3.4</span> What is a program made of?</h1>
+</div>
+<div id="values-and-types" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Values and Types</h1></div><div id="what-is-a-program-made-of" class="slide section level2">
+<h1><span class="header-section-number">4.1</span> What is a program made of?</h1>
 <ul>
 <li><p>A program is the <strong>expression</strong> of the solution of a given <strong>problem</strong></p></li>
 <li><p>We need a way to define and refer to the elements of the <strong>problem domain</strong></p></li>
 </ul>
 </div><div id="the-simplest-program-elements-literal-values" class="slide section level2">
-<h1><span class="header-section-number">3.5</span> The Simplest Program Elements: Literal Values</h1>
+<h1><span class="header-section-number">4.2</span> The Simplest Program Elements: Literal Values</h1>
 <blockquote>
 <p>What is “the answer to life the universe and everything”?</p>
 </blockquote>
@@ -133,7 +134,7 @@ res1: String = Julien</code></pre>
 <li><code>42</code> and <code>&quot;Julien&quot;</code> are <strong>values</strong> composed of a single <strong>literal value</strong>.</li>
 </ul>
 </div><div id="compound-values-operators" class="slide section level2">
-<h1><span class="header-section-number">3.6</span> Compound Values: Operators</h1>
+<h1><span class="header-section-number">4.3</span> Compound Values: Operators</h1>
 <blockquote>
 <p>How many is three plus two?</p>
 </blockquote>
@@ -148,7 +149,7 @@ res3: String = Hello world!</code></pre>
 <li>Values can be combined using <strong>operators</strong> to build more complex values.</li>
 </ul>
 </div><div id="compound-values-method-calls" class="slide section level2">
-<h1><span class="header-section-number">3.7</span> Compound Values: Method Calls</h1>
+<h1><span class="header-section-number">4.4</span> Compound Values: Method Calls</h1>
 <blockquote>
 <p>What is the size of the text “Hello world!”?</p>
 </blockquote>
@@ -166,7 +167,7 @@ res5: scala.<span class="fu">collection</span>.<span class="fu">immutable</span>
 <li>Methods can have <strong>parameters</strong>. They are supplied between parentheses.</li>
 </ul>
 </div><div id="operators-are-methods" class="slide section level2">
-<h1><span class="header-section-number">3.8</span> Operators Are Methods</h1>
+<h1><span class="header-section-number">4.5</span> Operators Are Methods</h1>
 <p>Actually, operators are just methods with symbolic names:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="dv">3</span>.+(<span class="dv">2</span>)
 res6: Int = <span class="dv">5</span></code></pre>
@@ -177,13 +178,13 @@ res7: scala.<span class="fu">collection</span>.<span class="fu">immutable</span>
 <li>The <strong>unification</strong> of methods and operators makes the language simpler.</li>
 </ul>
 </div><div id="exercises" class="slide section level2">
-<h1><span class="header-section-number">3.9</span> Exercises</h1>
+<h1><span class="header-section-number">4.6</span> Exercises</h1>
 <ul>
 <li><p>Use the <code>abs</code> method to get the absolute value of <code>-42</code>.</p></li>
 <li><p>Use the <code>toUpperCase</code> method to get the text “Hello world!” in upper case.</p></li>
 </ul>
 </div><div id="raising-the-abstraction-level-non-literal-values" class="slide section level2">
-<h1><span class="header-section-number">3.10</span> Raising the Abstraction Level: Non-Literal Values</h1>
+<h1><span class="header-section-number">4.7</span> Raising the Abstraction Level: Non-Literal Values</h1>
 <p>Until now you worked essentially with numbers and text. But how to define things of a higher-level like <strong>images</strong>?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">Circle</span>(<span class="dv">42</span>)
 res8: doodle.<span class="fu">core</span>.<span class="fu">Circle</span> = <span class="fu">Circle</span>(<span class="fl">42.0</span>)</code></pre>
@@ -191,7 +192,7 @@ res8: doodle.<span class="fu">core</span>.<span class="fu">Circle</span> = <span
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; Rectangle(<span class="dv">30</span>, <span class="dv">50</span>)
 res9: doodle.<span class="fu">core</span>.<span class="fu">Rectangle</span> = Rectangle(<span class="fl">30.0</span>, <span class="fl">50.0</span>)</code></pre>
 </div><div id="manipulating-images-display-and-layout" class="slide section level2">
-<h1><span class="header-section-number">3.11</span> Manipulating Images: Display and Layout</h1>
+<h1><span class="header-section-number">4.8</span> Manipulating Images: Display and Layout</h1>
 <ul>
 <li>Show an image with <code>draw</code>:</li>
 </ul>
@@ -204,7 +205,7 @@ res10: doodle.<span class="fu">core</span>.<span class="fu">Image</span> = <span
 
 scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <span class="dv">100</span>) beside <span class="fu">Circle</span>(<span class="dv">30</span>))</code></pre>
 </div><div id="types" class="slide section level2">
-<h1><span class="header-section-number">3.12</span> Types</h1>
+<h1><span class="header-section-number">4.9</span> Types</h1>
 <ul>
 <li>All values have a <strong>type</strong>:
 <ul>
@@ -217,7 +218,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 </ul></li>
 </ul>
 </div><div id="types-guide-you" class="slide section level2">
-<h1><span class="header-section-number">3.13</span> Types Guide You</h1>
+<h1><span class="header-section-number">4.10</span> Types Guide You</h1>
 <ul>
 <li>Type checking forbids you to combine values in a wrong way:</li>
 </ul>
@@ -236,13 +237,13 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>Type checking happens during the first step: errors are detected early.</li>
 </ul>
 </div><div id="some-common-types" class="slide section level2">
-<h1><span class="header-section-number">3.14</span> Some Common Types</h1>
+<h1><span class="header-section-number">4.11</span> Some Common Types</h1>
 <p><code>Int</code> : a 32-bit signed integer</p>
 <p><code>Double</code> : a 64-bit IEEE-754 floating point number (e.g. <code>12.34</code>).</p>
 <p><code>Boolean</code> : boolean values (<code>true</code> and <code>false</code>)</p>
 <p><code>String</code> : text</p>
 </div><div id="the-type-meaning-the-absence-of-meaningful-value" class="slide section level2">
-<h1><span class="header-section-number">3.15</span> The Type Meaning the Absence of (Meaningful) Value</h1>
+<h1><span class="header-section-number">4.12</span> The Type Meaning the Absence of (Meaningful) Value</h1>
 <ul>
 <li>Methods like <code>println</code> or <code>draw</code> return no meaningful value</li>
 <li>Instead, they perform some <strong>side-effects</strong></li>
@@ -250,7 +251,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>There is only one value of type <code>Unit</code>: <code>()</code></li>
 </ul>
 </div><div id="exercise" class="slide section level2">
-<h1><span class="header-section-number">3.16</span> Exercise</h1>
+<h1><span class="header-section-number">4.13</span> Exercise</h1>
 <ul>
 <li>Draw an exclamation mark.</li>
 </ul>
@@ -258,7 +259,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="exclamation.png" />
 </div>
 </div><div id="exercise-1" class="slide section level2">
-<h1><span class="header-section-number">3.17</span> Exercise</h1>
+<h1><span class="header-section-number">4.14</span> Exercise</h1>
 <ul>
 <li>Draw a barbell.</li>
 </ul>
@@ -266,12 +267,12 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="barbell.png" />
 </div>
 </div><div id="manipulating-images-colors" class="slide section level2">
-<h1><span class="header-section-number">3.18</span> Manipulating Images: Colors</h1>
+<h1><span class="header-section-number">4.15</span> Manipulating Images: Colors</h1>
 <p>Use <code>fillColor</code> to fill an image with a given color:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">draw</span>(Rectangle(<span class="dv">30</span>, <span class="dv">80</span>) fillColor Color.<span class="fu">black</span>)</code></pre>
 <p>Examples of available colors are <code>red</code>, <code>blue</code>, <code>green</code>, <code>black</code>, <code>white</code>, <code>gray</code> and <code>brown</code>.</p>
 </div><div id="exercise-2" class="slide section level2">
-<h1><span class="header-section-number">3.19</span> Exercise</h1>
+<h1><span class="header-section-number">4.16</span> Exercise</h1>
 <ul>
 <li>Add colors to your barbell.</li>
 </ul>
@@ -279,8 +280,8 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="barbell-color.png" />
 </div>
 </div>
-<div id="definitions" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Definitions</h1></div><div id="value-definitions" class="slide section level2">
-<h1><span class="header-section-number">4.1</span> Value Definitions</h1>
+<div id="definitions" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Definitions</h1></div><div id="value-definitions" class="slide section level2">
+<h1><span class="header-section-number">5.1</span> Value Definitions</h1>
 <p>Consider the following program:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">draw</span>(
   (Rectangle(<span class="dv">25</span>, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>) beside
@@ -292,7 +293,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>It is hard to <strong>maintain</strong>: if you want to change the width of the weights you have to change the code at <strong>two</strong> places.</li>
 </ul>
 </div><div id="value-definitions-2" class="slide section level2">
-<h1><span class="header-section-number">4.2</span> Value Definitions (2)</h1>
+<h1><span class="header-section-number">5.2</span> Value Definitions (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> weight = Rectangle(<span class="dv">25</span>, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>
 
 <span class="kw">val</span> bar = Rectangle(<span class="dv">200</span>, <span class="dv">20</span>) fillColor Color.<span class="fu">grey</span>
@@ -308,7 +309,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li><p>Note that the type of definitions is <strong>inferred</strong> by the compiler.</p></li>
 </ul>
 </div><div id="value-definitions-1" class="slide section level2">
-<h1><span class="header-section-number">4.3</span> Value Definitions</h1>
+<h1><span class="header-section-number">5.3</span> Value Definitions</h1>
 <p>Now, changing the weights requires to modify the code at one place only:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> weight = Rectangle(<span class="dv">15</span>, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>
 
@@ -316,7 +317,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 
 <span class="fu">draw</span>(weight beside bar beside weight)</code></pre>
 </div><div id="exercise-3" class="slide section level2">
-<h1><span class="header-section-number">4.4</span> Exercise</h1>
+<h1><span class="header-section-number">5.4</span> Exercise</h1>
 <ul>
 <li>Draw two barbells one above the other. The first one must have small weights, while the second one must have heavy weights.</li>
 </ul>
@@ -324,7 +325,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <img src="barbells.png" />
 </div>
 </div><div id="method-definitions" class="slide section level2">
-<h1><span class="header-section-number">4.5</span> Method Definitions</h1>
+<h1><span class="header-section-number">5.5</span> Method Definitions</h1>
 <p>Consider the following program:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> heavyWeight = Rectangle(<span class="dv">30</span>, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>
 <span class="kw">val</span> smallWeight = Rectangle(<span class="dv">15</span>, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>
@@ -336,7 +337,7 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <span class="fu">draw</span>(smallBarbell above heavyBarbell)</code></pre>
 <p>Note the similarities between the <code>heavyWeight</code> and <code>smallWeight</code> definitions. How could you <strong>generalize</strong> them?</p>
 </div><div id="method-definitions-2" class="slide section level2">
-<h1><span class="header-section-number">4.6</span> Method Definitions (2)</h1>
+<h1><span class="header-section-number">5.6</span> Method Definitions (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">weight</span>(width: Int) = Rectangle(width, <span class="dv">100</span>) fillColor Color.<span class="fu">black</span>
 
 <span class="kw">val</span> heavyWeight = <span class="fu">weight</span>(<span class="dv">30</span>)
@@ -347,14 +348,14 @@ scala&gt; <span class="fu">draw</span>(Rectangle(<span class="dv">60</span>, <sp
 <li>Parameter’s type must be explicitly given.</li>
 </ul>
 </div><div id="abstraction-principle" class="slide section level2">
-<h1><span class="header-section-number">4.7</span> Abstraction Principle</h1>
+<h1><span class="header-section-number">5.7</span> Abstraction Principle</h1>
 <blockquote>
 <p>Each significant piece of functionality in a program should be implemented in just one place in the source code.</p>
 <p>Where similar functions are carried out by distinct pieces of code, it is generally beneficial to combine them into one by <strong>abstracting</strong> out the varying parts.</p>
 </blockquote>
 <p>Benjamin C. Pierce. <em>Types and Programming Languages</em>. MIT Press 2002.</p>
 </div><div id="exercise-4" class="slide section level2">
-<h1><span class="header-section-number">4.8</span> Exercise</h1>
+<h1><span class="header-section-number">5.8</span> Exercise</h1>
 <ul>
 <li><p>Define a method <code>barbell</code> that takes as parameter an image of a weight and returns an image of a barbell with this weight.</p></li>
 <li><p>Rewrite your previous program using the methods <code>barbell</code> and <code>weight</code>.</p></li>
@@ -372,7 +373,7 @@ draw(smallBarbell above heavyBarbell)
 -->
 
 </div><div id="elements-of-programming" class="slide section level2">
-<h1><span class="header-section-number">4.9</span> Elements of Programming</h1>
+<h1><span class="header-section-number">5.9</span> Elements of Programming</h1>
 <ul>
 <li>The programming language gives us ways to:
 <ul>
@@ -386,13 +387,13 @@ draw(smallBarbell above heavyBarbell)
 <li>These means of abstraction and composition give you <strong>expression power</strong> to generalize programs and combine them</li>
 </ul>
 </div>
-<div id="loops-and-conditionals" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Loops and Conditionals</h1></div><div id="exercise-5" class="slide section level2">
-<h1><span class="header-section-number">5.1</span> Exercise</h1>
+<div id="loops-and-conditionals" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Loops and Conditionals</h1></div><div id="exercise-5" class="slide section level2">
+<h1><span class="header-section-number">6.1</span> Exercise</h1>
 <ul>
 <li>Draw five barbells stacked on top of each other.</li>
 </ul>
 </div><div id="loops-and-conditionals-1" class="slide section level2">
-<h1><span class="header-section-number">5.2</span> Loops and Conditionals</h1>
+<h1><span class="header-section-number">6.2</span> Loops and Conditionals</h1>
 <p>Consider the following program:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">unit</span> = <span class="fu">barbell</span>(<span class="fu">weight</span>(<span class="dv">15</span>))
 <span class="kw">val</span> barbell1 = <span class="dt">unit</span>
@@ -402,7 +403,7 @@ draw(smallBarbell above heavyBarbell)
 <span class="kw">val</span> barbell5 = <span class="dt">unit</span> above barbell4</code></pre>
 <p>Note pattern: each <span class="math"><em>b</em><em>a</em><em>r</em><em>b</em><em>e</em><em>l</em><em>l</em><sub><em>n</em></sub></span> value is built by putting a barbell above the <span class="math"><em>b</em><em>a</em><em>r</em><em>b</em><em>e</em><em>l</em><em>l</em><sub><em>n</em> − 1</sub></span> value. How to <strong>generalize</strong> this pattern?</p>
 </div><div id="loops-and-conditionals-2" class="slide section level2">
-<h1><span class="header-section-number">5.3</span> Loops and Conditionals</h1>
+<h1><span class="header-section-number">6.3</span> Loops and Conditionals</h1>
 <p>Basically, we want to express the following:</p>
 <ul>
 <li><span class="math"><em>b</em><em>a</em><em>r</em><em>b</em><em>e</em><em>l</em><em>l</em><sub><em>n</em></sub> = </span>
@@ -412,7 +413,7 @@ draw(smallBarbell above heavyBarbell)
 </ul></li>
 </ul>
 </div><div id="conditional-expressions" class="slide section level2">
-<h1><span class="header-section-number">5.4</span> Conditional Expressions</h1>
+<h1><span class="header-section-number">6.4</span> Conditional Expressions</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">unit</span> = <span class="fu">barbell</span>(<span class="fu">weight</span>(<span class="dv">15</span>))
 <span class="kw">def</span> <span class="fu">barbells</span>(n: Int) =
   <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="dt">unit</span>
@@ -422,7 +423,7 @@ draw(smallBarbell above heavyBarbell)
 <li>The result of a conditional depends on the <code>Boolean</code> value of the condition</li>
 </ul>
 </div><div id="boolean-expressions" class="slide section level2">
-<h1><span class="header-section-number">5.5</span> Boolean Expressions</h1>
+<h1><span class="header-section-number">6.5</span> Boolean Expressions</h1>
 <ul>
 <li>Boolean literals: <code>true</code> and <code>false</code></li>
 <li>Comparison operator: <code>42 == 42</code>, <code>42 != 0</code>, <code>42 &gt; 0</code></li>
@@ -432,7 +433,7 @@ draw(smallBarbell above heavyBarbell)
 </ul></li>
 </ul>
 </div><div id="recursive-methods" class="slide section level2">
-<h1><span class="header-section-number">5.6</span> Recursive Methods</h1>
+<h1><span class="header-section-number">6.6</span> Recursive Methods</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">unit</span> = <span class="fu">barbell</span>(<span class="fu">weight</span>(<span class="dv">15</span>))
 <span class="kw">def</span> <span class="fu">barbells</span>(n: Int): Image =
   <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="dt">unit</span>
@@ -441,7 +442,7 @@ draw(smallBarbell above heavyBarbell)
 <li>The return type of <strong>recursive</strong> methods is mandatory.</li>
 </ul>
 </div><div id="recursive-methods-2" class="slide section level2">
-<h1><span class="header-section-number">5.7</span> Recursive Methods (2)</h1>
+<h1><span class="header-section-number">6.7</span> Recursive Methods (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">barbells</span>(<span class="dv">3</span>)
 res11: doodle.<span class="fu">core</span>.<span class="fu">Image</span> = <span class="fu">Above</span>(…)</code></pre>
 <ul>
@@ -458,7 +459,7 @@ res11: doodle.<span class="fu">core</span>.<span class="fu">Image</span> = <span
 <span class="dt">unit</span> <span class="fu">above</span> (<span class="dt">unit</span> above <span class="dt">unit</span>)</code></pre></li>
 </ul>
 </div><div id="exercise-6" class="slide section level2">
-<h1><span class="header-section-number">5.8</span> Exercise</h1>
+<h1><span class="header-section-number">6.8</span> Exercise</h1>
 <ul>
 <li>Define a method <code>circles</code> that takes a number <code>n</code> as parameter and returns an image showing <code>n</code> concentric circles of increasing sizes.</li>
 </ul>
@@ -475,8 +476,8 @@ def circles(n: Int): Image = {
 -->
 
 </div>
-<div id="top-level-definitions-and-lexical-scopes" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Top-Level Definitions and Lexical Scopes</h1></div><div id="object-definition" class="slide section level2">
-<h1><span class="header-section-number">6.1</span> Object Definition</h1>
+<div id="top-level-definitions-and-lexical-scopes" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Top-Level Definitions and Lexical Scopes</h1></div><div id="object-definition" class="slide section level2">
+<h1><span class="header-section-number">7.1</span> Object Definition</h1>
 <ul>
 <li>In Scala programs, methods and values must be defined within a top-level definition:</li>
 </ul>
@@ -489,7 +490,7 @@ def circles(n: Int): Image = {
 <li>The method <code>circles</code> can be reached from the outside using the usual dot notation: <code>Loops.circles(42)</code></li>
 </ul>
 </div><div id="packages" class="slide section level2">
-<h1><span class="header-section-number">6.2</span> Packages</h1>
+<h1><span class="header-section-number">7.2</span> Packages</h1>
 <ul>
 <li>Object definitions can be organized in <strong>packages</strong>:</li>
 </ul>
@@ -500,7 +501,7 @@ def circles(n: Int): Image = {
 
 <span class="kw">object</span> Lists { … }</code></pre>
 </div><div id="packages-visibility" class="slide section level2">
-<h1><span class="header-section-number">6.3</span> Packages Visibility</h1>
+<h1><span class="header-section-number">7.3</span> Packages Visibility</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> core
 
 <span class="kw">object</span> Loops {
@@ -515,7 +516,7 @@ def circles(n: Int): Image = {
 <li>Names located in a package are visible from code located in the same package</li>
 </ul>
 </div><div id="packages-visibility-2" class="slide section level2">
-<h1><span class="header-section-number">6.4</span> Packages Visibility (2)</h1>
+<h1><span class="header-section-number">7.4</span> Packages Visibility (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> std
 
 <span class="kw">object</span> Lists {
@@ -526,7 +527,7 @@ def circles(n: Int): Image = {
 <li>These names must be <strong>fully qualified</strong> to be resolved by the compiler</li>
 </ul>
 </div><div id="imports" class="slide section level2">
-<h1><span class="header-section-number">6.5</span> Imports</h1>
+<h1><span class="header-section-number">7.5</span> Imports</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> std
 
 <span class="kw">import</span> core.<span class="fu">Loops</span>
@@ -538,7 +539,7 @@ def circles(n: Int): Image = {
 <li><strong>Import</strong> clauses make names available without qualification</li>
 </ul>
 </div><div id="blocks-and-local-definitions" class="slide section level2">
-<h1><span class="header-section-number">6.6</span> Blocks and Local Definitions</h1>
+<h1><span class="header-section-number">7.6</span> Blocks and Local Definitions</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">barbells</span>(n: Int): Image = {
   <span class="kw">val</span> <span class="dt">unit</span> = <span class="fu">barbell</span>(<span class="fu">weight</span>(<span class="dv">15</span>))
   <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="dt">unit</span>
@@ -549,7 +550,7 @@ def circles(n: Int): Image = {
 <li>These local definitions are not visible from the outside of the block</li>
 </ul>
 </div><div id="exercise-7" class="slide section level2">
-<h1><span class="header-section-number">6.7</span> Exercise</h1>
+<h1><span class="header-section-number">7.7</span> Exercise</h1>
 <ul>
 <li>Define a method <code>spiral</code> that takes a number <code>n</code> as parameter and returns an image showing <code>n</code> circles of increasing sizes and laid out in a shape of spiral.</li>
 </ul>
@@ -567,7 +568,7 @@ def spiral(n: Int): Image = {
 -->
 
 </div><div id="exercise-8" class="slide section level2">
-<h1><span class="header-section-number">6.8</span> Exercise</h1>
+<h1><span class="header-section-number">7.8</span> Exercise</h1>
 <ul>
 <li>Define a method <code>sierpinski</code> that takes a number <code>n</code> as parameter and returns an image showing the <em>Sierpinski triangle</em> at <code>n</code> iterations:</li>
 </ul>
@@ -586,22 +587,22 @@ def sierpinski(n: Int): Image = {
 -->
 
 </div>
-<div id="syntax-summary" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Syntax Summary</h1></div><div id="definitions-1" class="slide section level2">
-<h1><span class="header-section-number">7.1</span> Definitions</h1>
+<div id="syntax-summary" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Syntax Summary</h1></div><div id="definitions-1" class="slide section level2">
+<h1><span class="header-section-number">8.1</span> Definitions</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> &lt;name&gt; {
   &lt;statements&gt;
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> &lt;name&gt; = &lt;expr&gt;</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> &lt;name&gt;(&lt;p1&gt;, &lt;p2&gt;, …) = &lt;expr&gt;</code></pre>
 </div><div id="expressions" class="slide section level2">
-<h1><span class="header-section-number">7.2</span> Expressions</h1>
+<h1><span class="header-section-number">8.2</span> Expressions</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">if</span> (&lt;expr&gt;) &lt;expr&gt; <span class="kw">else</span> &lt;expr&gt;</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala">&lt;name&gt;(&lt;expr&gt;, &lt;expr&gt;, …)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala">&lt;expr&gt;.&lt;name&gt;(&lt;expr&gt;, …)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala">{ &lt;expr&gt; ; … ; &lt;expr&gt; }</code></pre>
 </div>
-<div id="evaluation-model" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Evaluation Model</h1></div><div id="evaluation-model-1" class="slide section level2">
-<h1><span class="header-section-number">8.1</span> Evaluation Model</h1>
+<div id="evaluation-model" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Evaluation Model</h1></div><div id="evaluation-model-1" class="slide section level2">
+<h1><span class="header-section-number">9.1</span> Evaluation Model</h1>
 <p>Consider the following program:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> foo = <span class="dv">1</span> + <span class="dv">1</span>
 <span class="kw">val</span> bar = <span class="dv">1</span> + <span class="dv">1</span></code></pre>
@@ -617,7 +618,7 @@ def sierpinski(n: Int): Image = {
 </ul></li>
 </ul>
 </div><div id="termination" class="slide section level2">
-<h1><span class="header-section-number">8.2</span> Termination</h1>
+<h1><span class="header-section-number">9.2</span> Termination</h1>
 <p>Is the evaluation process guaranteed to terminate?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> loop: Nothing = loop</code></pre>
 <!--
@@ -627,8 +628,8 @@ TODO
 -->
 
 </div>
-<div id="higher-order-functions-and-function-literals" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Higher-Order Functions and Function Literals</h1></div><div id="motivation" class="slide section level2">
-<h1><span class="header-section-number">9.1</span> Motivation</h1>
+<div id="higher-order-functions-and-function-literals" class="titleslide slide section level1"><h1><span class="header-section-number">10</span> Higher-Order Functions and Function Literals</h1></div><div id="motivation" class="slide section level2">
+<h1><span class="header-section-number">10.1</span> Motivation</h1>
 <p>Consider the following solutions to the circles and spiral exercises:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">circles</span>(n: Int): Image = {
   <span class="kw">val</span> circle = <span class="fu">Circle</span>(<span class="dv">25</span> + <span class="dv">15</span> * n)
@@ -646,7 +647,7 @@ TODO
 <li>Note the similarities between the last line of each method</li>
 </ul>
 </div><div id="motivation-2" class="slide section level2">
-<h1><span class="header-section-number">9.2</span> Motivation (2)</h1>
+<h1><span class="header-section-number">10.2</span> Motivation (2)</h1>
 <p>Here is an attempt to capture the loop and abstract over the images:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stack</span>(image: Image, n: Int): Image =
   <span class="kw">if</span> (n == <span class="dv">1</span>) image <span class="kw">else</span> image on <span class="fu">stack</span>(image, n - <span class="dv">1</span>)
@@ -657,7 +658,7 @@ TODO
 <li>How to abstract over the <strong>computation</strong> that returns the image?</li>
 </ul>
 </div><div id="abstract-over-computations" class="slide section level2">
-<h1><span class="header-section-number">9.3</span> Abstract Over Computations</h1>
+<h1><span class="header-section-number">10.3</span> Abstract Over Computations</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stack</span>(image: Int =&gt; Image, n: Int): Image =
   <span class="kw">if</span> (n == <span class="dv">1</span>) <span class="fu">image</span>(n) <span class="kw">else</span> <span class="fu">image</span>(n) on <span class="fu">stack</span>(image, n - <span class="dv">1</span>)
 
@@ -667,7 +668,7 @@ TODO
 <li>We define <code>circles</code> by supplying a <strong>function literal</strong></li>
 </ul>
 </div><div id="function-types-and-function-values" class="slide section level2">
-<h1><span class="header-section-number">9.4</span> Function Types and Function Values</h1>
+<h1><span class="header-section-number">10.4</span> Function Types and Function Values</h1>
 <ul>
 <li>The type <code>(T1, …, Tn) =&gt; R</code> is the type of a function that takes <code>n</code> parameters (of type <code>T1</code>, …, <code>Tn</code>) and returns a value of type <code>R</code>
 <ul>
@@ -679,7 +680,7 @@ TODO
 </ul></li>
 </ul>
 </div><div id="exercise-9" class="slide section level2">
-<h1><span class="header-section-number">9.5</span> Exercise</h1>
+<h1><span class="header-section-number">10.5</span> Exercise</h1>
 <ul>
 <li>Rewrite <code>spiral</code> using <code>stack</code></li>
 </ul>
@@ -693,7 +694,7 @@ def spiral(count: Int) = stack(n => {
 -->
 
 </div><div id="exercise-10" class="slide section level2">
-<h1><span class="header-section-number">9.6</span> Exercise</h1>
+<h1><span class="header-section-number">10.6</span> Exercise</h1>
 <ul>
 <li>Note the similarities between <code>stack</code> and <code>barbells</code>. Abstract over their differences by defining the following <code>layout</code> method:</li>
 </ul>
@@ -710,7 +711,7 @@ def layout(op: (Image, Image) => Image, image: Int => Image, n: Int): Image =
 -->
 
 </div><div id="exercise-11" class="slide section level2">
-<h1><span class="header-section-number">9.7</span> Exercise</h1>
+<h1><span class="header-section-number">10.7</span> Exercise</h1>
 <ul>
 <li>Rewrite <code>sierpinski</code> using <code>layout</code></li>
 </ul>
@@ -722,8 +723,8 @@ def sierpinski(count: Int) =
 
 
 </div>
-<div id="making-standalone-programs" class="titleslide slide section level1"><h1><span class="header-section-number">10</span> Making Standalone Programs</h1></div><div id="making-a-standalone-program-from-a-source-file" class="slide section level2">
-<h1><span class="header-section-number">10.1</span> Making a Standalone Program from a Source File</h1>
+<div id="making-standalone-programs" class="titleslide slide section level1"><h1><span class="header-section-number">11</span> Making Standalone Programs</h1></div><div id="making-a-standalone-program-from-a-source-file" class="slide section level2">
+<h1><span class="header-section-number">11.1</span> Making a Standalone Program from a Source File</h1>
 <ul>
 <li>Write the following program in a file <code>Main.scala</code>:</li>
 </ul>
@@ -733,7 +734,7 @@ def sierpinski(count: Int) =
 
 }</code></pre>
 </div><div id="making-an-executable-program-from-a-source-file-2" class="slide section level2">
-<h1><span class="header-section-number">10.2</span> Making an Executable Program from a Source File (2)</h1>
+<h1><span class="header-section-number">11.2</span> Making an Executable Program from a Source File (2)</h1>
 <ul>
 <li>Compile it:</li>
 </ul>
@@ -745,7 +746,7 @@ def sierpinski(count: Int) =
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">scala</span> Main
 <span class="st">&quot;Hello world!&quot;</span></code></pre>
 </div><div id="scaling-the-build-process" class="slide section level2">
-<h1><span class="header-section-number">10.3</span> Scaling the Build Process</h1>
+<h1><span class="header-section-number">11.3</span> Scaling the Build Process</h1>
 <ul>
 <li><p>What if your program has 100 source files?</p></li>
 <li><p>How to recompile only the sources impacted by a given modification?</p></li>
@@ -753,10 +754,10 @@ def sierpinski(count: Int) =
 <li><p>How to handle a whole project lifecycle (testing, packaging, publishing, etc.)?</p></li>
 </ul>
 </div><div id="sbt" class="slide section level2">
-<h1><span class="header-section-number">10.4</span> sbt</h1>
+<h1><span class="header-section-number">11.4</span> sbt</h1>
 <p><a href="http://www.scala-sbt.org/">sbt</a> is a build tool for Scala (and Java) projects</p>
 </div><div id="sbt-quick-start" class="slide section level2">
-<h1><span class="header-section-number">10.5</span> sbt Quick Start</h1>
+<h1><span class="header-section-number">11.5</span> sbt Quick Start</h1>
 <ul>
 <li><p>Run <code>$ sbt &lt;command&gt;</code> from your project directory to run an sbt command from your shell</p></li>
 <li><p>Run <code>$ sbt</code> from your project directory to open the sbt prompt</p></li>
@@ -769,7 +770,7 @@ def sierpinski(count: Int) =
 </ul></li>
 </ul>
 </div><div id="sbt-quick-start-2" class="slide section level2">
-<h1><span class="header-section-number">10.6</span> sbt Quick Start (2)</h1>
+<h1><span class="header-section-number">11.6</span> sbt Quick Start (2)</h1>
 <ul>
 <li>The build process of the project is defined in a <code>build.sbt</code> file</li>
 <li><p>This file essentially defines your project’s <strong>settings</strong>:</p>
@@ -781,8 +782,8 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li><p>Settings values are Scala expressions</p></li>
 </ul>
 </div>
-<div id="modeling-the-world" class="titleslide slide section level1"><h1><span class="header-section-number">11</span> Modeling the World</h1></div><div id="motivation-1" class="slide section level2">
-<h1><span class="header-section-number">11.1</span> Motivation</h1>
+<div id="modeling-the-world" class="titleslide slide section level1"><h1><span class="header-section-number">12</span> Modeling the World</h1></div><div id="motivation-1" class="slide section level2">
+<h1><span class="header-section-number">12.1</span> Motivation</h1>
 <ul>
 <li>Consider the following <code>barbell</code> method that creates a barbell:</li>
 </ul>
@@ -798,7 +799,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li>You can’t do much with your barbells (excepted drawing them)</li>
 </ul>
 </div><div id="motivation-2-1" class="slide section level2">
-<h1><span class="header-section-number">11.2</span> Motivation (2)</h1>
+<h1><span class="header-section-number">12.2</span> Motivation (2)</h1>
 <ul>
 <li>How to define a barbell heavier than a given barbell?</li>
 </ul>
@@ -807,7 +808,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li>Modeling barbells with images makes it hard to manipulate them</li>
 </ul>
 </div><div id="motivation-3" class="slide section level2">
-<h1><span class="header-section-number">11.3</span> Motivation (3)</h1>
+<h1><span class="header-section-number">12.3</span> Motivation (3)</h1>
 <ul>
 <li>How to define a barbell heavier than a given barbell?</li>
 </ul>
@@ -823,7 +824,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li>This approach is such a mess to use</li>
 </ul>
 </div><div id="case-class-definition" class="slide section level2">
-<h1><span class="header-section-number">11.4</span> Case Class Definition</h1>
+<h1><span class="header-section-number">12.4</span> Case Class Definition</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Barbell</span>(load: Int, length: Int) {
   <span class="kw">def</span> weigh: Barbell = <span class="fu">Barbell</span>(load + <span class="dv">10</span>, length + <span class="dv">20</span>)
 }
@@ -838,7 +839,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 </ul></li>
 </ul>
 </div><div id="case-class-definition-2" class="slide section level2">
-<h1><span class="header-section-number">11.5</span> Case Class Definition (2)</h1>
+<h1><span class="header-section-number">12.5</span> Case Class Definition (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Barbell</span>(load: Int, length: Int) {
   <span class="kw">def</span> weigh: Barbell = <span class="fu">Barbell</span>(load + <span class="dv">10</span>, length + <span class="dv">20</span>)
 }
@@ -850,18 +851,18 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li><code>lightBarbell</code> and <code>heavyBarbell</code> are <strong>instances</strong> of <code>Barbell</code></li>
 </ul>
 </div><div id="exercise-12" class="slide section level2">
-<h1><span class="header-section-number">11.6</span> Exercise</h1>
+<h1><span class="header-section-number">12.6</span> Exercise</h1>
 <ul>
 <li>Implement the following method:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">barbellImage</span>(barbell: Barbell): Image = ???</code></pre>
 </div><div id="exercise-13" class="slide section level2">
-<h1><span class="header-section-number">11.7</span> Exercise</h1>
+<h1><span class="header-section-number">12.7</span> Exercise</h1>
 <ul>
 <li>Add a method <code>lighten</code> to the <code>Barbell</code> type</li>
 </ul>
 </div><div id="exercise-14" class="slide section level2">
-<h1><span class="header-section-number">11.8</span> Exercise</h1>
+<h1><span class="header-section-number">12.8</span> Exercise</h1>
 <ul>
 <li>A barbell is one possible fitness device</li>
 <li>Consider also a simple mat as another type of fitness device:</li>
@@ -873,13 +874,13 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li>A mat has a width and a length. Define a case class for it.</li>
 </ul>
 </div><div id="exercise-15" class="slide section level2">
-<h1><span class="header-section-number">11.9</span> Exercise</h1>
+<h1><span class="header-section-number">12.9</span> Exercise</h1>
 <ul>
 <li>Let’s assume that in your world a fitness device is either a mat or a barbell (and nothing else)</li>
 <li>Write a <code>fitnessDeviceImage</code> method that takes a fitness device as parameter and returns an image of it</li>
 </ul>
 </div><div id="variant-types" class="slide section level2">
-<h1><span class="header-section-number">11.10</span> Variant Types</h1>
+<h1><span class="header-section-number">12.10</span> Variant Types</h1>
 <ul>
 <li>How to model that a fitness device can either be a mat or be a barbell, and nothing else?</li>
 </ul>
@@ -894,20 +895,20 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 </ul></li>
 </ul>
 </div><div id="pattern-matching" class="slide section level2">
-<h1><span class="header-section-number">11.11</span> Pattern Matching</h1>
+<h1><span class="header-section-number">12.11</span> Pattern Matching</h1>
 <p>You can manipulate case classes and sealed types using <strong>pattern matching</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">name</span>(fitnessDevice: FitnessDevice): String = fitnessDevice <span class="kw">match</span> {
   <span class="kw">case</span> <span class="fu">Barbell</span>(load, length) =&gt; <span class="st">&quot;Barbell&quot;</span>
   <span class="kw">case</span> <span class="fu">Mat</span>(width, length) =&gt; <span class="st">&quot;Mat&quot;</span>
 }</code></pre>
 </div><div id="exercise-16" class="slide section level2">
-<h1><span class="header-section-number">11.12</span> Exercise</h1>
+<h1><span class="header-section-number">12.12</span> Exercise</h1>
 <ul>
 <li>Implement the following method:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">fitnessDeviceImage</span>(fitnessDevice: FitnessDevice): Image = ???</code></pre>
 </div><div id="syntax-summary-1" class="slide section level2">
-<h1><span class="header-section-number">11.13</span> Syntax Summary</h1>
+<h1><span class="header-section-number">12.13</span> Syntax Summary</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> &lt;name&gt;(&lt;member1&gt;, &lt;member2&gt;, …)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> &lt;name1&gt;
 <span class="kw">case</span> <span class="kw">class</span> &lt;name2&gt;(…) <span class="kw">extends</span> &lt;name1&gt;
@@ -918,8 +919,8 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
   <span class="kw">case</span> &lt;name3&gt;(…) =&gt; &lt;expr&gt;
 }</code></pre>
 </div>
-<div id="handling-failure" class="titleslide slide section level1"><h1><span class="header-section-number">12</span> Handling Failure</h1></div><div id="motivation-4" class="slide section level2">
-<h1><span class="header-section-number">12.1</span> Motivation</h1>
+<div id="handling-failure" class="titleslide slide section level1"><h1><span class="header-section-number">13</span> Handling Failure</h1></div><div id="motivation-4" class="slide section level2">
+<h1><span class="header-section-number">13.1</span> Motivation</h1>
 <p>Remember the <code>lighten</code> method:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> lighten = <span class="fu">Barbell</span>(load - <span class="dv">10</span>, length - <span class="dv">20</span>)</code></pre>
 <ul class="incremental">
@@ -927,7 +928,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li>Do you want <code>lighten</code> to be <strong>defined</strong> for <strong>all</strong> values of <code>Barbell</code>?</li>
 </ul>
 </div><div id="option" class="slide section level2">
-<h1><span class="header-section-number">12.2</span> <code>Option</code></h1>
+<h1><span class="header-section-number">13.2</span> <code>Option</code></h1>
 <p>A way to model the fact that a given barbell may not have a lighter barbell is to use the <code>Option</code> type:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> lighten: Option[Barbell] =
   <span class="kw">if</span> (load &lt;= <span class="dv">15</span> || length &lt;= <span class="dv">100</span>) None
@@ -941,13 +942,13 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 </ul></li>
 </ul>
 </div><div id="exercise-17" class="slide section level2">
-<h1><span class="header-section-number">12.3</span> Exercise</h1>
+<h1><span class="header-section-number">13.3</span> Exercise</h1>
 <ul>
 <li>Add a <code>smaller</code> method to the <code>Mat</code> type:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> smaller: Option[Mat] = ???</code></pre>
 </div><div id="common-patterns-with-optional-values" class="slide section level2">
-<h1><span class="header-section-number">12.4</span> Common Patterns with Optional Values</h1>
+<h1><span class="header-section-number">13.4</span> Common Patterns with Optional Values</h1>
 <p><code>Option</code> values can be manipulated using pattern matching:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">lighterBarbell</span>(barbell: Barbell): String =
   barbell.<span class="fu">lighten</span> <span class="kw">match</span> {
@@ -955,17 +956,17 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
     <span class="kw">case</span> None =&gt; <span class="st">&quot;there is no lighter barbell&quot;</span>
   }</code></pre>
 </div><div id="common-patterns-with-optional-values-1" class="slide section level2">
-<h1><span class="header-section-number">12.5</span> Common Patterns With Optional Values</h1>
+<h1><span class="header-section-number">13.5</span> Common Patterns With Optional Values</h1>
 <p>Use <code>map</code> to transform a successful value into another successful value, ignoring the <code>None</code> case:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">smallerWidth</span>(mat: Mat): Option[Int] =
   mat.<span class="fu">smaller</span>.<span class="fu">map</span>(smallerMat =&gt; smallerMat.<span class="fu">width</span>)</code></pre>
 </div><div id="common-patterns-with-optional-values-2" class="slide section level2">
-<h1><span class="header-section-number">12.6</span> Common Patterns With Optional Values (2)</h1>
+<h1><span class="header-section-number">13.6</span> Common Patterns With Optional Values (2)</h1>
 <p>Use <code>filter</code> to turn a successful value into a failure if it does not satisfy a given predicate:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">keepHugeMats</span>(maybeMat: Option[Mat]): Option[Mat] =
   maybeMat.<span class="fu">filter</span>(mat =&gt; mat.<span class="fu">width</span> &gt; <span class="dv">100</span> &amp;&amp; mat.<span class="fu">length</span> &gt; <span class="dv">200</span>)</code></pre>
 </div><div id="exercise-18" class="slide section level2">
-<h1><span class="header-section-number">12.7</span> Exercise</h1>
+<h1><span class="header-section-number">13.7</span> Exercise</h1>
 <ul>
 <li>Write a method that takes a <code>Mat</code> as parameter, tries to get a smaller mat and returns its area only if it is higher than 1000:</li>
 </ul>
@@ -978,12 +979,12 @@ def smallerButLargeEnough(mat: Mat): Option[Int] =
 -->
 
 </div><div id="common-patterns-with-optional-values-3" class="slide section level2">
-<h1><span class="header-section-number">12.8</span> Common Patterns With Optional Values (3)</h1>
+<h1><span class="header-section-number">13.8</span> Common Patterns With Optional Values (3)</h1>
 <p>Use <code>flatMap</code> to transform a successful value into an optional value:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">smallerSmaller</span>(mat: Mat): Option[Mat] =
   mat.<span class="fu">smaller</span>.<span class="fu">flatMap</span>(smallerMat =&gt; smallerMat.<span class="fu">smaller</span>)</code></pre>
 </div><div id="sequencing-computations-manipulating-optional-values" class="slide section level2">
-<h1><span class="header-section-number">12.9</span> Sequencing Computations Manipulating Optional Values</h1>
+<h1><span class="header-section-number">13.9</span> Sequencing Computations Manipulating Optional Values</h1>
 <p><code>flatMap</code> and <code>map</code> are used to sequence computations operating on optional values:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">lightenLightenLoad</span>(barbell: Barbell): Option[Int] =
   barbell.<span class="fu">lighten</span>.<span class="fu">flatMap</span> { lighterBarbell =&gt;
@@ -993,7 +994,7 @@ def smallerButLargeEnough(mat: Mat): Option[Int] =
   }</code></pre>
 <p>(We will see a more expressive way of expressing such computations, soon)</p>
 </div><div id="try" class="slide section level2">
-<h1><span class="header-section-number">12.10</span> <code>Try</code></h1>
+<h1><span class="header-section-number">13.10</span> <code>Try</code></h1>
 <ul>
 <li><code>Try[A]</code> is <em>similar</em> to <code>Option[A]</code> excepted that in case of failure it provides more information. It can either be:
 <ul>
@@ -1002,7 +1003,7 @@ def smallerButLargeEnough(mat: Mat): Option[Int] =
 </ul></li>
 </ul>
 </div><div id="common-patterns-with-trya-values" class="slide section level2">
-<h1><span class="header-section-number">12.11</span> Common Patterns with <code>Try[A]</code> Values</h1>
+<h1><span class="header-section-number">13.11</span> Common Patterns with <code>Try[A]</code> Values</h1>
 <ul>
 <li>Like <code>Option[A]</code>, <code>Try[A]</code> has <code>map</code>, <code>filter</code> and <code>flatMap</code></li>
 </ul>
@@ -1011,12 +1012,12 @@ TODO Exceptions try/catch
 -->
 
 </div>
-<div id="standard-collections" class="titleslide slide section level1"><h1><span class="header-section-number">13</span> Standard Collections</h1></div><div id="standard-collections-1" class="slide section level2">
-<h1><span class="header-section-number">13.1</span> Standard Collections</h1>
+<div id="standard-collections" class="titleslide slide section level1"><h1><span class="header-section-number">14</span> Standard Collections</h1></div><div id="standard-collections-1" class="slide section level2">
+<h1><span class="header-section-number">14.1</span> Standard Collections</h1>
 <p>The Scala standard library provides several types making it easier to deal with collections of elements</p>
 <p>This section gives a slight overview of the standard collections. For more details see the <a href="http://scala-lang.org/api">API documentation</a></p>
 </div><div id="first-steps" class="slide section level2">
-<h1><span class="header-section-number">13.2</span> First Steps</h1>
+<h1><span class="header-section-number">14.2</span> First Steps</h1>
 <ul>
 <li>Create a sequence of objects with <code>Seq</code>:</li>
 </ul>
@@ -1026,7 +1027,7 @@ TODO Exceptions try/catch
 <li><code>mats</code> and <code>mats2</code> have type <code>Seq[Mat]</code></li>
 </ul>
 </div><div id="first-steps-2" class="slide section level2">
-<h1><span class="header-section-number">13.3</span> First Steps (2)</h1>
+<h1><span class="header-section-number">14.3</span> First Steps (2)</h1>
 <ul>
 <li>Add an element to the front of the sequence using the <code>+:</code> operator:</li>
 </ul>
@@ -1039,7 +1040,7 @@ TODO Exceptions try/catch
 <li>Note that these methods <strong>return a new sequence</strong> (they don’t modify the <code>mats</code> object)</li>
 </ul>
 </div><div id="first-steps-3" class="slide section level2">
-<h1><span class="header-section-number">13.4</span> First Steps (3)</h1>
+<h1><span class="header-section-number">14.4</span> First Steps (3)</h1>
 <ul>
 <li>“pattern match” on a sequence like this:</li>
 </ul>
@@ -1048,7 +1049,7 @@ TODO Exceptions try/catch
   <span class="kw">case</span> mat +: mats =&gt; <span class="dv">1</span> + <span class="fu">size</span>(mats)
 }</code></pre>
 </div><div id="first-steps-4" class="slide section level2">
-<h1><span class="header-section-number">13.5</span> First Steps (4)</h1>
+<h1><span class="header-section-number">14.5</span> First Steps (4)</h1>
 <ul>
 <li>Transform the elements of a sequence using <code>map</code>:</li>
 </ul>
@@ -1058,7 +1059,7 @@ TODO Exceptions try/catch
 <li><code>areas</code> has type <code>Seq[Int]</code></li>
 </ul>
 </div><div id="first-steps-5" class="slide section level2">
-<h1><span class="header-section-number">13.6</span> First Steps (5)</h1>
+<h1><span class="header-section-number">14.6</span> First Steps (5)</h1>
 <ul>
 <li>Filter elements using <code>filter</code>:</li>
 </ul>
@@ -1067,7 +1068,7 @@ TODO Exceptions try/catch
 <li><code>filter</code> takes a predicate function returning a <code>Boolean</code> and returns a sequence whose elements are the sequence elements that satisfy the predicate</li>
 </ul>
 </div><div id="exercise-19" class="slide section level2">
-<h1><span class="header-section-number">13.7</span> Exercise</h1>
+<h1><span class="header-section-number">14.7</span> Exercise</h1>
 <ul>
 <li>Define a method that takes a sequence of <code>Mat</code> and returns their areas if this one is greater than 1000</li>
 </ul>
@@ -1080,21 +1081,21 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 -->
 
 </div><div id="first-steps-6" class="slide section level2">
-<h1><span class="header-section-number">13.8</span> First Steps (6)</h1>
+<h1><span class="header-section-number">14.8</span> First Steps (6)</h1>
 <ul>
 <li>Transform each element of a sequence into a sequence using <code>flatMap</code>:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">duplicate</span>(images: Seq[Image]): Seq[Image] =
   images.<span class="fu">flatMap</span>(image =&gt; Seq(image above image, image beside image))</code></pre>
 </div><div id="first-steps-7" class="slide section level2">
-<h1><span class="header-section-number">13.9</span> First Steps (7)</h1>
+<h1><span class="header-section-number">14.9</span> First Steps (7)</h1>
 <ul>
 <li>Apply a side-effecting function to the elements of a sequence using <code>foreach</code>:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">drawAll</span>(images: Seq[Image]): Unit =
   images.<span class="fu">foreach</span>(image =&gt; <span class="fu">draw</span>(image))</code></pre>
 </div><div id="traversable" class="slide section level2">
-<h1><span class="header-section-number">13.10</span> <code>Traversable</code></h1>
+<h1><span class="header-section-number">14.10</span> <code>Traversable</code></h1>
 <p>The most general collection is <code>Traversable[A]</code>, it provides methods to iterate on the elements of a collection, to transform a collection, to filter it, and a lot more:</p>
 <table>
 <thead>
@@ -1151,7 +1152,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </tbody>
 </table>
 </div><div id="iterable" class="slide section level2">
-<h1><span class="header-section-number">13.11</span> <code>Iterable</code></h1>
+<h1><span class="header-section-number">14.11</span> <code>Iterable</code></h1>
 <p><code>Iterable[A]</code> extends <code>Traversable[A]</code>, here are some of its new members:</p>
 <table>
 <thead>
@@ -1180,7 +1181,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </tbody>
 </table>
 </div><div id="seq" class="slide section level2">
-<h1><span class="header-section-number">13.12</span> <code>Seq</code></h1>
+<h1><span class="header-section-number">14.12</span> <code>Seq</code></h1>
 <p><code>Seq[A]</code> is an <code>Iterable[A]</code> which order of elements is kept. It adds the following members:</p>
 <table>
 <thead>
@@ -1217,7 +1218,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </tbody>
 </table>
 </div><div id="seq-2" class="slide section level2">
-<h1><span class="header-section-number">13.13</span> <code>Seq</code> (2)</h1>
+<h1><span class="header-section-number">14.13</span> <code>Seq</code> (2)</h1>
 <p>A <code>Seq</code> can be created simply using the <code>Seq</code> constructor:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Seq(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">val</span> ys = Seq.<span class="fu">empty</span>[Int]</code></pre>
@@ -1227,7 +1228,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
   <span class="kw">case</span> x +: xs =&gt; x + <span class="fu">sum</span>(xs)
 }</code></pre>
 </div><div id="list-and-vector" class="slide section level2">
-<h1><span class="header-section-number">13.14</span> <code>List</code> and <code>Vector</code></h1>
+<h1><span class="header-section-number">14.14</span> <code>List</code> and <code>Vector</code></h1>
 <p><code>List[A]</code> and <code>Vector[A]</code> are two implementations of <code>Seq[A]</code> with different performance characteristics:</p>
 <ul>
 <li><p><code>List[A]</code> has more efficient <code>head</code> and <code>tail</code> implementations</p></li>
@@ -1237,13 +1238,13 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = <span class="dv">1</span> :: <span class="dv">2</span> :: <span class="dv">3</span> :: Nil <span class="co">// List</span>
 <span class="kw">val</span> ys = Vector(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
 </div><div id="range" class="slide section level2">
-<h1><span class="header-section-number">13.15</span> <code>Range</code></h1>
+<h1><span class="header-section-number">14.15</span> <code>Range</code></h1>
 <p><code>Range</code> is a useful implementation of <code>Seq[Int]</code> that efficiently represents a range of integer values</p>
 <p>The simplest way to generate a range is to use <code>to</code> and <code>until</code> methods of numeric values:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">(<span class="dv">1</span> to <span class="dv">3</span>).<span class="fu">foreach</span>(println) <span class="co">// prints “1”, “2”, “3”</span>
 (<span class="dv">0</span> until <span class="dv">3</span>).<span class="fu">map</span>(_ * <span class="dv">2</span>).<span class="fu">foreach</span>(println) <span class="co">// prints “0”, “2”, “4”</span></code></pre>
 </div><div id="set" class="slide section level2">
-<h1><span class="header-section-number">13.16</span> <code>Set</code></h1>
+<h1><span class="header-section-number">14.16</span> <code>Set</code></h1>
 <p>A <code>Set[A]</code> is an <code>Iterable[A]</code> that contains no duplicate elements. It adds the following members:</p>
 <table>
 <thead>
@@ -1281,7 +1282,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </table>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Set(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</code></pre>
 </div><div id="map" class="slide section level2">
-<h1><span class="header-section-number">13.17</span> <code>Map</code></h1>
+<h1><span class="header-section-number">14.17</span> <code>Map</code></h1>
 <p>A <code>Map[A, B]</code> is an <code>Iterable[(A, B)]</code> that contains <code>B</code> values indexed by <code>A</code> values. It adds the following members:</p>
 <table>
 <thead>
@@ -1311,7 +1312,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </table>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Map(<span class="st">&quot;foo&quot;</span> -&gt; <span class="dv">42</span>, <span class="st">&quot;bar&quot;</span> -&gt; <span class="dv">10</span>, <span class="st">&quot;baz&quot;</span> -&gt; <span class="dv">0</span>)</code></pre>
 </div><div id="exercise-20" class="slide section level2">
-<h1><span class="header-section-number">13.18</span> Exercise</h1>
+<h1><span class="header-section-number">14.18</span> Exercise</h1>
 <ul>
 <li>Change the <code>circles</code> method so that it returns a collection of concentric circles:</li>
 </ul>
@@ -1333,7 +1334,7 @@ def circles(count: Int) =
 -->
 
 </div><div id="exercise-21" class="slide section level2">
-<h1><span class="header-section-number">13.19</span> Exercise</h1>
+<h1><span class="header-section-number">14.19</span> Exercise</h1>
 <ul>
 <li>Do the same for <code>spiral</code>:</li>
 </ul>
@@ -1349,7 +1350,7 @@ def spiral(count: Int) =
 -->
 
 </div><div id="exercise-22" class="slide section level2">
-<h1><span class="header-section-number">13.20</span> Exercise</h1>
+<h1><span class="header-section-number">14.20</span> Exercise</h1>
 <ul>
 <li>Change the <code>stack</code> method to the following:</li>
 </ul>
@@ -1368,7 +1369,7 @@ def stack(images: Seq[Image]): Image =
 -->
 
 </div><div id="exercise-23" class="slide section level2">
-<h1><span class="header-section-number">13.21</span> Exercise</h1>
+<h1><span class="header-section-number">14.21</span> Exercise</h1>
 <ul>
 <li>Change the <code>layout</code> method to the following:</li>
 </ul>
@@ -1379,8 +1380,8 @@ def layout(op: (Image, Image) => Image, images: Seq[Image]): Image =
 -->
 
 </div>
-<div id="syntactic-sugars" class="titleslide slide section level1"><h1><span class="header-section-number">14</span> Syntactic Sugars</h1></div><div id="string-interpolation" class="slide section level2">
-<h1><span class="header-section-number">14.1</span> String Interpolation</h1>
+<div id="syntactic-sugars" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> Syntactic Sugars</h1></div><div id="string-interpolation" class="slide section level2">
+<h1><span class="header-section-number">15.1</span> String Interpolation</h1>
 <p><strong>String interpolation</strong> is a mechanism to build strings from dynamic values:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">greet</span>(name: String) = s<span class="st">&quot;Hello, $name!&quot;</span></code></pre>
 <ul>
@@ -1389,11 +1390,11 @@ def layout(op: (Image, Image) => Image, images: Seq[Image]): Image =
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">greet</span>(<span class="st">&quot;World&quot;</span>) <span class="co">// &quot;Hello, World!&quot;</span></code></pre>
 </div><div id="sequencing-computations" class="slide section level2">
-<h1><span class="header-section-number">14.2</span> Sequencing Computations</h1>
+<h1><span class="header-section-number">15.2</span> Sequencing Computations</h1>
 <p>Actually, <code>flatMap</code> and <code>map</code> functions are very useful to sequence computations within a given <em>context</em> (optional values, collections, and much more)</p>
 <p>They are so common that Scala supports a more convenient syntax, the <strong><code>for</code> notation</strong>, that desugars to <code>flatMap</code>, <code>map</code> and <code>filter</code> calls</p>
 </div><div id="sequencing-computations-1" class="slide section level2">
-<h1><span class="header-section-number">14.3</span> Sequencing Computations</h1>
+<h1><span class="header-section-number">15.3</span> Sequencing Computations</h1>
 <p>Remember the <code>lightenLightenLoad</code> method:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">lightenLightenLoad</span>(barbell: Barbell): Option[Int] =
   barbell.<span class="fu">lighten</span>.<span class="fu">flatMap</span> { lighterBarbell =&gt;
@@ -1408,22 +1409,22 @@ def layout(op: (Image, Image) => Image, images: Seq[Image]): Image =
     lighterLighterBarbell &lt;- lighterBarbell.<span class="fu">lighten</span>
   } <span class="kw">yield</span> lighterLighterBarbell.<span class="fu">load</span></code></pre>
 </div><div id="translation-of-for" class="slide section level2">
-<h1><span class="header-section-number">14.4</span> Translation of <code>for</code></h1>
+<h1><span class="header-section-number">15.4</span> Translation of <code>for</code></h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
 <p>is translated to:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">xs.<span class="fu">map</span>(x =&gt; x + <span class="dv">1</span>)</code></pre>
 </div><div id="translation-of-for-2" class="slide section level2">
-<h1><span class="header-section-number">14.5</span> Translation of <code>for</code> (2)</h1>
+<h1><span class="header-section-number">15.5</span> Translation of <code>for</code> (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs; y &lt;- ys) <span class="kw">yield</span> (x, y)</code></pre>
 <p>is translated to:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">xs.<span class="fu">flatMap</span>(x =&gt; <span class="kw">for</span> (y &lt;- ys) <span class="kw">yield</span> (x, y))</code></pre>
 </div><div id="translation-of-for-3" class="slide section level2">
-<h1><span class="header-section-number">14.6</span> Translation of <code>for</code> (3)</h1>
+<h1><span class="header-section-number">15.6</span> Translation of <code>for</code> (3)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs <span class="kw">if</span> x % <span class="dv">2</span> == <span class="dv">0</span>) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
 <p>is essentially translated to:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">for</span> (x &lt;- xs.<span class="fu">filter</span>(x =&gt; x % <span class="dv">2</span> == <span class="dv">0</span>)) <span class="kw">yield</span> x + <span class="dv">1</span></code></pre>
 </div><div id="function-literals" class="slide section level2">
-<h1><span class="header-section-number">14.7</span> Function Literals</h1>
+<h1><span class="header-section-number">15.7</span> Function Literals</h1>
 <p>In some cases, you’d like to avoid to repeat the parameter name of a literal function:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> inc: Int =&gt; Int = x =&gt; x + <span class="dv">1</span></code></pre>
 <p>You can use an underscore as a placeholder for the function parameter:</p>
@@ -1432,7 +1433,7 @@ def layout(op: (Image, Image) => Image, images: Seq[Image]): Image =
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum = <span class="fu">fold</span>(<span class="dv">0</span>, _ + _)
 <span class="kw">def</span> product = <span class="fu">fold</span>(<span class="dv">1</span>, _ * _)</code></pre>
 </div><div id="currying-and-partial-application" class="slide section level2">
-<h1><span class="header-section-number">14.8</span> Currying and Partial Application</h1>
+<h1><span class="header-section-number">15.8</span> Currying and Partial Application</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
 
 <span class="fu">add</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="co">// 7</span></code></pre>
@@ -1444,7 +1445,7 @@ def layout(op: (Image, Image) => Image, images: Seq[Image]): Image =
 <p>The second version takes one number as parameter and returns a function that takes the second number and returns their sum</p>
 <p>We say that the second version is a <strong>curried</strong> function</p>
 </div><div id="currying-and-partial-application-2" class="slide section level2">
-<h1><span class="header-section-number">14.9</span> Currying and Partial Application (2)</h1>
+<h1><span class="header-section-number">15.9</span> Currying and Partial Application (2)</h1>
 <p>Curried functions can be partially applied:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">val</span> inc = <span class="fu">add</span>(<span class="dv">1</span>)
 inc: Int =&gt; Int = &lt;function1&gt;
@@ -1454,7 +1455,7 @@ res0: Int = <span class="dv">6</span></code></pre>
 <p>Alternatively, you can write the curried version using several <strong>parameters lists</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(a: Int)(b: Int) = a + b</code></pre>
 </div><div id="tuples" class="slide section level2">
-<h1><span class="header-section-number">14.10</span> Tuples</h1>
+<h1><span class="header-section-number">15.10</span> Tuples</h1>
 <p>Classes can combine several values together</p>
 <p>But sometimes you just want to aggregate values without defining additional methods</p>
 <p>In such cases, defining an extra class would be cumbersome, you can use <strong>tuples</strong> instead:</p>
@@ -1464,13 +1465,13 @@ res0: Int = <span class="dv">6</span></code></pre>
   (quotient, remainder)
 }</code></pre>
 </div><div id="tuples-2" class="slide section level2">
-<h1><span class="header-section-number">14.11</span> Tuples (2)</h1>
+<h1><span class="header-section-number">15.11</span> Tuples (2)</h1>
 <ul>
 <li>The type <code>(T1, …, Tn)</code> is a tuple type of <code>n</code> elements which i<sup>th</sup> element has type <code>Ti</code></li>
 <li>The value <code>(t1, …, tn)</code> is a tuple value of <code>n</code> elements</li>
 </ul>
 </div><div id="tuples-3" class="slide section level2">
-<h1><span class="header-section-number">14.12</span> Tuples (3)</h1>
+<h1><span class="header-section-number">15.12</span> Tuples (3)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> qr = <span class="fu">euclideanDiv</span>(<span class="dv">42</span>, <span class="dv">10</span>)
 <span class="fu">println</span>(qr.<span class="fu">_1</span>)
 <span class="fu">println</span>(qr.<span class="fu">_2</span>)</code></pre>
@@ -1482,19 +1483,19 @@ res0: Int = <span class="dv">6</span></code></pre>
 <li>Or use a <strong>tuple pattern</strong> to <em>deconstruct</em> a tuple</li>
 </ul>
 </div><div id="named-parameters" class="slide section level2">
-<h1><span class="header-section-number">14.13</span> Named Parameters</h1>
+<h1><span class="header-section-number">15.13</span> Named Parameters</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">Range</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)</code></pre>
 <p>It is difficult to figure out what the above program does: what is the meaning of these numbers?</p>
 <p>Using <strong>named parameters</strong> can improve readability:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">Range</span>(start = <span class="dv">1</span>, end = <span class="dv">10</span>, step = <span class="dv">2</span>)</code></pre>
 </div><div id="default-arguments" class="slide section level2">
-<h1><span class="header-section-number">14.14</span> Default Arguments</h1>
+<h1><span class="header-section-number">15.14</span> Default Arguments</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">square</span>(size: Int = <span class="dv">50</span>) = Rectangle(size, size)
 
 <span class="kw">val</span> defaultSquare = <span class="fu">square</span>()
 <span class="kw">val</span> customSquare = <span class="fu">square</span>(<span class="dv">100</span>)</code></pre>
 </div><div id="repeated-parameters" class="slide section level2">
-<h1><span class="header-section-number">14.15</span> Repeated Parameters</h1>
+<h1><span class="header-section-number">15.15</span> Repeated Parameters</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stack</span>(images: Image*): Image =
   images.<span class="fu">foldLeft</span>(emptyImage)((image, result) =&gt; image on result)
 
@@ -1503,8 +1504,8 @@ res0: Int = <span class="dv">6</span></code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> images = Seq(<span class="fu">Circle</span>(<span class="dv">50</span>), <span class="fu">Circle</span>(<span class="dv">60</span>))
 <span class="fu">stack</span>(images: _*)</code></pre>
 </div>
-<div id="extensibility-and-modularity" class="titleslide slide section level1"><h1><span class="header-section-number">15</span> Extensibility and Modularity</h1></div><div id="motivation-5" class="slide section level2">
-<h1><span class="header-section-number">15.1</span> Motivation</h1>
+<div id="extensibility-and-modularity" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Extensibility and Modularity</h1></div><div id="motivation-5" class="slide section level2">
+<h1><span class="header-section-number">16.1</span> Motivation</h1>
 <p>Your game of life implementation hard codes the rules of the game</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
   <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
@@ -1513,7 +1514,7 @@ res0: Int = <span class="dv">6</span></code></pre>
 <li>How to abstract over the rules in a way that we can easily plug a given set of rules in a given world?</li>
 </ul>
 </div><div id="st-solution-method-parameter" class="slide section level2">
-<h1><span class="header-section-number">15.2</span> 1st Solution: Method Parameter</h1>
+<h1><span class="header-section-number">16.2</span> 1st Solution: Method Parameter</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> GameOfLife {
   <span class="kw">def</span> <span class="fu">next</span>(world: World, rules: (Cell, Int) =&gt; Cell): World = ???
 }</code></pre>
@@ -1528,7 +1529,7 @@ res0: Int = <span class="dv">6</span></code></pre>
 }
 GameOfLife.<span class="fu">next</span>(…, life)</code></pre>
 </div><div id="nd-solution-class-definition" class="slide section level2">
-<h1><span class="header-section-number">15.3</span> 2nd Solution: Class Definition</h1>
+<h1><span class="header-section-number">16.3</span> 2nd Solution: Class Definition</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">GameOfLife</span>(rules: (Cell, Seq[Cell]) =&gt; Cell) {
   <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ???
 }</code></pre>
@@ -1542,7 +1543,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>An object of type <code>GameOfLife</code> can be created using <code>new</code></li>
 </ul>
 </div><div id="rd-solution-trait-definition" class="slide section level2">
-<h1><span class="header-section-number">15.4</span> 3rd Solution: Trait Definition</h1>
+<h1><span class="header-section-number">16.4</span> 3rd Solution: Trait Definition</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> GameOfLife {
   <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]): Cell
   <span class="kw">def</span> <span class="fu">next</span>(world: World): World = ??? <span class="co">// code calling `rules`</span>
@@ -1552,7 +1553,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>It has an <strong>abstract method</strong>, <code>rules</code></li>
 </ul>
 </div><div id="rd-solution-trait-definition-2" class="slide section level2">
-<h1><span class="header-section-number">15.5</span> 3rd Solution: Trait Definition (2)</h1>
+<h1><span class="header-section-number">16.5</span> 3rd Solution: Trait Definition (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Life <span class="kw">extends</span> GameOfLife {
   <span class="kw">def</span> <span class="fu">rules</span>(cell: Cell, neighbours: Seq[Cell]) = {
     <span class="kw">val</span> alive =
@@ -1567,7 +1568,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>Unlike “sealed” trait, a simple trait can have an unlimited number of implementations</li>
 </ul>
 </div><div id="dynamic-method-dispatch" class="slide section level2">
-<h1><span class="header-section-number">15.6</span> Dynamic Method Dispatch</h1>
+<h1><span class="header-section-number">16.6</span> Dynamic Method Dispatch</h1>
 <p>Consider the following program:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">run</span>(game: GameOfLife, world: World) = game.<span class="fu">next</span>(world)</code></pre>
 <ul>
@@ -1575,14 +1576,14 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>This process is named <strong>dynamic method dispatch</strong></li>
 </ul>
 </div><div id="abstract-members-encapsulation-and-modularity" class="slide section level2">
-<h1><span class="header-section-number">15.7</span> Abstract Members, Encapsulation and Modularity</h1>
+<h1><span class="header-section-number">16.7</span> Abstract Members, Encapsulation and Modularity</h1>
 <ul>
 <li><p>Abstract members achieve <strong>encapsulation</strong></p></li>
 <li><p>Encapsulation allows the construction of <strong>abstraction layers</strong></p></li>
 <li><p>It is a key principle to achieve <strong>modularity</strong>: the underlying implementation can change without affecting users</p></li>
 </ul>
 </div><div id="specialization" class="slide section level2">
-<h1><span class="header-section-number">15.8</span> Specialization</h1>
+<h1><span class="header-section-number">16.8</span> Specialization</h1>
 <p><code>GameOfLife</code> is more <strong>general</strong> than <code>Life</code></p>
 <p>You could also say that <code>Life</code> is more <strong>specialized</strong> than <code>GameOfLife</code></p>
 <p>When specializing a type, you can:</p>
@@ -1593,7 +1594,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 </ul>
 <p>A subclass <strong>conforms</strong> to its superclass, so it can be used everywhere the superclass is needed</p>
 </div><div id="adding-a-member-to-a-base-class" class="slide section level2">
-<h1><span class="header-section-number">15.9</span> Adding a Member to a Base Class</h1>
+<h1><span class="header-section-number">16.9</span> Adding a Member to a Base Class</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> SemiGroup {
   <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = a + b
 }
@@ -1606,7 +1607,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
   <span class="kw">def</span> <span class="fu">inverse</span>(a: Int) = -a
 }</code></pre>
 </div><div id="redefining-a-member-of-a-base-class" class="slide section level2">
-<h1><span class="header-section-number">15.10</span> Redefining a Member of a Base Class</h1>
+<h1><span class="header-section-number">16.10</span> Redefining a Member of a Base Class</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> LoggingSemiGroup <span class="kw">extends</span> SemiGroup {
   <span class="kw">override</span> <span class="kw">def</span> <span class="fu">append</span>(a: Int, b: Int) = {
     <span class="fu">println</span>(s<span class="st">&quot;Calling append($a, $b)&quot;</span>)
@@ -1618,7 +1619,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>You can still refer to the base implementation using <code>super</code></li>
 </ul>
 </div><div id="members-visibility" class="slide section level2">
-<h1><span class="header-section-number">15.11</span> Members Visibility</h1>
+<h1><span class="header-section-number">16.11</span> Members Visibility</h1>
 <p>You can control the visibility of the members of a class:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Foo {
   <span class="kw">private</span> <span class="kw">def</span> foo = <span class="dv">42</span>
@@ -1629,7 +1630,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li><code>protected</code> members are not visible outside of the class definition except for subclasses</li>
 </ul>
 </div><div id="closing-a-class-hierarchy" class="slide section level2">
-<h1><span class="header-section-number">15.12</span> Closing a Class Hierarchy</h1>
+<h1><span class="header-section-number">16.12</span> Closing a Class Hierarchy</h1>
 <p>You can forbid the specialization of a class or of its members:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Foo {
   <span class="kw">final</span> <span class="kw">def</span> foo = <span class="dv">42</span>
@@ -1641,12 +1642,12 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li><code>final</code> classes can not be extended</li>
 </ul>
 </div><div id="overloading" class="slide section level2">
-<h1><span class="header-section-number">15.13</span> Overloading</h1>
+<h1><span class="header-section-number">16.13</span> Overloading</h1>
 <p>Several members with the same name can coexist, as long their type signature is different:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">add</span>(that: Complex): Complex = …
 <span class="kw">def</span> <span class="fu">add</span>(real: Double): Complex = <span class="fu">add</span>(<span class="kw">new</span> <span class="fu">Complex</span>(real, <span class="dv">0</span>)</code></pre>
 </div><div id="traits-classes-objects-abstract-members-and-parameters" class="slide section level2">
-<h1><span class="header-section-number">15.14</span> Traits, Classes, Objects, Abstract Members and Parameters</h1>
+<h1><span class="header-section-number">16.14</span> Traits, Classes, Objects, Abstract Members and Parameters</h1>
 <ul>
 <li>Traits, classes and objects are different “flavours” of type definition</li>
 <li>Objects corresponds to the special case of a type with just one value</li>
@@ -1657,7 +1658,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 </ul></li>
 </ul>
 </div><div id="case-classes-vs-classes" class="slide section level2">
-<h1><span class="header-section-number">15.15</span> Case Classes vs Classes</h1>
+<h1><span class="header-section-number">16.15</span> Case Classes vs Classes</h1>
 <ul>
 <li>Should you use algebraic data types or regular classes?
 <ul>
@@ -1666,7 +1667,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 </ul></li>
 </ul>
 </div><div id="components" class="slide section level2">
-<h1><span class="header-section-number">15.16</span> Components</h1>
+<h1><span class="header-section-number">16.16</span> Components</h1>
 <p>You saw how to implement a set of features in a single component using classes</p>
 <p>Is it possible to build a larger system by combining small components together?</p>
 <p>For instance, given the following class definitions:</p>
@@ -1678,7 +1679,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 }</code></pre>
 <p>How to build calculator from these two components?</p>
 </div><div id="traits" class="slide section level2">
-<h1><span class="header-section-number">15.17</span> Traits</h1>
+<h1><span class="header-section-number">16.17</span> Traits</h1>
 <p>Traits can encapsulate members and can be mixed together</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Adding {
   <span class="kw">def</span> <span class="fu">add</span>(a: Int, b: Int) = a + b
@@ -1693,7 +1694,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>Traits can be mixed in other traits or classes using <code>extends</code> and <code>with</code></li>
 </ul>
 </div><div id="traits-and-dynamic-dispatch" class="slide section level2">
-<h1><span class="header-section-number">15.18</span> Traits and Dynamic Dispatch</h1>
+<h1><span class="header-section-number">16.18</span> Traits and Dynamic Dispatch</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Simple {
   <span class="kw">def</span> value = <span class="dv">7</span>
 }
@@ -1709,13 +1710,13 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <span class="fu">println</span>(mixin.<span class="fu">value</span>) <span class="co">// What is printed?</span></code></pre>
 <p>Which implementation of the <code>value</code> member is called?</p>
 </div><div id="traits-and-dynamic-dispatch-2" class="slide section level2">
-<h1><span class="header-section-number">15.19</span> Traits and Dynamic Dispatch (2)</h1>
+<h1><span class="header-section-number">16.19</span> Traits and Dynamic Dispatch (2)</h1>
 <div class="figure">
 <img src="Traits.png" alt="Traits Linearization" /><p class="caption">Traits Linearization</p>
 </div>
 </div>
-<div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">16</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
-<h1><span class="header-section-number">16.1</span> Motivating Problem: Random Number Generator</h1>
+<div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
+<h1><span class="header-section-number">17.1</span> Motivating Problem: Random Number Generator</h1>
 <p>Try to implement the following random number generator:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> next: Int = ???</code></pre>
 <blockquote>
@@ -1729,7 +1730,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <li>The <code>next</code> method is impossible to implement!</li>
 </ul>
 </div><div id="motivating-problem-random-number-generator-1" class="slide section level2">
-<h1><span class="header-section-number">16.2</span> Motivating Problem: Random Number Generator</h1>
+<h1><span class="header-section-number">17.2</span> Motivating Problem: Random Number Generator</h1>
 <p>By changing the <code>next</code> signature, a possible implementation would be the following:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">next</span>(x: Int) = <span class="dv">22695477</span> * x + <span class="dv">1</span></code></pre>
 <p>But users would be required to <em>remember</em> each value to get the next one:</p>
@@ -1738,14 +1739,14 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <span class="kw">val</span> x2 = <span class="fu">next</span>(x1)
 <span class="fu">println</span>(x2)</code></pre>
 </div><div id="assignment" class="slide section level2">
-<h1><span class="header-section-number">16.3</span> Assignment</h1>
+<h1><span class="header-section-number">17.3</span> Assignment</h1>
 <p>A <strong><code>var</code> definition</strong> associates a value with a name, like <code>val</code> does, but you can later <strong>assign</strong> a new value to this name:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">var</span> x = <span class="dv">10</span>
 <span class="fu">println</span>(x) <span class="co">// “10”</span>
 x = x + <span class="dv">10</span>
 <span class="fu">println</span>(x) <span class="co">// “20”</span></code></pre>
 </div><div id="imperative-loops" class="slide section level2">
-<h1><span class="header-section-number">16.4</span> Imperative Loops</h1>
+<h1><span class="header-section-number">17.4</span> Imperative Loops</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">fact</span>(n: Int) = {
   <span class="kw">var</span> result = <span class="dv">1</span>
   <span class="kw">var</span> i = <span class="dv">2</span>
@@ -1756,7 +1757,7 @@ x = x + <span class="dv">10</span>
   result
 }</code></pre>
 </div><div id="stateful-computations" class="slide section level2">
-<h1><span class="header-section-number">16.5</span> Stateful Computations</h1>
+<h1><span class="header-section-number">17.5</span> Stateful Computations</h1>
 <p><code>next</code> can be implemented as follows using a <code>var</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">var</span> x = <span class="dv">1</span>
 <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1767,7 +1768,7 @@ x = x + <span class="dv">10</span>
 <li>The <code>x</code> var contains the random number generator’s <strong>state</strong></li>
 </ul>
 </div><div id="stateful-classes" class="slide section level2">
-<h1><span class="header-section-number">16.6</span> Stateful Classes</h1>
+<h1><span class="header-section-number">17.6</span> Stateful Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
   <span class="kw">private</span> <span class="kw">var</span> x = <span class="dv">1</span>
   <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1783,7 +1784,7 @@ x = x + <span class="dv">10</span>
 </ul></li>
 </ul>
 </div><div id="stateful-classes-1" class="slide section level2">
-<h1><span class="header-section-number">16.7</span> Stateful Classes</h1>
+<h1><span class="header-section-number">17.7</span> Stateful Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
   <span class="kw">private</span> <span class="kw">var</span> x = <span class="dv">1</span>
   <span class="kw">def</span> <span class="fu">next</span>() = {
@@ -1800,7 +1801,7 @@ x = x + <span class="dv">10</span>
 <li>The <code>RNG</code> class <strong>encapsulates</strong> its state</li>
 </ul>
 </div><div id="benefits-of-assignment" class="slide section level2">
-<h1><span class="header-section-number">16.8</span> Benefits of Assignment</h1>
+<h1><span class="header-section-number">17.8</span> Benefits of Assignment</h1>
 <ul>
 <li><p><strong>Stateful objects</strong> help keeping code modular</p>
 <ul>
@@ -1808,7 +1809,7 @@ x = x + <span class="dv">10</span>
 </ul></li>
 </ul>
 </div><div id="identity-and-state" class="slide section level2">
-<h1><span class="header-section-number">16.9</span> Identity and State</h1>
+<h1><span class="header-section-number">17.9</span> Identity and State</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG</code></pre>
 <p>Are <code>rng1</code> and <code>rng2</code> the same objects? At first glance they seem to be the same…</p>
@@ -1818,7 +1819,7 @@ x = x + <span class="dv">10</span>
 <p><code>rng1</code> and <code>rng2</code> have distinct <strong>effects</strong>, they are not equals in a sense that we can not substitute one by the other</p>
 <p>The introduction of assignment leads to the loss of <strong>referential transparency</strong> and makes reasonning about programs drastically more difficult</p>
 </div><div id="classes-vs-case-classes-identity" class="slide section level2">
-<h1><span class="header-section-number">16.10</span> Classes vs Case Classes: Identity</h1>
+<h1><span class="header-section-number">17.10</span> Classes vs Case Classes: Identity</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG
 rng1 == rng2</code></pre>
@@ -1832,14 +1833,14 @@ barbell1 == barbell2</code></pre>
 <li><code>true</code></li>
 </ul>
 </div><div id="stateful-objects-aliasing-and-copying" class="slide section level2">
-<h1><span class="header-section-number">16.11</span> Stateful Objects, Aliasing and Copying</h1>
+<h1><span class="header-section-number">17.11</span> Stateful Objects, Aliasing and Copying</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <p>Giving two different names to the <em>same</em> object can be confusing: applying a method on <code>rng1</code> will have an effect on <code>rng2</code>!</p>
 <p>Stateful objects force you to distinguish between the intents of <strong>aliasing</strong> and <strong>copying</strong></p>
 <p>This problem does not exist with <strong>immutable objects</strong></p>
 </div><div id="classes-vs-case-classes-aliasing" class="slide section level2">
-<h1><span class="header-section-number">16.12</span> Classes vs Case Classes: Aliasing</h1>
+<h1><span class="header-section-number">17.12</span> Classes vs Case Classes: Aliasing</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> barbell1 = <span class="fu">Barbell</span>(<span class="dv">20</span>, <span class="dv">150</span>)
@@ -1848,7 +1849,7 @@ barbell1 == barbell2</code></pre>
 <li>Immutable objects (ie. defined by case classes) can be freely aliased (it is actually a <strong>good practice</strong> to reduce the memory consumption)</li>
 </ul>
 </div><div id="pure-functions-and-side-effects" class="slide section level2">
-<h1><span class="header-section-number">16.13</span> Pure Functions and Side-Effects</h1>
+<h1><span class="header-section-number">17.13</span> Pure Functions and Side-Effects</h1>
 <p>Without assignment, the following declaration has only one possible implementation:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> mystery[A](a: A): A</code></pre>
 <ul class="incremental">
@@ -1862,7 +1863,7 @@ barbell1 == barbell2</code></pre>
 <li><p>Without assignment the type signature of a computation tells a lot about its behavior</p></li>
 </ul>
 </div><div id="immutability-when-possible" class="slide section level2">
-<h1><span class="header-section-number">16.14</span> Immutability When Possible</h1>
+<h1><span class="header-section-number">17.14</span> Immutability When Possible</h1>
 <blockquote>
 <p>In addition to raising complications about computational models, programs written in imperative style are susceptible to bugs that cannot occur in functional programs.</p>
 </blockquote>
@@ -1872,7 +1873,7 @@ barbell1 == barbell2</code></pre>
 </blockquote>
 <p>Joshua Bloch. <em>Effective Java</em>. Addison Wesley 2008</p>
 </div><div id="safe-usage-of-vars" class="slide section level2">
-<h1><span class="header-section-number">16.15</span> Safe Usage of Vars</h1>
+<h1><span class="header-section-number">17.15</span> Safe Usage of Vars</h1>
 <ul>
 <li>As long as side-effects are not observable from the outside, using a var is safe:</li>
 </ul>
@@ -1884,12 +1885,12 @@ barbell1 == barbell2</code></pre>
   result
 }</code></pre>
 </div>
-<div id="type-polymorphism" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Type Polymorphism</h1></div><div id="type-polymorphism-1" class="slide section level2">
-<h1><span class="header-section-number">17.1</span> Type Polymorphism</h1>
+<div id="type-polymorphism" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Type Polymorphism</h1></div><div id="type-polymorphism-1" class="slide section level2">
+<h1><span class="header-section-number">18.1</span> Type Polymorphism</h1>
 <p>Until now, you saw only how to abstract over values</p>
 <p>It is also possible to abstract over <strong>types</strong></p>
 </div><div id="exercise-24" class="slide section level2">
-<h1><span class="header-section-number">17.2</span> Exercise</h1>
+<h1><span class="header-section-number">18.2</span> Exercise</h1>
 <!-- FIXME Use `identity(n: Int): Int`, `identity(b: Boolean): Boolean` as an example? -->
 
 <ul>
@@ -1904,7 +1905,7 @@ barbell1 == barbell2</code></pre>
 <li>Is it possible to write only one <code>fold</code> function that would work with both <code>Int</code> and <code>Boolean</code>?</li>
 </ul>
 </div><div id="polymorphic-functions" class="slide section level2">
-<h1><span class="header-section-number">17.3</span> Polymorphic Functions</h1>
+<h1><span class="header-section-number">18.3</span> Polymorphic Functions</h1>
 <p>Look at the type signatures of <code>fold</code> and <code>foldBool</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">(Int,     (Int, Int)     =&gt; Int)     =&gt; Int
 (Boolean, (Int, Boolean) =&gt; Boolean) =&gt; Boolean</code></pre>
@@ -1913,7 +1914,7 @@ barbell1 == barbell2</code></pre>
 <p>It always follows this pattern:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">(A, (Int, A) =&gt; A) =&gt; A</code></pre>
 </div><div id="polymorphic-functions-2" class="slide section level2">
-<h1><span class="header-section-number">17.4</span> Polymorphic Functions (2)</h1>
+<h1><span class="header-section-number">18.4</span> Polymorphic Functions (2)</h1>
 <p>Functions can have <strong>type parameters</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](z: A, op: (Int, A) =&gt; A): A</code></pre>
 <ul>
@@ -1928,12 +1929,12 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum = <span class="fu">fold</span>(<span class="dv">0</span>)((n, s) =&gt; s + n)</code></pre></li>
 </ul>
 </div><div id="exercise-25" class="slide section level2">
-<h1><span class="header-section-number">17.5</span> Exercise</h1>
+<h1><span class="header-section-number">18.5</span> Exercise</h1>
 <ul>
 <li>Make <code>fold</code> polymorphic</li>
 </ul>
 </div><div id="exercise-26" class="slide section level2">
-<h1><span class="header-section-number">17.6</span> Exercise</h1>
+<h1><span class="header-section-number">18.6</span> Exercise</h1>
 <ul>
 <li>Implement an abstract data type representing a list of <code>String</code> elements:</li>
 </ul>
@@ -1946,7 +1947,7 @@ barbell1 == barbell2</code></pre>
 <li>You want to abstract over the type of the elements of the list</li>
 </ul>
 </div><div id="type-constructors" class="slide section level2">
-<h1><span class="header-section-number">17.7</span> Type Constructors</h1>
+<h1><span class="header-section-number">18.7</span> Type Constructors</h1>
 <p>Types can have type parameters:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> List[A] {
   <span class="kw">def</span> <span class="fu">add</span>(element: A): List[A]
@@ -1959,7 +1960,7 @@ barbell1 == barbell2</code></pre>
 </ul></li>
 </ul>
 </div><div id="exercise-27" class="slide section level2">
-<h1><span class="header-section-number">17.8</span> Exercise</h1>
+<h1><span class="header-section-number">18.8</span> Exercise</h1>
 <ul>
 <li>Write a polymorphic <code>List[A]</code> data type:</li>
 </ul>
@@ -1969,7 +1970,7 @@ barbell1 == barbell2</code></pre>
   <span class="kw">def</span> fold[B](z: B)(op: (A, B) =&gt; B): B
 }</code></pre>
 </div><div id="type-quantification" class="slide section level2">
-<h1><span class="header-section-number">17.9</span> Type Quantification</h1>
+<h1><span class="header-section-number">18.9</span> Type Quantification</h1>
 <p>Subtyping and universal types are two different generalization mechanisms. Can you mix them together?</p>
 <p>Consider the following class hierarchy:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Animal {
@@ -1987,7 +1988,7 @@ barbell1 == barbell2</code></pre>
 <span class="kw">trait</span> Giraffe <span class="kw">extends</span> Mammal</code></pre>
 <p>You want to write a function <code>selection</code>, that takes two animals as parameters and returns the one with the highest <code>fitness</code> value. What will its type signature be?</p>
 </div><div id="type-quantification-2" class="slide section level2">
-<h1><span class="header-section-number">17.10</span> Type Quantification (2)</h1>
+<h1><span class="header-section-number">18.10</span> Type Quantification (2)</h1>
 <p>A possible solution using subtyping is the following:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">selection</span>(a1: Animal, a2: Animal) =
   <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
@@ -1999,13 +2000,13 @@ barbell1 == barbell2</code></pre>
 </ul></li>
 </ul>
 </div><div id="type-quantification-3" class="slide section level2">
-<h1><span class="header-section-number">17.11</span> Type Quantification (3)</h1>
+<h1><span class="header-section-number">18.11</span> Type Quantification (3)</h1>
 <p>We could try to solve this issue using a universal type:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> selection[A](a1: A, a2: A): A =
   <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
 <p>But this solution does not compile: we can not access the <code>fitness</code> member of <code>a1</code> and <code>a2</code> because <code>A</code> is not constrained to be a subtype of <code>Animal</code></p>
 </div><div id="upper-and-lower-bounds" class="slide section level2">
-<h1><span class="header-section-number">17.12</span> Upper and Lower Bounds</h1>
+<h1><span class="header-section-number">18.12</span> Upper and Lower Bounds</h1>
 <p>We can write a better solution using a <strong>bounded quantification</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> selection[A &lt;: Animal](a1: A, a2: A): A =
    <span class="kw">if</span> (a1.<span class="fu">fitness</span> &gt; a2.<span class="fu">fitness</span>) a1 <span class="kw">else</span> a2</code></pre>
@@ -2017,7 +2018,7 @@ barbell1 == barbell2</code></pre>
 <li><code>A &gt;: B</code></li>
 </ul>
 </div><div id="variance" class="slide section level2">
-<h1><span class="header-section-number">17.13</span> Variance</h1>
+<h1><span class="header-section-number">18.13</span> Variance</h1>
 <p>Consider the following type modeling a zoo run containing an animal:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[A] {
   <span class="kw">def</span> get: A <span class="co">// Get the animal that lives in this run</span>
@@ -2026,7 +2027,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">isLargeEnough</span>(run: Run[Mammal]): Boolean = …</code></pre>
 <p>What happens if you pass it a <code>Run[Zebra]</code> as parameter?</p>
 </div><div id="variance-2" class="slide section level2">
-<h1><span class="header-section-number">17.14</span> Variance (2)</h1>
+<h1><span class="header-section-number">18.14</span> Variance (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">isLargeEnough</span>(zebraRun)
 &lt;console&gt;:<span class="dv">14</span>: error: <span class="kw">type</span> mismatch;
  found   : Run[Zebra]
@@ -2039,7 +2040,7 @@ barbell1 == barbell2</code></pre>
 <li>It seems that <code>Run[Zebra]</code> should be a subtype of <code>Run[Mammal]</code></li>
 </ul>
 </div><div id="covariance" class="slide section level2">
-<h1><span class="header-section-number">17.15</span> Covariance</h1>
+<h1><span class="header-section-number">18.15</span> Covariance</h1>
 <p>More generally, <code>Run[A] &lt;: Run[B]</code> if <code>A &lt;: B</code></p>
 <p>We say that <code>A</code> is <strong>covariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[+A] {
@@ -2047,7 +2048,7 @@ barbell1 == barbell2</code></pre>
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Run[Zebra]</code> where a <code>Run[Mammal]</code> is expected</p>
 </div><div id="variance-3" class="slide section level2">
-<h1><span class="header-section-number">17.16</span> Variance (3)</h1>
+<h1><span class="header-section-number">18.16</span> Variance (3)</h1>
 <p>Consider the following type modeling a veterinary able to treat animals:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[A] {
   <span class="kw">def</span> <span class="fu">treat</span>(a: A)
@@ -2056,7 +2057,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">treatMammals</span>(vet: Vet[Mammal]) { … }</code></pre>
 <p>What happens if you pass it a <code>Vet[Animal]</code> as parameter?</p>
 </div><div id="variance-4" class="slide section level2">
-<h1><span class="header-section-number">17.17</span> Variance (4)</h1>
+<h1><span class="header-section-number">18.17</span> Variance (4)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="fu">treatMammals</span>(animalVet)
 &lt;console&gt;:<span class="dv">14</span>: error: <span class="kw">type</span> mismatch;
  found   : Vet[Animal]
@@ -2069,7 +2070,7 @@ barbell1 == barbell2</code></pre>
 <li>It seems that <code>Vet[Animal]</code> should be a subtype of <code>Vet[Mammal]</code></li>
 </ul>
 </div><div id="contravariance" class="slide section level2">
-<h1><span class="header-section-number">17.18</span> Contravariance</h1>
+<h1><span class="header-section-number">18.18</span> Contravariance</h1>
 <p>More generally, <code>Vet[A] &lt;: Vet[B]</code> if <code>A &gt;: B</code></p>
 <p>We say that <code>A</code> is <strong>contravariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[-A] {
@@ -2077,17 +2078,17 @@ barbell1 == barbell2</code></pre>
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Vet[Animal]</code> where a <code>Vet[Mammal]</code> is expected</p>
 </div><div id="variance-5" class="slide section level2">
-<h1><span class="header-section-number">17.19</span> Variance (5)</h1>
+<h1><span class="header-section-number">18.19</span> Variance (5)</h1>
 <p>For a type constructor <code>F[X]</code>, variance annotations allow you to define the subtyping relation of the types <code>F[A]</code> and <code>F[B]</code> according to the subtyping relation of the types <code>A</code> and <code>B</code></p>
 <p>By default, type parameters are <strong>invariant</strong></p>
 </div><div id="exercise-28" class="slide section level2">
-<h1><span class="header-section-number">17.20</span> Exercise</h1>
+<h1><span class="header-section-number">18.20</span> Exercise</h1>
 <ul>
 <li>Make the <code>List</code> class covariant</li>
 </ul>
 </div>
-<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">18</span> Type Classes and Implicit Parameters</h1></div><div id="motivating-problem" class="slide section level2">
-<h1><span class="header-section-number">18.1</span> Motivating Problem</h1>
+<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Type Classes and Implicit Parameters</h1></div><div id="motivating-problem" class="slide section level2">
+<h1><span class="header-section-number">19.1</span> Motivating Problem</h1>
 <p>Remember the <code>sum</code> method of <code>IntList</code>?</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sumInts</span>(xs: List[Int]): Int = xs.<span class="fu">fold</span>(<span class="dv">0</span>)(_ + _)</code></pre>
 <p>What if we want to compute the sum of a list of complex numbers?</p>
@@ -2097,7 +2098,7 @@ barbell1 == barbell2</code></pre>
 <li>Can we abstract over the similarities of <code>sumInts</code> and <code>sumComplexes</code>?</li>
 </ul>
 </div><div id="motivating-problem-2" class="slide section level2">
-<h1><span class="header-section-number">18.2</span> Motivating Problem (2)</h1>
+<h1><span class="header-section-number">19.2</span> Motivating Problem (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A &lt;: Sumable[A]] {
   <span class="kw">def</span> + (that: A): A
 }
@@ -2112,13 +2113,13 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
 <span class="fu">sum</span>(zs, <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))</code></pre>
 </div><div id="motivating-problem-3" class="slide section level2">
-<h1><span class="header-section-number">18.3</span> Motivating Problem (3)</h1>
+<h1><span class="header-section-number">19.3</span> Motivating Problem (3)</h1>
 <ul>
 <li><p>We can not change the implementation of <code>Int</code> to make it extend <code>Sumable[Int]</code></p></li>
 <li><p>Anyway, this <code>Sumable</code> trait captures only a part of the problem: we still need to manually supply the identity element corresponding to each type</p></li>
 </ul>
 </div><div id="almost-type-classes" class="slide section level2">
-<h1><span class="header-section-number">18.4</span> (Almost) Type Classes</h1>
+<h1><span class="header-section-number">19.4</span> (Almost) Type Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A] {
   <span class="kw">def</span> zero: A
   <span class="kw">def</span> <span class="fu">append</span>(a1: A, a2: A): A
@@ -2126,7 +2127,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A], A: Sumable[A]) =
   as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
 </div><div id="retroactive-extension" class="slide section level2">
-<h1><span class="header-section-number">18.5</span> Retroactive Extension</h1>
+<h1><span class="header-section-number">19.5</span> Retroactive Extension</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableInt = <span class="kw">new</span> Sumable[Int] {
   <span class="kw">val</span> zero = <span class="dv">0</span>
   <span class="kw">def</span> <span class="fu">append</span>(a1: Int, a2: Int) = a1 + a2
@@ -2134,7 +2135,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = List(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
 <span class="fu">sum</span>(xs, sumableInt)</code></pre>
 </div><div id="retroactive-extension-2" class="slide section level2">
-<h1><span class="header-section-number">18.6</span> Retroactive Extension (2)</h1>
+<h1><span class="header-section-number">19.6</span> Retroactive Extension (2)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableComplex = <span class="kw">new</span> Sumable[Complex] {
   <span class="kw">val</span> zero = <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>)
   <span class="kw">def</span> <span class="fu">append</span>(a1: Complex, a2: Complex) = a1.<span class="fu">add</span>(a2)
@@ -2142,7 +2143,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
 <span class="fu">sum</span>(zs, sumableComplex)</code></pre>
 </div><div id="almost-type-classes-2" class="slide section level2">
-<h1><span class="header-section-number">18.7</span> (Almost) Type Classes (2)</h1>
+<h1><span class="header-section-number">19.7</span> (Almost) Type Classes (2)</h1>
 <ul>
 <li><p>The <code>Sumable[A]</code> trait captures everything we need to make a sum of a list of <code>A</code> (the identity element and the binary operation)</p></li>
 <li><p>However, we need to explicitly supply the instance corresponding to each type</p>
@@ -2152,7 +2153,7 @@ barbell1 == barbell2</code></pre>
 </ul></li>
 </ul>
 </div><div id="implicit-parameters" class="slide section level2">
-<h1><span class="header-section-number">18.8</span> Implicit Parameters</h1>
+<h1><span class="header-section-number">19.8</span> Implicit Parameters</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A])(<span class="kw">implicit</span> A: Sumable[A]) =
   as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
 <p><code>sum</code> takes an <strong>implicit parameter</strong> of type <code>Sumable[A]</code></p>
@@ -2162,7 +2163,7 @@ barbell1 == barbell2</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">sum</span>(xs)
 <span class="fu">sum</span>(zs)</code></pre>
 </div><div id="implicit-parameters-2" class="slide section level2">
-<h1><span class="header-section-number">18.9</span> Implicit Parameters (2)</h1>
+<h1><span class="header-section-number">19.9</span> Implicit Parameters (2)</h1>
 <p>If you call a method without supplying its implicit parameters, the compiler tries to resolve them in the <strong>implicit scope</strong></p>
 <p>The implicit scope is basically built using (by order of priority, highest first):</p>
 <ul>
@@ -2171,7 +2172,7 @@ barbell1 == barbell2</code></pre>
 <li><p>the implicit values of companion objects of the implicit parameter’s type</p></li>
 </ul>
 </div><div id="context-bounds" class="slide section level2">
-<h1><span class="header-section-number">18.10</span> Context Bounds</h1>
+<h1><span class="header-section-number">19.10</span> Context Bounds</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A : Sumable](as: List[A]) = {
   <span class="kw">val</span> A = implicitly[Sumable[A]]
   xs.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)
