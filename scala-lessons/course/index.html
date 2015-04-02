@@ -1962,17 +1962,21 @@ String  =&gt; String</code></pre>
 </div><div id="exercise-28" class="slide section level2">
 <h1><span class="header-section-number">18.10</span> Exercise</h1>
 <ul>
-<li>Write a polymorphic <code>Seq[A]</code> data type:</li>
+<li>Write a polymorphic <code>Col[A]</code> data type:</li>
 </ul>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Seq[A] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Col[A] {
   <span class="kw">def</span> size: Int
-  <span class="kw">def</span> <span class="fu">concat</span>(as: Seq[A]): Seq[A]
-  <span class="kw">def</span> reverse: Seq[A]
-  <span class="kw">def</span> map[B](f: A =&gt; B): Seq[B]
-  <span class="kw">def</span> <span class="fu">filter</span>(p: A =&gt; Boolean): Seq[A]
+  <span class="kw">def</span> <span class="fu">concat</span>(as: Col[A]): Col[A]
+  <span class="kw">def</span> reverse: Col[A]
+  <span class="kw">def</span> map[B](f: A =&gt; B): Col[B]
+  <span class="kw">def</span> <span class="fu">filter</span>(p: A =&gt; Boolean): Col[A]
   <span class="kw">def</span> <span class="fu">forall</span>(p: A =&gt; Boolean): Boolean
   <span class="kw">def</span> <span class="fu">exists</span>(p: A =&gt; Boolean): Boolean
-}</code></pre>
+  <span class="kw">def</span> fold[B](b: B)(f: (B, A) =&gt; B): B
+}
+
+<span class="kw">case</span> <span class="kw">class</span> Nil[A]() <span class="kw">extends</span> Col[A]
+<span class="kw">case</span> <span class="kw">class</span> OneAnd[A](a: A, tail: Col[A]) <span class="kw">extends</span> Col[A]</code></pre>
 </div><div id="type-quantification" class="slide section level2">
 <h1><span class="header-section-number">18.11</span> Type Quantification</h1>
 <p>Subtyping and universal types are two different generalization mechanisms. Can you mix them together?</p>
