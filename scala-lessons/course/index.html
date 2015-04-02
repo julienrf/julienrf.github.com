@@ -1765,6 +1765,10 @@ x = x + <span class="dv">10</span>
   }
   result
 }</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">fact</span>(n: Int): Int = n <span class="kw">match</span> {
+  <span class="kw">case</span> <span class="dv">0</span> =&gt; <span class="dv">1</span>
+  <span class="kw">case</span> n =&gt; n * <span class="fu">fact</span>(n - <span class="dv">1</span>)
+}</code></pre>
 </div><div id="stateful-computations" class="slide section level2">
 <h1><span class="header-section-number">17.5</span> Stateful Computations</h1>
 <p><code>next</code> can be implemented as follows using a <code>var</code>:</p>
@@ -1786,22 +1790,6 @@ x = x + <span class="dv">10</span>
   }
 }</code></pre>
 <ul>
-<li>This code is a <strong>class definition</strong> which introduces :
-<ul>
-<li>the <code>RNG</code> type</li>
-<li>the <code>RNG</code> constructor</li>
-</ul></li>
-</ul>
-</div><div id="stateful-classes-1" class="slide section level2">
-<h1><span class="header-section-number">17.7</span> Stateful Classes</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> RNG {
-  <span class="kw">private</span> <span class="kw">var</span> x = <span class="dv">1</span>
-  <span class="kw">def</span> <span class="fu">next</span>() = {
-    x = <span class="dv">22695477</span> * x + <span class="dv">1</span>
-    x
-  }
-}</code></pre>
-<ul>
 <li>The <code>RNG</code> type has two members:
 <ul>
 <li><code>x</code>, which is <strong>private</strong> (not reachable from the outside)</li>
@@ -1810,15 +1798,15 @@ x = x + <span class="dv">10</span>
 <li>The <code>RNG</code> class <strong>encapsulates</strong> its state</li>
 </ul>
 </div><div id="benefits-of-assignment" class="slide section level2">
-<h1><span class="header-section-number">17.8</span> Benefits of Assignment</h1>
+<h1><span class="header-section-number">17.7</span> Benefits of Assignment</h1>
 <ul>
-<li><p><strong>Stateful objects</strong> help keeping code modular</p>
+<li><p><strong>Stateful objects</strong> can help keeping code modular</p>
 <ul>
 <li>The stateful version of <code>RNG</code> does not require users to explicitly manipulate objects state (by passing an additional parameter)</li>
 </ul></li>
 </ul>
 </div><div id="identity-and-state" class="slide section level2">
-<h1><span class="header-section-number">17.9</span> Identity and State</h1>
+<h1><span class="header-section-number">17.8</span> Identity and State</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG</code></pre>
 <p>Are <code>rng1</code> and <code>rng2</code> the same objects? At first glance they seem to be the same…</p>
@@ -1828,7 +1816,7 @@ x = x + <span class="dv">10</span>
 <p><code>rng1</code> and <code>rng2</code> have distinct <strong>effects</strong>, they are not equals in a sense that we can not substitute one by the other</p>
 <p>The introduction of assignment leads to the loss of <strong>referential transparency</strong> and makes reasonning about programs drastically more difficult</p>
 </div><div id="classes-vs-case-classes-identity" class="slide section level2">
-<h1><span class="header-section-number">17.10</span> Classes vs Case Classes: Identity</h1>
+<h1><span class="header-section-number">17.9</span> Classes vs Case Classes: Identity</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = <span class="kw">new</span> RNG
 rng1 == rng2</code></pre>
@@ -1842,14 +1830,14 @@ barbell1 == barbell2</code></pre>
 <li><code>true</code></li>
 </ul>
 </div><div id="stateful-objects-aliasing-and-copying" class="slide section level2">
-<h1><span class="header-section-number">17.11</span> Stateful Objects, Aliasing and Copying</h1>
+<h1><span class="header-section-number">17.10</span> Stateful Objects, Aliasing and Copying</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <p>Giving two different names to the <em>same</em> object can be confusing: applying a method on <code>rng1</code> will have an effect on <code>rng2</code>!</p>
 <p>Stateful objects force you to distinguish between the intents of <strong>aliasing</strong> and <strong>copying</strong></p>
 <p>This problem does not exist with <strong>immutable objects</strong></p>
 </div><div id="classes-vs-case-classes-aliasing" class="slide section level2">
-<h1><span class="header-section-number">17.12</span> Classes vs Case Classes: Aliasing</h1>
+<h1><span class="header-section-number">17.11</span> Classes vs Case Classes: Aliasing</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> rng1 = <span class="kw">new</span> RNG
 <span class="kw">val</span> rng2 = rng1</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> barbell1 = <span class="fu">Barbell</span>(<span class="dv">20</span>, <span class="dv">150</span>)
@@ -1858,7 +1846,7 @@ barbell1 == barbell2</code></pre>
 <li>Immutable objects (ie. defined by case classes) can be freely aliased (it is actually a <strong>good practice</strong> to reduce the memory consumption)</li>
 </ul>
 </div><div id="pure-functions-and-side-effects" class="slide section level2">
-<h1><span class="header-section-number">17.13</span> Pure Functions and Side-Effects</h1>
+<h1><span class="header-section-number">17.12</span> Pure Functions and Side-Effects</h1>
 <p>Without assignment, the following declaration has only one possible implementation:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> mystery[A](a: A): A</code></pre>
 <ul class="incremental">
@@ -1872,7 +1860,7 @@ barbell1 == barbell2</code></pre>
 <li><p>Without assignment the type signature of a computation tells a lot about its behavior</p></li>
 </ul>
 </div><div id="immutability-when-possible" class="slide section level2">
-<h1><span class="header-section-number">17.14</span> Immutability When Possible</h1>
+<h1><span class="header-section-number">17.13</span> Immutability When Possible</h1>
 <blockquote>
 <p>In addition to raising complications about computational models, programs written in imperative style are susceptible to bugs that cannot occur in functional programs.</p>
 </blockquote>
@@ -1882,7 +1870,7 @@ barbell1 == barbell2</code></pre>
 </blockquote>
 <p>Joshua Bloch. <em>Effective Java</em>. Addison Wesley 2008</p>
 </div><div id="safe-usage-of-vars" class="slide section level2">
-<h1><span class="header-section-number">17.15</span> Safe Usage of Vars</h1>
+<h1><span class="header-section-number">17.14</span> Safe Usage of Vars</h1>
 <ul>
 <li>As long as side-effects are not observable from the outside, using a var is safe:</li>
 </ul>
