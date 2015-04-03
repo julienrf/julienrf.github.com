@@ -918,6 +918,17 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
   <span class="kw">case</span> &lt;name2&gt;(…) =&gt; &lt;expr&gt;
   <span class="kw">case</span> &lt;name3&gt;(…) =&gt; &lt;expr&gt;
 }</code></pre>
+</div><div id="exercise-17" class="slide section level2">
+<h1><span class="header-section-number">12.14</span> Exercise</h1>
+<ul>
+<li>Model the following domain in Scala:
+<ul>
+<li>A geometric shape <em>is</em> a circle <em>or</em> a rectangle <em>or</em> a triangle,</li>
+<li>A circle <em>has</em> a radius,</li>
+<li>A rectangle <em>has</em> a width <em>and</em> a height,</li>
+<li>A triangle <em>has</em> a width <em>and</em> a height.</li>
+</ul></li>
+</ul>
 </div>
 <div id="handling-failure" class="titleslide slide section level1"><h1><span class="header-section-number">13</span> Handling Failure</h1></div><div id="motivation-4" class="slide section level2">
 <h1><span class="header-section-number">13.1</span> Motivation</h1>
@@ -941,7 +952,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <li><code>None</code></li>
 </ul></li>
 </ul>
-</div><div id="exercise-17" class="slide section level2">
+</div><div id="exercise-18" class="slide section level2">
 <h1><span class="header-section-number">13.3</span> Exercise</h1>
 <ul>
 <li>Add a <code>smaller</code> method to the <code>Mat</code> type:</li>
@@ -965,7 +976,7 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 <p>Use <code>filter</code> to turn a successful value into a failure if it does not satisfy a given predicate:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">keepHugeMats</span>(maybeMat: Option[Mat]): Option[Mat] =
   maybeMat.<span class="fu">filter</span>(mat =&gt; mat.<span class="fu">width</span> &gt; <span class="dv">100</span> &amp;&amp; mat.<span class="fu">length</span> &gt; <span class="dv">200</span>)</code></pre>
-</div><div id="exercise-18" class="slide section level2">
+</div><div id="exercise-19" class="slide section level2">
 <h1><span class="header-section-number">13.7</span> Exercise</h1>
 <ul>
 <li>Write a method that takes a <code>Mat</code> as parameter, tries to get a smaller mat and returns its area only if it is higher than 1000:</li>
@@ -1067,7 +1078,7 @@ TODO Exceptions try/catch
 <ul>
 <li><code>filter</code> takes a predicate function returning a <code>Boolean</code> and returns a sequence whose elements are the sequence elements that satisfy the predicate</li>
 </ul>
-</div><div id="exercise-19" class="slide section level2">
+</div><div id="exercise-20" class="slide section level2">
 <h1><span class="header-section-number">14.7</span> Exercise</h1>
 <ul>
 <li>Define a method that takes a sequence of <code>Mat</code> and returns their areas if this one is greater than 1000</li>
@@ -1311,7 +1322,7 @@ def largeEnough(mats: Seq[Mat]): Seq[Int] =
 </tbody>
 </table>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Map(<span class="st">&quot;foo&quot;</span> -&gt; <span class="dv">42</span>, <span class="st">&quot;bar&quot;</span> -&gt; <span class="dv">10</span>, <span class="st">&quot;baz&quot;</span> -&gt; <span class="dv">0</span>)</code></pre>
-</div><div id="exercise-20" class="slide section level2">
+</div><div id="exercise-21" class="slide section level2">
 <h1><span class="header-section-number">14.18</span> Exercise</h1>
 <ul>
 <li>Change the <code>circles</code> method so that it returns a collection of concentric circles:</li>
@@ -1333,7 +1344,7 @@ def circles(count: Int) =
   }
 -->
 
-</div><div id="exercise-21" class="slide section level2">
+</div><div id="exercise-22" class="slide section level2">
 <h1><span class="header-section-number">14.19</span> Exercise</h1>
 <ul>
 <li>Do the same for <code>spiral</code>:</li>
@@ -1349,7 +1360,7 @@ def spiral(count: Int) =
   }
 -->
 
-</div><div id="exercise-22" class="slide section level2">
+</div><div id="exercise-23" class="slide section level2">
 <h1><span class="header-section-number">14.20</span> Exercise</h1>
 <ul>
 <li>Change the <code>stack</code> method to the following:</li>
@@ -1368,7 +1379,7 @@ def stack(images: Seq[Image]): Image =
   images.foldLeft(emtyImage)((image, result) => image on result)
 -->
 
-</div><div id="exercise-23" class="slide section level2">
+</div><div id="exercise-24" class="slide section level2">
 <h1><span class="header-section-number">14.21</span> Exercise</h1>
 <ul>
 <li>Change the <code>layout</code> method to the following:</li>
@@ -1714,7 +1725,7 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <div class="figure">
 <img src="Traits.png" alt="Traits Linearization" /><p class="caption">Traits Linearization</p>
 </div>
-</div><div id="exercise-24" class="slide section level2">
+</div><div id="exercise-25" class="slide section level2">
 <h1><span class="header-section-number">16.20</span> Exercise</h1>
 <ul>
 <li>Abstract over the game rules in your <code>World</code> type (you can use the way you prefer)</li>
@@ -1722,6 +1733,31 @@ gameOfLife.<span class="fu">next</span>(…)</code></pre>
 <ul>
 <li>See <a href="http://en.wikipedia.org/wiki/Life-like_cellular_automaton#A_selection_of_Life-like_rules">here</a> for inspiration!</li>
 </ul></li>
+</ul>
+</div><div id="exercise-26" class="slide section level2">
+<h1><span class="header-section-number">16.21</span> Exercise</h1>
+<ul>
+<li>Model the following domain in Scala:
+<ul>
+<li>An arithmetic expression <em>is</em> a number <em>or</em> an addition,</li>
+<li>A number <em>has</em> a numeric value,</li>
+<li>An addition <em>has</em> two terms.</li>
+<li>Implement a method that evaluates the value of a specified expression</li>
+</ul></li>
+<li>Add a new variant for expressions: a multiplication, which <em>has</em> two factors</li>
+<li>Add a method that prints a specified expression</li>
+</ul>
+</div><div id="exercise-27" class="slide section level2">
+<h1><span class="header-section-number">16.22</span> Exercise</h1>
+<ul>
+<li>Model the following domain in Scala:
+<ul>
+<li>An arithmetic expression <em>can</em> be evaluated</li>
+<li>A number <em>is</em> an arithmetic expression that evaluates a number</li>
+<li>An addition <em>is</em> an arithmetic expression that evaluates the sum of two arithmetic expressions</li>
+</ul></li>
+<li>Add a new variant for expressions: a multiplication, which evaluates to the product of two arithmetic expressions</li>
+<li>Add the capability to be printed to expressions</li>
 </ul>
 </div>
 <div id="imperative-programming" class="titleslide slide section level1"><h1><span class="header-section-number">17</span> Imperative Programming</h1></div><div id="motivating-problem-random-number-generator" class="slide section level2">
@@ -1927,19 +1963,19 @@ String  =&gt; String</code></pre>
 <li><p>Note that the type parameter can actually be inferred from the argument type:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x = <span class="fu">identity</span>(<span class="dv">42</span>)</code></pre></li>
 </ul>
-</div><div id="exercise-25" class="slide section level2">
+</div><div id="exercise-28" class="slide section level2">
 <h1><span class="header-section-number">18.6</span> Exercise</h1>
 <ul>
 <li>Implement the following method that takes a collection at parameter and returns its number of elements:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> size[A](as: Seq[A]): Int = ???</code></pre>
-</div><div id="exercise-26" class="slide section level2">
+</div><div id="exercise-29" class="slide section level2">
 <h1><span class="header-section-number">18.7</span> Exercise</h1>
 <ul>
 <li>Implement the following method that concatenates two sequences:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> concat[A](as: Seq[A], as: Seq[A]): Seq[A] = ???</code></pre>
-</div><div id="exercise-27" class="slide section level2">
+</div><div id="exercise-30" class="slide section level2">
 <h1><span class="header-section-number">18.8</span> Exercise</h1>
 <ul>
 <li>Implement the following method that reverses a sequence:</li>
@@ -1959,7 +1995,7 @@ String  =&gt; String</code></pre>
 <li>E.g. <code>Seq[Int]</code>, <code>Seq[String]</code>, etc.</li>
 </ul></li>
 </ul>
-</div><div id="exercise-28" class="slide section level2">
+</div><div id="exercise-31" class="slide section level2">
 <h1><span class="header-section-number">18.10</span> Exercise</h1>
 <ul>
 <li>Write a polymorphic <code>Col[A]</code> data type:</li>
@@ -2089,7 +2125,7 @@ String  =&gt; String</code></pre>
 <h1><span class="header-section-number">18.21</span> Variance (5)</h1>
 <p>For a type constructor <code>F[X]</code>, variance annotations allow you to define the subtyping relation of the types <code>F[A]</code> and <code>F[B]</code> according to the subtyping relation of the types <code>A</code> and <code>B</code></p>
 <p>By default, type parameters are <strong>invariant</strong></p>
-</div><div id="exercise-29" class="slide section level2">
+</div><div id="exercise-32" class="slide section level2">
 <h1><span class="header-section-number">18.22</span> Exercise</h1>
 <ul>
 <li>Make the <code>List</code> class covariant</li>
