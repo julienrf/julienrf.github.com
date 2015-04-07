@@ -1966,7 +1966,7 @@ String  =&gt; String</code></pre>
 </div><div id="exercise-28" class="slide section level2">
 <h1><span class="header-section-number">18.6</span> Exercise</h1>
 <ul>
-<li>Implement the following method that takes a collection at parameter and returns its number of elements:</li>
+<li>Implement the following method that takes a collection as parameter and returns its number of elements:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> size[A](as: Seq[A]): Int = ???</code></pre>
 </div><div id="exercise-29" class="slide section level2">
@@ -1974,7 +1974,7 @@ String  =&gt; String</code></pre>
 <ul>
 <li>Implement the following method that concatenates two sequences:</li>
 </ul>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> concat[A](as: Seq[A], as: Seq[A]): Seq[A] = ???</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> concat[A](as1: Seq[A], as2: Seq[A]): Seq[A] = ???</code></pre>
 </div><div id="exercise-30" class="slide section level2">
 <h1><span class="header-section-number">18.8</span> Exercise</h1>
 <ul>
@@ -2001,17 +2001,17 @@ String  =&gt; String</code></pre>
 <li>Write a polymorphic <code>Col[A]</code> data type:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Col[A] {
-  <span class="kw">def</span> size: Int
-  <span class="kw">def</span> <span class="fu">concat</span>(as: Col[A]): Col[A]
-  <span class="kw">def</span> reverse: Col[A]
-  <span class="kw">def</span> map[B](f: A =&gt; B): Col[B]
-  <span class="kw">def</span> <span class="fu">filter</span>(p: A =&gt; Boolean): Col[A]
-  <span class="kw">def</span> <span class="fu">forall</span>(p: A =&gt; Boolean): Boolean
-  <span class="kw">def</span> <span class="fu">exists</span>(p: A =&gt; Boolean): Boolean
-  <span class="kw">def</span> fold[B](b: B)(f: (B, A) =&gt; B): B
+  <span class="kw">def</span> size: Int = ???
+  <span class="kw">def</span> <span class="fu">concat</span>(as: Col[A]): Col[A] = ???
+  <span class="kw">def</span> reverse: Col[A] = ???
+  <span class="kw">def</span> map[B](f: A =&gt; B): Col[B] = ???
+  <span class="kw">def</span> <span class="fu">filter</span>(p: A =&gt; Boolean): Col[A] = ???
+  <span class="kw">def</span> <span class="fu">forall</span>(p: A =&gt; Boolean): Boolean = ???
+  <span class="kw">def</span> <span class="fu">exists</span>(p: A =&gt; Boolean): Boolean = ???
+  <span class="kw">def</span> fold[B](b: B)(f: (B, A) =&gt; B): B = ???
 }
 
-<span class="kw">case</span> <span class="kw">class</span> Nil[A]() <span class="kw">extends</span> Col[A]
+<span class="kw">case</span> <span class="kw">class</span> Empty[A]() <span class="kw">extends</span> Col[A]
 <span class="kw">case</span> <span class="kw">class</span> OneAnd[A](a: A, tail: Col[A]) <span class="kw">extends</span> Col[A]</code></pre>
 </div><div id="type-quantification" class="slide section level2">
 <h1><span class="header-section-number">18.11</span> Type Quantification</h1>
@@ -2128,87 +2128,129 @@ String  =&gt; String</code></pre>
 </div><div id="exercise-32" class="slide section level2">
 <h1><span class="header-section-number">18.22</span> Exercise</h1>
 <ul>
-<li>Make the <code>List</code> class covariant</li>
+<li>Make the <code>Col[A]</code> type covariant</li>
 </ul>
 </div>
-<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Type Classes and Implicit Parameters</h1></div><div id="motivating-problem" class="slide section level2">
-<h1><span class="header-section-number">19.1</span> Motivating Problem</h1>
-<p>Remember the <code>sum</code> method of <code>IntList</code>?</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sumInts</span>(xs: List[Int]): Int = xs.<span class="fu">fold</span>(<span class="dv">0</span>)(_ + _)</code></pre>
-<p>What if we want to compute the sum of a list of complex numbers?</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sumComplexes</span>(zs: List[Complex]): Complex =
-  zs.<span class="fu">fold</span>(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))(_ add _)</code></pre>
-<ul>
-<li>Can we abstract over the similarities of <code>sumInts</code> and <code>sumComplexes</code>?</li>
+<div id="type-classes-and-implicit-parameters" class="titleslide slide section level1"><h1><span class="header-section-number">19</span> Type Classes and Implicit Parameters</h1></div><div id="motivation-7" class="slide section level2">
+<h1><span class="header-section-number">19.1</span> Motivation</h1>
+<p>Remember the <code>sum</code> and <code>stack</code> methods:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sum</span>(xs: Seq[Int]): Int = xs.<span class="fu">foldLeft</span>(<span class="dv">0</span>)(_ + _)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stack</span>(is: Seq[Image]): Image =
+  is.<span class="fu">foldLeft</span>(<span class="fu">Circle</span>(<span class="dv">0</span>).<span class="fu">lineColor</span>(Color.<span class="fu">white</span>))(_ on _)</code></pre>
+<ul class="incremental">
+<li>Can you capture the ability for a type to have an identity element and to be combined through a binary operation?</li>
 </ul>
-</div><div id="motivating-problem-2" class="slide section level2">
-<h1><span class="header-section-number">19.2</span> Motivating Problem (2)</h1>
+</div><div id="motivation-2-3" class="slide section level2">
+<h1><span class="header-section-number">19.2</span> Motivation (2)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">genericSum</span>(ss: Seq[Sumable]): Sumable =
+  ss.<span class="fu">foldLeft</span>(???)((acc, a) =&gt; acc + a)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable {
+  <span class="kw">def</span> + (that: Sumable): Sumable
+}</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumImages = <span class="fu">genericSum</span>(Seq(<span class="fu">Circle</span>(<span class="dv">10</span>), <span class="fu">Circle</span>(<span class="dv">20</span>)))</code></pre>
+<ul class="incremental">
+<li>Problem: <code>genericSum</code> returns a <code>Sumable</code> instead of an <code>Image</code></li>
+</ul>
+</div><div id="motivation-3-1" class="slide section level2">
+<h1><span class="header-section-number">19.3</span> Motivation (3)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A &lt;: Sumable](ss: Seq[A]): A =
+  ss.<span class="fu">foldLeft</span>(???)((acc, a) =&gt; acc + a)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Image <span class="kw">extends</span> Sumable {
+  <span class="kw">def</span> + (that: Sumable): Sumable = <span class="kw">this</span> on that
+  <span class="kw">def</span> <span class="fu">on</span>(that: Image): Image = ???
+}</code></pre>
+<ul class="incremental">
+<li>Problem: <code>Sumable</code> forces to return a <code>Sumable</code> instead of an <code>Image</code></li>
+</ul>
+</div><div id="motivation-4-1" class="slide section level2">
+<h1><span class="header-section-number">19.4</span> Motivation (4)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A &lt;: Sumable[A]](ss: Seq[A]): A =
+  ss.<span class="fu">foldLeft</span>(???)((acc, a) =&gt; acc + a)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A &lt;: Sumable[A]] {
   <span class="kw">def</span> + (that: A): A
-}
-
-<span class="kw">def</span> sum[A &lt;: Sumable[A]](as: List[A], zero: A): A =
-  as.<span class="fu">fold</span>(zero)(_ + _)</code></pre>
-<p>We can change the implementation of <code>Complex</code> to extend <code>Sumable[Complex]</code>:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Complex <span class="kw">extends</span> Sumable[Complex] {
-  <span class="kw">def</span> + (that: Complex) = <span class="fu">add</span>(that)
-  …
 }</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
-<span class="fu">sum</span>(zs, <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>))</code></pre>
-</div><div id="motivating-problem-3" class="slide section level2">
-<h1><span class="header-section-number">19.3</span> Motivating Problem (3)</h1>
-<ul>
-<li><p>We can not change the implementation of <code>Int</code> to make it extend <code>Sumable[Int]</code></p></li>
-<li><p>Anyway, this <code>Sumable</code> trait captures only a part of the problem: we still need to manually supply the identity element corresponding to each type</p></li>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Image <span class="kw">extends</span> Sumable[Image] {
+  <span class="kw">def</span> + (that: Image): Image = <span class="kw">this</span> on that
+  <span class="kw">def</span> <span class="fu">on</span>(that: Image): Image = ???
+}</code></pre>
+<ul class="incremental">
+<li>Problem: we can not automatically get the <code>zero</code> value for a given <code>Sumable</code> type</li>
 </ul>
+</div><div id="motivation-5-1" class="slide section level2">
+<h1><span class="header-section-number">19.5</span> Motivation (5)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A &lt;: Sumable[A]](zero: A, ss: Seq[A]): A =
+  ss.<span class="fu">foldLeft</span>(zero)((acc, a) =&gt; acc + a)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumImages = <span class="fu">genericSum</span>(
+  <span class="fu">Circle</span>(<span class="dv">0</span>).<span class="fu">lineColor</span>(Color.<span class="fu">white</span>),
+  Seq(<span class="fu">Circle</span>(<span class="dv">10</span>), <span class="fu">Circle</span>(<span class="dv">20</span>))
+)
+
+<span class="kw">val</span> sumInts = <span class="fu">genericSum</span>(<span class="dv">0</span>, Seq(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</code></pre>
+<ul class="incremental">
+<li>Problem: <code>Int</code> does not extend <code>Sumable</code></li>
+</ul>
+</div><div id="motivation-6-1" class="slide section level2">
+<h1><span class="header-section-number">19.6</span> Motivation (6)</h1>
+<p>Let’s recap our goals:</p>
+<ul>
+<li>Capture the ability for a type to <strong>both</strong> have a identity element and to be combined through a binary operation</li>
+<li><strong>Retroactively</strong> add this ability to any type</li>
+</ul>
+</div><div id="toward-type-classes" class="slide section level2">
+<h1><span class="header-section-number">19.7</span> Toward Type Classes</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sum</span>(xs: Seq[Int]): Int =
+  xs.<span class="fu">foldLeft</span>(<span class="dv">0</span>)(_ + _)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stack</span>(is: Seq[Image]): Image =
+  is.<span class="fu">foldLeft</span>(<span class="fu">Circle</span>(<span class="dv">0</span>).<span class="fu">lineColor</span>(Color.<span class="fu">white</span>))(_ on _)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A](as: Seq[A], zero: A, combine: (A, A) =&gt; A): A =
+  as.<span class="fu">foldLeft</span>(zero)(combine)</code></pre>
 </div><div id="almost-type-classes" class="slide section level2">
-<h1><span class="header-section-number">19.4</span> (Almost) Type Classes</h1>
+<h1><span class="header-section-number">19.8</span> (Almost) Type Classes</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Sumable[A] {
   <span class="kw">def</span> zero: A
-  <span class="kw">def</span> <span class="fu">append</span>(a1: A, a2: A): A
+  <span class="kw">def</span> <span class="fu">combine</span>(a1: A, a2: A): A
 }</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A], A: Sumable[A]) =
-  as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A](as: Seq[A], sumable: Sumable[A]) =
+  as.<span class="fu">foldLeft</span>(sumable.<span class="fu">zero</span>)(sumable.<span class="fu">combine</span>)</code></pre>
 </div><div id="retroactive-extension" class="slide section level2">
-<h1><span class="header-section-number">19.5</span> Retroactive Extension</h1>
+<h1><span class="header-section-number">19.9</span> Retroactive Extension</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableInt = <span class="kw">new</span> Sumable[Int] {
   <span class="kw">val</span> zero = <span class="dv">0</span>
-  <span class="kw">def</span> <span class="fu">append</span>(a1: Int, a2: Int) = a1 + a2
+  <span class="kw">def</span> <span class="fu">combine</span>(a1: Int, a2: Int) = a1 + a2
 }</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = List(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
-<span class="fu">sum</span>(xs, sumableInt)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Seq(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+<span class="fu">genericSum</span>(xs, sumableInt)</code></pre>
 </div><div id="retroactive-extension-2" class="slide section level2">
-<h1><span class="header-section-number">19.6</span> Retroactive Extension (2)</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableComplex = <span class="kw">new</span> Sumable[Complex] {
-  <span class="kw">val</span> zero = <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">0</span>, <span class="dv">0</span>)
-  <span class="kw">def</span> <span class="fu">append</span>(a1: Complex, a2: Complex) = a1.<span class="fu">add</span>(a2)
+<h1><span class="header-section-number">19.10</span> Retroactive Extension (2)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> sumableImage = <span class="kw">new</span> Sumable[Image] {
+  <span class="kw">val</span> zero = <span class="fu">Circle</span>(<span class="dv">0</span>).<span class="fu">lineColor</span>(Color.<span class="fu">white</span>)
+  <span class="kw">def</span> <span class="fu">combine</span>(a1: Complex, a2: Complex) = a1 on a2
 }</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> zs = List(<span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">new</span> <span class="fu">Complex</span>(<span class="dv">3</span>, <span class="dv">4</span>))
-<span class="fu">sum</span>(zs, sumableComplex)</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> images = Seq(<span class="fu">Circle</span>(<span class="dv">10</span>), <span class="fu">Circle</span>(<span class="dv">20</span>))
+<span class="fu">genericSum</span>(images, sumableImage)</code></pre>
 </div><div id="almost-type-classes-2" class="slide section level2">
-<h1><span class="header-section-number">19.7</span> (Almost) Type Classes (2)</h1>
+<h1><span class="header-section-number">19.11</span> (Almost) Type Classes (2)</h1>
 <ul>
-<li><p>The <code>Sumable[A]</code> trait captures everything we need to make a sum of a list of <code>A</code> (the identity element and the binary operation)</p></li>
+<li><p>The <code>Sumable[A]</code> trait captures everything we need to compute the “sum” of a sequence of <code>A</code> values (the identity element and the binary operation)</p></li>
 <li><p>However, we need to explicitly supply the instance corresponding to each type</p>
 <ul>
 <li><p>To compute a sum of <code>Int</code> we explicitly pass <code>sumableInt</code></p></li>
-<li><p>To compute a sum of <code>Complex</code> we explicitly pass <code>sumableComplex</code></p></li>
+<li><p>To compute a sum of <code>Image</code> we explicitly pass <code>sumableImage</code></p></li>
 </ul></li>
 </ul>
 </div><div id="implicit-parameters" class="slide section level2">
-<h1><span class="header-section-number">19.8</span> Implicit Parameters</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: List[A])(<span class="kw">implicit</span> A: Sumable[A]) =
-  as.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)</code></pre>
-<p><code>sum</code> takes an <strong>implicit parameter</strong> of type <code>Sumable[A]</code></p>
-<p>If you define <code>sumableInt</code> and <code>sumableComplex</code> as <strong>implicit values</strong> you can omit to supply them when calling <code>sum</code>:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> sumableInt = …
-<span class="kw">implicit</span> <span class="kw">val</span> sumableComplex = …</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">sum</span>(xs)
-<span class="fu">sum</span>(zs)</code></pre>
+<h1><span class="header-section-number">19.12</span> Implicit Parameters</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A](as: List[A])(<span class="kw">implicit</span> sumable: Sumable[A]) =
+  as.<span class="fu">foldLeft</span>(sumable.<span class="fu">zero</span>)(sumable.<span class="fu">combine</span>)</code></pre>
+<p><code>genericSum</code> takes an <strong>implicit parameter</strong> of type <code>Sumable[A]</code></p>
+<p>If you define <code>sumableInt</code> and <code>sumableImage</code> as <strong>implicit values</strong> you can omit to supply them when calling <code>genericSum</code>:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> sumableInt: Sumable[Int] = …
+<span class="kw">implicit</span> <span class="kw">val</span> sumableImage: Sumable[Image] = …</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">genericSum</span>(xs)
+<span class="fu">genericSum</span>(images)</code></pre>
 </div><div id="implicit-parameters-2" class="slide section level2">
-<h1><span class="header-section-number">19.9</span> Implicit Parameters (2)</h1>
-<p>If you call a method without supplying its implicit parameters, the compiler tries to resolve them in the <strong>implicit scope</strong></p>
+<h1><span class="header-section-number">19.13</span> Implicit Parameters (2)</h1>
+<p>If you call a method without supplying its implicit parameters, the compiler tries to resolve them from the <strong>implicit scope</strong></p>
 <p>The implicit scope is basically built using (by order of priority, highest first):</p>
 <ul>
 <li><p>implicit values of the current lexical scope or outer scopes,</p></li>
@@ -2216,16 +2258,22 @@ String  =&gt; String</code></pre>
 <li><p>the implicit values of companion objects of the implicit parameter’s type</p></li>
 </ul>
 </div><div id="context-bounds" class="slide section level2">
-<h1><span class="header-section-number">19.10</span> Context Bounds</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A : Sumable](as: List[A]) = {
-  <span class="kw">val</span> A = implicitly[Sumable[A]]
-  xs.<span class="fu">fold</span>(A.<span class="fu">zero</span>)(A.<span class="fu">append</span>)
+<h1><span class="header-section-number">19.14</span> Context Bounds</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> genericSum[A : Sumable](as: List[A]) = {
+  <span class="kw">val</span> sumable = implicitly[Sumable[A]]
+  xs.<span class="fu">fold</span>(sumable.<span class="fu">zero</span>)(sumable.<span class="fu">combine</span>)
 }</code></pre>
 <ul>
-<li><p><code>A : F</code> expands to an implicit parameter of type <code>F[A]</code></p></li>
-<li><p>We say that <code>F</code> is a <strong>context bound</strong> for <code>A</code></p></li>
-<li><p>You can retrieve an implicit parameter using the <code>implicitly</code> helper</p></li>
-<li><p>Sometimes the context bound notation is shorter than using an implicit parameter list</p></li>
+<li><code>A : F</code> expands to an implicit parameter of type <code>F[A]</code></li>
+<li>We say that <code>F</code> is a <strong>context bound</strong> for <code>A</code></li>
+<li>You can retrieve an implicit parameter using the <code>implicitly</code> method</li>
+<li>Sometimes the context bound notation is shorter than using an implicit parameter list</li>
+</ul>
+</div><div id="exercise-33" class="slide section level2">
+<h1><span class="header-section-number">19.15</span> Exercise</h1>
+<ul>
+<li>Define a type class <code>Show[A]</code> that captures the ability to compute an image for a given value</li>
+<li>Implement an instance of <code>Show[FitnesDevice]</code></li>
 </ul>
 </div>
 </body>
