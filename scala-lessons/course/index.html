@@ -2064,7 +2064,7 @@ String  =&gt; String</code></pre>
 </div><div id="variance" class="slide section level2">
 <h1><span class="header-section-number">18.15</span> Variance</h1>
 <p>Consider the following type modeling a zoo run containing an animal:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[A] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Run[A] {
   <span class="kw">def</span> get: A <span class="co">// Get the animal that lives in this run</span>
 }</code></pre>
 <p>Mammal well being is a serious subject, the following function checks that a given run has the appropriate size regarding to the animal that lives in (provided you have methods in <code>Run[A]</code> and <code>Mammal</code> that give you their size):</p>
@@ -2087,14 +2087,14 @@ String  =&gt; String</code></pre>
 <h1><span class="header-section-number">18.17</span> Covariance</h1>
 <p>More generally, <code>Run[A] &lt;: Run[B]</code> if <code>A &lt;: B</code></p>
 <p>We say that <code>A</code> is <strong>covariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Run[+A] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Run[+A] {
   <span class="kw">def</span> get: A
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Run[Zebra]</code> where a <code>Run[Mammal]</code> is expected</p>
 </div><div id="variance-3" class="slide section level2">
 <h1><span class="header-section-number">18.18</span> Variance (3)</h1>
 <p>Consider the following type modeling a veterinary able to treat animals:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[A] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Vet[A] {
   <span class="kw">def</span> <span class="fu">treat</span>(a: A)
 }</code></pre>
 <p>And the following function treating all the mammals of the zoo using a veterinary passed as parameter:</p>
@@ -2117,7 +2117,7 @@ String  =&gt; String</code></pre>
 <h1><span class="header-section-number">18.20</span> Contravariance</h1>
 <p>More generally, <code>Vet[A] &lt;: Vet[B]</code> if <code>A &gt;: B</code></p>
 <p>We say that <code>A</code> is <strong>contravariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Vet[-A] {
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Vet[-A] {
   <span class="kw">def</span> <span class="fu">treat</span>(a: A)
 }</code></pre>
 <p>Now the compiler accepts that you pass a <code>Vet[Animal]</code> where a <code>Vet[Mammal]</code> is expected</p>
