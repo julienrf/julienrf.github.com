@@ -2008,7 +2008,7 @@ String  =&gt; String</code></pre>
   <span class="kw">def</span> <span class="fu">filter</span>(p: A =&gt; Boolean): Col[A] = ???
   <span class="kw">def</span> <span class="fu">forall</span>(p: A =&gt; Boolean): Boolean = ???
   <span class="kw">def</span> <span class="fu">exists</span>(p: A =&gt; Boolean): Boolean = ???
-  <span class="kw">def</span> fold[B](b: B)(f: (B, A) =&gt; B): B = ???
+  <span class="kw">def</span> fold[B](b: B)(f: (A, B) =&gt; B): B = ???
 }
 
 <span class="kw">case</span> <span class="kw">class</span> Empty[A]() <span class="kw">extends</span> Col[A]
