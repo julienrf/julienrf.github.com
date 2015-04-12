@@ -1938,22 +1938,22 @@ barbell1 == barbell2</code></pre>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">stringIdentity</span>(s: String): String = s</code></pre>
 <ul class="incremental">
-<li>How to write a general <code>identity</code> function that works with any type?</li>
+<li>How to write a general <code>identity</code> method that works with any type?</li>
 </ul>
-</div><div id="polymorphic-functions" class="slide section level2">
-<h1><span class="header-section-number">18.4</span> Polymorphic Functions</h1>
+</div><div id="polymorphic-methods" class="slide section level2">
+<h1><span class="header-section-number">18.4</span> Polymorphic Methods</h1>
 <p>Look at the type signatures of <code>intIdentity</code>, <code>boolIdentity</code> and <code>stringIdentity</code>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">Int     =&gt; Int
 Boolean =&gt; Boolean
 String  =&gt; String</code></pre>
 <p>It always follows this pattern:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">A       =&gt; A</code></pre>
-</div><div id="polymorphic-functions-2" class="slide section level2">
-<h1><span class="header-section-number">18.5</span> Polymorphic Functions (2)</h1>
-<p>Functions can have <strong>type parameters</strong>:</p>
+</div><div id="polymorphic-methods-2" class="slide section level2">
+<h1><span class="header-section-number">18.5</span> Polymorphic Methods (2)</h1>
+<p>Methods can have <strong>type parameters</strong>:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> identity[A](a: A): A = a</code></pre>
 <ul>
-<li><code>A</code> is a <strong>type parameter</strong> (<strong>universally</strong> quantified), <code>identity</code> is a <strong>polymorphic function</strong></li>
+<li><code>A</code> is a <strong>type parameter</strong> (<strong>universally</strong> quantified), <code>identity</code> is a <strong>polymorphic method</strong></li>
 </ul>
 <p>You can then call <code>identity</code> as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x = identity[Int](<span class="dv">42</span>)
