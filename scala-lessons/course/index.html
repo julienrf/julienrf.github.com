@@ -2272,6 +2272,18 @@ String  =&gt; String</code></pre>
 </div><div id="exercise-33" class="slide section level2">
 <h1><span class="header-section-number">19.15</span> Exercise</h1>
 <ul>
+<li>Implement the following generic <code>sum</code> method:</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> sum[A](as: Seq[A])(<span class="kw">implicit</span> numeric: Numeric[A]): A</code></pre>
+</div><div id="exercise-34" class="slide section level2">
+<h1><span class="header-section-number">19.16</span> Exercise</h1>
+<ul>
+<li>Implement an instance of <code>Ordering[Mat]</code> that compares the area of the mats:</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> matOrdering: Ordering[Mat] = ???</code></pre>
+</div><div id="exercise-35" class="slide section level2">
+<h1><span class="header-section-number">19.17</span> Exercise</h1>
+<ul>
 <li>Define a type class <code>Show[A]</code> that captures the ability to compute an image for a given value</li>
 <li>Implement an instance of <code>Show[FitnesDevice]</code></li>
 </ul>
