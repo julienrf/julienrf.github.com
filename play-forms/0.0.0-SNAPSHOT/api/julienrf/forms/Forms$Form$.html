@@ -1,22 +1,22 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>ScalaTags - julienrf.forms.presenters.ScalaTags</title>
-          <meta name="description" content="ScalaTags - julienrf.forms.presenters.ScalaTags" />
-          <meta name="keywords" content="ScalaTags julienrf.forms.presenters.ScalaTags" />
+          <title>Form - julienrf.forms.Forms.Form</title>
+          <meta name="description" content="Form - julienrf.forms.Forms.Form" />
+          <meta name="keywords" content="Form julienrf.forms.Forms.Form" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
       
       <script type="text/javascript">
          if(top === self) {
-            var url = '../../../index.html';
-            var hash = 'julienrf.forms.presenters.ScalaTags$';
+            var url = '../../index.html';
+            var hash = 'julienrf.forms.Forms$Form$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,13 +28,15 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img src="../../../lib/object_big.png" />
-        <p id="owner"><a href="../../package.html" class="extype" name="julienrf">julienrf</a>.<a href="../package.html" class="extype" name="julienrf.forms">forms</a>.<a href="package.html" class="extype" name="julienrf.forms.presenters">presenters</a></p>
-        <h1>ScalaTags</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="package.html" class="extype" name="julienrf.forms.presenters">package presenters</a>
+        <a href="Forms$Form.html" title="See companion trait"><img src="../../lib/object_to_trait_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="julienrf">julienrf</a>.<a href="package.html" class="extype" name="julienrf.forms">forms</a>.<a href="Forms.html" class="extype" name="julienrf.forms.Forms">Forms</a></p>
+        <h1><a href="Forms$Form.html" title="See companion trait">Form</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="Forms$Form.html" title="See companion trait">trait Form</a>
+            | <a href="Forms.html" class="extype" name="julienrf.forms.Forms">package Forms</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       </div>
@@ -45,11 +47,21 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">ScalaTags</span>
+        <span class="name">Form</span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>You can create a form using the <a href="#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.Presenter[A,Forms.this.Out]):Forms.this.Form[A]" class="extmbr" name="julienrf.forms.Forms.Form#field">field</a> method or by combining forms together. forms can be
+combined in ways that allow you to reuse both the decoding logic and the associated
+form presentation (the HTML markup) of smaller forms to build larger forms.</p><p>For instance, consider the following <code>Place</code> class definition that defines an abstract representation of your form data:</p><pre><span class="kw">case</span> <span class="kw">class</span> Place(name: <span class="std">String</span>, position: Position)
+<span class="kw">case</span> <span class="kw">class</span> Position(latitude: BigDecimal, longitude: BigDecimal)</pre><p>You can first create two <code>Form[BigDecimal]</code> values for the <code>latitude</code> and <code>longitude</code> fields as follows:</p><pre><span class="kw">val</span> latitudeForm = Form.field(<span class="lit">"latitude"</span>, Codec.bigDecimal)(Input.input)
+<span class="kw">val</span> longitudeForm = Form.field(<span class="lit">"longitude"</span>, Codec.bigDecimal)(Input.input)</pre><p>You can then combine them to build a <code>Form[Position]</code> as follows:</p><pre><span class="kw">import</span> play.api.libs.functional.syntax._
+
+<span class="kw">val</span> positionForm = (latitudeForm ~ longitudeForm)(Position.apply, unlift(Position.unapply))</pre><p>Finally, you can combine the <code>positionForm</code> with a <code>nameForm</code> (whose definition has been elided for the sake of brevity)
+to build a <code>Form[Place]</code> as follows:</p><pre><span class="kw">val</span> placeForm = (
+  nameForm ~
+  Form.form(<span class="lit">"position"</span>, positionForm)
+)(Place.apply, unlift(Place.unapply))</pre></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -69,7 +81,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="julienrf.forms.presenters.ScalaTags"><span>ScalaTags</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="julienrf.forms.Forms.Form"><span>Form</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -89,78 +101,7 @@
         <div id="allMembers">
         
 
-        <div id="types" class="types members">
-              <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.presenters.ScalaTags.Attr" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="AttrextendsAnyRef"></a>
-      <a id="Attr:Attr"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$$Attr.html"><span class="name">Attr</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@AttrextendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.ScalaTags.Bundle" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="BundleextendsScalaTags.AttrwithScalaTags.TagwithScalaTags.Implicits"></a>
-      <a id="Bundle:Bundle"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$$Bundle.html"><span class="name">Bundle</span></a><span class="result"> extends <a href="ScalaTags$$Attr.html" class="extype" name="julienrf.forms.presenters.ScalaTags.Attr">Attr</a> with <a href="ScalaTags$$Tag.html" class="extype" name="julienrf.forms.presenters.ScalaTags.Tag">Tag</a> with <a href="ScalaTags$$Implicits.html" class="extype" name="julienrf.forms.presenters.ScalaTags.Implicits">Implicits</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@BundleextendsScalaTags.AttrwithScalaTags.TagwithScalaTags.Implicits" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.ScalaTags.Implicits" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="ImplicitsextendsText.AggregatewithText.Cap"></a>
-      <a id="Implicits:Implicits"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$$Implicits.html"><span class="name">Implicits</span></a><span class="result"> extends <span class="extype" name="scalatags.Text.Aggregate">Aggregate</span> with <span class="extype" name="scalatags.Text.Cap">Cap</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@ImplicitsextendsText.AggregatewithText.Cap" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.ScalaTags.Tag" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="TagextendsAnyRef"></a>
-      <a id="Tag:Tag"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$$Tag.html"><span class="name">Tag</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@TagextendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li></ol>
-            </div>
+        
 
         
 
@@ -178,8 +119,8 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -195,8 +136,8 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@##():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@##():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -212,28 +153,11 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="julienrf.forms.presenters.ScalaTags.Bundle" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Bundle"></a>
-      <a id="Bundle:Bundle"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$$Bundle$.html"><span class="name">Bundle</span></a><span class="result"> extends <a href="ScalaTags$$Bundle.html" class="extype" name="julienrf.forms.presenters.ScalaTags.Bundle">Bundle</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@Bundle" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -246,8 +170,8 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -263,11 +187,11 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@clone():Object" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@clone():Object" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
@@ -286,8 +210,8 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -303,11 +227,30 @@
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="julienrf.forms.Forms.Form#field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.Presenter[A,Forms.this.Out]):Forms.this.Form[A]"></a>
+      <a id="field[A](String,Codec[FieldData,A])(Presenter[A,Out]):Form[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Forms.Form.field.A">A</span>]</span>)</span><span class="params">(<span name="presenter">presenter: <a href="Presenter.html" class="extype" name="julienrf.forms.Presenter">Presenter</a>[<span class="extype" name="julienrf.forms.Forms.Form.field.A">A</span>, <a href="Forms.html#Out" class="extmbr" name="julienrf.forms.Forms.Out">Out</a>]</span>)</span><span class="result">: <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Forms.Form.field.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.Forms$Form$@field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.Presenter[A,Forms.this.Out]):Forms.this.Form[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Creates a form with one field.</p><div class="fullcomment"><div class="comment cmt"><p>Creates a form with one field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>the type of the data decoded by the returned form.
+</p></dd><dt class="param">key</dt><dd class="cmt"><p>field key. Each field within a form must have a unique key.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the <code>Codec</code> to use to decode and encode the <code>A</code> value.</p></dd><dt class="param">presenter</dt><dd class="cmt"><p>the <code>Presenter</code> to use to render the returned form.</p></dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -320,34 +263,58 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="julienrf.forms.presenters.ScalaTags#form" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="form(call:play.api.mvc.Call)(modifiers:julienrf.forms.presenters.ScalaTags.Bundle.Modifier*):julienrf.forms.presenters.ScalaTags.Bundle.Tag"></a>
-      <a id="form(Call)(ScalaTags.Bundle.Modifier*):ScalaTags.Bundle.Tag"></a>
+    </li><li name="julienrf.forms.Forms.Form#form" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="form[A](key:String,fa:Forms.this.Form[A])(implicitev:julienrf.forms.SemiGroup[Forms.this.Out]):Forms.this.Form[A]"></a>
+      <a id="form[A](String,Form[A])(SemiGroup[Out]):Form[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">form</span><span class="params">(<span name="call">call: <span class="extype" name="play.api.mvc.Call">Call</span></span>)</span><span class="params">(<span name="modifiers">modifiers: <a href="ScalaTags$$Bundle$.html#Modifier=scalatags.generic.Modifier[Builder]" class="extmbr" name="julienrf.forms.presenters.ScalaTags.Bundle.Modifier">ScalaTags.Bundle.Modifier</a>*</span>)</span><span class="result">: <a href="ScalaTags$$Bundle$.html#Tag=scalatags.Text.TypedTag[String]" class="extmbr" name="julienrf.forms.presenters.ScalaTags.Bundle.Tag">ScalaTags.Bundle.Tag</a></span>
+        <span class="name">form</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fa">fa: <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Forms.Form.form.A">A</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <a href="SemiGroup.html" class="extype" name="julienrf.forms.SemiGroup">SemiGroup</a>[<a href="Forms.html#Out" class="extmbr" name="julienrf.forms.Forms.Out">Out</a>]</span>)</span><span class="result">: <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>[<span class="extype" name="julienrf.forms.Forms.Form.form.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@form(call:play.api.mvc.Call)(modifiers:julienrf.forms.presenters.ScalaTags.Bundle.Modifier*):julienrf.forms.presenters.ScalaTags.Bundle.Tag" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@form[A](key:String,fa:Forms.this.Form[A])(implicitev:julienrf.forms.SemiGroup[Forms.this.Out]):Forms.this.Form[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Prefixes the fields of the specified form.</p><div class="fullcomment"><div class="comment cmt"><p>Prefixes the fields of the specified form.</p><pre><span class="kw">val</span> fooForm = Form.field(<span class="lit">"foo"</span>, Codec.text)(Input.input)
+<span class="kw">val</span> prefixedForm = Form.form(<span class="lit">"bar"</span>, fooForm)
+assert(prefixedForm.keys == <span class="std">Seq</span>(<span class="lit">"bar.foo"</span>))</pre></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>the prefix to prepend to all the fields of the <code>fa</code> form.</p></dd><dt class="param">fa</dt><dd class="cmt"><p>the form whose fields are to be prepended by the prefix</p></dd><dt class="param">ev</dt><dd class="cmt"><p><a href="SemiGroup.html" class="extype" name="julienrf.forms.SemiGroup">SemiGroup</a> defining how the form fields are concatenated when rendered
+</p></dd></dl></div>
+    </li><li name="julienrf.forms.Forms.Form#formInstances" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="formInstances(implicitev:julienrf.forms.SemiGroup[Forms.this.Out]):play.api.libs.functional.InvariantFunctor[Forms.this.Form]withplay.api.libs.functional.FunctionalCanBuild[Forms.this.Form]"></a>
+      <a id="formInstances(SemiGroup[Out]):InvariantFunctor[Form]withFunctionalCanBuild[Form]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">formInstances</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <a href="SemiGroup.html" class="extype" name="julienrf.forms.SemiGroup">SemiGroup</a>[<a href="Forms.html#Out" class="extmbr" name="julienrf.forms.Forms.Out">Out</a>]</span>)</span><span class="result">: <span class="extype" name="play.api.libs.functional.InvariantFunctor">InvariantFunctor</span>[<a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>] with <span class="extype" name="play.api.libs.functional.FunctionalCanBuild">FunctionalCanBuild</span>[<a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.Forms$Form$@formInstances(implicitev:julienrf.forms.SemiGroup[Forms.this.Out]):play.api.libs.functional.InvariantFunctor[Forms.this.Form]withplay.api.libs.functional.FunctionalCanBuild[Forms.this.Form]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Typeclass instances.</p><div class="fullcomment"><div class="comment cmt"><p>Typeclass instances.</p><p>Forms are invariant functors. It means that you can transform a <code>Form[A]</code> into a <code>Form[B]</code> provided you have
+two functions <code>f: A =&gt; B</code> and <code>g: B =&gt; A</code>.</p><p>Forms also implement <code>FunctionalCanBuild</code>. It means that you can combine several forms “in parallel” (i.e. the
+decoding processes all the fields in parallel and accumulates all the validation errors).
+</p></div><dl class="paramcmts block"><dt class="param">ev</dt><dd class="cmt"><p>Defines how form fields are concatenated when rendered.
+</p></dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -360,8 +327,8 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -377,8 +344,8 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@hashCode():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -394,8 +361,8 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -411,8 +378,8 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -428,8 +395,8 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@notify():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@notify():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -445,8 +412,8 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -462,8 +429,8 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -479,8 +446,8 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@toString():String" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@toString():String" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -496,8 +463,8 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@wait():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@wait():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -519,8 +486,8 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -542,8 +509,8 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.ScalaTags$@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Forms$Form$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>

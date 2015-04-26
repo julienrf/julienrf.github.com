@@ -66,225 +66,47 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.presenters.Field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="Field[A]extendsProductwithSerializable"></a>
-      <a id="Field[A]:Field[A]"></a>
+              <ol><li name="julienrf.forms.presenters.Input" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Input[Out]extendsAnyRef"></a>
+      <a id="Input[Out]:Input[Out]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="Field.html"><span class="name">Field</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="../codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.presenters.Field.A">A</span>]</span>, <span name="value">value: <a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="Input.html"><span class="name">Input</span></a><span class="tparams">[<span name="Out">Out</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Field[A]extendsProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Form field.</p><div class="fullcomment"><div class="comment cmt"><p>Form field.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.
-</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl></div>
-    </li><li name="julienrf.forms.presenters.InputType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="InputType[A]extendsProductwithSerializable"></a>
-      <a id="InputType[A]:InputType[A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a href="InputType.html"><span class="name">InputType</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="tpe">tpe: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@InputType[A]extendsProductwithSerializable" title="Permalink" target="_top">
+      <a href="../../../index.html#julienrf.forms.presenters.package@Input[Out]extendsAnyRef" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
       
-    </li><li name="julienrf.forms.presenters.Mandatory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Mandatory[A]extendsProductwithSerializable"></a>
-      <a id="Mandatory[A]:Mandatory[A]"></a>
+    </li><li name="julienrf.forms.presenters.PlayField" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="PlayField[Out]extendsAnyRef"></a>
+      <a id="PlayField[Out]:PlayField[Out]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="Mandatory.html"><span class="name">Mandatory</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="PlayField.html"><span class="name">PlayField</span></a><span class="tparams">[<span name="Out">Out</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Mandatory[A]extendsProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Multiple" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Multiple[A]extendsProductwithSerializable"></a>
-      <a id="Multiple[A]:Multiple[A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a href="Multiple.html"><span class="name">Multiple</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Multiple[A]extendsProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Presenter" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="Presenter[A]extendsAnyRef"></a>
-      <a id="Presenter[A]:Presenter[A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="Presenter.html"><span class="name">Presenter</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Presenter[A]extendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Defines how to render a form field.</p><div class="fullcomment"><div class="comment cmt"><p>Defines how to render a form field.</p><p>The <code>A</code> type parameter can be used to define type-level computations to derive information from the field.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field to render.
-</p></dd></dl></div>
-    </li></ol>
-            </div>
-
-        
-
-        <div id="values" class="values members">
-              <h3>Value Members</h3>
-              <ol><li name="julienrf.forms.presenters.Input" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Input"></a>
-      <a id="Input:Input"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="Input$.html"><span class="name">Input</span></a>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Input" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.InputType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="InputType"></a>
-      <a id="InputType:InputType"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="InputType$.html"><span class="name">InputType</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@InputType" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Labeled" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Labeled"></a>
-      <a id="Labeled:Labeled"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="Labeled$.html"><span class="name">Labeled</span></a>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Labeled" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Fields with just an input and a label
-</p>
-    </li><li name="julienrf.forms.presenters.Mandatory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Mandatory"></a>
-      <a id="Mandatory:Mandatory"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="Mandatory$.html"><span class="name">Mandatory</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Mandatory" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.Multiple" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Multiple"></a>
-      <a id="Multiple:Multiple"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="Multiple$.html"><span class="name">Multiple</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Multiple" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
-    </li><li name="julienrf.forms.presenters.PlayField" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="PlayField"></a>
-      <a id="PlayField:PlayField"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="PlayField$.html"><span class="name">PlayField</span></a>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@PlayField" title="Permalink" target="_top">
+      <a href="../../../index.html#julienrf.forms.presenters.package@PlayField[Out]extendsAnyRef" title="Permalink" target="_top">
         <img src="../../../lib/permalink.png" />
       </a>
     </span>
       <p class="shortcomment cmt">Produces HTML similar to what form helpers built-in with Play produce, but with the following changes:</p><div class="fullcomment"><div class="comment cmt"><p>Produces HTML similar to what form helpers built-in with Play produce, but with the following changes:</p><ul><li>Fixes the problem with <code>optional(nonEmptyText)</code></li><li>Adds HTML validation attributes to input tag
 </li></ul></div></div>
-    </li><li name="julienrf.forms.presenters.ScalaTags" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ScalaTags"></a>
-      <a id="ScalaTags:ScalaTags"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="ScalaTags$.html"><span class="name">ScalaTags</span></a>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@ScalaTags" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      
     </li></ol>
             </div>
+
+        
+
+        
 
         
 

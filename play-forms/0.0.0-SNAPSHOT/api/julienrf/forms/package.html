@@ -47,8 +47,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The library is built around three abstractions: <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a> and
-<a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenter</a>.</p><p>A <a href="Form.html" class="extype" name="julienrf.forms.Form">Form</a> combines several <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codecs</a> and <a href="presenters/Presenter.html" class="extype" name="julienrf.forms.presenters.Presenter">Presenters</a> to define:</p><ul><li>how to decode the form data ;</li><li>how to display an empty (not filled) form ;</li><li>how to display a filled form with and without validation errors.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The library is built around three abstractions: <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a>, <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a> and
+<a href="Presenter.html" class="extype" name="julienrf.forms.Presenter">Presenter</a>.</p><p>A <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">Form</a> combines several <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codecs</a> and <a href="Presenter.html" class="extype" name="julienrf.forms.Presenter">Presenters</a> to define:</p><ul><li>how to decode the form data ;</li><li>how to display an empty (not filled) form ;</li><li>how to display a filled form with and without validation errors.
 </li></ul></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
@@ -91,7 +91,26 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.FieldData" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="julienrf.forms.Field" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Field[A]extendsProductwithSerializable"></a>
+      <a id="Field[A]:Field[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Field.html"><span class="name">Field</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>, <span name="value">value: <a href="#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Field[A]extendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Form field.</p><div class="fullcomment"><div class="comment cmt"><p>Form field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.
+</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl></div>
+    </li><li name="julienrf.forms.FieldData" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="FieldData=Seq[String]"></a>
       <a id="FieldData:FieldData"></a>
       <h4 class="signature">
@@ -108,24 +127,6 @@
       </a>
     </span>
       
-    </li><li name="julienrf.forms.Form" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="Form[A]extendsAnyRef"></a>
-      <a id="Form[A]:Form[A]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">sealed </span>
-        <span class="kind">trait</span>
-      </span>
-      <span class="symbol">
-        <a href="Form.html"><span class="name">Form</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@Form[A]extendsAnyRef" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">An HTML form with one or more fields.</p><div class="fullcomment"><div class="comment cmt"><p>An HTML form with one or more fields. It provides the following features:</p><ul><li>decode the form data to an <code>A</code> value ;</li><li>display an empty (not filled) form to the client ;</li><li>display a filled form with and without validation errors.</li></ul><p>See the <a href="Form$.html" class="extype" name="julienrf.forms.Form">companion object’s documentation</a> to know how to create a <code>Form[A]</code> value.
-</p></div></div>
     </li><li name="julienrf.forms.FormData" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="FormData=Map[String,Seq[String]]"></a>
       <a id="FormData:FormData"></a>
@@ -143,23 +144,111 @@
       </a>
     </span>
       
-    </li><li name="julienrf.forms.FormUi" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="FormUiextendsProductwithSerializable"></a>
-      <a id="FormUi:FormUi"></a>
+    </li><li name="julienrf.forms.Forms" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="FormsextendsAnyRef"></a>
+      <a id="Forms:Forms"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Forms.html"><span class="name">Forms</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@FormsextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Defines <a href="Forms$Form.html" class="extype" name="julienrf.forms.Forms.Form">forms</a>.</p>
+    </li><li name="julienrf.forms.InputType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InputType[A]extendsProductwithSerializable"></a>
+      <a id="InputType[A]:InputType[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="FormUi.html"><span class="name">FormUi</span></a><span class="params">(<span name="html">html: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scalatags.generic.Aliases.Modifier">scalatags.Text.Modifier</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="InputType.html"><span class="name">InputType</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="tpe">tpe: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@FormUiextendsProductwithSerializable" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.package@InputType[A]extendsProductwithSerializable" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
       
+    </li><li name="julienrf.forms.Mandatory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Mandatory[A]extendsProductwithSerializable"></a>
+      <a id="Mandatory[A]:Mandatory[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Mandatory.html"><span class="name">Mandatory</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Mandatory[A]extendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.Multiple" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Multiple[A]extendsProductwithSerializable"></a>
+      <a id="Multiple[A]:Multiple[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Multiple.html"><span class="name">Multiple</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Multiple[A]extendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.Presenter" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Presenter[A,B]extendsAnyRef"></a>
+      <a id="Presenter[A,B]:Presenter[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Presenter.html"><span class="name">Presenter</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Presenter[A,B]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Defines how to render a form field.</p><div class="fullcomment"><div class="comment cmt"><p>Defines how to render a form field.</p><p>The <code>A</code> type parameter can be used to define type-level computations to derive information from the field.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field to render.</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>type of the output
+</p></dd></dl></div>
+    </li><li name="julienrf.forms.SemiGroup" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="SemiGroup[A]extendsAnyRef"></a>
+      <a id="SemiGroup[A]:SemiGroup[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="SemiGroup.html"><span class="name">SemiGroup</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@SemiGroup[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Defines how to combine <code>A</code> values
+</p>
     </li></ol>
             </div>
 
@@ -167,33 +256,74 @@
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="julienrf.forms.Form" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="Form"></a>
-      <a id="Form:Form"></a>
+              <ol><li name="julienrf.forms.InputType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InputType"></a>
+      <a id="InputType:InputType"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Form$.html"><span class="name">Form</span></a>
+        <a href="InputType$.html"><span class="name">InputType</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.package@Form" title="Permalink" target="_top">
+      <a href="../../index.html#julienrf.forms.package@InputType" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">You can create a form using the <a href="Form$.html#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" class="extmbr" name="julienrf.forms.Form#field">field</a> method or by combining forms together.</p><div class="fullcomment"><div class="comment cmt"><p>You can create a form using the <a href="Form$.html#field[A](key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A])(presenter:julienrf.forms.presenters.Presenter[A]):julienrf.forms.Form[A]" class="extmbr" name="julienrf.forms.Form#field">field</a> method or by combining forms together. forms can be
-combined in ways that allow you to reuse both the decoding logic and the associated
-form presentation (the HTML markup) of smaller forms to build larger forms.</p><p>For instance, consider the following <code>Place</code> class definition that defines an abstract representation of your form data:</p><pre><span class="kw">case</span> <span class="kw">class</span> Place(name: <span class="std">String</span>, position: Position)
-<span class="kw">case</span> <span class="kw">class</span> Position(latitude: BigDecimal, longitude: BigDecimal)</pre><p>You can first create two <code>Form[BigDecimal]</code> values for the <code>latitude</code> and <code>longitude</code> fields as follows:</p><pre><span class="kw">val</span> latitudeForm = Form.field(<span class="lit">"latitude"</span>, Codec.bigDecimal)(Input.input)
-<span class="kw">val</span> longitudeForm = Form.field(<span class="lit">"longitude"</span>, Codec.bigDecimal)(Input.input)</pre><p>You can then combine them to build a <code>Form[Position]</code> as follows:</p><pre><span class="kw">import</span> play.api.libs.functional.syntax._
-
-<span class="kw">val</span> positionForm = (latitudeForm ~ longitudeForm)(Position.apply, unlift(Position.unapply))</pre><p>Finally, you can combine the <code>positionForm</code> with a <code>nameForm</code> (whose definition has been elided for the sake of brevity)
-to build a <code>Form[Place]</code> as follows:</p><pre><span class="kw">val</span> placeForm = (
-  nameForm ~
-  Form.form(<span class="lit">"position"</span>, positionForm)
-)(Place.apply, unlift(Place.unapply))</pre></div></div>
+      
+    </li><li name="julienrf.forms.Mandatory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Mandatory"></a>
+      <a id="Mandatory:Mandatory"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Mandatory$.html"><span class="name">Mandatory</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Mandatory" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.Multiple" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Multiple"></a>
+      <a id="Multiple:Multiple"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Multiple$.html"><span class="name">Multiple</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@Multiple" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="julienrf.forms.SemiGroup" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SemiGroup"></a>
+      <a id="SemiGroup:SemiGroup"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SemiGroup$.html"><span class="name">SemiGroup</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@SemiGroup" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
     </li><li name="julienrf.forms.codecs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="codecs"></a>
       <a id="codecs:codecs"></a>
@@ -228,6 +358,40 @@ to build a <code>Form[Place]</code> as follows:</p><pre><span class="kw">val</sp
       </a>
     </span>
       
+    </li><li name="julienrf.forms.scalatags" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="scalatags"></a>
+      <a id="scalatags:scalatags"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="scalatags/package.html"><span class="name">scalatags</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@scalatags" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><code>Forms</code> specialization that renders <a href="https://github.com/lihaoyi/scalatags" target="_blank">ScalaTags</a> fragments.</p>
+    </li><li name="julienrf.forms.twirl" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="twirl"></a>
+      <a id="twirl:twirl"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="twirl/package.html"><span class="name">twirl</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#julienrf.forms.package@twirl" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><code>Forms</code> specialization that renders Twirl’s <a href="https://www.playframework.com/documentation/2.4.x/api/scala/play/twirl/api/Html.html" target="_blank">Html</a> values.</p>
     </li></ol>
             </div>
 
