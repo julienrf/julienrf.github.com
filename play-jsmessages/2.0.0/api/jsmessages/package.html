@@ -82,17 +82,12 @@
         <img src="../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Generate a JavaScript function computing localized messages of a Play application.</p><div class="fullcomment"><div class="comment cmt"><p>Generate a JavaScript function computing localized messages of a Play application.</p><p>Typical usage:</p><pre><span class="kw">import</span> play.api.mvc._
-<span class="kw">import</span> play.api.Play.current
-<span class="kw">import</span> jsmessages.api.JsMessages
+      <p class="shortcomment cmt">Generate a JavaScript function computing localized messages of a Play application.</p><div class="fullcomment"><div class="comment cmt"><p>Generate a JavaScript function computing localized messages of a Play application.</p><p>Typical usage (from within a Play controller):</p><pre><span class="kw">val</span> jsMessages: JsMessages = ???
 
-<span class="kw">object</span> Application <span class="kw">extends</span> Controller {
-  <span class="kw">val</span> jsMessages = JsMessages.default
-
-  <span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
-    Ok(jsMessages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
-  }
-}</pre><p>Then on client-side:</p><pre>console.log(Messages(<span class="lit">"greeting"</span>, <span class="lit">"Julien"</span>)); <span class="cmt">// prints "Hello, Julien!"</span></pre></div></div>
+<span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
+  Ok(jsMessages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
+}</pre><p>Then on client-side:</p><pre>console.log(Messages(<span class="lit">"greeting"</span>, <span class="lit">"Julien"</span>)); <span class="cmt">// prints "Hello, Julien!"</span></pre><p>See <a href="JsMessagesFactory.html" class="extype" name="jsmessages.JsMessagesFactory">JsMessagesFactory</a> to know how to get a <code>JsMessages</code> instance.
+</p></div></div>
     </li><li name="jsmessages.JsMessagesFactory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="JsMessagesFactoryextendsAnyRef"></a>
       <a id="JsMessagesFactory:JsMessagesFactory"></a>
@@ -109,8 +104,16 @@
         <img src="../lib/permalink.png" />
       </a>
     </span>
-      <p class="shortcomment cmt">Defines various methods returning a <a href="JsMessages.html" class="extype" name="jsmessages.JsMessages">JsMessages</a>.</p><div class="fullcomment"><div class="comment cmt"><p>Defines various methods returning a <a href="JsMessages.html" class="extype" name="jsmessages.JsMessages">JsMessages</a>.
-</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Defines various methods returning a <a href="JsMessages.html" class="extype" name="jsmessages.JsMessages">JsMessages</a> instance.</p><div class="fullcomment"><div class="comment cmt"><p>Defines various methods returning a <a href="JsMessages.html" class="extype" name="jsmessages.JsMessages">JsMessages</a> instance.</p><p>Typical usage:</p><pre><span class="kw">import</span> jsmessages.JsMessagesFactory
+<span class="kw">import</span> play.api.i18n.{I18nSupport, MessagesApi}
+<span class="kw">import</span> play.api.mvc.{Action, Controller}
+
+<span class="kw">class</span> Application(jsMessagesFactory: JsMessagesFactory, <span class="kw">val</span> messagesApi: MessagesApi) <span class="kw">extends</span> Controller <span class="kw">with</span> I18nSupport {
+  <span class="kw">val</span> jsMessages = jsMessagesFactory.all
+  <span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
+    Ok(messages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
+  }
+}</pre></div><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@Singleton</span><span class="args">()</span>
               
         </dd></dl></div>

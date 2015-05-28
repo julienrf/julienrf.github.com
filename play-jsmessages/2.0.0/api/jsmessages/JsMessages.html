@@ -49,17 +49,12 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Generate a JavaScript function computing localized messages of a Play application.</p><p>Typical usage:</p><pre><span class="kw">import</span> play.api.mvc._
-<span class="kw">import</span> play.api.Play.current
-<span class="kw">import</span> jsmessages.api.JsMessages
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Generate a JavaScript function computing localized messages of a Play application.</p><p>Typical usage (from within a Play controller):</p><pre><span class="kw">val</span> jsMessages: JsMessages = ???
 
-<span class="kw">object</span> Application <span class="kw">extends</span> Controller {
-  <span class="kw">val</span> jsMessages = JsMessages.default
-
-  <span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
-    Ok(jsMessages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
-  }
-}</pre><p>Then on client-side:</p><pre>console.log(Messages(<span class="lit">"greeting"</span>, <span class="lit">"Julien"</span>)); <span class="cmt">// prints "Hello, Julien!"</span></pre></div><div class="toggleContainer block">
+<span class="kw">val</span> messages = Action { <span class="kw">implicit</span> request <span class="kw">=&gt;</span>
+  Ok(jsMessages(<span class="std">Some</span>(<span class="lit">"window.Messages"</span>)))
+}</pre><p>Then on client-side:</p><pre>console.log(Messages(<span class="lit">"greeting"</span>, <span class="lit">"Julien"</span>)); <span class="cmt">// prints "Hello, Julien!"</span></pre><p>See <a href="JsMessagesFactory.html" class="extype" name="jsmessages.JsMessagesFactory">JsMessagesFactory</a> to know how to get a <code>JsMessages</code> instance.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
