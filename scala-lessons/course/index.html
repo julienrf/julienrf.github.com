@@ -833,18 +833,47 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
 </div><div id="exercise-14" class="slide section level2">
 <h1><span class="header-section-number">11.14</span> Exercise</h1>
 <ul>
-<li>Define data types modeling</li>
+<li>Model the following domain in Scala:
+<ul>
+<li>A geometric shape <em>is</em> a circle <em>or</em> a rectangle <em>or</em> a triangle,</li>
+<li>A circle <em>has</em> a radius,</li>
+<li>A rectangle <em>has</em> a width <em>and</em> a height,</li>
+<li>A triangle <em>has</em> a width <em>and</em> a height.</li>
+</ul></li>
 </ul>
 </div><div id="exercise-15" class="slide section level2">
 <h1><span class="header-section-number">11.15</span> Exercise</h1>
 <ul>
-<li>Define data types modeling arithmetic expressions</li>
+<li>Model the following domain in Scala:
+<ul>
+<li>A course <em>has</em> a name <em>and</em> a difficulty level</li>
+<li>A difficulty level <em>is</em> either “beginner”, “intermediate” <em>or</em> “advanced”</li>
+</ul></li>
+<li>Can you then define a course named “Programming in Scala” targetting beginners?</li>
+</ul>
+</div><div id="case-objects" class="slide section level2">
+<h1><span class="header-section-number">11.16</span> Case Objects</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Beginner</span>() <span class="kw">extends</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Intermediate</span>() <span class="kw">extends</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Advanced</span>() <span class="kw">extends</span> DifficultyLevel</code></pre>
+<p>If a case class has no parameter, just use a <strong>case object</strong> instead:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">object</span> Beginner <span class="kw">extends</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">object</span> Intermediate <span class="kw">extends</span> DifficultyLevel
+<span class="kw">case</span> <span class="kw">object</span> Advanced <span class="kw">extends</span> DifficultyLevel</code></pre>
+</div><div id="exercise-16" class="slide section level2">
+<h1><span class="header-section-number">11.17</span> Exercise</h1>
+<ul>
+<li>Model the following domain in Scala:
+<ul>
 <li>An expression is either a number or an addition</li>
 <li>A number has a numeric value</li>
 <li>An addition has a left-hand side expression and a right-hand side expression</li>
+</ul></li>
 </ul>
 </div><div id="syntax-summary-1" class="slide section level2">
-<h1><span class="header-section-number">11.16</span> Syntax Summary</h1>
+<h1><span class="header-section-number">11.18</span> Syntax Summary</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> &lt;name&gt;(&lt;member1&gt;, &lt;member2&gt;, …)</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> &lt;name1&gt;
 <span class="kw">case</span> <span class="kw">class</span> &lt;name2&gt;(…) <span class="kw">extends</span> &lt;name1&gt;
@@ -854,17 +883,6 @@ libraryDependencies += <span class="st">&quot;com.chuusai&quot;</span> %% <span 
   <span class="kw">case</span> &lt;name2&gt;(…) =&gt; &lt;expr&gt;
   <span class="kw">case</span> &lt;name3&gt;(…) =&gt; &lt;expr&gt;
 }</code></pre>
-</div><div id="exercise-16" class="slide section level2">
-<h1><span class="header-section-number">11.17</span> Exercise</h1>
-<ul>
-<li>Model the following domain in Scala:
-<ul>
-<li>A geometric shape <em>is</em> a circle <em>or</em> a rectangle <em>or</em> a triangle,</li>
-<li>A circle <em>has</em> a radius,</li>
-<li>A rectangle <em>has</em> a width <em>and</em> a height,</li>
-<li>A triangle <em>has</em> a width <em>and</em> a height.</li>
-</ul></li>
-</ul>
 </div>
 <div id="standard-collections" class="titleslide slide section level1"><h1><span class="header-section-number">12</span> Standard Collections</h1></div><div id="standard-collections-1" class="slide section level2">
 <h1><span class="header-section-number">12.1</span> Standard Collections</h1>
@@ -2182,7 +2200,7 @@ String  =&gt; String</code></pre>
 </div><div id="contravariance" class="slide section level2">
 <h1><span class="header-section-number">18.20</span> Contravariance</h1>
 <p>More generally, <code>Vet[A] &lt;: Vet[B]</code> if <code>A &gt;: B</code></p>
-<p>We say that <code>A</code> is <strong>contravariant</strong> in <code>Run[A]</code> and we can tell it to the compiler as follows:</p>
+<p>We say that <code>A</code> is <strong>contravariant</strong> in <code>Vet[A]</code> and we can tell it to the compiler as follows:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Vet[-A] {
   <span class="kw">def</span> <span class="fu">treat</span>(a: A)
 }</code></pre>
