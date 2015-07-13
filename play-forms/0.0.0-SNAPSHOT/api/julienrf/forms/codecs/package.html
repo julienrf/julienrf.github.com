@@ -28,11 +28,11 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img src="../../../lib/package_big.png" />
+        <img alt="Package" src="../../../lib/package_big.png" />
         <p id="owner"><a href="../../package.html" class="extype" name="julienrf">julienrf</a>.<a href="../package.html" class="extype" name="julienrf.forms">forms</a></p>
         <h1>codecs</h1><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -79,15 +79,14 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package@Codec[A,B]extendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">As its name suggests, a <code>Codec[A, B]</code>, defines how to <b>decode</b> an <code>A</code> value to a <code>B</code> value, and, conversely,
 how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><div class="fullcomment"><div class="comment cmt"><p>As its name suggests, a <code>Codec[A, B]</code>, defines how to <b>decode</b> an <code>A</code> value to a <code>B</code> value, and, conversely,
-how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>The decoding and encoding processes are defined by the <a href="Codec.html#decode(a:A):Either[Seq[Throwable],B]" class="extmbr" name="julienrf.forms.codecs.Codec#decode">decode</a> and <a href="Codec.html#encode(b:B):Option[A]" class="extmbr" name="julienrf.forms.codecs.Codec#encode">encode</a> methods.</p><p>To get an instance of <code>Codec</code>, start with the provided <b>concrete subclasses</b> (see the <a href="Codec$.html" class="extype" name="julienrf.forms.codecs.Codec">companion object</a>) and <b>combine</b> them with the
-<a href="Codec.html#andThen[C](that:julienrf.forms.codecs.Codec[B,C]):julienrf.forms.codecs.Codec[A,C]" class="extmbr" name="julienrf.forms.codecs.Codec#andThen">andThen</a>, <a href="Codec.html#orElse[C](that:julienrf.forms.codecs.Codec[A,C]):julienrf.forms.codecs.Codec[A,Either[B,C]]" class="extmbr" name="julienrf.forms.codecs.Codec#orElse">orElse</a> and <a href="Codec.html#opt:julienrf.forms.codecs.Codec[A,Option[B]]" class="extmbr" name="julienrf.forms.codecs.Codec#opt">opt</a> methods.
-</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>: a specialization of <code>Codec</code> that can be seen as a validator of <code>A</code> values.
-</p></span></dd></dl></div>
+how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>The decoding and encoding processes are defined by the <a href="Codec.html#decode(a:A):Either[Seq[Throwable],B]" class="extmbr" name="julienrf.forms.codecs.Codec#decode">decode</a> and <a href="Codec.html#encode(b:B):A" class="extmbr" name="julienrf.forms.codecs.Codec#encode">encode</a> methods.</p><p>To get an instance of <code>Codec</code>, start with the provided <b>concrete subclasses</b> (see the <a href="Codec$.html" class="extype" name="julienrf.forms.codecs.Codec">companion object</a>) and <b>combine</b> them with the
+<a href="Codec.html#andThen[C](that:julienrf.forms.codecs.Codec[B,C]):julienrf.forms.codecs.Codec[A,C]" class="extmbr" name="julienrf.forms.codecs.Codec#andThen">andThen</a>, <a href="Codec.html#orElse[C](that:julienrf.forms.codecs.Codec[A,C]):julienrf.forms.codecs.Codec[A,Either[B,C]]" class="extmbr" name="julienrf.forms.codecs.Codec#orElse">orElse</a> and <a href="Codec.html#opt[C](implicitev:&lt;:&lt;[A,Option[C]]):julienrf.forms.codecs.Codec[Option[C],Option[B]]" class="extmbr" name="julienrf.forms.codecs.Codec#opt">opt</a> methods.
+</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>: a specialization of <code>Codec</code> that can be seen as a validator of <code>A</code> values.</p></span></dd></dl></div>
     </li><li name="julienrf.forms.codecs.Constraint" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="Constraint[A]extendsCodec[A,A]"></a>
       <a id="Constraint[A]:Constraint[A]"></a>
@@ -101,12 +100,11 @@ how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>Th
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package@Constraint[A]extendsCodec[A,A]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Specialisation of <code>Codec[A, A]</code> that can be seen as a validator of <code>A</code> values.</p><div class="fullcomment"><div class="comment cmt"><p>Specialisation of <code>Codec[A, A]</code> that can be seen as a validator of <code>A</code> values.</p><p>This class inherits all the combinators of <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a> and defines an additional combinator, <a href="Constraint.html#and(that:julienrf.forms.codecs.Constraint[A]):julienrf.forms.codecs.Constraint[A]" class="extmbr" name="julienrf.forms.codecs.Constraint#and">and</a>.
-</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>a <code>Constraint</code> can <b>not</b> modify the validated value
-</p></span></dd></dl></div>
+</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>a <code>Constraint</code> can <b>not</b> modify the validated value</p></span></dd></dl></div>
     </li></ol>
             </div>
 
@@ -127,7 +125,7 @@ how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>Th
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package@Codec" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Lists all the built-in <code>Codec</code>s.</p>
@@ -144,10 +142,10 @@ how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>Th
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package@Constraint" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p>
     </li><li name="julienrf.forms.codecs.Error" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Error"></a>
       <a id="Error:Error"></a>
@@ -161,7 +159,7 @@ how to <b>encode</b> a <code>B</code> value to an <code>A</code> value.</p><p>Th
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.package@Error" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       

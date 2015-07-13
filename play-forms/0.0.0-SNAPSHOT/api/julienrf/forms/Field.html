@@ -28,13 +28,13 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img src="../../lib/class_big.png" />
+        <img alt="Class" src="../../lib/class_big.png" />
         <p id="owner"><a href="../package.html" class="extype" name="julienrf">julienrf</a>.<a href="package.html" class="extype" name="julienrf.forms">forms</a></p>
         <h1>Field</h1><h3><span class="morelinks"><div>Related Doc:
             <a href="package.html" class="extype" name="julienrf.forms">package forms</a>
           </div></span></h3><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -45,13 +45,12 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>, <span name="value">value: <a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Field</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>, <span name="value">value: <a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Form field.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.
-</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type of the field.</p></dd><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -79,7 +78,6 @@
               <li class="hideall out"><span>Hide All</span></li>
               <li class="showall in"><span>Show all</span></li>
             </ol>
-            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
           </div>
         <div id="visbl">
             <span class="filtertype">Visibility</span>
@@ -92,7 +90,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="julienrf.forms.Field#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.Field[A]"></a>
+      <a id="&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.Field[A]"></a>
       <a id="&lt;init&gt;:Field[A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -100,11 +98,11 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Field</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>, <span name="value">value: <a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span>
+        <span class="name">Field</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="codec">codec: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>, <span name="value">value: <a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>, <span name="errors">errors: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="scala.Throwable">Throwable</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.Field@&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[_,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.Field[A]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Field@&lt;init&gt;(key:String,codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A],value:julienrf.forms.FieldData,errors:Seq[Throwable]):julienrf.forms.Field[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">key</dt><dd class="cmt"><p>the key of the field.</p></dd><dt class="param">codec</dt><dd class="cmt"><p>the codec of the field.</p></dd><dt class="param">value</dt><dd class="cmt"><p>the value of the field.</p></dd><dt class="param">errors</dt><dd class="cmt"><p>the validation errors associated to the field.</p></dd></dl></div>
@@ -130,7 +128,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -147,7 +145,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@##():Int" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -164,7 +162,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -181,7 +179,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -198,7 +196,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@clone():Object" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -209,19 +207,19 @@
               
         </dd></dl></div>
     </li><li name="julienrf.forms.Field#codec" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="codec:julienrf.forms.codecs.Codec[_,A]"></a>
-      <a id="codec:Codec[_,A]"></a>
+      <a id="codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]"></a>
+      <a id="codec:Codec[FieldData,A]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">codec</span><span class="result">: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[_, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>
+        <span class="name">codec</span><span class="result">: <a href="codecs/Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.Field.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#julienrf.forms.Field@codec:julienrf.forms.codecs.Codec[_,A]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+      <a href="../../index.html#julienrf.forms.Field@codec:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">the codec of the field.</p>
@@ -238,7 +236,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -255,7 +253,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@errors:Seq[Throwable]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">the validation errors associated to the field.</p>
@@ -272,7 +270,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -295,7 +293,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -312,7 +310,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -329,7 +327,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@key:String" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">the key of the field.</p>
@@ -346,7 +344,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -363,7 +361,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@notify():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -380,7 +378,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -397,7 +395,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -410,11 +408,11 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">value</span><span class="result">: <a href="package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>
+        <span class="name">value</span><span class="result">: <a href="package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a></span>
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@value:julienrf.forms.FieldData" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">the value of the field.</p>
@@ -431,7 +429,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@wait():Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -454,7 +452,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -477,7 +475,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#julienrf.forms.Field@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" />
+        <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>

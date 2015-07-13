@@ -28,7 +28,7 @@
         </head>
         <body class="value">
       <div id="definition">
-        <a href="Constraint.html" title="See companion class"><img src="../../../lib/object_to_class_big.png" /></a>
+        <a href="Constraint.html" title="See companion class"><img alt="Object/Class" src="../../../lib/object_to_class_big.png" /></a>
         <p id="owner"><a href="../../package.html" class="extype" name="julienrf">julienrf</a>.<a href="../package.html" class="extype" name="julienrf.forms">forms</a>.<a href="package.html" class="extype" name="julienrf.forms.codecs">codecs</a></p>
         <h1><a href="Constraint.html" title="See companion class">Constraint</a></h1><h3><span class="morelinks"><div>
             Related Docs:
@@ -36,7 +36,7 @@
             | <a href="package.html" class="extype" name="julienrf.forms.codecs">package codecs</a>
           </div></span></h3><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -51,7 +51,7 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -79,7 +79,6 @@
               <li class="hideall out"><span>Hide All</span></li>
               <li class="showall in"><span>Show all</span></li>
             </ol>
-            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
           </div>
         <div id="visbl">
             <span class="filtertype">Visibility</span>
@@ -91,7 +90,61 @@
         <div id="allMembers">
         
 
-        
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="julienrf.forms.codecs.Constraint.And" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="And[A]extendsConstraint[A]withProductwithSerializable"></a>
+      <a id="And[A]:And[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Constraint$$And.html"><span class="name">And</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="constraint1">constraint1: <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="julienrf.forms.codecs.Constraint.And.A">A</span>]</span>, <span name="constraint2">constraint2: <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="julienrf.forms.codecs.Constraint.And.A">A</span>]</span>)</span><span class="result"> extends <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="julienrf.forms.codecs.Constraint.And.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@And[A]extendsConstraint[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="Constraint.html#and(that:julienrf.forms.codecs.Constraint[A]):julienrf.forms.codecs.Constraint[A]" class="extmbr" name="julienrf.forms.codecs.Constraint#and">and</a> constraint.</p>
+    </li><li name="julienrf.forms.codecs.Constraint.Constrainable" visbl="pub" data-isabs="true" fullComment="no" group="types">
+      <a id="Constrainable[A]extendsConstraint[A]"></a>
+      <a id="Constrainable[A]:Constrainable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Constraint$$Constrainable.html"><span class="name">Constrainable</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="julienrf.forms.codecs.Constraint.Constrainable.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@Constrainable[A]extendsConstraint[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implement this trait to provide your own constraints.</p>
+    </li><li name="julienrf.forms.codecs.Constraint.GreaterOrEqual" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="GreaterOrEqualextendsConstraint[Int]withProductwithSerializable"></a>
+      <a id="GreaterOrEqual:GreaterOrEqual"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Constraint$$GreaterOrEqual.html"><span class="name">GreaterOrEqual</span></a><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="scala.Int">Int</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@GreaterOrEqualextendsConstraint[Int]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="#greaterOrEqual(n:Int):julienrf.forms.codecs.Constraint[Int]" class="extmbr" name="julienrf.forms.codecs.Constraint#greaterOrEqual">greaterOrEqual</a> constraint.</p>
+    </li></ol>
+            </div>
 
         
 
@@ -110,7 +163,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -127,7 +180,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@##():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -144,7 +197,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -161,7 +214,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -178,7 +231,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@clone():Object" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -201,7 +254,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -218,7 +271,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -235,7 +288,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -243,6 +296,26 @@
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
     </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="julienrf.forms.codecs.Constraint#ge" visbl="pub" data-isabs="false" fullComment="yes" group="values">
+      <a id="ge(n:Int):julienrf.forms.codecs.Constraint[Int]"></a>
+      <a id="ge(Int):Constraint[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ge</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@ge(n:Int):julienrf.forms.codecs.Constraint[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Alias for <code>greaterOrEqual</code></p><div class="fullcomment"><div class="comment cmt"><p>Alias for <code>greaterOrEqual</code></p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -258,10 +331,28 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="julienrf.forms.codecs.Constraint#greaterOrEqual" visbl="pub" data-isabs="false" fullComment="no" group="values">
+      <a id="greaterOrEqual(n:Int):julienrf.forms.codecs.Constraint[Int]"></a>
+      <a id="greaterOrEqual(Int):Constraint[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">greaterOrEqual</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@greaterOrEqual(n:Int):julienrf.forms.codecs.Constraint[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Checks that the decoded value is greater or equal to <code>n</code>
+</p>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -275,7 +366,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@hashCode():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -292,28 +383,10 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="julienrf.forms.codecs.Constraint#min" visbl="pub" data-isabs="false" fullComment="no" group="constraint">
-      <a id="min(n:Int):julienrf.forms.codecs.Constraint[Int]"></a>
-      <a id="min(Int):Constraint[Int]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">min</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="Constraint.html" class="extype" name="julienrf.forms.codecs.Constraint">Constraint</a>[<span class="extype" name="scala.Int">Int</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.codecs.Constraint$@min(n:Int):julienrf.forms.codecs.Constraint[Int]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Checks that the decoded value is greater or equal to <code>n</code>
-</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -327,7 +400,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -344,7 +417,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@notify():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -361,7 +434,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -378,7 +451,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -395,7 +468,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@toString():String" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -412,7 +485,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@wait():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -435,7 +508,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -458,7 +531,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Constraint$@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -486,8 +559,11 @@
         </div>
 
         <div id="groupedMembers">
-        <div class="group" name="constraint">
-              <h3>constraint</h3>
+        <div class="group" name="values">
+              <h3>Values</h3>
+              
+            </div><div class="group" name="types">
+              <h3>Types</h3>
               
             </div><div class="group" name="Ungrouped">
               <h3>Ungrouped</h3>

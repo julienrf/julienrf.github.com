@@ -28,7 +28,7 @@
         </head>
         <body class="value">
       <div id="definition">
-        <a href="Codec.html" title="See companion class"><img src="../../../lib/object_to_class_big.png" /></a>
+        <a href="Codec.html" title="See companion class"><img alt="Object/Class" src="../../../lib/object_to_class_big.png" /></a>
         <p id="owner"><a href="../../package.html" class="extype" name="julienrf">julienrf</a>.<a href="../package.html" class="extype" name="julienrf.forms">forms</a>.<a href="package.html" class="extype" name="julienrf.forms.codecs">codecs</a></p>
         <h1><a href="Codec.html" title="See companion class">Codec</a></h1><h3><span class="morelinks"><div>
             Related Docs:
@@ -36,7 +36,7 @@
             | <a href="package.html" class="extype" name="julienrf.forms.codecs">package codecs</a>
           </div></span></h3><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -80,7 +80,6 @@
               <li class="hideall out"><span>Hide All</span></li>
               <li class="showall in"><span>Show all</span></li>
             </ol>
-            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
           </div>
         <div id="visbl">
             <span class="filtertype">Visibility</span>
@@ -92,7 +91,112 @@
         <div id="allMembers">
         
 
-        
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="julienrf.forms.codecs.Codec.AndThen" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="AndThen[A,B,C]extendsCodec[A,C]withProductwithSerializable"></a>
+      <a id="AndThen[A,B,C]:AndThen[A,B,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$AndThen.html"><span class="name">AndThen</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>, <span name="C">C</span>]</span><span class="params">(<span name="codec1">codec1: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.AndThen.A">A</span>, <span class="extype" name="julienrf.forms.codecs.Codec.AndThen.B">B</span>]</span>, <span name="codec2">codec2: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.AndThen.B">B</span>, <span class="extype" name="julienrf.forms.codecs.Codec.AndThen.C">C</span>]</span>)</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.AndThen.A">A</span>, <span class="extype" name="julienrf.forms.codecs.Codec.AndThen.C">C</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@AndThen[A,B,C]extendsCodec[A,C]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="Codec.html#andThen[C](that:julienrf.forms.codecs.Codec[B,C]):julienrf.forms.codecs.Codec[A,C]" class="extmbr" name="julienrf.forms.codecs.Codec#andThen">andThen</a> combinator.</p>
+    </li><li name="julienrf.forms.codecs.Codec.Codecable" visbl="pub" data-isabs="true" fullComment="no" group="types">
+      <a id="Codecable[A,B]extendsCodec[A,B]"></a>
+      <a id="Codecable[A,B]:Codecable[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$Codecable.html"><span class="name">Codecable</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.Codecable.A">A</span>, <span class="extype" name="julienrf.forms.codecs.Codec.Codecable.B">B</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@Codecable[A,B]extendsCodec[A,B]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implement this trait to provide your own codecs.</p>
+    </li><li name="julienrf.forms.codecs.Codec.OneOf" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="OneOf[A]extendsCodec[String,A]withProductwithSerializable"></a>
+      <a id="OneOf[A]:OneOf[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$OneOf.html"><span class="name">OneOf</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.OneOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="julienrf.forms.codecs.Codec.OneOf.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@OneOf[A]extendsCodec[String,A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="#oneOf[A](valuesToKey:Map[A,String]):julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]" class="extmbr" name="julienrf.forms.codecs.Codec#oneOf">oneOf</a> codec.</p>
+    </li><li name="julienrf.forms.codecs.Codec.Opt" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="Opt[A,B]extendsCodec[Option[A],Option[B]]withProductwithSerializable"></a>
+      <a id="Opt[A,B]:Opt[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$Opt.html"><span class="name">Opt</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="codec">codec: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="julienrf.forms.codecs.Codec.Opt.A">A</span>], <span class="extype" name="julienrf.forms.codecs.Codec.Opt.B">B</span>]</span>)</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="julienrf.forms.codecs.Codec.Opt.A">A</span>], <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="julienrf.forms.codecs.Codec.Opt.B">B</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@Opt[A,B]extendsCodec[Option[A],Option[B]]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="Codec.html#opt[C](implicitev:&lt;:&lt;[A,Option[C]]):julienrf.forms.codecs.Codec[Option[C],Option[B]]" class="extmbr" name="julienrf.forms.codecs.Codec#opt">opt</a> combinator.</p>
+    </li><li name="julienrf.forms.codecs.Codec.OrElse" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="OrElse[A,B,C]extendsCodec[A,Either[B,C]]withProductwithSerializable"></a>
+      <a id="OrElse[A,B,C]:OrElse[A,B,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$OrElse.html"><span class="name">OrElse</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>, <span name="C">C</span>]</span><span class="params">(<span name="codec1">codec1: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.OrElse.A">A</span>, <span class="extype" name="julienrf.forms.codecs.Codec.OrElse.B">B</span>]</span>, <span name="codec2">codec2: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.OrElse.A">A</span>, <span class="extype" name="julienrf.forms.codecs.Codec.OrElse.C">C</span>]</span>)</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="julienrf.forms.codecs.Codec.OrElse.A">A</span>, <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="julienrf.forms.codecs.Codec.OrElse.B">B</span>, <span class="extype" name="julienrf.forms.codecs.Codec.OrElse.C">C</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@OrElse[A,B,C]extendsCodec[A,Either[B,C]]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="Codec.html#orElse[C](that:julienrf.forms.codecs.Codec[A,C]):julienrf.forms.codecs.Codec[A,Either[B,C]]" class="extmbr" name="julienrf.forms.codecs.Codec#orElse">orElse</a> combinator.</p>
+    </li><li name="julienrf.forms.codecs.Codec.SeveralOf" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="SeveralOf[A]extendsCodec[julienrf.forms.FieldData,Seq[A]]withProductwithSerializable"></a>
+      <a id="SeveralOf[A]:SeveralOf[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$SeveralOf.html"><span class="name">SeveralOf</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.SeveralOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="julienrf.forms.codecs.Codec.SeveralOf.A">A</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@SeveralOf[A]extendsCodec[julienrf.forms.FieldData,Seq[A]]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="#severalOf[A](valuesToKey:Map[A,String]):julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Seq[A]]" class="extmbr" name="julienrf.forms.codecs.Codec#severalOf">severalOf</a> codec.</p>
+    </li></ol>
+            </div>
 
         
 
@@ -111,7 +215,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -128,7 +232,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@##():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -145,10 +249,61 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="julienrf.forms.codecs.Codec.Head" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="Head"></a>
+      <a id="Head:Head"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$Head$.html"><span class="name">Head</span></a><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@Head" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Attempts to take the first value of a field data.</p>
+    </li><li name="julienrf.forms.codecs.Codec.ToBoolean" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="ToBoolean"></a>
+      <a id="ToBoolean:ToBoolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$ToBoolean$.html"><span class="name">ToBoolean</span></a><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Boolean">Boolean</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@ToBoolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Implementation of the <a href="#boolean:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Boolean]" class="extmbr" name="julienrf.forms.codecs.Codec#boolean">boolean</a> codec.</p>
+    </li><li name="julienrf.forms.codecs.Codec.ToInt" visbl="pub" data-isabs="false" fullComment="no" group="types">
+      <a id="ToInt"></a>
+      <a id="ToInt:ToInt"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Codec$$ToInt$.html"><span class="name">ToInt</span></a><span class="result"> extends <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@ToInt" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Attempts to decode a text as a number.</p>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -162,7 +317,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -175,11 +330,11 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">boolean</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Boolean">Boolean</span>]</span>
+        <span class="name">boolean</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Boolean">Boolean</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@boolean:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Boolean]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Attempts to get a <code>Boolean</code> value form the form field data.</p><div class="fullcomment"><div class="comment cmt"><p>Attempts to get a <code>Boolean</code> value form the form field data.</p><p>Decodes <code>true</code> if the field data is not empty, <code>false</code> otherwise.
@@ -197,7 +352,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@clone():Object" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -220,7 +375,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -237,7 +392,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -254,7 +409,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -277,7 +432,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -294,7 +449,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@hashCode():Int" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -307,11 +462,11 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">int</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">int</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@int:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Int]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Attempts to get an <code>Int</code> from the form field data.</p>
@@ -328,7 +483,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -345,7 +500,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -362,7 +517,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@notify():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -379,7 +534,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -392,16 +547,15 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">oneOf</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.oneOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.codecs.Codec.oneOf.A">A</span>]</span>
+        <span class="name">oneOf</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.oneOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="julienrf.forms.codecs.Codec.oneOf.A">A</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@oneOf[A](valuesToKey:Map[A,String]):julienrf.forms.codecs.Codec[julienrf.forms.FieldData,A]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Attempts to map the form field data to an <code>A</code> value using the specified <code>Map</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Attempts to map the form field data to an <code>A</code> value using the specified <code>Map</code>.
-</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>the values of the <code>Map</code> must be unique
-</p></span></dd></dl></div>
+</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>the values of the <code>Map</code> must be unique</p></span></dd></dl></div>
     </li><li name="julienrf.forms.codecs.Codec#severalOf" visbl="pub" data-isabs="false" fullComment="yes" group="field">
       <a id="severalOf[A](valuesToKey:Map[A,String]):julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Seq[A]]"></a>
       <a id="severalOf[A](Map[A,String]):Codec[FieldData,Seq[A]]"></a>
@@ -411,17 +565,15 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">severalOf</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.severalOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="julienrf.forms.codecs.Codec.severalOf.A">A</span>]]</span>
+        <span class="name">severalOf</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="valuesToKey">valuesToKey: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="julienrf.forms.codecs.Codec.severalOf.A">A</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="julienrf.forms.codecs.Codec.severalOf.A">A</span>]]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@severalOf[A](valuesToKey:Map[A,String]):julienrf.forms.codecs.Codec[julienrf.forms.FieldData,Seq[A]]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Attempts to map tfe form field data to several <code>A</code> values using the specified <code>Map</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Attempts to map tfe form field data to several <code>A</code> values using the specified <code>Map</code>.
-</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>the values of the <code>Map</code> must be unique
-</p></span>, <span class="cmt"><p>if one of the values of the form field data is not a valid index in the <code>Map</code>, the <code>Codec</code> fails
-</p></span></dd></dl></div>
+</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>the values of the <code>Map</code> must be unique</p></span>, <span class="cmt"><p>if one of the values of the form field data is not a valid index in the <code>Map</code>, the <code>Codec</code> fails</p></span></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -435,7 +587,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -448,15 +600,32 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">text</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Seq[String]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Predef.String">String</span>]</span>
+        <span class="name">text</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<a href="../package.html#FieldData=Option[Seq[String]]" class="extmbr" name="julienrf.forms.FieldData">FieldData</a>, <span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@text:julienrf.forms.codecs.Codec[julienrf.forms.FieldData,String]" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Attempts to get a <code>String</code> value from a form field data.</p><div class="fullcomment"><div class="comment cmt"><p>Attempts to get a <code>String</code> value from a form field data.
-</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>Empty <code>String</code> values are not considered to be valid. Use the <a href="Codec.html#opt:julienrf.forms.codecs.Codec[A,Option[B]]" class="extmbr" name="julienrf.forms.codecs.Codec#opt">opt</a> combinator to optionally decode a <code>String</code>.</p></span></dd></dl></div>
+</p></div><dl class="attributes block"> <dt>Note</dt><dd><span class="cmt"><p>Empty <code>String</code> values are not considered to be valid. Use the <a href="Codec.html#opt[C](implicitev:&lt;:&lt;[A,Option[C]]):julienrf.forms.codecs.Codec[Option[C],Option[B]]" class="extmbr" name="julienrf.forms.codecs.Codec#opt">opt</a> combinator to optionally decode a <code>String</code>.</p></span></dd></dl></div>
+    </li><li name="julienrf.forms.codecs.Codec#toInt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="toInt:julienrf.forms.codecs.Codec[String,Int]"></a>
+      <a id="toInt:Codec[String,Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toInt</span><span class="result">: <a href="Codec.html" class="extype" name="julienrf.forms.codecs.Codec">Codec</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#julienrf.forms.codecs.Codec$@toInt:julienrf.forms.codecs.Codec[String,Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Attempts to decode a number from a text.</p>
     </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <a id="toString():String"></a>
@@ -470,7 +639,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@toString():String" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -487,7 +656,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@wait():Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -510,7 +679,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -533,7 +702,7 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.codecs.Codec$@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -563,6 +732,9 @@
         <div id="groupedMembers">
         <div class="group" name="field">
               <h3>Field Codecs</h3>
+              
+            </div><div class="group" name="types">
+              <h3>Types</h3>
               
             </div><div class="group" name="Ungrouped">
               <h3>Ungrouped</h3>

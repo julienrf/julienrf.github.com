@@ -28,11 +28,11 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img src="../../../lib/package_big.png" />
+        <img alt="Package" src="../../../lib/package_big.png" />
         <p id="owner"><a href="../../package.html" class="extype" name="julienrf">julienrf</a>.<a href="../package.html" class="extype" name="julienrf.forms">forms</a></p>
         <h1>presenters</h1><span class="permalink">
       <a href="../../../index.html#julienrf.forms.presenters.package" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -66,23 +66,23 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="julienrf.forms.presenters.Input" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="Input[Out]extendsAnyRef"></a>
-      <a id="Input[Out]:Input[Out]"></a>
+              <ol><li name="julienrf.forms.presenters.Control" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Control[Out]extendsAnyRef"></a>
+      <a id="Control[Out]:Control[Out]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="Input.html"><span class="name">Input</span></a><span class="tparams">[<span name="Out">Out</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <a href="Control.html"><span class="name">Control</span></a><span class="tparams">[<span name="Out">Out</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../index.html#julienrf.forms.presenters.package@Input[Out]extendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+      <a href="../../../index.html#julienrf.forms.presenters.package@Control[Out]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Defines common HTML controls (input and select).</p>
     </li><li name="julienrf.forms.presenters.PlayField" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="PlayField[Out]extendsAnyRef"></a>
       <a id="PlayField[Out]:PlayField[Out]"></a>
@@ -96,10 +96,12 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../index.html#julienrf.forms.presenters.package@PlayField[Out]extendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../lib/permalink.png" />
+        <img src="../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Produces HTML similar to what form helpers built-in with Play produce, but with the following changes:</p><div class="fullcomment"><div class="comment cmt"><p>Produces HTML similar to what form helpers built-in with Play produce, but with the following changes:</p><ul><li>Fixes the problem with <code>optional(nonEmptyText)</code></li><li>Adds HTML validation attributes to input tag
+      <p class="shortcomment cmt">Enriches HTML presenters in order to produce markup similar to what form helpers built-in with Play produce, but with
+the following changes:</p><div class="fullcomment"><div class="comment cmt"><p>Enriches HTML presenters in order to produce markup similar to what form helpers built-in with Play produce, but with
+the following changes:</p><ul><li>Fixes the problem with <code>optional(nonEmptyText)</code></li><li>Adds HTML validation attributes to input tag
 </li></ul></div></div>
     </li></ol>
             </div>
