@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy jrf@zengularity.com" />
+  <meta name="author" content="Daniel Krzywicki dkr@zengularity.com" />
+  <meta name="author" content="" />
+  <meta name="author" content="Zengularity" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/lambda-days-2016" />
+  <meta name="date" content="2016-02-19" />
+  <title>Deriving the Documentation of JSON Protocols from their Implementation</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Deriving the Documentation of JSON Protocols from their Implementation</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#122;&#x65;&#110;&#x67;&#x75;&#108;&#x61;&#114;&#x69;&#116;&#x79;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#106;&#114;&#102;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#114;&#102;&#32;&#x61;&#116;&#32;&#122;&#x65;&#110;&#x67;&#x75;&#108;&#x61;&#114;&#x69;&#116;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript><br/>Daniel Krzywicki <script type="text/javascript">
+<!--
+h='&#122;&#x65;&#110;&#x67;&#x75;&#108;&#x61;&#114;&#x69;&#116;&#x79;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#100;&#x6b;&#114;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#100;&#x6b;&#114;&#32;&#x61;&#116;&#32;&#122;&#x65;&#110;&#x67;&#x75;&#108;&#x61;&#114;&#x69;&#116;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript><br/><br/><img src="/logo-zengularity-1200-red.png" alt="Zengularity" /><br/><br/><a href="http://julienrf.github.io/lambda-days-2016" class="uri">http://julienrf.github.io/lambda-days-2016</a>
+  </p>
+  <p class="date">February 19, 2016</p>
+</div>
+<div id="motivation" class="slide section level1">
+<h1>Motivation</h1>
+</div>
+<div id="context" class="slide section level1">
+<h1>Context</h1>
+<ul>
+<li>We have a web service with endpoints consuming and producing JSON </li>
+<li>We need to deserialize/validate the inputs and serialize the outputs</li>
+<li>We need user documentation to describe the JSON schemas of our endpoints.</li>
+</ul>
+</div>
+<div id="command-example-buyarticle" class="slide section level1">
+<h1>Command example: <code>BuyArticle</code></h1>
+<p>Let's consider the following example, a command to buy articles:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">BuyArticle</span>(
+  articleId: String,
+  quantity: Int
+)</code></pre></div>
+</div>
+<div id="command-json-codec" class="slide section level1">
+<h1>Command JSON codec</h1>
+<p>To send the command from one service to another, we need a codec to marshall the Scala value in and out of JSON.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">encodeBuyArticle</span>(buyArticle: BuyArticle): JsonObject =
+  <span class="fu">JsonObject</span>(
+    <span class="st">&quot;articleId&quot;</span> -&gt; <span class="fu">JsonString</span>(buyArticle.<span class="fu">articleId</span>),
+    <span class="st">&quot;quantity&quot;</span> -&gt; <span class="fu">JsonNumber</span>(buyArticle.<span class="fu">quantity</span>)
+  )</code></pre></div>
+</div>
+<div id="command-json-codec-1" class="slide section level1">
+<h1>Command JSON codec</h1>
+<p>On the decoding side, we will probably need to enforce some validation rules (e.g. a positive quantity)</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">decodeBuyArticle</span>(json: Json): Either[DecodingError, BuyArticle] =
+  json <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">JsonObject</span>(fields) =&gt;
+      (fields.<span class="fu">get</span>(<span class="st">&quot;articleId&quot;</span>), fields.<span class="fu">get</span>(<span class="st">&quot;quantity&quot;</span>)) <span class="kw">match</span> {
+        <span class="kw">case</span> (Some(<span class="fu">JsonString</span>(s)), Some(<span class="fu">JsonNumber</span>(n))) <span class="kw">if</span> n &gt;= <span class="dv">1</span> =&gt;
+          <span class="fu">Right</span>(<span class="fu">BuyArticle</span>(s, n))
+        <span class="kw">case</span> _ =&gt; <span class="fu">Left</span>(<span class="fu">DecodingError</span>(<span class="st">&quot;Bad fields&quot;</span>))
+      }
+    <span class="kw">case</span> _ =&gt; <span class="fu">Left</span>(<span class="fu">DecodingError</span>(<span class="st">&quot;Not an object&quot;</span>))
+  }</code></pre></div>
+</div>
+<div id="serialized-buyarticle" class="slide section level1">
+<h1>Serialized <code>BuyArticle</code></h1>
+<p>Using that codec, we'll have the following serialized representation of a <code>BuyArticle</code>:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;articleId&quot;</span><span class="fu">:</span> <span class="st">&quot;123&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;quantity&quot;</span><span class="fu">:</span> <span class="dv">10</span>
+<span class="fu">}</span></code></pre></div>
+</div>
+<div id="buyarticle-schema-documentation" class="slide section level1">
+<h1><code>BuyArticle</code> schema documentation</h1>
+<p>Apart from the human-readable HTML documentation, a REST API should expose a machine-readable representation of our schema, e.g.:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;articleId&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span>
+  <span class="fu">},</span>
+  <span class="dt">&quot;quantity&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;number&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;verifying&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+      <span class="dt">&quot;minValue&quot;</span><span class="fu">:</span> <span class="dv">1</span>
+    <span class="fu">}</span>
+  <span class="fu">}</span>
+<span class="fu">}</span></code></pre></div>
+</div>
+<div id="code-and-documentation-consistency" class="slide section level1">
+<h1>Code And Documentation Consistency</h1>
+<p>At any time, we want to have consistency between:</p>
+<ul>
+<li>the codecs (encoders and decoders),</li>
+<li>the documentation (both human and machine readable).</li>
+</ul>
+<p>Some start with the documentation (specification) of an endpoint and implement it (with more or less bugs).</p>
+<p>Some start with the implementation and write the documentation later (or never).</p>
+<p>In both cases, any change to the former must be ported to the latter, which is usually manual and error prone.</p>
+</div>
+<div id="our-approach" class="slide section level1">
+<h1>Our Approach</h1>
+<ul>
+<li>Produce both <strong>documentation</strong> and <strong>implementation</strong> from a common <strong>model</strong> ;</li>
+<li>Leverage functional programming to separate a program <strong>description</strong> from its <strong>evaluation</strong>.</li>
+</ul>
+</div>
+<div id="agenda" class="slide section level1">
+<h1>Agenda</h1>
+<ul>
+<li>Define JSON codecs and their documentation <em>via</em> embedded DSLs</li>
+<li>Tie together a JSON codec and its documentation in a single DSL</li>
+<li>Generically derive JSON protocols for any algebraic data type</li>
+<li>Decouple the embedded DSL from its possible semantics</li>
+</ul>
+</div>
+<div id="codecin-out" class="slide section level1">
+<h1><code>Codec[In, Out]</code></h1>
+<p>There are many Scala JSON libraries out there. For simplicity, we will consider the following example API:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Codec[In, Out] {
+  <span class="kw">def</span> <span class="fu">decode</span>(in: In): Either[DecodingError, Out]
+  <span class="kw">def</span> <span class="fu">encode</span>(out: Out): In
+}</code></pre></div>
+</div>
+<div id="json-int-codec" class="slide section level1">
+<h1>JSON ⟺ <code>Int</code> Codec</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">int</span>: Codec[Json, Int] =
+  <span class="kw">new</span> Codec[Json, Int] {
+
+    <span class="kw">def</span> <span class="fu">decode</span>(json: Json) =
+      json <span class="kw">match</span> {
+        <span class="kw">case</span> <span class="fu">JsonNumber</span>(n) =&gt;
+          n.<span class="fu">toInt</span>.<span class="fu">left</span>.<span class="fu">map</span>(_ =&gt; <span class="fu">DecodingError</span>(<span class="st">&quot;Too large&quot;</span>))
+        <span class="kw">case</span> _ =&gt; <span class="fu">Left</span>(<span class="fu">DecodingError</span>(<span class="st">&quot;Not a number&quot;</span>))
+      }
+
+    <span class="kw">def</span> <span class="fu">encode</span>(n: Int) =
+      <span class="fu">JsonNumber</span>(BigDecimal(n))
+
+  }</code></pre></div>
+</div>
+<div id="some-other-basic-codecs" class="slide section level1">
+<h1>Some Other Basic Codecs</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> string: Codec[Json, String] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">field</span>(name: String): Codec[JsonObject, Json] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">minValue</span>(n: Int): Codec[Int, Int] = …</code></pre></div>
+</div>
+<div id="codec-combinators" class="slide section level1">
+<h1>Codec Combinators</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> andThen[A, B, C](ab: Codec[A, B], bc: Codec[B, C]): Codec[A, C] =
+  <span class="kw">new</span> Codec[A, C] {
+    <span class="kw">def</span> <span class="fu">decode</span>(a: A) = ab.<span class="fu">decode</span>(a).<span class="fu">right</span>.<span class="fu">flatMap</span>(bc.<span class="fu">decode</span>)
+    <span class="kw">def</span> <span class="fu">encode</span>(c: C) = ab.<span class="fu">encode</span>(bc.<span class="fu">encode</span>(c))
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> imap[A, B, C](ab: Codec[A, B], f: B =&gt; C, g: C =&gt; B): Codec[A, C] =
+  <span class="kw">new</span> Codec[A, C] {
+    <span class="kw">def</span> <span class="fu">decode</span>(a: A) = ab.<span class="fu">decode</span>(a).<span class="fu">right</span>.<span class="fu">map</span>(f)
+    <span class="kw">def</span> <span class="fu">encode</span>(c: C) = ab.<span class="fu">encode</span>(<span class="fu">g</span>(c))
+  }</code></pre></div>
+</div>
+<div id="codec-combinators-2" class="slide section level1">
+<h1>Codec Combinators (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> articleId: Codec[Json, String] =
+  <span class="fu">andThen</span>(
+    <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>),
+    string
+  )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> quantity: Codec[Json, Int] =
+  <span class="fu">andThen</span>(
+    <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>),
+    <span class="fu">andThen</span>(
+      <span class="dt">int</span>,
+      <span class="fu">minValue</span>(<span class="dv">1</span>)
+    )
+)</code></pre></div>
+</div>
+<div id="object-codecs" class="slide section level1">
+<h1>Object Codecs</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ObjCodec[Out] <span class="kw">extends</span> Codec[Json, Out] {
+  <span class="kw">def</span> <span class="fu">encode</span>(out: Out): JsonObject
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> field[A](name: String, codec: Codec[Json, A]): ObjCodec[A] = …</code></pre></div>
+</div>
+<div id="object-codec-combinator" class="slide section level1">
+<h1>Object Codec Combinator</h1>
+<p>We can zip two object codecs:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> zip[A, B](a: ObjCodec[A], b: ObjCodec[B]): ObjCodec[(A, B)] =
+  <span class="kw">new</span> ObjCodec[(A, B)] {
+    <span class="kw">def</span> <span class="fu">decode</span>(json: Json) =
+      (a.<span class="fu">decode</span>(json), b.<span class="fu">decode</span>(json)) <span class="kw">match</span> {
+        <span class="kw">case</span> (<span class="fu">Right</span>(aValue), <span class="fu">Right</span>(bValue)) =&gt; <span class="fu">Right</span>((aValue, bValue))
+        <span class="kw">case</span> (<span class="fu">Left</span>(aError),  <span class="fu">Right</span>(_))      =&gt; <span class="fu">Left</span>(aError)
+        <span class="kw">case</span> (<span class="fu">Right</span>(_),      <span class="fu">Left</span>(bError))  =&gt; <span class="fu">Left</span>(bError)
+        <span class="kw">case</span> (<span class="fu">Left</span>(aError),  <span class="fu">Left</span>(bError)   =&gt; <span class="fu">Left</span>(aError ++ bError)
+      }
+    <span class="kw">def</span> <span class="fu">encode</span>(abValue: (A, B)) = {
+      <span class="kw">val</span> (aValue, bValue) = abValue
+      <span class="fu">JsonObject</span>(
+        a.<span class="fu">encode</span>(aValue).<span class="fu">fields</span> ++ b.<span class="fu">encode</span>(bValue).<span class="fu">fields</span>
+      )
+    }
+  }</code></pre></div>
+</div>
+<div id="object-codec-combinator-2" class="slide section level1">
+<h1>Object Codec Combinator (2)</h1>
+<p>Finally, we can write a full codec for our model using the different combinators:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: Codec[Json, BuyArticle] =
+  <span class="fu">imap</span>(
+    <span class="fu">zip</span>(
+      <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string),
+      <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>, <span class="fu">andThen</span>(<span class="dt">int</span>, <span class="fu">minValue</span>(<span class="dv">1</span>)))
+    ),
+    BuyArticle.<span class="fu">apply</span>, BuyArticle.<span class="fu">unapply</span>
+  )</code></pre></div>
+</div>
+<div id="codecs-summary" class="slide section level1">
+<h1>Codecs Summary</h1>
+<ul>
+<li>Codec APIs essentially provide a DSL to define codecs</li>
+<li>Codecs are transformable and composable</li>
+<li>The codec can be thought of as a program written in that DSL</li>
+</ul>
+</div>
+<div id="documentation" class="slide section level1">
+<h1>Documentation</h1>
+<p>Let's consider the following example of documentation ADT:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Doc
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Scalar</span>(typeName: String, description: Option[String]) <span class="kw">extends</span> Doc
+
+<span class="kw">case</span> <span class="kw">class</span> Object(fields: Field*) <span class="kw">extends</span> Doc
+<span class="kw">case</span> <span class="kw">class</span> Field(name: String, doc: Doc, description: Option[String])
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">MinValue</span>(n: Int) <span class="kw">extends</span> Doc
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Satisfying</span>(prerequisite: Doc, subsequent: Doc) <span class="kw">extends</span> Doc</code></pre></div>
+</div>
+<div id="documentation-2" class="slide section level1">
+<h1>Documentation (2)</h1>
+<p>We can define some basic building blocks:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">int</span> = <span class="fu">Scalar</span>(<span class="st">&quot;number&quot;</span>)
+<span class="kw">val</span> string = <span class="fu">Scalar</span>(<span class="st">&quot;string&quot;</span>)
+<span class="kw">val</span> date = <span class="fu">Scalar</span>(<span class="st">&quot;string&quot;</span>, Some(<span class="st">&quot;A date with format YYYY-MM-DD&quot;</span>))</code></pre></div>
+</div>
+<div id="documentation-3" class="slide section level1">
+<h1>Documentation (3)</h1>
+<p>And then combine them to express a model:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: Doc =
+  Object(
+    Field(<span class="st">&quot;articleId&quot;</span>, string, Some(<span class="st">&quot;Article ID&quot;</span>)),
+    Field(<span class="st">&quot;quantity&quot;</span>, <span class="fu">Satisfying</span>(<span class="dt">int</span>, <span class="fu">MinValue</span>(<span class="dv">1</span>)), Some(<span class="st">&quot;Quantity&quot;</span>))
+  )</code></pre></div>
+</div>
+<div id="ultimate-goal-unify-codec-and-doc" class="slide section level1">
+<h1>Ultimate Goal: Unify <code>Codec</code> and <code>Doc</code></h1>
+<p>How to keep the following two in sync?</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: Codec[Json, BuyArticle] =
+  <span class="fu">imap</span>(
+    <span class="fu">zip</span>(
+      <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string),
+      <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>, <span class="fu">andThen</span>(<span class="dt">int</span>, <span class="fu">minValue</span>(<span class="dv">1</span>)))
+    ),
+    BuyArticle.<span class="fu">apply</span>, BuyArticle.<span class="fu">unapply</span>
+  )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: Doc =
+  Object(
+    Field(<span class="st">&quot;articleId&quot;</span>, string, Some(<span class="st">&quot;Article ID&quot;</span>)),
+    Field(<span class="st">&quot;quantity&quot;</span>, <span class="fu">Satisfying</span>(<span class="dt">int</span>, <span class="fu">MinValue</span>(<span class="dv">1</span>)), Some(<span class="st">&quot;Quantity&quot;</span>))
+  )</code></pre></div>
+</div>
+<div id="protocol" class="slide section level1">
+<h1>Protocol</h1>
+<p>What if we could define them at the same time, using a common model?</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Protocol[In, Out] {
+  <span class="kw">def</span> codec: Codec[In, Out]
+  <span class="kw">def</span> doc: Doc
+}</code></pre></div>
+</div>
+<div id="what-do-we-want-to-express-with-a-protocol" class="slide section level1">
+<h1>What do we want to <em>express</em> with a <code>Protocol</code>?</h1>
+</div>
+<div id="protocola-is-an-invariant-functor" class="slide section level1">
+<h1><code>Protocol[A, ?]</code> is an <em>invariant functor</em></h1>
+<ul>
+<li>We want to be able to transform the output value of a codec into another value (that may be more convenient to work with)
+<ul>
+<li>E.g. we want to turn a tuple into a case class</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> imap[A, B, C](ab: Protocol[A, B], f: B =&gt; C, g: C =&gt; B): Protocol[A, C] =
+  <span class="kw">new</span> Protocol[A, C] {
+    <span class="kw">val</span> codec = ab.<span class="fu">codec</span>.<span class="fu">imap</span>(f, g)
+    <span class="kw">val</span> doc = ab.<span class="fu">doc</span>
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> InvariantFunctor[F[_]] {
+  <span class="kw">def</span> imap[A, B](fa: F[A], f: A =&gt; B, g: B =&gt; A): F[B]
+}</code></pre></div>
+</div>
+<div id="protocola-b-is-an-arrow" class="slide section level1">
+<h1><code>Protocol[A, B]</code> is an <em>arrow</em></h1>
+<ul>
+<li>We want to be able to chain codecs (so that the output of the former is the input of the latter)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> andThen[A, B, C](ab: Protocol[A, B], bc: Protocol[B, C]): Protocol[A, C] =
+  <span class="kw">new</span> Protocol[A, C] {
+    <span class="kw">val</span> codec = ab.<span class="fu">codec</span>.<span class="fu">andThen</span>(bc.<span class="fu">codec</span>)
+    <span class="kw">val</span> doc = <span class="fu">Satisfying</span>(ab, bc)
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Arrow[F[_, _]] {
+  <span class="kw">def</span> andThen[A, B, C](ab: F[A, B], bc: F[B, C]): F[A, C]
+}</code></pre></div>
+</div>
+<div id="objprotocol" class="slide section level1">
+<h1><code>ObjProtocol</code></h1>
+<ul>
+<li>We want to refine the features of JSON objects protocols</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ObjProtocol[Out] <span class="kw">extends</span> Protocol[Json, Out] {
+  <span class="kw">def</span> codec: ObjCodec[Out]
+  <span class="kw">def</span> doc: Object
+}</code></pre></div>
+</div>
+<div id="objprotocol-is-cartesian" class="slide section level1">
+<h1><code>ObjProtocol</code> is <em>cartesian</em></h1>
+<ul>
+<li>We want to combine the output of two <code>ObjProtocol</code>s into a tuple
+<ul>
+<li>That’s what makes it possible to define JSON object protocols out of their field protocols</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> zip[A, B](pa: ObjProtocol[A], pb: ObjProtocol[B]): ObjProtocol[(A, B)] =
+  <span class="kw">new</span> ObjProtocol[(A, B)] {
+    <span class="kw">val</span> codec = pa.<span class="fu">codec</span>.<span class="fu">zip</span>(pb.<span class="fu">codec</span>)
+    <span class="kw">val</span> doc = Object(pa.<span class="fu">doc</span>.<span class="fu">fields</span> ++ pb.<span class="fu">doc</span>.<span class="fu">fields</span>)
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Cartesian[F[_]] {
+  <span class="kw">def</span> zip[A, B](fa: F[A], fb: F[B]): F[(A, B)]
+}</code></pre></div>
+</div>
+<div id="is-protocol-a-monad" class="slide section level1">
+<h1>Is <code>Protocol</code> a <em>monad</em>?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Monad[F[_]] {
+  <span class="kw">def</span> flatMap[A, B](fa: F[A], f: A =&gt; F[B]): F[B]
+}</code></pre></div>
+<p>No.</p>
+<p>That’s what makes possible static reasoning on protocol definitions (ie. that’s why we can get a protocol’s documentation).</p>
+</div>
+<div id="what-are-the-protocols-building-blocks" class="slide section level1">
+<h1>What are the <code>Protocol</code>’s <em>building blocks</em>?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> string: Protocol[Json, String] =
+  <span class="kw">new</span> Protocol[Json, String] {
+    <span class="kw">val</span> codec = Codec.<span class="fu">string</span>
+    <span class="kw">val</span> doc = Doc.<span class="fu">string</span>
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> <span class="dt">int</span>: Protocol[Json, Int] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">minValue</span>(n: Int): Protocol[Int, Int] = …</code></pre></div>
+</div>
+<div id="what-are-the-protocols-building-blocks-2" class="slide section level1">
+<h1>What are the <code>Protocol</code>’s <em>building blocks</em>? (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> field[A](
+  name: String,
+  protocol: Protocol[Json, A],
+  description: Option[String]
+): ObjProtocol[A] =
+  <span class="kw">new</span> ObjProtocol[A] {
+    <span class="kw">val</span> codec = Codec.<span class="fu">field</span>(name, protocol.<span class="fu">codec</span>)
+    <span class="kw">val</span> doc = Object(Seq(Field(name), protocol.<span class="fu">doc</span>, description))
+  }</code></pre></div>
+</div>
+<div id="examples" class="slide section level1">
+<h1>Examples</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: ObjProtocol[BuyArticle] =
+  <span class="fu">imap</span>(
+    <span class="fu">zip</span>(
+      <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string,                    Some(<span class="st">&quot;Article ID&quot;</span>),
+      <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>,  <span class="fu">andThen</span>(<span class="dt">int</span>, <span class="fu">minValue</span>(<span class="dv">1</span>)), Some(<span class="st">&quot;Quantity&quot;</span>)
+    ),
+    BuyArticle.<span class="fu">apply</span>, BuyArticle.<span class="fu">unapply</span>
+  )</code></pre></div>
+</div>
+<div id="examples-1" class="slide section level1">
+<h1>Examples</h1>
+<p>Let's put in some syntactic sugar for arrows:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: ObjProtocol[BuyArticle] =
+  <span class="fu">imap</span>(
+    <span class="fu">zip</span>(
+      <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string,              Some(<span class="st">&quot;Article ID&quot;</span>),
+      <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>,  <span class="dt">int</span> &gt;&gt;&gt; <span class="fu">minValue</span>(<span class="dv">1</span>), Some(<span class="st">&quot;Quantity&quot;</span>)
+    ),
+    BuyArticle.<span class="fu">apply</span>,
+    BuyArticle.<span class="fu">unapply</span>
+  )</code></pre></div>
+</div>
+<div id="examples-2" class="slide section level1">
+<h1>Examples</h1>
+<p>And some syntactic sugar for cartesian invariant functors:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: ObjProtocol[BuyArticle] = (
+  <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string,              Some(<span class="st">&quot;Article ID&quot;</span>)) :*:
+  <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>,  <span class="dt">int</span> &gt;&gt;&gt; <span class="fu">minValue</span>(<span class="dv">1</span>), Some(<span class="st">&quot;Quantity&quot;</span>))
+).<span class="fu">mappedAs</span>[BuyArticle]</code></pre></div>
+</div>
+<div id="examples-3" class="slide section level1">
+<h1>Examples</h1>
+<p>And some builder dsl for fields:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buyArticle: ObjProtocol[BuyArticle] = (
+  (<span class="st">&quot;articleId&quot;</span> as string                meaning <span class="st">&quot;Article ID&quot;</span>) :*:
+  (<span class="st">&quot;quantity&quot;</span>  <span class="fu">as</span> (<span class="dt">int</span> &gt;&gt;&gt; <span class="fu">minValue</span>(<span class="dv">1</span>)) meaning <span class="st">&quot;Quantity&quot;</span>)
+).<span class="fu">mappedAs</span>[BuyArticle]</code></pre></div>
+</div>
+<div id="usage" class="slide section level1">
+<h1>Usage</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> command = <span class="fu">BuyArticle</span>(articleId = <span class="st">&quot;123&quot;</span>, quantity = <span class="dv">5</span>) <span class="co">// BuyArticle(&quot;123&quot;, 5)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">decode</span>(buyArticle.<span class="fu">encode</span>(command))
+  <span class="fu">Right</span>(<span class="fu">BuyArticle</span>(<span class="st">&quot;123&quot;</span>, <span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">decode</span>(Json.<span class="fu">parse</span>(<span class="st">&quot;{&quot;</span>other<span class="st">&quot;: &quot;</span>wrong<span class="st">&quot;}&quot;</span>)
+  <span class="fu">Left</span>(...)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">encode</span>(command).<span class="fu">pretty</span>
+  <span class="st">&quot;</span>
+  {
+    <span class="st">&quot;articleId&quot;</span>: <span class="st">&quot;123&quot;</span>,
+    <span class="st">&quot;quantity&quot;</span>: <span class="dv">5</span>
+  }
+  <span class="st">&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">doc</span>.<span class="fu">toJson</span>.<span class="fu">pretty</span>  
+  <span class="st">&quot;</span>
+  {
+    <span class="st">&quot;articleId&quot;</span>: {
+      <span class="st">&quot;type&quot;</span>: <span class="st">&quot;string&quot;</span>
+    },
+    <span class="st">&quot;quantity&quot;</span>: {
+      <span class="st">&quot;type&quot;</span>: <span class="st">&quot;number&quot;</span>,
+      <span class="st">&quot;verifying&quot;</span>: {
+        <span class="st">&quot;minValue&quot;</span>: <span class="dv">1</span>
+      }
+    }
+  }
+  <span class="st">&quot;</span></code></pre></div>
+</div>
+<div id="increase-our-agility" class="slide section level1">
+<h1>Increase Our Agility</h1>
+<ul>
+<li>For every data type we need to explicitly define its protocol ;</li>
+<li><p>For prototyping purposes this task can be cumbersome ;</p></li>
+<li><p>Couldn’t we derive the JSON protocol from a data type definition?</p></li>
+</ul>
+</div>
+<div id="deriving-a-protocola-from-type-a" class="slide section level1">
+<h1>Deriving A <code>Protocol[A]</code> From Type <code>A</code></h1>
+<ul>
+<li><p>Algebraic data types are <em>sums</em> of <em>products</em></p></li>
+<li>Generic instance derivation strategy:
+<ol style="list-style-type: decimal">
+<li>Define an isomorphism between any algebraic data type and a general representation of sum types and product types, named <code>Generic</code> ;</li>
+<li>Implement <code>Protocol</code> instances for <code>Generic</code> ;</li>
+<li>Derive ADTs instances by transforming these ADTs from or to their <code>Generic</code> counterpart and by delegating to <code>Generic</code>s implementations.</li>
+</ol></li>
+</ul>
+</div>
+<div id="shapeless" class="slide section level1">
+<h1>Shapeless</h1>
+<ul>
+<li>The required level of generic programming is not natively supported by the Scala language (yet?) ;</li>
+<li>We use the <a href="https://github.com/milessabin/shapeless">shapeless</a> library, which provides a solution for step 1.</li>
+</ul>
+</div>
+<div id="implement-protocol-instances-for-generic-adts" class="slide section level1">
+<h1>Implement <code>Protocol</code> Instances For Generic ADTs</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DerivedObjProtocol[A] {
+  <span class="kw">def</span> protocol: ObjProtocol[A]
+}
+
+<span class="kw">object</span> DerivedObjProtocol <span class="kw">extends</span> SpecificInstances</code></pre></div>
+<p>If there's already a protocol in implicit scope, use it.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
+<span class="kw">trait</span> SpecificInstances <span class="kw">extends</span> GenericInstances {
+  <span class="kw">implicit</span> <span class="kw">def</span> fromExistingProtocol[A](<span class="kw">implicit</span>
+    existingProtocol: ObjProtocol[A]
+  ): DerivedObjProtocol[A] = <span class="kw">new</span> DerivedObjProtocol[A] {
+      <span class="kw">def</span> protocol = existingProtocol
+    }
+}</code></pre></div>
+<p>Otherwise derive one for representations in terms of generic HLists or Coproducts.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> GenericInstances <span class="kw">extends</span> HListInstances <span class="kw">with</span> CoproductInstances {
+  <span class="kw">implicit</span> <span class="kw">def</span> fromHListProtocol[A, Repr &lt;: HList](<span class="kw">implicit</span>
+    gen: Generic.<span class="fu">Aux</span>[A, Repr],  <span class="co">// proof that A is isomorphic to a HList</span>
+    hlistProtocol: DerivedObjProtocol[Repr]
+  ): DerivedObjProtocol[A] = <span class="kw">new</span> DerivedObjProtocol[A] {
+    <span class="kw">def</span> protocol = hlistProtocol.<span class="fu">inmap</span>(gen.<span class="fu">from</span>, gen.<span class="fu">to</span>)
+  }
+
+  <span class="kw">implicit</span> <span class="kw">def</span> fromCoproductProtocol[A, Repr &lt;: Coproduct](<span class="kw">implicit</span>
+    gen: Generic.<span class="fu">Aux</span>[A, Repr],  <span class="co">// proof that A is isomorphic to a Coproduct</span>
+    coproductProtocol: DerivedObjProtocol[Repr]
+  ): DerivedObjProtocol[A] = <span class="kw">new</span> DerivedObjProtocol[A] {
+    <span class="kw">def</span> protocol = coproductProtocol.<span class="fu">inmap</span>(gen.<span class="fu">from</span>, gen.<span class="fu">to</span>)
+  }
+}</code></pre></div>
+</div>
+<div id="implement-protocol-instances-for-generic-adts-2" class="slide section level1">
+<h1>Implement <code>Protocol</code> Instances For Generic ADTs (2)</h1>
+<p>Recursively build a protocol for HLists.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> HListInstances {
+
+  <span class="kw">implicit</span> <span class="kw">val</span> hnilProtocol: DerivedObjProtocol[HNil] = …
+
+  <span class="kw">implicit</span> <span class="kw">def</span> hconsProtocol[H, T &lt;: HList](<span class="kw">implicit</span>
+    hProtocol: DerivedObjProtocol[H],
+    tProtocol: DerivedObjProtocol[T]
+  ): DerivedObjProtocol[H :: T] = …
+}</code></pre></div>
+</div>
+<div id="implement-protocol-instances-for-generic-adts-3" class="slide section level1">
+<h1>Implement <code>Protocol</code> Instances For Generic ADTs (3)</h1>
+<p>Recursively build a protocol for Coproducts.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> CoproductInstances {
+  <span class="kw">implicit</span> <span class="kw">val</span> cnilProtocol: DerivedObjProtocol[CNil] = …
+
+  <span class="kw">implicit</span> <span class="kw">def</span> cconsProtocol[L, R &lt;: Coproduct](<span class="kw">implicit</span>
+    leftProtocol: DerivedObjProtocol[L],
+    rightProtocol: DerivedObjProtocol[R],
+  ): DerivedObjProtocol[L :+: R] = …
+}</code></pre></div>
+</div>
+<div id="discussion" class="slide section level1">
+<h1>Discussion</h1>
+<ul>
+<li><strong>Documentation derived from code</strong> rather than code generated from a model ;</li>
+<li>Protocol definitions are <strong>plain Scala code</strong>, so we can reuse Scala’s linguistic features (name binding, functional abstraction, etc.) ;</li>
+<li><p>Protocol’s algebra (i.e. expressive power) is clearly defined by well known typeclasses ;</p></li>
+<li><p>The possible semantics of a protocol definition are <strong>fixed</strong> (<code>codec</code> and <code>doc</code>).</p></li>
+</ul>
+</div>
+<div id="future-work" class="slide section level1">
+<h1>Future Work</h1>
+<ul>
+<li><em>Free applicatives</em>, <em>object algebras</em> or <em>finally tagless GADTs</em> would make it possible to define protocol semantics independently of each other ;</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ProtocolAlg[F[_, _]] {
+  <span class="co">// smart constructors</span>
+  <span class="kw">def</span> field[A](name: String, protocol: F[Json, A]): F[JsonObject, A]
+  …
+  <span class="co">// combinators</span>
+  <span class="kw">def</span> andThen[A, B, C](ab: F[A, B], bc: F[B, C]): F[A, C]
+  …
+}</code></pre></div>
+</div>
+<div id="algebra-building-blocks" class="slide section level1">
+<h1>Algebra Building blocks</h1>
+<p>We can fully customize the expressive power we need from our algebras. Some implementations may only be possible for a limited expressive power.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[A, F[_, _]] = ProtocolInstances[A, F]
+  <span class="kw">with</span> FunctorAlgebra[F]
+  <span class="kw">with</span> ArrowAlgebra[F]
+
+<span class="kw">type</span> WeakProtocolAlgebra[A, F[_, _]] = ProtocolInstances[A, F]
+  <span class="kw">with</span> FunctorAlgebra[F]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ProtocolInstances[A, F[_, _]] {
+
+  <span class="kw">def</span> integer: F[A, Int]
+
+  <span class="kw">def</span> string: F[A, String]
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> FunctorAlgebra[F[_, _]] {
+
+  <span class="kw">def</span> imap[A, B, C](a: F[A, B], f: B =&gt; C, C =&gt; B): F[A, C]
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ArrowAlgebra[F[_, _]] {
+
+  <span class="kw">def</span> andThen[A, B, C](a: F[A, B], b: F[B, C]): F[A, C]
+
+}</code></pre></div>
+</div>
+<div id="implementing-algebras" class="slide section level1">
+<h1>Implementing algebras:</h1>
+<p>We can then have different specializations and implementations of the algebra</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> CodecAlgebra[A] <span class="kw">extends</span> ProtocolAlgebra[A, Codec]
+
+<span class="kw">object</span> JsonCodecAlgebra <span class="kw">extends</span> CodecAlgebra[Json] {
+
+  <span class="kw">val</span> integer: Codec[Json, Integer] = ...
+  <span class="kw">val</span> string: Codec[Json, String] = ...
+
+  <span class="kw">def</span> imap[A, B, C](a: Codec[A, B], f: B =&gt; C, C =&gt; B): Codec[A, C] = ...
+
+  ...
+}
+
+<span class="kw">object</span> XmlCodecAlgebra <span class="kw">extends</span> CodecAlgebra[Xml] {
+  ...
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> TypedDoc[A] = Doc
+<span class="kw">type</span> DocAlias[A, B] = TypedDoc[B]
+
+<span class="kw">object</span> DocAlgebra <span class="kw">extends</span> ProtocolAlgebra[Nothing, DocAlias] {
+
+  <span class="kw">val</span> integer: TypedDoc[Integer] = ...
+  <span class="kw">val</span> string: TypedDoc[String] = ...
+
+  <span class="kw">def</span> imap[B, C](a: TypedDoc[B], f: B =&gt; C, C =&gt; B): TypedDoc[C] = ...
+
+  ...
+}</code></pre></div>
+</div>
+<div id="programming-a-codec-in-terms-of-an-algebra" class="slide section level1">
+<h1>Programming a Codec in terms of an algebra:</h1>
+<p>Let's now define our model in terms of an algebra:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[A, F[_, _]](algebra: ProtocolAlgebra[A, F]): F[A, BuyArticle] = {
+  <span class="kw">import</span> algebra.<span class="fu">_</span>
+  <span class="fu">imap</span>(
+    <span class="fu">zip</span>(
+      <span class="fu">field</span>(<span class="st">&quot;articleId&quot;</span>, string,                    Some(<span class="st">&quot;Article ID&quot;</span>),
+      <span class="fu">field</span>(<span class="st">&quot;quantity&quot;</span>,  <span class="fu">andThen</span>(<span class="dt">int</span>, <span class="fu">minValue</span>(<span class="dv">1</span>)), Some(<span class="st">&quot;Quantity&quot;</span>)
+    ),
+    BuyArticle.<span class="fu">apply</span>, BuyArticle.<span class="fu">unapply</span>
+  )
+}</code></pre></div>
+<p>Or with some syntactic sugar:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[A, F[_, _]](<span class="kw">implicit</span> algebra: Algebra[A, F]): F[A, BuyArticle] = (
+  (<span class="st">&quot;articleId&quot;</span> as[String]           meaning <span class="st">&quot;Article ID&quot;</span>) :*:
+  (<span class="st">&quot;quantity&quot;</span>  as[Int](<span class="fu">minValue</span>(<span class="dv">1</span>)) meaning <span class="st">&quot;Quantity&quot;</span>)
+).<span class="fu">mappedAs</span>[BuyArticle]</code></pre></div>
+</div>
+<div id="algebra-usage" class="slide section level1">
+<h1>Algebra usage:</h1>
+<p>We can now reuse the model for several use cases, and easily introduce new ones</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> codec: Codec[Json, BuyArticle] = <span class="fu">buyArticle</span>(JsonCodecAlgebra)
+<span class="kw">val</span> doc: TypedDoc[BuyArticle] = <span class="fu">buyArticle</span>(DocAlgebra)
+
+
+...
+
+<span class="kw">val</span> graph: GraphVisualization[BuyArticle] = <span class="fu">buyArticle</span>(GraphAlgebra)
+<span class="kw">val</span> bsonCodec: Codec[Bson, BuyArticle] = <span class="fu">buyArticle</span>(BsonAlgebra)</code></pre></div>
+</div>
+<div id="conclusion" class="slide section level1">
+<h1>Conclusion</h1>
+<ul>
+<li>We defined an <strong>embedded DSL</strong> to describe the JSON protocols of our program ;</li>
+<li>This DSL provides <strong>basic building blocks</strong> and an <strong>algebra</strong> to combine them ;</li>
+<li>This DSL can have several <strong>semantics</strong>: documentation and codecs ;</li>
+<li>We generically <strong>derived</strong> JSON protocols for algebraic data types.</li>
+</ul>
+</div>
+<div id="questions" class="slide section level1">
+<h1>Questions?</h1>
+<p>Thanks for your attention.</p>
+</div>
+</body>
+</html>
