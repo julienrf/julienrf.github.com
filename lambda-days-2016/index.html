@@ -125,6 +125,18 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="dt">&quot;quantity&quot;</span><span class="fu">:</span> <span class="dv">10</span>
 <span class="fu">}</span></code></pre></div>
 </div>
+<div id="what-about-documentation" class="slide section level1">
+<h1>What about documentation?</h1>
+<blockquote>
+<p>&quot;Big data is like teenage sex:</p>
+<p>everyone talks about it,</p>
+<p>nobody really knows how to do it,</p>
+<p>everyone thinks everyone else is doing it,</p>
+<p>so everyone claims they are doing it...&quot;</p>
+<p><em>Dan Ariely</em></p>
+</blockquote>
+<p>The same could be said about REST APIs...</p>
+</div>
 <div id="buyarticle-schema-documentation" class="slide section level1">
 <h1><code>BuyArticle</code> schema documentation</h1>
 <p>Apart from the human-readable HTML documentation, a REST API should expose a machine-readable representation of our schema, e.g.:</p>
@@ -619,6 +631,9 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 
   <span class="kw">def</span> <span class="fu">assemble</span>(a: AbstractProduct1, b: AbstractProduct2): AbstractProduct3
 }</code></pre></div>
+</div>
+<div id="revisiting-the-abstract-factory-2" class="slide section level1">
+<h1>Revisiting the <code>Abstract Factory</code> (2)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ConcreteProduct1 <span class="kw">extends</span> AbstractProduct1
 
 <span class="kw">object</span> ConcreteProduct2 <span class="kw">extends</span> AbstractProduct2
@@ -633,8 +648,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">def</span> <span class="fu">assemble</span>(a: AbstractProduct1, b: AbstractProduct2) = ConcreteProduct3
 }</code></pre></div>
 </div>
-<div id="revisiting-the-abstract-factory-2" class="slide section level1">
-<h1>Revisiting the <code>Abstract Factory</code> (2)</h1>
+<div id="revisiting-the-abstract-factory-3" class="slide section level1">
+<h1>Revisiting the <code>Abstract Factory</code> (3)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Client {
   <span class="kw">def</span> <span class="fu">orderStuff</span>(factory: AbstractFactory) = {
     <span class="kw">val</span> first = factory.<span class="fu">create1</span>
@@ -645,43 +660,41 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div>
 <div id="object-algebras" class="slide section level1">
 <h1><code>Object algebras</code></h1>
-<p>Object algebras can be though of as Abstract Factories which define terminals (building blocks) and productions (operations on building blocks).</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[A, F[_, _]] {
-  <span class="kw">def</span> integer: F[A, Int]
+<p>Object algebras can be though of as Abstract Factories which define the basic building blocks and the operation which allow to combine them.</p>
+<p>It is also equivalent to a formal grammar with terminals and productions (after all, the <code>L</code> in <code>DSL</code> stands for <code>Language</code>).</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[F[_]] {
+  <span class="kw">def</span> integer: F[Int]
 
-  <span class="kw">def</span> string: F[A, String]
+  <span class="kw">def</span> string: F[String]
 
-  <span class="kw">def</span> imap[B, C](a: F[A, B], f: B =&gt; C, C =&gt; B): F[A, C]
+  <span class="kw">def</span> imap[A, B](a: F[A], f: A =&gt; B, g: B =&gt; A): F[B]
+
+  <span class="kw">def</span> zip[A, B](a: F[A], b: F[B]): F[(A, B)]
 
   ...
 }</code></pre></div>
 <p>Given a object algebra, we can define a program. The actual evaluation of that program depends on the concrete algebra we will use.</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> algebra: ProtocolAlgebra[T, F] = ...
-<span class="kw">val</span> program: F[T, String] = algebra.<span class="fu">inmap</span>(
-  algebra.<span class="fu">integer</span>,
-  i =&gt; String.<span class="fu">valueOf</span>(Array.<span class="fu">fill</span>(i)(&#39;a&#39;)),
-  s =&gt; s.<span class="fu">length</span>
-)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> algebra: ProtocolAlgebra[F] = ...
+
+<span class="kw">val</span> program: F[(Int, String)] =
+  algebra.<span class="fu">zip</span>(
+    algebra.<span class="fu">integer</span>,
+    algebra.<span class="fu">string</span>
+  )</code></pre></div>
 </div>
 <div id="algebra-building-blocks" class="slide section level1">
 <h1>Algebra building blocks</h1>
-<p>We can fully customize the expressive power we need from our algebras. Some implementations may only be possible for a limited expressive power.</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[A, F[_, _]] = ProtocolInstances[A, F]
-  <span class="kw">with</span> FunctorAlgebra[F]
-  <span class="kw">with</span> ArrowAlgebra[F]
+<p>We can decompose the different features of our algebra into mixins, which we can later combine.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> AlgebraTerminals[F[_]] {
 
-<span class="kw">type</span> WeakProtocolAlgebra[A, F[_, _]] = ProtocolInstances[A, F]
-  <span class="kw">with</span> FunctorAlgebra[F]</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ProtocolInstances[A, F[_, _]] {
+  <span class="kw">def</span> integer: F[Int]
 
-  <span class="kw">def</span> integer: F[A, Int]
-
-  <span class="kw">def</span> string: F[A, String]
+  <span class="kw">def</span> string: F[String]
 
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> FunctorAlgebra[F[_, _]] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> InvariantFunctorAlgebra[F[_]] {
 
-  <span class="kw">def</span> imap[A, B, C](a: F[A, B], f: B =&gt; C, C =&gt; B): F[A, C]
+  <span class="kw">def</span> imap[A, B](a: F[A], f: A =&gt; B, B =&gt; A): F[B]
 
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ArrowAlgebra[F[_, _]] {
@@ -690,33 +703,53 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 
 }</code></pre></div>
 </div>
+<div id="algebra-building-blocks-2" class="slide section level1">
+<h1>Algebra building blocks (2)</h1>
+<p>We can fully customize the expressive power we need from our algebras. Some implementations may only be possible for a limited expressive power.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> WeakProtocolAlgebra[F[_]] = AlgebraTerminals[F]
+  <span class="kw">with</span> InvariantFunctorAlgebra[F]
+
+<span class="kw">type</span> StrongerAlgebra[A, F[_, _]] = AlgebraTerminals[F[A, ?]]
+  <span class="kw">with</span> InvariantFunctorAlgebra[F[A, ?]]
+  <span class="kw">with</span> ArrowAlgebra[F]
+  <span class="kw">with</span> ...</code></pre></div>
+</div>
 <div id="implementing-algebras" class="slide section level1">
-<h1>Implementing algebras:</h1>
+<h1>Implementing algebras</h1>
 <p>We can then have different specializations and implementations of the algebra</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> CodecAlgebra[A] <span class="kw">extends</span> ProtocolAlgebra[A, Codec]
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
+<span class="kw">trait</span> CodecAlgebra[T] <span class="kw">extends</span> ProtocolAlgebra[Codec[T, ?]] {
+  <span class="kw">def</span> imap[A, B](a: Codec[T, A], f: A =&gt; B, B =&gt; A): Codec[T, B] = ...
+
+  ...
+}
 
 <span class="kw">object</span> JsonCodecAlgebra <span class="kw">extends</span> CodecAlgebra[Json] {
 
   <span class="kw">val</span> integer: Codec[Json, Integer] = ...
   <span class="kw">val</span> string: Codec[Json, String] = ...
 
-  <span class="kw">def</span> imap[A, B, C](a: Codec[A, B], f: B =&gt; C, C =&gt; B): Codec[A, C] = ...
-
   ...
 }
 
 <span class="kw">object</span> XmlCodecAlgebra <span class="kw">extends</span> CodecAlgebra[Xml] {
+
+  <span class="kw">val</span> integer: Codec[Xml, Integer] = ...
+  <span class="kw">val</span> string: Codec[Xml, String] = ...
+
   ...
 }</code></pre></div>
+</div>
+<div id="implementing-algebras-2" class="slide section level1">
+<h1>Implementing algebras (2)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> TypedDoc[A] = Doc
-<span class="kw">type</span> DocAlias[A, B] = TypedDoc[B]
 
-<span class="kw">object</span> DocAlgebra <span class="kw">extends</span> ProtocolAlgebra[Nothing, DocAlias] {
+<span class="kw">object</span> DocAlgebra <span class="kw">extends</span> ProtocolAlgebra[TypedDoc] {
 
   <span class="kw">val</span> integer: TypedDoc[Integer] = ...
   <span class="kw">val</span> string: TypedDoc[String] = ...
 
-  <span class="kw">def</span> imap[B, C](a: TypedDoc[B], f: B =&gt; C, C =&gt; B): TypedDoc[C] = ...
+  <span class="kw">def</span> imap[A, B](a: TypedDoc[A], f: A =&gt; B, B =&gt; A): TypedDoc[B] = ...
 
   ...
 }</code></pre></div>
@@ -724,7 +757,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div id="programming-a-codec-in-terms-of-an-algebra" class="slide section level1">
 <h1>Programming a <code>Codec</code> in terms of an algebra:</h1>
 <p>Let's now define our model in terms of an algebra:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[A, F[_, _]](algebra: ProtocolAlgebra[A, F]): F[A, BuyArticle] = {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[F[_]](algebra: ProtocolAlgebra[F]): F[BuyArticle] = {
   <span class="kw">import</span> algebra.<span class="fu">_</span>
   <span class="fu">imap</span>(
     <span class="fu">zip</span>(
@@ -735,7 +768,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   )
 }</code></pre></div>
 <p>Or with some syntactic sugar:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[A, F[_, _]](<span class="kw">implicit</span> algebra: Algebra[A, F]): F[A, BuyArticle] = (
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[F[_]](<span class="kw">implicit</span> algebra: ProtocolAlgebra[F]): F[BuyArticle] = (
   (<span class="st">&quot;articleId&quot;</span> as[String]           meaning <span class="st">&quot;Article ID&quot;</span>) :*:
   (<span class="st">&quot;quantity&quot;</span>  as[Int](<span class="fu">minValue</span>(<span class="dv">1</span>)) meaning <span class="st">&quot;Quantity&quot;</span>)
 ).<span class="fu">mappedAs</span>[BuyArticle]</code></pre></div>
