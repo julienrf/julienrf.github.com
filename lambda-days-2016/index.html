@@ -476,7 +476,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> command = <span class="fu">BuyArticle</span>(articleId = <span class="st">&quot;123&quot;</span>, quantity = <span class="dv">5</span>) <span class="co">// BuyArticle(&quot;123&quot;, 5)</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">decode</span>(buyArticle.<span class="fu">encode</span>(command))
   <span class="fu">Right</span>(<span class="fu">BuyArticle</span>(<span class="st">&quot;123&quot;</span>, <span class="dv">5</span>))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">decode</span>(Json.<span class="fu">parse</span>(<span class="st">&quot;{&quot;</span>other<span class="st">&quot;: &quot;</span>wrong<span class="st">&quot;}&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">decode</span>(Json.<span class="fu">parse</span>(<span class="st">&quot;&quot;&quot;{&quot;</span>other<span class="st">&quot;: &quot;</span>wrong<span class="st">&quot;}&quot;&quot;&quot;</span>)
   <span class="fu">Left</span>(...)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">&gt; buyArticle.<span class="fu">encode</span>(command).<span class="fu">pretty</span>
   <span class="st">&quot;</span>
