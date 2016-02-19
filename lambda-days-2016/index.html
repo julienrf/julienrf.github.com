@@ -363,6 +363,17 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">def</span> andThen[A, B, C](ab: F[A, B], bc: F[B, C]): F[A, C]
 }</code></pre></div>
 </div>
+<div id="why-bother-with-abstract-things-such-as-invariant-functors-and-arrows" class="slide section level1">
+<h1>Why bother with abstract things such as <em>invariant functors</em> and <em>arrows</em>?</h1>
+<ul>
+<li>DSL <strong>users</strong> don’t need to be aware of these things ;</li>
+<li>DSL <strong>designers</strong> should know them, at least for two reasons:
+<ul>
+<li><strong>consistency</strong>: several DSL relying on the same concepts should <em>name</em> them consistently,</li>
+<li><strong>reasoning</strong>: these abstract things have well studied properties that may affect the expressive power of the DSL.</li>
+</ul></li>
+</ul>
+</div>
 <div id="objprotocol" class="slide section level1">
 <h1><code>ObjProtocol</code></h1>
 <ul>
@@ -583,22 +594,77 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li><p>The possible semantics of a protocol definition are <strong>fixed</strong> (<code>codec</code> and <code>doc</code>).</p></li>
 </ul>
 </div>
-<div id="future-work" class="slide section level1">
-<h1>Future Work</h1>
+<div id="going-beyond" class="slide section level1">
+<h1>Going beyond</h1>
+<p>Using the <code>Protocol</code> trait, we were able to unify <code>Codec</code> and <code>Doc</code>. However, we've also tightly coupled them together.</p>
 <ul>
-<li><em>Free applicatives</em>, <em>object algebras</em> or <em>finally tagless GADTs</em> would make it possible to define protocol semantics independently of each other ;</li>
+<li>What if any implementation needs to be changed?</li>
+<li>What if we need to introduce a new <strong>interpretation</strong> of the model? (e.g. draw a class diagram)</li>
+<li>What if we need more or less expressive power (monads, recursion) for some representations?</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ProtocolAlg[F[_, _]] {
-  <span class="co">// smart constructors</span>
-  <span class="kw">def</span> field[A](name: String, protocol: F[Json, A]): F[JsonObject, A]
-  …
-  <span class="co">// combinators</span>
-  <span class="kw">def</span> andThen[A, B, C](ab: F[A, B], bc: F[B, C]): F[A, C]
-  …
+<p><em>Free applicatives</em>, <em>object algebras</em> or <em>finally tagless GADTs</em> make it possible to define the model and its interpretation semantics independently of each other</p>
+</div>
+<div id="revisiting-the-abstract-factory" class="slide section level1">
+<h1>Revisiting the <code>Abstract Factory</code></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> AbstractProduct1
+
+<span class="kw">trait</span> AbstractProduct2
+
+<span class="kw">trait</span> AbstractProduct3
+
+<span class="kw">trait</span> AbstractFactory {
+  <span class="kw">def</span> create1: AbstractProduct1
+
+  <span class="kw">def</span> create2: AbstractProduct2
+
+  <span class="kw">def</span> <span class="fu">assemble</span>(a: AbstractProduct1, b: AbstractProduct2): AbstractProduct3
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ConcreteProduct1 <span class="kw">extends</span> AbstractProduct1
+
+<span class="kw">object</span> ConcreteProduct2 <span class="kw">extends</span> AbstractProduct2
+
+<span class="kw">object</span> ConcreteProduct3 <span class="kw">extends</span> AbstractProduct3
+
+<span class="kw">object</span> ConcreteFactory {
+  <span class="kw">def</span> create1 = ConcreteProduct1
+
+  <span class="kw">def</span> create2 = ConcreteProduct2
+
+  <span class="kw">def</span> <span class="fu">assemble</span>(a: AbstractProduct1, b: AbstractProduct2) = ConcreteProduct3
 }</code></pre></div>
 </div>
+<div id="revisiting-the-abstract-factory-2" class="slide section level1">
+<h1>Revisiting the <code>Abstract Factory</code> (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Client {
+  <span class="kw">def</span> <span class="fu">orderStuff</span>(factory: AbstractFactory) = {
+    <span class="kw">val</span> first = factory.<span class="fu">create1</span>
+    <span class="kw">val</span> second = factory.<span class="fu">create2</span>
+    factory.<span class="fu">assemble</span>(first, second)
+  }
+}</code></pre></div>
+</div>
+<div id="object-algebras" class="slide section level1">
+<h1><code>Object algebras</code></h1>
+<p>Object algebras can be though of as Abstract Factories which define terminals (building blocks) and productions (operations on building blocks).</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[A, F[_, _]] {
+  <span class="kw">def</span> integer: F[A, Int]
+
+  <span class="kw">def</span> string: F[A, String]
+
+  <span class="kw">def</span> imap[B, C](a: F[A, B], f: B =&gt; C, C =&gt; B): F[A, C]
+
+  ...
+}</code></pre></div>
+<p>Given a object algebra, we can define a program. The actual evaluation of that program depends on the concrete algebra we will use.</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> algebra: ProtocolAlgebra[T, F] = ...
+<span class="kw">val</span> program: F[T, String] = algebra.<span class="fu">inmap</span>(
+  algebra.<span class="fu">integer</span>,
+  i =&gt; String.<span class="fu">valueOf</span>(Array.<span class="fu">fill</span>(i)(&#39;a&#39;)),
+  s =&gt; s.<span class="fu">length</span>
+)</code></pre></div>
+</div>
 <div id="algebra-building-blocks" class="slide section level1">
-<h1>Algebra Building blocks</h1>
+<h1>Algebra building blocks</h1>
 <p>We can fully customize the expressive power we need from our algebras. Some implementations may only be possible for a limited expressive power.</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> ProtocolAlgebra[A, F[_, _]] = ProtocolInstances[A, F]
   <span class="kw">with</span> FunctorAlgebra[F]
@@ -656,7 +722,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 }</code></pre></div>
 </div>
 <div id="programming-a-codec-in-terms-of-an-algebra" class="slide section level1">
-<h1>Programming a Codec in terms of an algebra:</h1>
+<h1>Programming a <code>Codec</code> in terms of an algebra:</h1>
 <p>Let's now define our model in terms of an algebra:</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> buyArticle[A, F[_, _]](algebra: ProtocolAlgebra[A, F]): F[A, BuyArticle] = {
   <span class="kw">import</span> algebra.<span class="fu">_</span>
@@ -689,10 +755,11 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div id="conclusion" class="slide section level1">
 <h1>Conclusion</h1>
 <ul>
-<li>We defined an <strong>embedded DSL</strong> to describe the JSON protocols of our program ;</li>
+<li>We've defined an <strong>embedded DSL</strong> to describe the JSON protocols of our program ;</li>
 <li>This DSL provides <strong>basic building blocks</strong> and an <strong>algebra</strong> to combine them ;</li>
 <li>This DSL can have several <strong>semantics</strong>: documentation and codecs ;</li>
-<li>We generically <strong>derived</strong> JSON protocols for algebraic data types.</li>
+<li>We've generically <strong>derived</strong> JSON protocols for algebraic data types ;</li>
+<li>We've showed that such an embedded DSL can be generalized as an <strong>object algebra</strong> in order to have extensible and modular semantics.</li>
 </ul>
 </div>
 <div id="questions" class="slide section level1">
