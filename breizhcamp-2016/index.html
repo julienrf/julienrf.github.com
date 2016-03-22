@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien@richard-foy.fr" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/breizhcamp-2016" />
+  <title>La programmation fonctionnelle, c’est juste pour faire des preuves ?</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">La <em>programmation fonctionnelle</em>, c’est juste pour faire des <em>preuves</em> ?</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#46;&#102;&#114;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#102;&#114;</noscript><br/><br/><a href="http://julienrf.github.io/breizhcamp-2016" class="uri">http://julienrf.github.io/breizhcamp-2016</a>
+  </p>
+  <p class="date">BreizhCamp 2016</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="plan">Plan</h2>
+<ul>
+<li>Composition</li>
+<li>Modélisation</li>
+<li>Abstraction</li>
+<li>Adéquation (avec les besoins d’aujourdhui)</li>
+</ul>
+</div>
+<div id="composition" class="slide section level1">
+<h1>Composition</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="compositionnalité">Compositionnalité</h2>
+<blockquote>
+<p>Principe selon lequel la signification d’une <em>expression complexe</em> est définie par les significations des <em>expressions la composant</em>, et par les règles employées pour les <em>combiner</em>.</p>
+</blockquote>
+<p><a href="https://fr.wikipedia.org/wiki/Principe_de_compositionnalit%C3%A9">Wikipedia</a></p>
+</div>
+<div class="slide section level1">
+
+<h2 id="la-composition-appliquée-aux-programmes">La composition appliquée aux programmes</h2>
+<ul>
+<li>Créer un programme complexe en combinant des programmes plus simples</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="la-composition-appliquée-aux-programmes-variante">La composition appliquée aux programmes (variante)</h2>
+<ul>
+<li>Décomposer un problème complexe en problèmes plus simples (et <em>indépendants</em>)</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="illegalstateexception"><code>IllegalStateException</code></h2>
+<p>(existe aussi sous la forme d’une <code>NullPointerException</code>, <code>IOException</code>, etc.)</p>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">User user = <span class="kw">new</span> <span class="fu">User</span>();
+<span class="fu">println</span>(user.<span class="fu">name</span>);</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="car-without-wheels.jpg" alt="Invalide" />
+<p class="caption">Invalide</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="toute-valeur-doit-être-initialisée-dans-un-état-valide">Toute valeur doit être initialisée dans un état valide</h2>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">User user = <span class="kw">new</span> <span class="fu">User</span>(<span class="st">&quot;Julien&quot;</span>);
+<span class="fu">doSomething</span>(user);
+<span class="fu">println</span>(user.<span class="fu">name</span>);</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="crush.jpg" alt="Crush" />
+<p class="caption">Crush</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="la-valeur-associée-à-un-nom-donné-ne-doit-pas-changer-au-cours-du-temps">La valeur associée à un nom donné ne doit pas changer au cours du temps</h2>
+</div>
+<div class="slide section level1">
+
+<h2 id="immuabilité">Immuabilité</h2>
+<ul>
+<li>L’immuabilité <em>contraint</em> le code appelé ;</li>
+<li>L’immuabilité <em>libère</em> le code appelant.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Integer n = <span class="dv">1</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">n + n == <span class="dv">1</span> + <span class="dv">1</span>;</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Image img = <span class="kw">new</span> <span class="fu">Circle</span>(<span class="dv">5</span>);</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">img.<span class="fu">beside</span>(img) == (<span class="kw">new</span> <span class="fu">Circle</span>(<span class="dv">5</span>)).<span class="fu">beside</span>(<span class="kw">new</span> <span class="fu">Circle</span>(<span class="dv">5</span>));</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="alias-vs-copie-superficielle-vs-copie-profonde">Alias vs copie superficielle vs copie profonde</h2>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Image ear = <span class="kw">new</span> <span class="fu">Circle</span>(<span class="dv">8</span>);
+Image face = <span class="kw">new</span> <span class="fu">Circle</span>(<span class="dv">10</span>);
+Image mickey =
+  ear.<span class="fu">beside</span>(ear)
+    .<span class="fu">above</span>(face);</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="values.jpg" alt="Valeurs" />
+<p class="caption">Valeurs</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="travailler-avec-des-valeurs">Travailler avec des valeurs</h2>
+<p>ie. Éviter de ne « rien » retourner</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="compositionnalité-synthèse">Composition(nalité) : synthèse</h2>
+<ul>
+<li>Arme pour <em>gérer la complexité</em> ;</li>
+<li>Élimine toute une classe de <em>problèmes d’intégration</em> ;</li>
+<li>S’obtient en travaillant avec des <em>valeurs immuables</em>.</li>
+</ul>
+</div>
+<div id="modélisation" class="slide section level1">
+<h1>Modélisation</h1>
+</div>
+<div class="slide section level1">
+
+<blockquote>
+<p>When you program you have to think about <em>how someone</em> will <em>read your code</em>, not just how a computer will interpret it.</p>
+</blockquote>
+<p>Kent Beck</p>
+</div>
+<div class="slide section level1">
+
+<ul>
+<li>Un domaine métier doit pouvoir être traduit facilement en code ;</li>
+<li>Réciproquement, le code doit permettre de reconstruire, mentalement, le domaine métier.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="partition.svg" alt="Partition" />
+<p class="caption">Partition</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="partition-de-musique-en-français">Partition de musique (en français)</h2>
+<ul>
+<li>Une partition de musique a une clé et une suite de notes</li>
+<li>Une note a un nom (« do », « ré », etc.) et un rythme (« noire », « blanche », etc.)</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="products.svg" alt="Products" />
+<p class="caption">Products</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Note {
+  <span class="kw">public</span> Name name;
+  <span class="kw">public</span> Rhythm rhythm;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Note {
+  <span class="kw">public</span> <span class="dt">final</span> Name name;
+  <span class="kw">public</span> <span class="dt">final</span> Rhythm rhythm;
+
+  <span class="kw">public</span> <span class="fu">Note</span>(Name name, Rhythm rhythm) {
+    <span class="kw">this</span>.<span class="fu">name</span> = name;
+    <span class="kw">this</span>.<span class="fu">rhythm</span> = rhythm;
+  }
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Note do1 = <span class="kw">new</span> <span class="fu">Note</span>(C, Quarter);
+Note do2 = <span class="kw">new</span> <span class="fu">Note</span>(C, Quarter);
+<span class="fu">assert</span>(do1.<span class="fu">equals</span>(do2)); <span class="co">// ???</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="value-classes"><em>Value Classes</em></h2>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">final</span> <span class="kw">class</span> Note {
+  <span class="kw">public</span> <span class="dt">final</span> Name name;
+  <span class="kw">public</span> <span class="dt">final</span> Rhythm rhythm;
+
+  <span class="kw">public</span> <span class="fu">Note</span>(Name name, Rhythm rhythm) {
+    <span class="kw">this</span>.<span class="fu">name</span> = name;
+    <span class="kw">this</span>.<span class="fu">rhythm</span> = rhythm;
+  }
+
+  <span class="fu">@Override</span>
+  <span class="kw">public</span> Boolean <span class="fu">equals</span>(that) {
+    <span class="kw">if</span> (that <span class="kw">instanceof</span> Note) {
+      <span class="kw">return</span> <span class="kw">this</span>.<span class="fu">name</span>.<span class="fu">equals</span>(that.<span class="fu">name</span>) &amp;&amp; <span class="kw">this</span>.<span class="fu">rhythm</span>.<span class="fu">equals</span>(that.<span class="fu">rhythm</span>);
+    } <span class="kw">else</span> <span class="kw">return</span> <span class="kw">false</span>;
+  }
+
+  <span class="fu">@Override</span>
+  <span class="kw">public</span> Long <span class="fu">hashCode</span>() {
+    <span class="kw">return</span> (<span class="dv">17</span> + name.<span class="fu">hashCode</span>()) * <span class="dv">31</span> + rhythm.<span class="fu">hashCode</span>(); 
+  }
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="note.svg" alt="Note" />
+<p class="caption">Note</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<p>Scala :</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Note</span>(
+  name: Name,
+  rhythm: Rhythm
+)</code></pre></div>
+<p>Haskell :</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Note</span> <span class="fu">=</span> <span class="dt">Note</span> <span class="dt">Name</span> <span class="dt">Rhythm</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="un-symbole-musical-est-soit-un-silence-soit-une-note">« Un symbole musical est soit un silence, soit une note »</h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="sums.svg" alt="Sums" />
+<p class="caption">Sums</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="inheritance.svg" alt="Inheritance" />
+<p class="caption">Inheritance</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="visitor.svg" alt="Visitor" />
+<p class="caption">Visitor</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Symbol {
+  <span class="kw">private</span> <span class="fu">Symbol</span>() {}
+
+  <span class="kw">public</span> <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">accept</span>(Visitor visitor);
+
+  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">class</span> Note <span class="kw">extends</span> Symbol {
+    …
+    <span class="fu">@Override</span>
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">accept</span>(Visitor visitor) {
+      visitor.<span class="fu">visitNote</span>(<span class="kw">this</span>);
+    }
+  }
+  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">class</span> Rest <span class="kw">extends</span> Symbol {
+    …
+    <span class="fu">@Override</span>
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">accept</span>(Visitor visitor) {
+      visitor.<span class="fu">visitRest</span>(<span class="kw">this</span>);
+    }
+  }
+
+  <span class="kw">public</span> <span class="dt">static</span> <span class="kw">interface</span> Visitor {
+    <span class="dt">void</span> <span class="fu">visitNote</span>(Note note);
+    <span class="dt">void</span> <span class="fu">visitRest</span>(Rest rest);
+  }
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="sums.svg" alt="Sums" />
+<p class="caption">Sums</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="sum-types"><em>Sum Types</em></h2>
+<p>a.k.a. <em>union types</em></p>
+</div>
+<div class="slide section level1">
+
+<p>Scala :</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Symbol
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Note</span>(name: Name, rhythm: Rhythm) <span class="kw">extends</span> Symbol
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Rest</span>(rhythm: Rhythm) <span class="kw">extends</span> Symbol</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">doSomething</span>(symbol: Symbol): Unit =
+  symbol <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Note</span>(name, rhythm) =&gt; …
+    <span class="kw">case</span> <span class="fu">Rest</span>(rhythm) =&gt; …
+  }</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<p>Haskell :</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Symbol</span> <span class="fu">=</span> <span class="dt">Note</span> <span class="dt">Name</span> <span class="dt">Rhythm</span> <span class="fu">|</span> <span class="dt">Rest</span> <span class="dt">Rhythm</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">doSomething (<span class="dt">Note</span> name rhythm) <span class="fu">=</span> <span class="fu">…</span>
+doSomething (<span class="dt">Rest</span> rhythm) <span class="fu">=</span> <span class="fu">…</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="modélisation-synthèse">Modélisation : synthèse</h2>
+<ul>
+<li>Les types de données algébriques (c’est leur nom…) permettent de modéliser efficacement un domaine métier ;</li>
+<li>Les concepts du domaine se traduisent directement en code, et <em>vice versa</em>.</li>
+</ul>
+</div>
+<div id="abstraction" class="slide section level1">
+<h1>Abstraction</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="définition">Définition</h2>
+<blockquote>
+<p>The purpose of <em>abstraction</em> is not to be <em>vague</em>, but to create a new <em>semantic level</em> in which one can be <em>absolutely precise</em></p>
+</blockquote>
+<p>Edsger W. Dijkstra</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="on-est-déjà-à-mi-chemin">On est déjà à mi-chemin !</h2>
+<ul>
+<li>Le découpage du code de manière compositionnelle aide à construire de petites abstractions réutilisables ;</li>
+<li>Les types de données algébriques permettent de représenter un domaine métier (c.-à-d. une abstraction du monde réel).</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="principe-dabstraction">Principe d’abstraction</h2>
+<blockquote>
+<p>Each <em>significant piece of functionality</em> in a program should be implemented in just <em>one place</em> in the source code.</p>
+<p>Where similar functions are carried out by distinct pieces of code, it is generally beneficial to combine them into one by <em>abstracting out the varying parts</em>.</p>
+</blockquote>
+<p>Benjamin C. Pierce</p>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double earArea = earRadius * earRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double faceArea = faceRadius * faceRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double earArea = earRadius * earRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double faceArea = faceRadius * faceRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Double <span class="fu">disqArea</span>(Double radius) {
+  <span class="kw">return</span> radius * radius * Math.<span class="fu">PI</span>;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="généraliser-une-procédure-permet-de-prendre-du-recul"><em>Généraliser</em> une procédure permet de <em>prendre du recul</em></h2>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double earArea = earRadius * earRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double faceArea = faceRadius * faceRadius * Math.<span class="fu">PI</span>;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Double <span class="fu">disqArea</span>(Double radius) {
+  <span class="kw">return</span> radius * radius * Math.<span class="fu">PI</span>;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double earArea = <span class="fu">disqArea</span>(earRadius);</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Double faceArea = <span class="fu">disqArea</span>(faceRadius);</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Double <span class="fu">disqArea</span>(Double radius) {
+  <span class="kw">return</span> radius * radius * Math.<span class="fu">PI</span>;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="nommer-les-choses-améliore-la-lisibilité">Nommer les choses améliore la <em>lisibilité</em></h2>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Integer <span class="fu">sum</span>(List&lt;Integer&gt; numbers) {
+  Integer result = <span class="dv">0</span>;
+  <span class="kw">for</span> (Integer n : numbers) {
+    result = result + n;
+  }
+  <span class="kw">return</span> result;
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Integer <span class="fu">product</span>(List&lt;Integer&gt; numbers) {
+  Integer result = <span class="dv">1</span>;
+  <span class="kw">for</span> (Integer n : numbers) {
+    result = result * n;
+  }
+  <span class="kw">return</span> result;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Integer <span class="fu">reduce</span>(
+    List&lt;Integer&gt; numbers,
+    Integer init,
+    BiFunction&lt;Integer, Integer, Integer&gt; op
+) {
+  Integer result = init;
+  <span class="kw">for</span> (Integer n : numbers) {
+    result = op.<span class="fu">apply</span>(result, n)
+  }
+  <span class="kw">return</span> result;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Integer <span class="fu">sum</span>(List&lt;Integer&gt; numbers) {
+  <span class="kw">return</span> <span class="fu">reduce</span>(numbers, <span class="dv">0</span>, (n1, n2) -&gt; n1 + n2);
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Integer <span class="fu">product</span>(List&lt;Integer&gt; numbers) {
+  <span class="kw">return</span> <span class="fu">reduce</span>(numbers, <span class="dv">1</span>, (n1, n2) -&gt; n1 * n2);
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Image <span class="fu">allBeside</span>(List&lt;Image&gt; images) {
+  Image result = Image.<span class="fu">EMPTY</span>;
+  <span class="kw">for</span> (Image image : images) {
+    result = result.<span class="fu">beside</span>(image);
+  }
+  <span class="kw">return</span> result;
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Image <span class="fu">allBeside</span>(List&lt;Image&gt; images) {
+  <span class="kw">return</span> <span class="fu">reduce</span>(images, Image.<span class="fu">EMPTY</span>, (i1, i2) -&gt; i1.<span class="fu">beside</span>(i2));
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<p>Scala :</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">reduce</span>(numbers: List[Int], init: Int, op: (Int, Int) =&gt; Int): Int</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">sum</span>(numbers: List[Int]): Int =
+  <span class="fu">reduce</span>(numbers, <span class="dv">0</span>, (x, y) =&gt; x + y);</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<p>Haskell :</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">reduce ::</span> <span class="dt">Integer</span> <span class="ot">-&gt;</span> (<span class="dt">Integer</span> <span class="ot">-&gt;</span> <span class="dt">Integer</span> <span class="ot">-&gt;</span> <span class="dt">Integer</span>) <span class="ot">-&gt;</span> [<span class="dt">Integer</span>] <span class="ot">-&gt;</span> <span class="dt">Integer</span>
+reduce init op numbers <span class="fu">=</span> <span class="fu">…</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">sum<span class="ot"> ::</span> [<span class="dt">Integer</span>] <span class="ot">-&gt;</span> <span class="dt">Integer</span>
+sum <span class="fu">=</span> reduce <span class="dv">0</span> (\x y <span class="ot">-&gt;</span> x <span class="fu">+</span> y)</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="principe-dabstraction-synthèse">(Principe d’)abstraction : synthèse</h2>
+<ul>
+<li>Rend le code plus <em>lisible</em> et plus <em>maintenable</em> ;</li>
+<li>Sa mise en œuvre est facilitée si le langage permet aux fonctions de <em>prendre en paramètre des fonctions</em>.</li>
+</ul>
+</div>
+<div id="applications-pratiques" class="slide section level1">
+<h1>Applications pratiques</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="architectures">Architectures</h2>
+<ul>
+<li>Machines multi-cœurs ;</li>
+<li>Architectures Web.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="tirer-parti-de-ces-ressources">Tirer parti de ces ressources</h2>
+</div>
+<div class="slide section level1">
+
+<h2 id="paralléliser">Paralléliser</h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="super-lambda.png" alt="Super-Lambda" />
+<p class="caption">Super-Lambda</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="gérer-la-concurrence">Gérer la concurrence</h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="super-lambda.png" alt="Super-Lambda" />
+<p class="caption">Super-Lambda</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="gérer-lintermittence-des-traitements">Gérer l’intermittence des traitements</h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="super-lambda.png" alt="Super-Lambda" />
+<p class="caption">Super-Lambda</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="logiciels">Logiciels</h2>
+<ul>
+<li>Systèmes de recommandation (Google, Facebook, etc.) ;</li>
+<li>Économie collaborative (BlaBlaCar, AirBnB, Uber, etc.) ;</li>
+<li>Intelligence artificielle (voiture autonome, reconnaissance de la parole, etc.).</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="modéliser-et-traiter-de-linformation">Modéliser et traiter de l’information</h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="super-lambda.png" alt="Super-Lambda" />
+<p class="caption">Super-Lambda</p>
+</div>
+</div>
+<div id="résumé" class="slide section level1">
+<h1>Résumé</h1>
+<p>La programmation fonctionnelle est pratique pour :</p>
+<ul>
+<li>prouver des propriétés sur des programmes ;</li>
+<li>découper un problème <strong>complexe</strong> en problèmes plus <strong>simples</strong> indépendants ;</li>
+<li><strong>modéliser</strong> un domaine métier ;</li>
+<li>écrire du code « au <em>bon</em> niveau d’abstraction » ;</li>
+<li>tirer parti des machines multi-cœurs ou architectures distribuées ;</li>
+<li>traiter de l’information intermittente.</li>
+</ul>
+</div>
+<div id="questions" class="slide section level1">
+<h1>Questions ?</h1>
+<p style="text-align: center">
+<a href="mailto:julien@richard-foy.fr">julien@richard-foy.fr</a>
+</p>
+</div>
+<div id="bonus" class="slide section level1">
+<h1>Bonus</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="persistent-data-structures"><em>Persistent data structures</em></h2>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="persistent.svg" alt="Persistent" />
+<p class="caption">Persistent</p>
+</div>
+</div>
+<div class="slide section level1">
+
+<h2 id="inconvénients-de-limmuabilité">Inconvénients de l’immuabilité</h2>
+<ul>
+<li>Écrire une interface homme-machine est difficile
+<ul>
+<li>Toutefois, certains langages rendent ce problème étonnamment facile (p. ex. <a href="http://elm-lang.org">Elm</a>)</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="langage-fonctionnel"><em>Langage</em> fonctionnel ?</h2>
+<p>Java</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Optional&lt;T&gt; {
+  <span class="kw">public</span> &lt;U&gt; Optional&lt;U&gt; <span class="fu">map</span>(Function&lt;? <span class="kw">super</span> T, ? <span class="kw">extends</span> U&gt; mapper);
+}</code></pre></div>
+<p>Scala</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Option[A] {
+  <span class="kw">def</span> map[B](f: A =&gt; B): Option[B]
+}</code></pre></div>
+<p>Haskell</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">fmap<span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">Maybe</span> a <span class="ot">-&gt;</span> <span class="dt">Maybe</span> b</code></pre></div>
+</div>
+</body>
+</html>
