@@ -1,0 +1,1 @@
+Index.PACKAGES = {"enum" : [{"case class" : "enum\/DecodingFailure.html", "name" : "enum.DecodingFailure"}, {"object" : "enum\/Encoder$.html", "trait" : "enum\/Encoder.html", "name" : "enum.Encoder"}, {"object" : "enum\/Enum$.html", "trait" : "enum\/Enum.html", "name" : "enum.Enum"}]};

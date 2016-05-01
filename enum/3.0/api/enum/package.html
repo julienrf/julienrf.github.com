@@ -1,0 +1,207 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>enum - enum</title>
+          <meta name="description" content="enum - enum" />
+          <meta name="keywords" content="enum enum" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../lib/template.js"></script>
+      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'enum.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../lib/package_big.png" />
+        
+        <h1>enum</h1><span class="permalink">
+      <a href="../index.html#enum.package" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">enum</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="enum.DecodingFailure" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="DecodingFailure[A]extendsProductwithSerializable"></a>
+      <a id="DecodingFailure[A]:DecodingFailure[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="DecodingFailure.html"><span class="name">DecodingFailure</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="validValues">validValues: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#enum.package@DecodingFailure[A]extendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="enum.Encoder" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Encoder[A]extendsAnyRef"></a>
+      <a id="Encoder[A]:Encoder[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Encoder.html"><span class="name">Encoder</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#enum.package@Encoder[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A typeclass defining how to encode enumeration values as strings</p><div class="fullcomment"><div class="comment cmt"><p>A typeclass defining how to encode enumeration values as strings</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@implicitNotFound</span><span class="args">(<span>
+      
+      <span class="defval" name="&quot;Unable to find a way to encode ${A} values as strings. Make sure it is a sealed trait and is only extended by case objects.&quot;">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="enum.Enum" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Enum[A]extendsAnyRef"></a>
+      <a id="Enum[A]:Enum[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Enum.html"><span class="name">Enum</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#enum.package@Enum[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"><p></p><pre><span class="kw">sealed</span> <span class="kw">trait</span> Foo
+<span class="kw">object</span> Foo {
+  <span class="kw">case</span> <span class="kw">object</span> Bar <span class="kw">extends</span> Foo
+  <span class="kw">case</span> <span class="kw">object</span> Baz <span class="kw">extends</span> Foo
+
+  <span class="kw">val</span> enum: Enum[Foo] = Enum.derived[Foo]
+}
+
+assert(Foo.enum.values == <span class="std">Set</span>(Foo.Bar, Foo.Baz))
+assert(Foo.enum.labels == <span class="std">Set</span>(<span class="lit">"Bar"</span>, <span class="lit">"Baz"</span>))
+assert(Foo.enum.encode(Foo.Bar) == <span class="lit">"Bar"</span>)
+assert(Foo.enum.decode(<span class="lit">"Baz"</span>) == Right(Foo.Baz))
+assert(Foo.enum.decode(<span class="lit">"invalid"</span>) == Left(DecodingFailure[Foo](<span class="std">Set</span>(<span class="lit">"Bar"</span>, <span class="lit">"Baz"</span>))))</pre></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Type of the enumeration values</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="enum.Encoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Encoder"></a>
+      <a id="Encoder:Encoder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Encoder$.html"><span class="name">Encoder</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#enum.package@Encoder" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="enum.Enum" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Enum"></a>
+      <a id="Enum:Enum"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Enum$.html"><span class="name">Enum</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#enum.package@Enum" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
