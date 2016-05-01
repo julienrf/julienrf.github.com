@@ -63,7 +63,7 @@ assert(Foo.enum.values == <span class="std">Set</span>(Foo.Bar, Foo.Baz))
 assert(Foo.enum.labels == <span class="std">Set</span>(<span class="lit">"Bar"</span>, <span class="lit">"Baz"</span>))
 assert(Foo.enum.encode(Foo.Bar) == <span class="lit">"Bar"</span>)
 assert(Foo.enum.decode(<span class="lit">"Baz"</span>) == Right(Foo.Baz))
-assert(Foo.enum.decode(<span class="lit">"invalid"</span>) == Left(DecodingFailure[Foo](<span class="std">Set</span>(<span class="lit">"Bar"</span>, <span class="lit">"Baz"</span>))))</pre></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Type of the enumeration values</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/julienrf/enum/tree/v3.1-SNAPSHOT/enum/src/main/scala/enum/Enum.scala" target="_blank">Enum.scala</a></dd></dl><div class="toggleContainer block">
+assert(Foo.enum.decode(<span class="lit">"invalid"</span>) == Left(DecodingFailure[Foo](<span class="std">Set</span>(<span class="lit">"Bar"</span>, <span class="lit">"Baz"</span>))))</pre></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Type of the enumeration values</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/julienrf/enum/tree/v3.0/enum/src/main/scala/enum/Enum.scala" target="_blank">Enum.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
