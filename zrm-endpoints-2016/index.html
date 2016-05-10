@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien@richard-foy.fr" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/zrm-endpoints-2016" />
+  <title>Endpoints</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Endpoints</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#46;&#102;&#114;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#102;&#114;</noscript><br/><br/><a href="http://julienrf.github.io/zrm-endpoints-2016" class="uri">http://julienrf.github.io/zrm-endpoints-2016</a>
+  </p>
+</div>
+<div id="outline" class="slide section level1">
+<h1>Outline</h1>
+<ul>
+<li>Motivation
+<ul>
+<li>First-class values</li>
+<li>Multiple interpretations</li>
+<li>Extensibility</li>
+</ul></li>
+<li>Implementation</li>
+<li>Examples</li>
+</ul>
+</div>
+<div id="motivation" class="slide section level1">
+<h1>Motivation</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="first-class-values">First-class values</h2>
+<ul>
+<li>Leverage Scala’s <strong>expressive power</strong> in your endpoint definitions
+<ul>
+<li>Expressive power is the corner stone of mastering complexity</li>
+</ul></li>
+<li>cf <a href="http://julien.richard-foy.fr/blog/2016/01/24/my-problem-with-code-generation/">blogpost</a></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="duplication-reduction">Duplication reduction</h3>
+<pre><code>POST   /items       myshop.Items.create
+GET    /items/:id   myshop.Items.read(id)</code></pre>
+<ul>
+<li>We want to abstract out the “/items” path prefix</li>
+<li>We want to abstract out the <code>myshop.Items</code> value</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="name-binding">Name binding</h3>
+<pre><code>POST   /items       myshop.Items.create
+GET    /items/:id   myshop.Items.read(id)</code></pre>
+<ul>
+<li>We want to abstract out the “/items” path prefix</li>
+<li>We want to abstract out the <code>myshop.Items</code> value</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">val itemsPath = /items
+val itemsCtl = myshop.<span class="fu">Items</span>
+
+POST   itemsPath      itemsCtl.<span class="fu">create</span>
+GET    itemsPath/:id  itemsCtl.<span class="fu">read</span>(id)</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="name-binding-1">Name binding</h3>
+<pre><code>POST   /items       myshop.Items.create
+GET    /items/:id   myshop.Items.read(id)</code></pre>
+<ul>
+<li>We want to abstract out the “/items” path prefix</li>
+<li>We want to abstract out the <code>myshop.Items</code> value</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+<span class="kw">val</span> itemsCtl = myshop.<span class="fu">Items</span>
+
+<span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath),                   itemsCtl.<span class="fu">create</span>)
+<span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span> (itemsPath / segment[String]), itemsCtl.<span class="fu">read</span> _)</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="abstract-over-a-controller-instance">Abstract over a controller instance</h3>
+<ul>
+<li>What if the <code>Items</code> controller is a <strong>class</strong>, instead of an object?</li>
+<li>We can not therefore statically reference this value</li>
+<li>We need to abstract over this value</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsEndpoints</span>(itemsCtl: Items) {
+  <span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath),                   itemsCtl.<span class="fu">create</span>)
+  <span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span> (itemsPath / segment[String]), itemsCtl.<span class="fu">read</span> _)
+}</code></pre></div>
+<ul>
+<li>Our router becomes a class itself and takes the controller as a constructor parameter (for instance)</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="seamless-integration-with-existing-code">Seamless integration with existing code</h3>
+<ul>
+<li>What if our app captures the concept of a <em>resource</em> as something that has two endpoints, <code>create</code> and <code>read</code>?</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ResourceEndpoints {
+  <span class="kw">def</span> create: Endpoint
+  <span class="kw">def</span> read: Endpoint
+}</code></pre></div>
+<ul>
+<li>We want the router to <strong>implement</strong> this trait</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="seamless-integration-with-existing-code-1">Seamless integration with existing code</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ResourceEndpoints {
+  <span class="kw">def</span> create: Endpoint
+  <span class="kw">def</span> read: Endpoint
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsEndpoints</span>(itemsCtl: Items) <span class="kw">extends</span> ResourceEndpoints {
+  <span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath),                   itemsCtl.<span class="fu">create</span>)
+  <span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span> (itemsPath / segment[String]), itemsCtl.<span class="fu">read</span> _)
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="first-class-values-summary">First-class values: summary</h3>
+<ul>
+<li>Defining the router and its constituent parts using first-class values <strong>liberates</strong> us from several constraints
+<ul>
+<li>First-class values can be reused, combined, abstracted out, abstracted over, etc.</li>
+</ul></li>
+<li>The price to pay is a slightly more cluttered syntax, though…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="multiple-interpretations">Multiple interpretations</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="multiple-interpretations-1">Multiple interpretations</h3>
+<ul>
+<li>We want to reuse the router’s knowledge to derive (for instance) an HTTP client consistent with the routes ;</li>
+<li>We need to decouple the router from the application.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="monolith.svg" alt="" />
+
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="algebra.svg" alt="" />
+
+</div>
+</div>
+<div class="slide section level1">
+
+<div class="figure">
+<img src="algebra-commented.svg" alt="" />
+
+</div>
+</div>
+<div class="slide section level1">
+
+<h3 id="going-from-a-router-to-an-http-protocol-specification">Going from a router to an HTTP protocol specification</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsEndpoints</span>(itemsCtl: Items) {
+  <span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath),                   itemsCtl.<span class="fu">create</span>)
+  <span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span> (itemsPath / segment[String]), itemsCtl.<span class="fu">read</span> _)
+}</code></pre></div>
+<ul>
+<li>Let’s remove everything that’s related to the server implementation…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="what-else-do-we-want-to-include-in-our-specification">What else do we want to include in our specification?</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ItemsEndpoints {
+  <span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath))
+  <span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span> (itemsPath / segment[String]))
+}</code></pre></div>
+<ul>
+<li>Let’s complete the specification with the HTTP entities…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="complete-http-protocol-specification">Complete HTTP protocol specification</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ItemsEndpoints {
+  <span class="kw">val</span> itemsPath = path / <span class="st">&quot;items&quot;</span>
+
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(<span class="fu">post</span>(itemsPath, jsonRequest[CreateItem]), jsonResponse[Item])
+  <span class="kw">val</span> read   = <span class="fu">endpoint</span>(<span class="fu">get</span>(itemsPath / segment[UUID]), jsonResponse[Item])
+}
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Item</span>(id: UUID, name: String, price: Int)
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CreateItem</span>(name: String, price: Int)</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="deriving-useful-programs-from-a-specification">Deriving useful programs from a specification</h3>
+<ul>
+<li>The methods <code>endpoint</code>, <code>post</code>, <code>path</code>, <code>jsonRequest</code>, etc. each return an <strong>abstract representation</strong> of a part of the specification</li>
+<li>Then, we want to give them several <strong>interpretations</strong></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="http-server">HTTP server</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsRouter</span>(items: Items) {
+
+  <span class="kw">val</span> router = <span class="fu">playRouterFromEndpoints</span>(
+    <span class="fu">playRoute</span>(ItemsEndpoints.<span class="fu">create</span>, items.<span class="fu">create</span>),
+    <span class="fu">playRoute</span>(ItemsEndpoints.<span class="fu">read</span>, items.<span class="fu">read</span>)
+  )
+
+}</code></pre></div>
+<ul>
+<li>A <em>server</em> decodes and extracts data from incoming requests, when they match the defined endpoints, and builds responses</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="http-server-1">HTTP server</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsRouter</span>(items: Items) {
+
+  <span class="kw">val</span> router = <span class="fu">playRouterFromEndpoints</span>(
+    <span class="fu">playRoute</span>(ItemsEndpoints.<span class="fu">create</span>, items.<span class="fu">create</span>),
+    <span class="fu">playRoute</span>(ItemsEndpoints.<span class="fu">read</span>, items.<span class="fu">read</span>)
+  )
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Items {
+  <span class="kw">def</span> <span class="fu">create</span>(createItem: CreateItem): Future[Item] = …
+  <span class="kw">def</span> <span class="fu">read</span>(id: UUID): Future[Item] = …
+}</code></pre></div>
+<ul>
+<li>Note that the server implementation (the <code>Items</code> class) directly manipulate DTOs instead of JSON</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="http-client">HTTP client</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsClient</span>(wsClient: WSClient) {
+  <span class="kw">val</span> create = <span class="fu">playClient</span>(ItemsEndpoints.<span class="fu">create</span>, wsClient)
+  <span class="kw">val</span> read = <span class="fu">playClient</span>(ItemsEndpoints.<span class="fu">read</span>, wsClient)
+}</code></pre></div>
+<ul>
+<li>A <em>client</em> builds requests from data and decodes responses</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="http-client-1">HTTP client</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsClient</span>(wsClient: WSClient) {
+  <span class="kw">val</span> create = <span class="fu">playClient</span>(ItemsEndpoints.<span class="fu">create</span>, wsClient)
+  <span class="kw">val</span> read = <span class="fu">playClient</span>(ItemsEndpoints.<span class="fu">read</span>, wsClient)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client: ItemsClient = …
+<span class="kw">for</span> {
+  itemCreated &lt;- client.<span class="fu">create</span>(<span class="fu">CreateItem</span>(<span class="st">&quot;foo&quot;</span>, <span class="dv">42</span>))
+  itemRead &lt;- client.<span class="fu">read</span>(itemCreated.<span class="fu">id</span>)
+} <span class="kw">yield</span> itemRead</code></pre></div>
+<ul>
+<li>The client is non blocking and manages the JSON marshalling process</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="another-http-client">(Another) HTTP client</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ItemsClient {
+  <span class="kw">val</span> create = <span class="fu">xhrClient</span>(ItemsEndpoints.<span class="fu">create</span>)
+  <span class="kw">val</span> read = <span class="fu">xhrClient</span>(ItemsEndpoints.<span class="fu">read</span>)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eventuallyItemCreated: js.<span class="fu">Promise</span>[Item] =
+  ItemsClient.<span class="fu">create</span>(<span class="fu">CreateItem</span>(<span class="st">&quot;foo&quot;</span>, <span class="dv">42</span>))</code></pre></div>
+<ul>
+<li>A <strong>JavaScript client</strong>, statically typed and consistent with the server implementation (as long as they share the same specification).</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="extensibility">Extensibility</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="extensibility-1">Extensibility</h3>
+<ul>
+<li>We’ve already seen that it is desirable to have several <strong>interpretations</strong> of endpoints definitions</li>
+<li>But what if we also need to extend the <strong>vocabulary</strong> used to define these endpoints?</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="adding-support-for-authentication">Adding support for authentication</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> create = <span class="fu">endpoint</span>(
+  <span class="fu">post</span>(path / <span class="st">&quot;items&quot;</span>, jsonRequest[CreateItem]),
+  jsonResponse[Item]
+)
+<span class="kw">val</span> read = <span class="fu">endpoint</span>(
+  <span class="fu">get</span>(path / <span class="st">&quot;items&quot;</span> / segment[UUID]),
+  jsonResponse[Item]
+)</code></pre></div>
+<ul>
+<li>We want to indicate, here, that the <code>GET</code> and <code>POST</code> requests must provide the appropriate credentials (in a way that is specific to our app – e.g. using HTTP basic authentication, or an API token, or a cookie, etc.)</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="adding-support-for-authentication-1">Adding support for authentication</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> create = <span class="fu">endpoint</span>(
+  <span class="fu">authenticatedPost</span>(path / <span class="st">&quot;items&quot;</span>, jsonRequest[CreateItem]),
+  jsonResponse[Item]
+)
+<span class="kw">val</span> read = <span class="fu">endpoint</span>(
+  <span class="fu">authenticatedGet</span>(path / <span class="st">&quot;items&quot;</span> / segment[UUID]),
+  jsonResponse[Item]
+)</code></pre></div>
+<ul>
+<li>So, we want to introduce the <code>authenticatedGet</code> and <code>authenticatedPost</code> terms (methods) to the mix
+<ul>
+<li>And we want to define how these terms will be interpreted and to integrate them with existing interpretations</li>
+</ul></li>
+</ul>
+</div>
+<div id="implementation" class="slide section level1">
+<h1>Implementation</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="abstract-descriptions-and-multiple-interpreters">Abstract descriptions and multiple interpreters</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="endpointsalg-interface"><code>EndpointsAlg</code> interface</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> EndpointsAlg {
+  <span class="kw">def</span> get[A](url: Url[A]): Request[A]
+  <span class="kw">type</span> Url[A]
+  <span class="kw">type</span> Request[A]
+  …
+}</code></pre></div>
+<ul>
+<li><code>EndpointsAlg</code> provides vocabulary for defining HTTP protocol specifications:
+<ul>
+<li><em>Terminals</em> are defined by <strong>abstract methods</strong>,</li>
+<li>Information is carried by <strong>abstract type members</strong>,</li>
+</ul></li>
+<li>Interpreters implement these methods and types with their own semantics ;</li>
+<li><code>EndpointAlg</code> has no JVM-only dependency, so it can also be used with Scala.js.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="what-is-the-carried-information">What is the “carried information”?</h3>
+<ul>
+<li>Information of interest that can vary for a given endpoint specification</li>
+<li>E.g. a request that takes a user name as a query string parameter can be modeled as a <code>Request[String]</code>
+<ul>
+<li>From a client perspective, <code>String</code> is the information to <strong>supply</strong> in order to build such a request ;</li>
+<li>from a server perspective, <code>String</code> is the information that is <strong>provided</strong> when processing such a request.</li>
+</ul></li>
+<li>E.g. a request that takes a user name and age as query string parameters can be modeled as a <code>Request[(String, Int)]</code></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="client-interpreter">Client interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayClient <span class="kw">extends</span> EndpointsAlg {
+
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="client-interpreter-1">Client interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayClient <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = A =&gt; Future[WSResponse]
+
+}</code></pre></div>
+<ul>
+<li>A <code>Request[A]</code> is a function that, given an <code>A</code>, eventually returns an HTTP response</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="client-interpreter-2">Client interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayClient <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = A =&gt; Future[WSResponse]
+
+  <span class="kw">type</span> Url[A] = A =&gt; String
+
+}</code></pre></div>
+<ul>
+<li>An <code>Url[A]</code> is a function that, given an <code>A</code>, returns an URL as a <code>String</code></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="client-interpreter-3">Client interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayClient <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = A =&gt; Future[WSResponse]
+
+  <span class="kw">type</span> Url[A] = A =&gt; String
+  
+  <span class="kw">def</span> <span class="fu">get</span>(url: Url[A]): Request[A] =
+    a =&gt; wsClient.<span class="fu">url</span>(<span class="fu">url</span>(a)).<span class="fu">get</span>()
+
+  <span class="kw">def</span> wsClient: WSClient
+    
+}</code></pre></div>
+<ul>
+<li><code>get</code> takes the URL function as parameter, and returns a function that, given an <code>A</code> computes the URL and performs an HTTP request using an HTTP client</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="server-interpreter">Server interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayRouter <span class="kw">extends</span> EndpointsAlg {
+
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="server-interpreter-1">Server interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayRouter <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = RequestHeader =&gt; Option[BodyParser[A]]
+
+}</code></pre></div>
+<ul>
+<li>A <code>Request[A]</code> is a function that, given an incoming request’s headers, optionally returns a <code>BodyParser[A]</code> (defining how to get an <code>A</code> out of the request) or <code>None</code> if the incoming request does not match the request specification</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="server-interpreter-2">Server interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayRouter <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = RequestHeader =&gt; Option[BodyParser[A]]
+
+  <span class="kw">type</span> Url[A] = RequestHeader =&gt; Option[A]
+
+}</code></pre></div>
+<ul>
+<li>An <code>Url[A]</code> is a function that, given an incoming request’s headers, optionally returns an <code>A</code>, or <code>None</code> if the incoming request does not match the request specification ;</li>
+<li>Said otherwise, an <code>Url[A]</code> attempts to extract an <code>A</code> from request headers.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="server-interpreter-3">Server interpreter</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayRouter <span class="kw">extends</span> EndpointsAlg {
+
+  <span class="kw">type</span> Request[A] = RequestHeader =&gt; Option[BodyParser[A]]
+
+  <span class="kw">type</span> Url[A] = RequestHeader =&gt; Option[A]
+
+  <span class="kw">def</span> <span class="fu">get</span>(url: Url[A]): Request[A] =
+    request =&gt;
+      <span class="kw">if</span> (request.<span class="fu">method</span> == <span class="st">&quot;GET&quot;</span>)
+        <span class="fu">url</span>(request)
+          .<span class="fu">map</span>(a =&gt; <span class="fu">BodyParser</span>(_ =&gt; Accumulator.<span class="fu">done</span>(<span class="fu">Right</span>(a))))
+      <span class="kw">else</span> None
+
+}</code></pre></div>
+<ul>
+<li><code>get</code> takes the URL function as parameter and returns a function that, given an incoming request’s headers, checks that the request method is <code>GET</code>, applies the URL function, and finally returns a <code>BodyParser</code> that immediately succeeds with the <code>A</code> decoded from the URL</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="interpreters-summary">Interpreters: summary</h3>
+<ul>
+<li>An interpreter is a trait that extends <code>EndpointsAlg</code> and implements the type members and methods according to the desired semantics</li>
+<li>Interpreters can be <em>mixed in</em> endpoints definitions to give them the desired semantics</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="retroactive-addition-of-new-vocabulary">Retroactive addition of new vocabulary</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="authenticated-requests">Authenticated requests</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> AuthRequests <span class="kw">extends</span> EndpointsAlg {
+  <span class="kw">def</span> authenticatedGet[A](url: Url[A]): Request[(A, String)]
+  …
+}</code></pre></div>
+<ul>
+<li>New terms are defined as abstract methods, in a trait extending <code>EndpointsAlg</code></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="client-interpreter-of-authenticated-requests">Client interpreter of authenticated requests</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> AuthRequestsClient <span class="kw">extends</span> EndpointsAlg <span class="kw">with</span> PlayClient {
+  <span class="kw">def</span> authenticatedGet[A](url: Url[A]): Request[(A, String)] = {
+    <span class="kw">case</span> (a, apiToken) =&gt;
+      wsClient
+        .<span class="fu">url</span>(<span class="fu">url</span>(a))
+        .<span class="fu">withHeaders</span>(<span class="st">&quot;X-ApiToken&quot;</span> -&gt; apiToken)
+        .<span class="fu">get</span>()
+  }
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="server-interpretation-of-authenticated-requests">Server interpretation of authenticated requests</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> AuthRequestsRouter <span class="kw">extends</span> EndpointsAlg <span class="kw">with</span> PlayRouter {
+  <span class="kw">def</span> authenticatedGet[A](url: Url[A]): Request[(A, String)] =
+    request =&gt;
+      <span class="kw">for</span> {
+        _ &lt;- <span class="kw">if</span> (request.<span class="fu">method</span> == <span class="st">&quot;GET&quot;</span>) Some(()) <span class="kw">else</span> None
+        a &lt;- <span class="fu">url</span>(request)
+        apiToken &lt;- request.<span class="fu">headers</span>.<span class="fu">get</span>(<span class="st">&quot;X-ApiToken&quot;</span>)
+      } <span class="kw">yield</span> <span class="fu">BodyParser</span>(_ =&gt; Accumulator.<span class="fu">done</span>(<span class="fu">Right</span>((a, apiToken))))
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="extensibility-summary">Extensibility: summary</h3>
+<ul>
+<li>New terms are introduced as abstract methods, in a trait that extends <code>EndpointsAlg</code></li>
+<li>Interpreters implement them</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="usage">Usage</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="define-your-http-protocol-specification">1. Define your HTTP protocol specification</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ItemsEndpoints <span class="kw">extends</span> EndpointsAlg <span class="kw">with</span> AuthRequests {
+  <span class="kw">val</span> create = <span class="fu">endpoint</span>(
+    <span class="fu">authenticatedPost</span>(path / <span class="st">&quot;items&quot;</span>, jsonRequest[CreateItem]),
+    jsonResponse[Item]
+  )
+  <span class="kw">val</span> read = <span class="fu">endpoint</span>(
+    <span class="fu">authenticatedGet</span>(path / <span class="st">&quot;items&quot;</span> / segment[UUID]),
+    jsonResponse[Item]
+  )
+}
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Item</span>(id: UUID, name: String, price: Int)
+
+<span class="kw">object</span> Item {
+  <span class="kw">implicit</span> <span class="kw">val</span> oformat: OFormat[Item] = …
+}
+
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CreateItem</span>(name: String, price: Int)
+
+<span class="kw">object</span> CreateItem {
+  <span class="kw">implicit</span> <span class="kw">val</span> oformat: OFormat[CreateItem] = …
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="implement-the-server">2. Implement the server</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">ItemsRouter</span>(items: ItemsService) <span class="kw">extends</span> ItemsEndpoints
+  <span class="kw">with</span> PlayRouter <span class="kw">with</span> AuthRequestsRouter {
+
+  <span class="kw">val</span> router = <span class="fu">routerFromEndpoints</span>(
+    create.<span class="fu">implementedBy</span>(items.<span class="fu">create</span>),
+    read.<span class="fu">implementedBy</span>(items.<span class="fu">read</span>)
+  )
+
+}</code></pre></div>
+<ul>
+<li>(Let’s pretend we have the following <code>ItemsService</code> class:)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> ItemsService {
+  <span class="kw">def</span> <span class="fu">create</span>(apiToken: String, createItem: CreateItem): Item = …
+  <span class="kw">def</span> <span class="fu">read</span>(apiToken: String, itemId: UUID): Item = …
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="make-the-server-executable">3. Make the server executable</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> App {
+  <span class="kw">val</span> itemsService = <span class="kw">new</span> ItemsService
+  <span class="kw">val</span> itemsRouter = <span class="kw">new</span> <span class="fu">ItemsRouter</span>(itemsService)
+  NettyServer.<span class="fu">fromRouter</span>()(itemsRouter.<span class="fu">router</span>)
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="define-a-client">4. Define a client</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client =
+  <span class="kw">new</span> ItemsEndpoints <span class="kw">with</span> PlayClient <span class="kw">with</span> AuthRequestsClient {
+    <span class="kw">val</span> wsClient = …
+  }</code></pre></div>
+<ul>
+<li>And then:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eventuallyItem: Future[Item] =
+  client.<span class="fu">create</span>(<span class="st">&quot;foo123&quot;</span>, <span class="fu">CreateItem</span>(<span class="st">&quot;foo&quot;</span>, <span class="dv">42</span>))
+…</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="usage-summary">Usage: summary</h3>
+<ul>
+<li>Define an abstract endpoints definition in a trait extending <code>EndpointsAlg</code> (or any other abstract trait that brings additional vocabulary) ;</li>
+<li>Give it several semantics by mixing in the desired interpreters.</li>
+</ul>
+</div>
+<div id="examples" class="slide section level1">
+<h1>Examples</h1>
+</div>
+<div class="slide section level1">
+
+<blockquote>
+<p>Comment tu exprimes un endpoint qui peut prendre plusieurs types de body, et qu’en fonction du body, tu peux avoir des types de retour différents ?</p>
+</blockquote>
+<p>Antoine Michel, CTO, Zengularity.</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="response-type-depending-on-the-request-type-rough-idea">Response type depending on the request type (rough idea)</h2>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ReqResp[A, B]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> myEndpoint[A, B](<span class="kw">implicit</span>
+  reqResp: ReqResp[A, B],
+  oformatA: OFormat[A],
+  oformatB: OFormat[B]
+): Endpoint[A, B] =
+  <span class="fu">endpoint</span>(<span class="fu">post</span>(path / <span class="st">&quot;foo&quot;</span>, jsonRequest[A]), jsonResponse[B])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> reqFooRespBar: ReqResp[CreateItem, ItemCreated] = <span class="kw">null</span>
+
+<span class="kw">implicit</span> <span class="kw">val</span> reqBazRespQuux: ReqResp[UpdateItem, ItemUpdated] = <span class="kw">null</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="how-to-control-the-http-response-status">How to control the HTTP response status?</h3>
+<ol style="list-style-type: decimal">
+<li>Weak (but simple) solution:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayResults <span class="kw">extends</span> EndpointsAlg {
+  <span class="kw">type</span> Result
+  <span class="kw">def</span> playResult: Response[Result]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Foo <span class="kw">extends</span> PlayResults {
+  <span class="kw">val</span> foo = <span class="fu">endpoint</span>(<span class="fu">get</span>(path / <span class="st">&quot;foo&quot;</span>), playResult)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PlayResultsRouter <span class="kw">extends</span> PlayRouter {
+  <span class="kw">type</span> Result = play.<span class="fu">api</span>.<span class="fu">mvc</span>.<span class="fu">Result</span>
+  <span class="kw">val</span> playResult = identity
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> FooRouter <span class="kw">extends</span> Foo <span class="kw">with</span> PlayResultsRouter {
+  <span class="kw">val</span> action = foo.<span class="fu">implementedBy</span>(_ =&gt; <span class="fu">Ok</span>(<span class="st">&quot;Hello&quot;</span>))
+}</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="how-to-control-the-http-response-status-1">How to control the HTTP response status?</h3>
+<ol start="2" style="list-style-type: decimal">
+<li>Better solution:</li>
+</ol>
+<ul>
+<li>Define your own result type, according to your app requirements ;</li>
+<li>For instance, for a JSON service:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> Result[A](status: Int, entity: A)(<span class="kw">implicit</span> <span class="kw">val</span> owrites: OWrites[A])</code></pre></div>
+<ul>
+<li>Extend the <code>EndpointsAlg</code> trait:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MyAppResult <span class="kw">extends</span> EndpointsAlg {
+  <span class="kw">def</span> result[A]: Response[Result[A]]
+}</code></pre></div>
+<ul>
+<li>Implement a server interpreter:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MyAppResultRouter <span class="kw">extends</span> MyAppResult <span class="kw">with</span> PlayRouter {
+  <span class="kw">def</span> result[A] = result =&gt; <span class="fu">Status</span>(result.<span class="fu">status</span>)(result.<span class="fu">owrites</span>(result.<span class="fu">entity</span>))
+}</code></pre></div>
+</div>
+<div id="questions" class="slide section level1">
+<h1>Questions?</h1>
+</div>
+<div id="bonus" class="slide section level1">
+<h1>Bonus</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="object-algebras-oliveira-2014"><em>Object algebras</em> <a href="http://dl.acm.org/authorize?N89314">(Oliveira, 2014)</a></h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="data-types-and-folds">Data types and folds</h3>
+<ul>
+<li>Consider the following data type definition:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Expr
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Add</span>(lhs: Expr, rhs: Expr) <span class="kw">extends</span> Expr
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Lit</span>(value: Int) <span class="kw">extends</span> Expr</code></pre></div>
+<ul>
+<li>We can then represent expressions such as “1” or “1 + 2”: <code>Lit(1)</code>, <code>Add(Lit(1), Lit(2))</code></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="data-types-and-folds-1">Data types and folds</h3>
+<ul>
+<li>Consider the following methods:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">eval</span>(expr: Expr): Int =
+  expr <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; <span class="fu">eval</span>(lhs) + <span class="fu">eval</span>(rhs)
+    <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; x
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">print</span>(expr: Expr): String =
+  expr <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; s<span class="st">&quot;${print(lhs)} + ${print(rhs)}&quot;</span>
+    <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; x.<span class="fu">toString</span>
+  }</code></pre></div>
+<ul>
+<li>They can be seen as <em>interpreters</em> for <code>Expr</code> ;</li>
+<li>We observe that they share the same (recursive) structure. Let’s abstract it out!</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="data-types-and-folds-2">Data types and folds</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](add: (A, A) =&gt; A, lit: Int =&gt; A)(expr: Expr): A =
+  expr <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; <span class="fu">add</span>(<span class="fu">fold</span>(add, lit)(lhs), <span class="fu">fold</span>(add, lit)(rhs))
+    <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; <span class="fu">lit</span>(x)
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eval: Expr =&gt; Int =
+  fold[Int](_ + _, identity)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> print: Expr =&gt; String =
+  fold[String]((lhs, rhs) =&gt; s<span class="st">&quot;$lhs + $rhs&quot;</span>, _.<span class="fu">toString</span>)</code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="data-types-and-folds-3">Data types and folds</h3>
+<ul>
+<li>Now, let’s apply some refactorings…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="fold-algebras">Fold-algebras</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](add: (A, A) =&gt; A, lit: Int =&gt; A)(expr: Expr): A =
+  expr <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; <span class="fu">add</span>(<span class="fu">fold</span>(add, lit)(lhs), <span class="fu">fold</span>(add, lit)(rhs))
+    <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; <span class="fu">lit</span>(x)
+  }</code></pre></div>
+<ul>
+<li>Let’s reify the parameters of <code>fold</code> into a proper type…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="fold-algebras-1">Fold-algebras</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> FoldAlg[A] = ((A, A) =&gt; A, Int =&gt; A)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](alg: FoldAlg[A]): Expr =&gt; A = {
+  <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; alg.<span class="fu">_1</span>(<span class="fu">fold</span>(alg)(lhs), <span class="fu">fold</span>(alg)(rhs))
+  <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; alg.<span class="fu">_2</span>(x)
+}</code></pre></div>
+<ul>
+<li>We say that <code>FoldAlg</code> is a <strong>fold algebra</strong> ;</li>
+<li>Let’s use a <strong>trait with methods</strong> instead of a <strong>product of functions</strong>…</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="object-algebra-interfaces">Object algebra interfaces</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ExprAlg[A] {
+  <span class="kw">def</span> <span class="fu">add</span>(lhs: A, rhs: A): A
+  <span class="kw">def</span> <span class="fu">lit</span>(value: Int): A
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](alg: ExprAlg[A])(expr: Expr): A =
+  expr <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">Add</span>(lhs, rhs) =&gt; alg.<span class="fu">add</span>(<span class="fu">fold</span>(alg)(lhs), <span class="fu">fold</span>(alg)(rhs))
+    <span class="kw">case</span> <span class="fu">Lit</span>(x) =&gt; alg.<span class="fu">lit</span>(x)
+  }</code></pre></div>
+<ul>
+<li>We say that <code>ExprAlg[A]</code> is an <strong>object algebra interface</strong></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="object-algebras">Object algebras</h3>
+<ul>
+<li>Let’s revisit the interpreters definition:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eval: ExprAlg[Int] =
+  <span class="kw">new</span> ExprAlg[Int] {
+    <span class="kw">def</span> <span class="fu">add</span>(lhs: Int, rhs: Int) = lhs + rhs
+    <span class="kw">def</span> <span class="fu">lit</span>(value: Int) = value
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> print: ExprAlg[String] =
+  <span class="kw">new</span> ExprAlg[String] {
+    <span class="kw">def</span> <span class="fu">add</span>(lhs: String, rhs: String) = s<span class="st">&quot;$lhs + $rhs&quot;</span>
+    <span class="kw">def</span> <span class="fu">lit</span>(value: Int) = value.<span class="fu">toString</span>
+  }</code></pre></div>
+<ul>
+<li>We say that <code>eval</code> and <code>print</code> are <strong>object algebras</strong></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="getting-rid-of-the-intermediate-data-type-using-church-encodings">Getting rid of the intermediate data type using Church encodings</h3>
+<ul>
+<li><code>fold</code> traverses an <code>Expr</code> and calls the corresponding methods of <code>ExprAlg</code> ;</li>
+<li>Instead of using an intermediate <code>Expr</code> data type, let’s directly use <code>ExprAlg</code> as an <em>abstract factory</em>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> onePlusTwo[A](alg: ExprAlg[A]): A =
+  alg.<span class="fu">add</span>(alg.<span class="fu">lit</span>(<span class="dv">1</span>), alg.<span class="fu">lit</span>(<span class="dv">2</span>))</code></pre></div>
+<ul>
+<li>We also say that <code>onePlusTwo</code> is a <em>Church encoding</em> for <code>Add(Lit(1), Lit(2))</code> ;</li>
+<li>Then we can pass an <em>interpreter</em> to <code>onePlusTwo</code>, to get an actual value:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">onePlusTwo</span>(eval) == <span class="dv">3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">onePlusTwo</span>(print) == <span class="st">&quot;1 + 2&quot;</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="so-what">So what?</h3>
+<ul>
+<li><strong>Inheritence</strong> can be used to achieve <strong>extensibility</strong>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MulAlg[A] <span class="kw">extends</span> ExprAlg[A] {
+  <span class="kw">def</span> <span class="fu">mul</span>(lhs: A, rhs: A): A
+}</code></pre></div>
+<ul>
+<li><code>mul</code> is defined independently of <code>add</code> and <code>lit</code> ;</li>
+<li>That was not possible with algebraic data types!</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="object-algebras-summary">Object algebras: summary</h3>
+<ul>
+<li>Object algebras can be used to define data types and operations in a modular and extensible way ;</li>
+<li>Said otherwise, they are a solution to the <em>expression problem</em> <a href="http://homepages.inf.ed.ac.uk/wadler/papers/expression/expression.txt">(Wadler, 1998)</a>.</li>
+</ul>
+</div>
+</body>
+</html>
