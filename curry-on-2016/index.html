@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien@richard-foy.fr" />
+  <meta name="author" content="" />
+  <meta name="author" content="Curry On – July 19th, 2016" />
+  <meta name="author" content="" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/curry-on-2016" />
+  <title>Using Object Algebras To Design Embedded Domain Specific Languages</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Using <em>Object Algebras</em> To Design Embedded Domain Specific Languages</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#46;&#102;&#114;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#102;&#114;</noscript><br/><br/>Curry On – July 19th, 2016<br/><br/><br/><a href="http://julienrf.github.io/curry-on-2016" class="uri">http://julienrf.github.io/curry-on-2016</a>
+  </p>
+</div>
+<div id="outline" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ul>
+<li>Motivation</li>
+<li>Object Algebras
+<ul>
+<li>Object algebras in a nutshell</li>
+<li>Variations in Scala</li>
+</ul></li>
+<li>Notable features
+<ul>
+<li>Extensibility</li>
+<li>Modular expressive power</li>
+<li>DSL families</li>
+</ul></li>
+<li>Comparison with free monads</li>
+</ul>
+</div>
+<div id="motivation" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Motivation</h1></div><div id="who-am-i" class="titleslide slide section level2"><h1><span class="header-section-number">1.1</span> Who am I?</h1></div><div id="software-engineer" class="slide section level3 unnumbered">
+<h1>Software engineer</h1>
+<ul>
+<li>I spent the past five years to essentially build Web apps ;</li>
+<li>Buzzwords:
+<ul>
+<li>REST: use the full capabilities of the HTTP protocol ;</li>
+<li>HATEOAS: self-descriptive HTTP APIs ;</li>
+<li>Microservices: consistent protocol between clients and servers.</li>
+</ul></li>
+</ul>
+</div><div id="web-engineering-challenges" class="titleslide slide section level2"><h1><span class="header-section-number">1.2</span> Web engineering challenges</h1></div><div class="slide section level3">
+
+<div class="figure">
+<img src="challenges.svg" alt="challenges" />
+<p class="caption">challenges</p>
+</div>
+</div><div id="example-e-shop-server" class="slide section level3 unnumbered">
+<h1>Example: e-shop (server)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> readItem = Router.<span class="fu">from</span> {
+  <span class="kw">case</span> <span class="fu">GET</span>(p<span class="st">&quot;/item/$id&quot;</span>) =&gt;
+    itemsRepository.<span class="fu">lookup</span>(id)
+      .<span class="fu">map</span>(item =&gt; <span class="fu">Ok</span>(<span class="fu">representation</span>(item)))
+}</code></pre></div>
+</div><div id="example-e-shop-client" class="slide section level3 unnumbered">
+<h1>Example: e-shop (client)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">eventualItem</span>(id: String): Future[Item] =
+  httpClient
+    .<span class="fu">url</span>(s<span class="st">&quot;http://eshop.com/item/${urlEncode(id)}&quot;</span>)
+    .<span class="fu">get</span>()
+    .<span class="fu">map</span>(response =&gt; <span class="fu">decodeItemFromJsonRepresentation</span>(response))</code></pre></div>
+<ul>
+<li>The request URL and entities must be consistent with the server implementation!</li>
+</ul>
+</div><div id="example-e-shop-documentation" class="slide section level3 unnumbered">
+<h1>Example: e-shop (documentation)</h1>
+<pre class="sh"><code>$ curl http://eshop.com/item</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+  <span class="st">&quot;data&quot;</span><span class="op">:</span> [
+    <span class="op">{</span>
+      <span class="st">&quot;href&quot;</span><span class="op">:</span> <span class="st">&quot;http://eshop.com/item/123abc&quot;</span><span class="op">,</span>
+      <span class="st">&quot;format&quot;</span><span class="op">:</span> <span class="op">{</span>
+        <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;string&quot;</span><span class="op">,</span>
+        <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;decimal&quot;</span>
+      <span class="op">}</span>
+    <span class="op">}</span>
+  ]
+<span class="op">}</span></code></pre></div>
+<ul>
+<li>The format description must be consistent with the server implementation!</li>
+</ul>
+</div><div id="motivation-summary" class="titleslide slide section level2"><h1><span class="header-section-number">1.3</span> Motivation: Summary</h1></div><div id="what-we-want" class="slide section level3 unnumbered">
+<h1>What we want</h1>
+<ul>
+<li>A well-defined <strong>vocabulary</strong> to effectively describe an HTTP API ;</li>
+<li>Ways to bring this vocabulary to “life” by giving it useful <strong>interpretations</strong>.
+<ul>
+<li>Server router (request dispatcher) ;</li>
+<li>Client(s) ;</li>
+<li>Machine readable documentation ;</li>
+<li>Human readable documentation ;</li>
+<li>… ?</li>
+</ul></li>
+</ul>
+</div><div id="engineering-concern-extensibility" class="slide section level3 unnumbered">
+<h1>Engineering concern: extensibility</h1>
+<ul>
+<li>To avoid reinventing the vocabulary to describe HTTP APIs for each new project, we want to move it into a library ;</li>
+<li>Libraries aim to be reusable across many applications ;</li>
+<li>But they can not tackle some application-specific concerns (e.g. authentication) ;</li>
+<li>We need a way to <strong>introduce new vocabulary</strong> (and their possible interpretations) into the mix.</li>
+</ul>
+</div><div id="engineering-concern-language-modularization" class="slide section level3 unnumbered">
+<h1>Engineering concern: language modularization</h1>
+<ul>
+<li>Define “language modules” that can be composed together to define a richer language ;</li>
+<li>E.g. to leverage some technical specificity of a given interpreter, in order to <strong>not dumb down</strong> the whole language according to the limitations of some interpreters.</li>
+</ul>
+</div>
+<div id="object-algebras" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Object Algebras</h1></div><div id="references" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> References</h1></div><div id="references-1" class="slide section level3 unnumbered">
+<h1>References</h1>
+<ul>
+<li>Christian Hofer <em>et al</em>. 2008. Polymorphic Embedding of DSLs. GPCE. (<a href="http://www.informatik.uni-marburg.de/~kos/papers/gpce50_hofer.pdf">paper</a>) ;</li>
+<li>Bruno Oliveira. 2009. Modular Visitor Components. ECOOP. (<a href="http://ropas.snu.ac.kr/~bruno/papers/ModularVisitor.pdf">paper</a>) ;</li>
+<li>Bruno Oliveira <em>et al</em>. 2012. Extensibility for the Masses. ECOOP. (<a href="http://ropas.snu.ac.kr/~bruno/papers/ecoop2012.pdf">paper</a>) ;</li>
+<li>Bruno Oliveira. 2014. Functional Programming, Object-Oriented Programming and Algebras! WGP. (<a href="http://i.cs.hku.hk/~bruno/papers/WGP2014.pdf">slides</a>).</li>
+</ul>
+</div><div id="object-algebras-in-a-nutshell" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Object Algebras In A Nutshell</h1></div><div id="an-algebra-interface-for-url-paths" class="slide section level3 unnumbered">
+<h1>An algebra interface for URL paths</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg[A] {
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): A
+
+  <span class="kw">def</span> <span class="fu">chained</span>(first: A, second: A): A
+
+}</code></pre></div>
+<ul>
+<li><code>PathAlg</code> is an <em>object algebra interface</em>, <code>A</code> is its <em>carrier type</em> ;</li>
+<li><code>segment</code> and <code>chained</code> are <em>constructors</em> ;</li>
+<li>Think of that as an abstract factory for defining paths, but whose return type is not yet known: it will depend on the interpreter.</li>
+</ul>
+</div><div id="usage" class="slide section level3 unnumbered">
+<h1>Usage</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg[A] {
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): A
+
+  <span class="kw">def</span> <span class="fu">chained</span>(first: A, second: A): A
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// defines the URL path “item/123abc”</span>
+<span class="kw">def</span> someItemPath[A](alg: PathAlg[A]): A = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  <span class="fu">chained</span>(<span class="fu">segment</span>(<span class="st">&quot;item&quot;</span>), <span class="fu">segment</span>(<span class="st">&quot;123abc&quot;</span>))
+}</code></pre></div>
+</div><div id="client-interpreter" class="slide section level3 unnumbered">
+<h1>Client interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathClient <span class="kw">extends</span> PathAlg[String] {
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): String = URLEncoder.<span class="fu">encode</span>(value)
+
+  <span class="kw">def</span> <span class="fu">chained</span>(first: String, second: String): String = s<span class="st">&quot;$first/$second&quot;</span>
+
+}</code></pre></div>
+<ul>
+<li><code>PathClient</code> is an <em>object algebra</em> that uses <code>String</code> as the concrete representation for the carrier type ;</li>
+<li>Indeed, from a client point of view, a path is just a <code>String</code> ;</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">someItemPath</span>(PathClient) <span class="co">// &quot;item/123abc&quot;</span></code></pre></div>
+</div><div id="server-interpreter" class="slide section level3 unnumbered">
+<h1>Server interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathRouting <span class="kw">extends</span> PathAlg[String =&gt; Boolean] {
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): String =&gt; Boolean =
+    incoming =&gt; URLDecoder.<span class="fu">decode</span>(incoming) == value
+
+  <span class="kw">def</span> <span class="fu">chained</span>(fst: String =&gt; Boolean, snd: String =&gt; Boolean): String =&gt; Boolean =
+    incoming =&gt; {
+      <span class="kw">val</span> i = incoming.<span class="fu">indexOf</span>(<span class="st">&quot;/&quot;</span>)
+      i &gt;= <span class="dv">0</span> &amp;&amp; <span class="fu">fst</span>(incoming.<span class="fu">take</span>(i)) &amp;&amp; <span class="fu">snd</span>(incoming.<span class="fu">drop</span>(i + <span class="dv">1</span>))
+    }
+}</code></pre></div>
+<ul>
+<li>From a server point of view, a path is a function that checks whether an incoming request’s path matches the path’s value</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> isSomeItem: String =&gt; Boolean = <span class="fu">someItemPath</span>(PathRouting)
+<span class="fu">isSomeItem</span>(<span class="st">&quot;foo/bar&quot;</span>) <span class="co">// false</span>
+<span class="fu">isSomeItem</span>(<span class="st">&quot;item/123abc&quot;</span>) <span class="co">// true</span></code></pre></div>
+</div><div id="summary" class="slide section level3 unnumbered">
+<h1>Summary</h1>
+<ul>
+<li>We defined an object algebra interface introducing constructors defining paths ;</li>
+<li>These definitions can be interpreted in various ways:
+<ul>
+<li>a client interpretation builds a <code>String</code> out of a path definition (to build an URL to perform a request on) ;</li>
+<li>a server interpretation checks if the path of an incoming request matches a path definition (to dispatch an incoming request to the corresponding endpoint implementation).</li>
+</ul></li>
+</ul>
+</div><div id="variations-in-scala" class="titleslide slide section level2"><h1><span class="header-section-number">2.3</span> Variations In Scala</h1></div><div id="type-members" class="slide section level3 unnumbered">
+<h1>Type members</h1>
+<ul>
+<li>In practice, we often have several carrier types:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> UrlAlg[A, B, C] {
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): A
+  <span class="kw">def</span> <span class="fu">chained</span>(first: A, second: A): A
+
+  <span class="kw">def</span> <span class="fu">queryStringParameter</span>(name: String): B
+
+  <span class="kw">def</span> <span class="fu">url</span>(path: A, queryString: B): C
+}</code></pre></div>
+<ul>
+<li>Distinct carrier types allow more precise concrete representations in the interpretation side</li>
+</ul>
+</div><div id="type-members-2" class="slide section level3 unnumbered">
+<h1>Type members (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> UrlAlg {
+
+  <span class="kw">type</span> Path
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): Path
+  <span class="kw">def</span> <span class="fu">chained</span>(first: Path, second: Path): Path
+
+  <span class="kw">type</span> QueryString
+  <span class="kw">def</span> <span class="fu">queryStringParameter</span>(name: String): QueryString
+
+  <span class="kw">type</span> Url
+  <span class="kw">def</span> <span class="fu">url</span>(path: Path, queryString: QueryString): Url
+}</code></pre></div>
+<ul>
+<li>In Scala, it is more convenient, in this case, to trade type parameters for <em>type members</em></li>
+</ul>
+</div><div id="type-members-3" class="slide section level3 unnumbered">
+<h1>Type members (3)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> someItemPath[A, B, C](alg: UrlAlg[A, B, C]): A = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  <span class="fu">chained</span>(<span class="fu">segment</span>(<span class="st">&quot;item&quot;</span>), <span class="fu">segment</span>(<span class="st">&quot;123abc&quot;</span>))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">someItemPath</span>(alg: UrlAlg): alg.<span class="fu">Path</span> = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  <span class="fu">chained</span>(<span class="fu">segment</span>(<span class="st">&quot;item&quot;</span>), <span class="fu">segment</span>(<span class="st">&quot;123abc&quot;</span>))
+}</code></pre></div>
+</div><div id="syntax" class="slide section level3 unnumbered">
+<h1>Syntax</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg {
+
+  <span class="kw">type</span> Path &lt;: PathSyntax
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): Path
+  <span class="kw">def</span> <span class="fu">chained</span>(first: Path, second: Path): Path
+
+  <span class="kw">trait</span> PathSyntax {
+    <span class="kw">final</span> <span class="kw">def</span> / (that: String): Path = <span class="fu">chained</span>(<span class="kw">this</span>, <span class="fu">segment</span>(that))
+  }
+
+  <span class="kw">val</span> path: Path = <span class="fu">segment</span>(<span class="st">&quot;&quot;</span>)
+}</code></pre></div>
+<ul>
+<li>Fancy <em>syntax</em> can be supported by providing a trait that will be mixed into the carrier type’s concrete representation</li>
+</ul>
+</div><div id="syntax-2" class="slide section level3 unnumbered">
+<h1>Syntax (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// defines the URL path “/item/123abc”</span>
+<span class="kw">def</span> <span class="fu">someItemPath</span>(alg: PathAlg): alg.<span class="fu">Path</span> = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  path / <span class="st">&quot;item&quot;</span> / <span class="st">&quot;123abc&quot;</span>
+}</code></pre></div>
+</div><div id="higher-kinded-carrier-types" class="slide section level3 unnumbered">
+<h1>Higher-kinded carrier types</h1>
+<ul>
+<li>Until now, the paths we can define with our DSL are constant ;</li>
+<li>The <code>Path</code> type we use is unable to represent a path whose first segment contains an item name, and whose second segment contains an item id (for instance) ;</li>
+<li>We can fix that by using a <em>higher-kinded</em> carrier type <code>Path[A]</code>.</li>
+</ul>
+</div><div id="higher-kinded-carrier-types-2" class="slide section level3 unnumbered">
+<h1>Higher-kinded carrier types (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg {
+
+  <span class="kw">type</span> Path[A]
+
+  <span class="kw">def</span> <span class="fu">constSegment</span>(value: String): Path[Unit]
+
+  <span class="kw">def</span> stringSegment: Path[String]
+
+  <span class="kw">def</span> integerSegment: Path[Int]
+
+  <span class="kw">def</span> chained[A, B](first: Path[A], second: Path[B]): Path[(A, B)]
+
+}</code></pre></div>
+</div><div id="higher-kinded-carrier-types-3" class="slide section level3 unnumbered">
+<h1>Higher-kinded carrier types (3)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// “{name}/{id}”</span>
+<span class="kw">def</span> <span class="fu">item</span>(alg: PathAlg): alg.<span class="fu">Path</span>[(String, Int)] = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  stringSegment / integerSegment
+}</code></pre></div>
+</div><div id="higher-kinded-carrier-types-4" class="slide section level3 unnumbered">
+<h1>Higher-kinded carrier types (4)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathClient <span class="kw">extends</span> PathAlg {
+
+  <span class="kw">type</span> Path[A] = A =&gt; String
+
+  …
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">item</span>(PathClient)((<span class="st">&quot;foo&quot;</span>, <span class="dv">42</span>)) <span class="co">// &quot;foo/42&quot;</span></code></pre></div>
+<ul>
+<li><code>A</code> is the information <em>needed</em> to build a path</li>
+</ul>
+</div><div id="higher-kinded-carrier-types-5" class="slide section level3 unnumbered">
+<h1>Higher-kinded carrier types (5)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathRouting <span class="kw">extends</span> PathAlg {
+
+  <span class="kw">type</span> Path[A] = String =&gt; Option[A]
+
+  …
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">item</span>(PathRouting)(<span class="st">&quot;foo/42&quot;</span>)  <span class="co">// Some((&quot;foo&quot;, 42))</span>
+<span class="fu">item</span>(PathRouting)(<span class="st">&quot;foo/bar&quot;</span>) <span class="co">// None</span></code></pre></div>
+<ul>
+<li><code>A</code> is the information that is <em>extracted</em> from the path of an incoming request</li>
+</ul>
+</div>
+<div id="notable-features" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Notable features</h1></div><div id="extensibility" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> Extensibility</h1></div><div id="retroactive-addition-of-new-vocabulary" class="slide section level3 unnumbered">
+<h1>Retroactive addition of new vocabulary</h1>
+<ul>
+<li>New terms are introduced as <em>abstract methods</em> in algebra interfaces:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> EndpointAlg <span class="kw">extends</span> UrlAlg {
+  <span class="kw">type</span> Request
+  <span class="kw">def</span> <span class="fu">get</span>(url: Url): Request
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> readItem =
+  <span class="fu">get</span>(<span class="fu">url</span>(path / <span class="st">&quot;item&quot;</span> / <span class="st">&quot;123abc&quot;</span>))</code></pre></div>
+</div><div id="retroactive-addition-of-new-interpreters" class="slide section level3 unnumbered">
+<h1>Retroactive addition of new interpreters</h1>
+<ul>
+<li>An interpreter is an algebra interface <em>implementation</em>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> UrlDocumentation <span class="kw">extends</span> UrlAlg {
+
+  <span class="kw">type</span> Path = Html
+  <span class="kw">type</span> QueryString = Html
+  <span class="kw">type</span> Url = Html
+
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String) = …
+  <span class="kw">def</span> <span class="fu">chained</span>(first: Path, second: Path) = …
+  <span class="kw">def</span> <span class="fu">queryStringParameter</span>(name: String) = …
+  <span class="kw">def</span> <span class="fu">url</span>(path: Path, queryString: QueryString) = …
+
+}</code></pre></div>
+</div><div id="languages-and-interpreters-can-be-combined-by-mixing-traits" class="slide section level3 unnumbered">
+<h1>Languages and interpreters can be combined by mixing traits</h1>
+<div class="figure">
+<img src="mixins.svg" alt="mixins" />
+<p class="caption">mixins</p>
+</div>
+</div><div id="modular-expressive-power" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Modular Expressive Power</h1></div><div id="remember-the-variant-of-pathalg-that-uses-a-type-constructor-as-a-carrier-type" class="slide section level3 unnumbered">
+<h1>Remember the variant of <code>PathAlg</code> that uses a type constructor as a carrier type</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg {
+
+  <span class="kw">type</span> Path[A]
+
+  <span class="kw">def</span> <span class="fu">constSegment</span>(value: String): Path[Unit]
+
+  <span class="kw">def</span> stringSegment: Path[String]
+
+  <span class="kw">def</span> integerSegment: Path[Int]
+
+  <span class="kw">def</span> chained[A, B](fst: Path[A], snd: Path[B]): Path[(A, B)]
+
+}</code></pre></div>
+</div><div id="lets-make-the-carrier-type-an-applicative-functor" class="slide section level3 unnumbered">
+<h1>Let’s make the carrier type an <em>applicative functor</em></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathApplicativeAlg <span class="kw">extends</span> PathAlg {
+
+  <span class="kw">val</span> pathApplicative: Applicative[Path]
+
+  <span class="kw">import</span> pathApplicative.<span class="fu">_</span>
+
+  <span class="kw">def</span> chained[A, B](fst: Path[A], snd: Path[B]) =
+    <span class="fu">map2</span>(fst, snd)((a, b) =&gt; (a, b))
+
+}</code></pre></div>
+</div><div id="lets-make-the-carrier-type-a-monad" class="slide section level3 unnumbered">
+<h1>Let’s make the carrier type a <em>monad</em></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathMonadAlg <span class="kw">extends</span> PathApplicativeAlg {
+
+  <span class="kw">val</span> pathMonad: Monad[Path]
+
+  <span class="kw">import</span> pathMonad.<span class="fu">_</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> pathApplicative = pathMonad
+
+}</code></pre></div>
+<ul>
+<li>Because all monads are applicative functors, we can make <code>PathMonadAlg</code> extend <code>PathApplicativeAlg</code></li>
+</ul>
+</div><div id="lets-revisit-the-pathrouting-interpreter" class="slide section level3 unnumbered">
+<h1>Let’s revisit the <code>PathRouting</code> interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathRouting <span class="kw">extends</span> PathMonadAlg {
+
+  <span class="kw">type</span> Path[A] = String =&gt; Option[(String, A)]
+
+  <span class="kw">val</span> pathMonad =
+    <span class="kw">new</span> Monad[Path] {
+      <span class="kw">def</span> pure[A](a: A): Path[A] = s =&gt; Some((s, a))
+      <span class="kw">def</span> flatMap[A, B](path: Path[A])(f: A =&gt; Path[B]): Path[B] =
+        (s: String) =&gt; <span class="fu">path</span>(s).<span class="fu">flatMap</span> { <span class="kw">case</span> (ss, a) =&gt; <span class="fu">f</span>(a)(ss) }
+    }
+
+}</code></pre></div>
+<ul>
+<li>Our <code>Path[A]</code> is a state monad that attempts to extract some <code>A</code> from a path value, and returns the remaining path along with this <code>A</code></li>
+</ul>
+</div><div id="lets-revisit-the-pathdocumentation-interpreter" class="slide section level3 unnumbered">
+<h1>Let’s revisit the <code>PathDocumentation</code> interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathDocumentation <span class="kw">extends</span> PathApplicativeAlg {
+
+  <span class="kw">type</span> Path[A] = String
+
+  <span class="kw">val</span> pathApplicative =
+    <span class="kw">new</span> Applicative[Path] {
+      <span class="kw">def</span> pure[A](a: A): Path[A] = <span class="st">&quot;&quot;</span>
+      <span class="kw">def</span> map[A, B](path: Path[A])(f: A =&gt; B): Path[B] = path
+      <span class="kw">def</span> ap[A, B](f: Path[A =&gt; B], path: Path[A]): Path[B] = s<span class="st">&quot;$f/$path&quot;</span>
+    }
+
+  <span class="kw">def</span> <span class="fu">constSegment</span>(value: String) = value
+  <span class="kw">val</span> integerSegment = <span class="st">&quot;{number}&quot;</span>
+  <span class="kw">val</span> stringSegment = <span class="st">&quot;{string}&quot;</span>
+}</code></pre></div>
+<ul>
+<li>Our <code>Path[A]</code> is a simple <code>String</code>, so we can not implement a <code>Monad[Path]</code> ;</li>
+<li>We can implement <code>Applicative[Path]</code>, though.</li>
+</ul>
+</div><div id="at-use-site-pick-the-expressive-power-you-need" class="slide section level3 unnumbered">
+<h1>At use site, pick the expressive power you need</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">program1</span>(alg: PathApplicativeAlg) = …</code></pre></div>
+<ul>
+<li><code>program1</code> is limited to the expressive power of applicative functors, but it accepts <em>more</em> interpreters (<code>PathRouting</code> and <code>PathDocumentation</code>) ;</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">program2</span>(alg: PathMonadAlg) = …</code></pre></div>
+<ul>
+<li><code>program2</code> can leverage the expressive power of monads, but it accepts <em>less</em> interpreters (only <code>PathRouting</code>).</li>
+</ul>
+</div><div id="dsl-families" class="titleslide slide section level2"><h1><span class="header-section-number">3.3</span> DSL Families</h1></div><div id="we-can-encode-subtyping-relationships-between-carrier-types" class="slide section level3 unnumbered">
+<h1>We can encode <em>subtyping relationships</em> between carrier types</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> UrlAlg {
+
+  <span class="kw">type</span> Path &lt;: Url
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): Path
+  <span class="kw">def</span> <span class="fu">chained</span>(first: Path, second: Path): Path
+
+  <span class="kw">type</span> QueryString
+  <span class="kw">def</span> <span class="fu">queryStringParameter</span>(name: String): QueryString
+
+  <span class="kw">type</span> Url
+  <span class="kw">def</span> <span class="fu">url</span>(path: Path, queryString: QueryString): Url
+}</code></pre></div>
+<ul>
+<li>I call this <em>DSL families</em>, by analogy with <em>type families</em></li>
+</ul>
+</div><div id="dsl-families-are-dsls-that-specialize-other-dsls" class="slide section level3 unnumbered">
+<h1>DSL families are DSLs that <em>specialize</em> other DSLs</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> UrlAlg {
+
+  <span class="kw">type</span> Path &lt;: Url
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): Path
+  <span class="kw">def</span> <span class="fu">chained</span>(first: Path, second: Path): Path
+  …
+  <span class="kw">type</span> Url
+  …
+}</code></pre></div>
+<ul>
+<li>We can give more capabilities to some terms ;</li>
+<li>E.g. in the particular case of URLs that are just made of a path, we can chain them together.</li>
+</ul>
+</div>
+<div id="comparison-with-free-monads" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Comparison With Free Monads</h1></div><div id="free-monads-in-a-nutshell" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Free monads in a nutshell</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter" class="slide section level3 unnumbered">
+<h1>Free monads abstract over the monadic context of a DSL interpreter</h1>
+<ul>
+<li>Let’s first define the language:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> PathF[A]
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">ConstSegment</span>(value: String) <span class="kw">extends</span> PathF[Unit]
+<span class="kw">case</span> <span class="kw">object</span> StringSegment <span class="kw">extends</span> PathF[String]
+<span class="kw">case</span> <span class="kw">object</span> IntegerSegment <span class="kw">extends</span> PathF[Int]
+<span class="kw">case</span> <span class="kw">class</span> Chained[A, B](fst: Path[A], snd: Path[B]) <span class="kw">extends</span> PathF[(A, B)]
+
+<span class="kw">type</span> Path[A] = Free[PathF, A]</code></pre></div>
+<ul>
+<li><code>Path[A]</code> is a monad (though we did not implement <code>Monad[PathF]</code>) that will be bound to an actual monadic context at interpretation time.</li>
+</ul>
+</div><div id="actual-patha-constructors" class="slide section level3 unnumbered">
+<h1>Actual <code>Path[A]</code> constructors</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">constSegment</span>(value: String): Path[Unit] =
+  <span class="fu">liftF</span>(<span class="fu">ConstSegment</span>(value))
+
+<span class="kw">val</span> stringSegment: Path[String] =
+  <span class="fu">liftF</span>(StringSegment)
+
+<span class="kw">val</span> integerSegment: Path[Int] =
+  <span class="fu">liftF</span>(IntegerSegment)
+
+<span class="kw">def</span> chained[A, B](fst: Path[A], snd: Path[B]): Path[(A, B)] =
+  <span class="fu">liftF</span>(<span class="fu">Chained</span>(fst, snd))</code></pre></div>
+</div><div id="server-interpreter-1" class="slide section level3 unnumbered">
+<h1>Server interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathRouting[A] = String =&gt; Option[A]</code></pre></div>
+<ul>
+<li>The interpreter’s type must be a <code>Monad</code> ;</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> pathRoutingMonad: Monad[PathRouting] =
+  <span class="kw">new</span> Monad[PathRouting] {
+    <span class="kw">def</span> pure[A](a: A): PathRouting[A] = _ =&gt; Some(a)
+    <span class="kw">def</span> flatMap[A, B](
+      path: PathRouting[A],
+      f: A =&gt; PathRouting[B]
+    ): PathRouting[B] =
+      incoming =&gt; <span class="fu">path</span>(incoming).<span class="fu">flatMap</span>(f)(incoming)
+  }</code></pre></div>
+</div><div id="server-interpreter-2" class="slide section level3 unnumbered">
+<h1>Server interpreter (2)</h1>
+<ul>
+<li>An interpreter is a <em>natural transformation</em> from <code>PathF</code> to the interpreter’s type:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Routing <span class="kw">extends</span> NaturalTransformation[PathF, PathRouting] {
+  <span class="kw">def</span> apply[A](path: PathF[A]): PathRouting[A] =
+    path <span class="kw">match</span> {
+      <span class="kw">case</span> <span class="fu">ConstSegment</span>(value) =&gt;
+        incoming =&gt; <span class="kw">if</span> (URLDecoder.<span class="fu">decode</span>(incoming) == value) Some(()) <span class="kw">else</span> None
+      <span class="kw">case</span> StringSegment =&gt;
+        incoming =&gt; Some(URLDecoder.<span class="fu">decode</span>(incoming))
+      <span class="kw">case</span> IntegerSegment =&gt;
+        incoming =&gt; <span class="fu">Try</span>(incoming.<span class="fu">toInt</span>).<span class="fu">toOption</span>
+      <span class="kw">case</span> <span class="fu">Chained</span>(fst, snd) =&gt;
+        incoming =&gt; {
+          <span class="kw">val</span> i = incoming.<span class="fu">indexOf</span>(<span class="st">&quot;/&quot;</span>)
+          <span class="kw">if</span> (i &gt;= <span class="dv">0</span>) {
+            fst.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(incoming.<span class="fu">take</span>(i))
+              .<span class="fu">zip</span>(snd.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(incoming.<span class="fu">drop</span>(i + <span class="dv">1</span>)))
+              .<span class="fu">headOption</span>
+          } <span class="kw">else</span> None
+        }
+    }
+}</code></pre></div>
+</div><div id="usage-1" class="slide section level3 unnumbered">
+<h1>Usage</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// {name}/{id}</span>
+<span class="kw">val</span> item = <span class="fu">chained</span>(stringSegment, integerSegment)</code></pre></div>
+<ul>
+<li>Finally, we apply an interpreter to a value by using <code>foldMap</code>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<span class="st">&quot;foo/42&quot;</span>)  <span class="co">// Some((&quot;foo&quot;, 42))</span>
+item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<span class="st">&quot;foo/bar&quot;</span>) <span class="co">// None</span></code></pre></div>
+</div><div id="dsls-combination" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> DSLs Combination</h1></div><div id="dsls-combination-1" class="slide section level3 unnumbered">
+<h1>DSLs combination</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> PathF[A]
+…
+<span class="kw">type</span> Path[A] = Free[PathF, A]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> QueryStringF[A]
+…
+<span class="kw">type</span> QueryString[A] = Free[QueryStringF, A]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathAndQS[A] = Free[???, A]</code></pre></div>
+<ul>
+<li>Monads do not compose in general, so we can not directly define <code>PathAndQS</code> out of <code>Path</code> and <code>QueryString</code></li>
+</ul>
+</div><div id="dsls-combination-2" class="slide section level3 unnumbered">
+<h1>DSLs combination (2)</h1>
+<ul>
+<li>In order to combine DSLs, the idea is to delay the process of lifting the case classes constructors into a <code>Free[F[_], _]</code> data type until this <code>F[_]</code> is fully known ;</li>
+<li>For instance, using <a href="https://github.com/ProjectSeptemberinc/freek">freek</a> (an experimental library for combining DSLs):</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathAndQS[A] = PathF :|: QueryStringF :|: FXNil</code></pre></div>
+<ul>
+<li>And then freek automatically lifts our constructors to <code>Free[PathAndQS, A]</code>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// {name}?{id=…}</span>
+<span class="kw">val</span> item =
+  <span class="kw">for</span> {
+    name &lt;- StringSegment.<span class="fu">freek</span>[PathAndQS]
+    id &lt;- <span class="fu">QueryStringParameter</span>(<span class="st">&quot;id&quot;</span>).<span class="fu">freek</span>[PathAndQS]
+  } <span class="kw">yield</span> (name, id)</code></pre></div>
+</div><div id="dsls-combination-3" class="slide section level3 unnumbered">
+<h1>DSLs combination (3)</h1>
+<ul>
+<li>Finally, you have to implement an interpreter for each DSL ;
+<ul>
+<li>With the additional constraint that they must all have the same target type constructor</li>
+</ul></li>
+</ul>
+<pre><code>type PathAndQSRouting[A] = Request =&gt; Option[A]</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathRouting <span class="kw">extends</span> (PathF ~&gt; PathAndQSRouting) { … }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> QSRouting <span class="kw">extends</span> (QueryStringF ~&gt; PathAndQSRouting) { … }</code></pre></div>
+<ul>
+<li>Then you can combine the interpreters:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> PathAndQSRouting = PathRouting :&amp;: QSRouting</code></pre></div>
+</div><div id="limitations" class="titleslide slide section level2"><h1><span class="header-section-number">4.3</span> Limitations</h1></div><div id="client-interpreter-1" class="slide section level3 unnumbered">
+<h1>Client interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathClient[A] = A =&gt; String</code></pre></div>
+<ul>
+<li>This type is <em>not</em> a monad…</li>
+<li>… so we can not define a client interpreter!</li>
+</ul>
+</div><div id="documentation-interpreter" class="slide section level3 unnumbered">
+<h1>Documentation interpreter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathDocumentation[A] = String</code></pre></div>
+<ul>
+<li>This type is not a monad either!</li>
+<li>But it is an <em>applicative functor</em>…
+<ul>
+<li>… so we could potentially define a <code>FreeApplicative</code> similar to <code>Free</code> ;</li>
+<li>but then, the nature of the interpreter (either monadic or applicative) would be fixed by the program definition (because constructors are lifted either to <code>Free</code> or <code>FreeApplicative</code>).</li>
+</ul></li>
+</ul>
+</div><div id="object-algebras-vs-free-monads" class="titleslide slide section level2"><h1><span class="header-section-number">4.4</span> Object Algebras vs Free Monads</h1></div><div id="object-algebras-vs-free-monads-1" class="slide section level3 unnumbered">
+<h1>Object algebras vs free monads</h1>
+<h4 id="complexity" class="unnumbered">Complexity</h4>
+<ul>
+<li>To use free monads you should be familiar with the concepts of <em>monads</em> and <em>natural transformations</em>,</li>
+<li>This is not required for object algebras.</li>
+</ul>
+<h4 id="verbosity" class="unnumbered">Verbosity</h4>
+<ul>
+<li>With free monads you have to lift your constructors into a <code>Free[F[_], _]</code> type,</li>
+<li>With object algebras you have to take an algebra as parameter (or extend it) to start using its constructors.</li>
+</ul>
+</div><div id="object-algebras-vs-free-monads-2" class="slide section level3 unnumbered">
+<h1>Object algebras vs free monads (2)</h1>
+<h4 id="extensibility-1" class="unnumbered">Extensibility</h4>
+<ul>
+<li>New interpreters and new DSLs can be retroactively added with both free monads and object algebras.</li>
+</ul>
+<h4 id="dsl-families-1" class="unnumbered">DSL families</h4>
+<ul>
+<li>Object algebras can represent subtyping relations between DSLs by using the subtyping mechanism of the host language,</li>
+<li>With free monads this is not possible (since algebraic data types are closed), so you have to rely on some explicit subtyping reification (or maybe use church encoding).</li>
+</ul>
+</div><div id="object-algebras-vs-free-monads-3" class="slide section level3 unnumbered">
+<h1>Object algebras vs free monads (3)</h1>
+<h4 id="practicality" class="unnumbered">Practicality</h4>
+<ul>
+<li>With free monads your interpreter <em>has to</em> be a monad,</li>
+<li>With object algebras, your interpreter <em>can</em> be a monad, but this is not required.</li>
+</ul>
+<h4 id="modular-expressive-power-1" class="unnumbered">Modular expressive power</h4>
+<ul>
+<li>You can alleviate the requirement of being a monad by using <code>FreeApplicative</code>, for instance, which would require the interpreter to be <em>only</em> an applicative functor,</li>
+<li>But it is difficult to build programs that can be used with both <code>Free</code> and <code>FreeApplicative</code></li>
+</ul>
+</div><div id="object-algebras-vs-free-monads-4" class="slide section level3 unnumbered">
+<h1>Object algebras vs free monads (4)</h1>
+<h4 id="stack-safety" class="unnumbered">Stack-safety</h4>
+<ul>
+<li>Recursive monadic calls are stack-safe with free monads,</li>
+<li>That’s not the case with object algebras (so you have to explicitly use trampolines to solve stack overflows).</li>
+</ul>
+</div>
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Questions?</h1></div>
+<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Bonus</h1></div><div id="embedded-dsls" class="titleslide slide section level2"><h1><span class="header-section-number">6.1</span> Embedded DSLs?</h1></div><div id="embedding-a-dsl" class="slide section level3 unnumbered">
+<h1>Embedding a DSL</h1>
+<ul>
+<li>Define the DSL vocabulary by just reusing your programming language capabilities to <strong>name</strong> things ;</li>
+<li>Reuse all the compiler infrastructure.</li>
+</ul>
+<p>Example in <a href="http://scala-lang.org">Scala</a>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> readItem: Endpoint[String, Item] =
+  <span class="fu">endpoint</span>(
+    <span class="fu">get</span>(path / <span class="st">&quot;items&quot;</span> / segment[String]),
+    jsonResponse[Item]
+  )</code></pre></div>
+</div><div id="embeddedding-a-dsl-2" class="slide section level3 unnumbered">
+<h1>Embeddedding a DSL (2)</h1>
+<ul>
+<li>Code that uses the DSL is seen by the program as a <strong>first class citizen</strong> ;</li>
+<li>Can be <strong>abstracted</strong> out and over.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// e.g. &quot;/fr/index&quot;, &quot;/en/index&quot;, etc.</span>
+<span class="kw">val</span> index =
+  <span class="fu">endpoint</span>(<span class="fu">get</span>(path / segment[Lang] / <span class="st">&quot;index&quot;</span>), htmlResponse)
+<span class="co">// e.g. &quot;/fr/about/&quot;, &quot;/en/about&quot;, etc.</span>
+<span class="kw">val</span> about =
+  <span class="fu">endpoint</span>(<span class="fu">get</span>(path / segment[Lang] / <span class="st">&quot;about&quot;</span>), htmlResponse)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">i18nPage</span>(title: String): Endpoint[Lang, Html] =
+  <span class="fu">endpoint</span>(<span class="fu">get</span>(path / segment[Lang] / title), htmlResponse)
+
+<span class="kw">val</span> index = <span class="fu">i18nPage</span>(<span class="st">&quot;index&quot;</span>)
+<span class="kw">val</span> about = <span class="fu">i18nPage</span>(<span class="st">&quot;about&quot;</span>)</code></pre></div>
+</div><div id="embeddedding-a-dsl-3" class="slide section level3 unnumbered">
+<h1>Embeddedding a DSL (3)</h1>
+<ul>
+<li>Code that uses the DSL can benefit from the <strong>expressive power</strong> of the host language</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">endpoint</span>(
+  <span class="fu">get</span>(path / <span class="st">&quot;asset&quot;</span> / assetSegments),
+  <span class="kw">if</span> (gzipEnabled) gzippedAssetResponse <span class="kw">else</span> assetResponse
+)</code></pre></div>
+</div><div id="embedded-dsl-vs-external-dsl" class="slide section level3 unnumbered">
+<h1>Embedded DSL vs “external” DSL</h1>
+<ul>
+<li>More details in this blogpost: “<a href="http://julien.richard-foy.fr/blog/2016/01/24/my-problem-with-code-generation">My Problem With Code Generation</a>” ;</li>
+<li>See also <a href="http://www.inf.ed.ac.uk/teaching/courses/epl/Landin66.pdf">[Landin, 1966]</a>, one of the first papers on this idea.</li>
+</ul>
+</div><div id="relation-with-fold-algebras" class="titleslide slide section level2"><h1><span class="header-section-number">6.2</span> Relation With Fold Algebras</h1></div><div id="fold-algebras" class="slide section level3 unnumbered">
+<h1><em>Fold algebras</em>?</h1>
+<ul>
+<li>First, what are <em>fold algebras</em>?</li>
+<li>Let’s define the following algebraic data type to model URL paths:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Path
+<span class="kw">case</span> <span class="kw">class</span> Segment(value: String) <span class="kw">extends</span> Path
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Chained</span>(first: Path, second: Path) <span class="kw">extends</span> Path</code></pre></div>
+<ul>
+<li>We recognize our two constructors, <code>Segment</code> and <code>Chained</code>.</li>
+</ul>
+</div><div id="we-can-then-construct-paths-in-a-similar-way-than-previously" class="slide section level3 unnumbered">
+<h1>We can then construct paths in a similar way than previously</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Path
+<span class="kw">case</span> <span class="kw">class</span> Segment(value: String) <span class="kw">extends</span> Path
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Chained</span>(first: Path, second: Path) <span class="kw">extends</span> Path</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> someItemPath: Path =
+  <span class="fu">Chained</span>(Segment(<span class="st">&quot;item&quot;</span>), Segment(<span class="st">&quot;123abc&quot;</span>))</code></pre></div>
+</div><div id="and-we-can-define-interpreters-as-folds" class="slide section level3 unnumbered">
+<h1>And we can define <em>interpreters</em> as <em>folds</em></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](s: String =&gt; A, c: (A, A) =&gt; A): Path =&gt; A = {
+  <span class="kw">case</span> Segment(value) =&gt; <span class="fu">s</span>(value)
+  <span class="kw">case</span> <span class="fu">Chained</span>(fst, snd) =&gt; <span class="fu">c</span>(<span class="fu">fold</span>(s, c)(fst), <span class="fu">fold</span>(s, c)(snd))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client: Path =&gt; String =
+  fold[String](URLEncoder.<span class="fu">encode</span>, (fst, snd) =&gt; s<span class="st">&quot;$fst/$snd&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> server: Path =&gt; String =&gt; Boolean =
+  fold[String =&gt; Boolean](
+    value =&gt; incoming =&gt; URLDecoder.<span class="fu">decode</span>(incoming) == value,
+    (fst, snd) =&gt; incoming =&gt; {
+      <span class="kw">val</span> i = incoming.<span class="fu">indexOf</span>(<span class="st">&quot;/&quot;</span>)
+      i &gt;= <span class="dv">0</span> &amp;&amp; <span class="fu">fst</span>(incoming.<span class="fu">take</span>(i)) &amp;&amp; <span class="fu">snd</span>(incoming.<span class="fu">drop</span>(i + <span class="dv">1</span>))
+    }
+  )</code></pre></div>
+</div><div id="example-of-use" class="slide section level3 unnumbered">
+<h1>Example of use</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">client</span>(someItemPath) <span class="co">// &quot;item/123abc&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">server</span>(someItemPath)(<span class="st">&quot;item/123abc&quot;</span>) <span class="co">// true</span>
+<span class="fu">server</span>(someItemPath)(<span class="st">&quot;foo/bar&quot;</span>) <span class="co">// false</span></code></pre></div>
+</div><div id="the-product-of-functions-matching-the-path-constructors-is-called-a-fold-algebra" class="slide section level3 unnumbered">
+<h1>The product of functions matching the <code>Path</code> constructors is called a <em>fold algebra</em></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Path
+<span class="kw">case</span> <span class="kw">class</span> Segment(value: String) <span class="kw">extends</span> Path
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Chained</span>(first: Path, second: Path) <span class="kw">extends</span> Path</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> fold[A](s: String =&gt; A, c: (A, A) =&gt; A): Path =&gt; A = …</code></pre></div>
+</div><div id="from-fold-algebras-to-object-algebras" class="slide section level3 unnumbered">
+<h1>From fold algebras to object algebras</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathAlg[A] = (String =&gt; A, (A, A) =&gt; A)
+<span class="kw">def</span> fold[A](alg: PathAlg[A]): Path =&gt; A = …</code></pre></div>
+<ul>
+<li>This <code>PathAlg</code> is the fold algebra of <code>Path</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg[A] {
+  <span class="kw">def</span> <span class="fu">segment</span>(value: String): A
+  <span class="kw">def</span> <span class="fu">chained</span>(fst: A, snd: A): A
+}
+<span class="kw">def</span> fold[A](alg: PathAlg[A]): Path =&gt; A = …</code></pre></div>
+<ul>
+<li>This <code>PathAlg</code> is our original <em>object algebra interface</em>!</li>
+</ul>
+</div><div id="by-using-church-encoded-values-the-path-type-does-not-even-need-to-exist" class="slide section level3 unnumbered">
+<h1>By using <em>Church encoded</em> values, the <code>Path</code> type does not even need to exist!</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> someItemPath: Path =
+  <span class="fu">Chained</span>(Segment(<span class="st">&quot;item&quot;</span>), Segment(<span class="st">&quot;123abc&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> someItemPath[A](alg: PathAlg[A]): A = {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  <span class="fu">chained</span>(<span class="fu">segment</span>(<span class="st">&quot;item&quot;</span>), <span class="fu">segment</span>(<span class="st">&quot;123abc&quot;</span>))
+}</code></pre></div>
+</div><div id="relation-with-fold-algebras-1" class="slide section level3 unnumbered">
+<h1>Relation With Fold Algebras</h1>
+<ul>
+<li>Object algebras are basically a combination of two techniques:
+<ul>
+<li>Fold algebras ;</li>
+<li>Church encodings.</li>
+</ul></li>
+</ul>
+</div><div id="performances" class="titleslide slide section level2"><h1><span class="header-section-number">6.3</span> Performances</h1></div><div id="performance-overhead-of-library-level-abstractions" class="slide section level3 unnumbered">
+<h1>Performance overhead of library-level abstractions</h1>
+<ul>
+<li>Embedded DSLs may introduce some performance overhead, as they are just libraries ;</li>
+<li>We basically have two ways to define optimizations:
+<ul>
+<li>Implement an interpreter that generates (optimized) code,</li>
+<li>Introduce explicit term representations, allowing the implementation of program transformations performing optimizations.</li>
+</ul></li>
+</ul>
+</div><div id="an-interpreter-that-generates-code" class="slide section level3 unnumbered">
+<h1>An interpreter that generates code</h1>
+<ul>
+<li>Very powerful (see e.g. <a href="https://scala-lms.github.io/">Lightweight Modular Staging</a>), but:
+<ul>
+<li>Integration of generated code and hand-written code has frictions ;</li>
+<li>All program parts may not cross stages ;</li>
+<li>More complex build chain.</li>
+</ul></li>
+</ul>
+</div><div id="program-transformations-applying-rewrite-rules" class="slide section level3 unnumbered">
+<h1>Program transformations applying rewrite rules</h1>
+<ul>
+<li>Explicit term representation hinders extensibility ;</li>
+<li>Some solutions exist, based on modular visitors, but they introduce a lot of complexity (see e.g. <a href="http://www.informatik.uni-marburg.de/~kos/papers/gpce62-hofer.pdf">[Hofer, 2010]</a>).</li>
+</ul>
+</div>
+</body>
+</html>
