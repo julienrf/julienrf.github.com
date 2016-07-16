@@ -12,7 +12,7 @@
   <meta name="author" content="" />
   <meta name="author" content="" />
   <meta name="author" content="http://julienrf.github.io/curry-on-2016" />
-  <title>Using Object Algebras To Design Embedded Domain Specific Languages</title>
+  <title>Using Object Algebras To Design Domain Specific Embedded Languages</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -40,7 +40,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Using <em>Object Algebras</em> To Design Embedded Domain Specific Languages</h1>
+  <h1 class="title">Using <em>Object Algebras</em> To Design Domain Specific Embedded Languages</h1>
   <p class="author">
 Julien Richard-Foy <script type="text/javascript">
 <!--
@@ -79,12 +79,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <li>Microservices: consistent protocol between clients and servers.</li>
 </ul></li>
 </ul>
-</div><div id="web-engineering-challenges" class="titleslide slide section level2"><h1><span class="header-section-number">1.2</span> Web engineering challenges</h1></div><div class="slide section level3">
-
-<div class="figure">
-<img src="challenges.svg" alt="challenges" /><p class="caption">challenges</p>
-</div>
-</div><div id="example-e-shop-server" class="slide section level3 unnumbered">
+</div><div id="web-engineering-challenges" class="titleslide slide section level2"><h1><span class="header-section-number">1.2</span> Web engineering challenges</h1></div><div id="example-e-shop-server" class="slide section level3 unnumbered">
 <h1>Example: e-shop (server)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> readItem = Router.<span class="fu">from</span> {
   <span class="kw">case</span> <span class="fu">GET</span>(p<span class="st">&quot;/item/$id&quot;</span>) =&gt;
@@ -567,7 +562,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <div id="comparison-with-free-monads" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Comparison With Free Monads</h1></div><div id="free-monads-in-a-nutshell" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Free monads in a nutshell</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter" class="slide section level3 unnumbered">
 <h1>Free monads abstract over the monadic context of a DSL interpreter</h1>
 <ul>
-<li>Let’s first define the language:</li>
+<li>First, let’s define our constructors as a data type:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> PathF[A]
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">ConstSegment</span>(value: String) <span class="kw">extends</span> PathF[Unit]
@@ -579,58 +574,30 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <ul>
 <li><code>Path[A]</code> is a monad (though we did not implement <code>Monad[PathF]</code>) that will be bound to an actual monadic context at interpretation time.</li>
 </ul>
-</div><div id="actual-patha-constructors" class="slide section level3 unnumbered">
-<h1>Actual <code>Path[A]</code> constructors</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">constSegment</span>(value: String): Path[Unit] =
-  <span class="fu">liftF</span>(<span class="fu">ConstSegment</span>(value))
+</div><div class="slide section level3">
 
-<span class="kw">val</span> stringSegment: Path[String] =
-  <span class="fu">liftF</span>(StringSegment)
-
-<span class="kw">val</span> integerSegment: Path[Int] =
-  <span class="fu">liftF</span>(IntegerSegment)
-
-<span class="kw">def</span> chained[A, B](fst: Path[A], snd: Path[B]): Path[(A, B)] =
-  <span class="fu">liftF</span>(<span class="fu">Chained</span>(fst, snd))</code></pre>
-</div><div id="server-interpreter-1" class="slide section level3 unnumbered">
-<h1>Server interpreter</h1>
+<ul>
+<li>Then, we need to wrap our <code>PathF[A]</code> constructors into the <code>Path[A]</code> type:</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">constSegment</span>(value: String): Path[Unit] = <span class="fu">liftF</span>(<span class="fu">ConstSegment</span>(value))
+<span class="co">// etc. for all constructors</span></code></pre>
+<ul>
+<li>Then, we define our interpreter’s type:</li>
+</ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathRouting[A] = String =&gt; Option[A]</code></pre>
 <ul>
-<li>The interpreter’s type must be a <code>Monad</code> ;</li>
+<li>… which has to be a <code>Monad</code>:</li>
 </ul>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> pathRoutingMonad: Monad[PathRouting] =
-  <span class="kw">new</span> Monad[PathRouting] {
-    <span class="kw">def</span> pure[A](a: A): PathRouting[A] = _ =&gt; Some(a)
-    <span class="kw">def</span> flatMap[A, B](
-      path: PathRouting[A],
-      f: A =&gt; PathRouting[B]
-    ): PathRouting[B] =
-      incoming =&gt; <span class="fu">path</span>(incoming).<span class="fu">flatMap</span>(f)(incoming)
-  }</code></pre>
-</div><div id="server-interpreter-2" class="slide section level3 unnumbered">
-<h1>Server interpreter (2)</h1>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> pathRoutingMonad: Monad[PathRouting] = <span class="kw">new</span> Monad[PathRouting] { … }</code></pre>
 <ul>
-<li>An interpreter is a <em>natural transformation</em> from <code>PathF</code> to the interpreter’s type:</li>
+<li>Finally, the interpreter is a <em>natural transformation</em> from <code>PathF</code> to the interpreter’s type:</li>
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Routing <span class="kw">extends</span> NaturalTransformation[PathF, PathRouting] {
-  <span class="kw">def</span> apply[A](path: PathF[A]): PathRouting[A] =
-    path <span class="kw">match</span> {
-      <span class="kw">case</span> <span class="fu">ConstSegment</span>(value) =&gt;
-        incoming =&gt; <span class="kw">if</span> (URLDecoder.<span class="fu">decode</span>(incoming) == value) Some(()) <span class="kw">else</span> None
-      <span class="kw">case</span> StringSegment =&gt;
-        incoming =&gt; Some(URLDecoder.<span class="fu">decode</span>(incoming))
-      <span class="kw">case</span> IntegerSegment =&gt;
-        incoming =&gt; <span class="fu">Try</span>(incoming.<span class="fu">toInt</span>).<span class="fu">toOption</span>
-      <span class="kw">case</span> <span class="fu">Chained</span>(fst, snd) =&gt;
-        incoming =&gt; {
-          <span class="kw">val</span> i = incoming.<span class="fu">indexOf</span>(<span class="st">&quot;/&quot;</span>)
-          <span class="kw">if</span> (i &gt;= <span class="dv">0</span>) {
-            fst.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(incoming.<span class="fu">take</span>(i))
-              .<span class="fu">zip</span>(snd.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(incoming.<span class="fu">drop</span>(i + <span class="dv">1</span>)))
-              .<span class="fu">headOption</span>
-          } <span class="kw">else</span> None
-        }
-    }
+  <span class="kw">def</span> apply[A](path: PathF[A]): PathRouting[A] = path <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">ConstSegment</span>(value) =&gt;
+      incoming =&gt; <span class="kw">if</span> (URLDecoder.<span class="fu">decode</span>(incoming) == value) Some(()) <span class="kw">else</span> None
+    <span class="co">// etc. for all constructors</span>
+  }
 }</code></pre>
 </div><div id="usage-1" class="slide section level3 unnumbered">
 <h1>Usage</h1>
@@ -641,20 +608,12 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 </ul>
 <pre class="sourceCode scala"><code class="sourceCode scala">item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<span class="st">&quot;foo/42&quot;</span>)  <span class="co">// Some((&quot;foo&quot;, 42))</span>
 item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<span class="st">&quot;foo/bar&quot;</span>) <span class="co">// None</span></code></pre>
-</div><div id="dsls-combination" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> DSLs Combination</h1></div><div id="dsls-combination-1" class="slide section level3 unnumbered">
-<h1>DSLs combination</h1>
+</div><div id="dsls-combination" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> DSLs Combination</h1></div><div class="slide section level3">
+
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> PathF[A]
-…
-<span class="kw">type</span> Path[A] = Free[PathF, A]</code></pre>
+…</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> QueryStringF[A]
-…
-<span class="kw">type</span> QueryString[A] = Free[QueryStringF, A]</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathAndQS[A] = Free[???, A]</code></pre>
-<ul>
-<li>Monads do not compose in general, so we can not directly define <code>PathAndQS</code> out of <code>Path</code> and <code>QueryString</code></li>
-</ul>
-</div><div id="dsls-combination-2" class="slide section level3 unnumbered">
-<h1>DSLs combination (2)</h1>
+…</code></pre>
 <ul>
 <li>In order to combine DSLs, the idea is to delay the process of lifting the case classes constructors into a <code>Free[F[_], _]</code> data type until this <code>F[_]</code> is fully known ;</li>
 <li>For instance, using <a href="https://github.com/ProjectSeptemberinc/freek">freek</a> (an experimental library for combining DSLs):</li>
@@ -669,15 +628,15 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
     name &lt;- StringSegment.<span class="fu">freek</span>[PathAndQS]
     id &lt;- <span class="fu">QueryStringParameter</span>(<span class="st">&quot;id&quot;</span>).<span class="fu">freek</span>[PathAndQS]
   } <span class="kw">yield</span> (name, id)</code></pre>
-</div><div id="dsls-combination-3" class="slide section level3 unnumbered">
-<h1>DSLs combination (3)</h1>
+</div><div class="slide section level3">
+
 <ul>
 <li>Finally, you have to implement an interpreter for each DSL ;
 <ul>
 <li>With the additional constraint that they must all have the same target type constructor</li>
 </ul></li>
 </ul>
-<pre><code>type PathAndQSRouting[A] = Request =&gt; Option[A]</code></pre>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> PathAndQSRouting[A] = Request =&gt; Option[A]</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> PathRouting <span class="kw">extends</span> (PathF ~&gt; PathAndQSRouting) { … }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> QSRouting <span class="kw">extends</span> (QueryStringF ~&gt; PathAndQSRouting) { … }</code></pre>
 <ul>
@@ -707,7 +666,7 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
 <h4 id="complexity" class="unnumbered">Complexity</h4>
 <ul>
 <li>To use free monads you should be familiar with the concepts of <em>monads</em> and <em>natural transformations</em>,</li>
-<li>This is not required for object algebras.</li>
+<li>To use object algebras you should be familiar with <em>object orientation</em>.</li>
 </ul>
 <h4 id="verbosity" class="unnumbered">Verbosity</h4>
 <ul>
@@ -750,7 +709,7 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
 <ul>
 <li>Way to define <strong>extensible</strong> embedded DSLs ;</li>
 <li>Fit well with <strong>object oriented</strong> programming languages ;</li>
-<li>More powerful but simpler than free monads! (IMHO)</li>
+<li>More powerful while simpler than free monads! (IMHO)</li>
 </ul>
 </div>
 <div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Questions?</h1></div>
