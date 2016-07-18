@@ -222,8 +222,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 </div><div id="summary" class="slide section level3 unnumbered">
 <h1>Summary</h1>
 <ul>
-<li>We defined an object algebra interface introducing constructors defining paths ;</li>
-<li>These path definitions can be interpreted in various ways:
+<li>We defined an object algebra interface defining the rules to <em>construct</em> and <em>combine</em> paths ;</li>
+<li>These path definitions can be <em>interpreted</em> in various ways:
 <ul>
 <li>a client interpretation builds a <code>String</code> out of a path definition (to build an URL to perform a request on) ;</li>
 <li>a server interpretation checks if the path of an incoming request matches a path definition (to dispatch an incoming request to the corresponding endpoint implementation).</li>
@@ -506,7 +506,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <li>We can give more capabilities to some terms ;</li>
 <li>E.g. in the particular case of URLs that are just made of a path, we can chain them together.</li>
 </ul>
-</div><div id="putting-things-together" class="titleslide slide section level2"><h1><span class="header-section-number">3.4</span> Putting things together</h1></div><div id="remember-the-motivating-example" class="slide section level3 unnumbered">
+</div>
+<div id="putting-things-together" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Putting things together</h1></div><div id="remember-the-motivating-example" class="slide section level3 unnumbered">
 <h1>Remember the motivating example</h1>
 <ul>
 <li>Server:</li>
@@ -558,7 +559,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <h1>Applying a documenting interpreter</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">readItemRequest</span>(EndpointDocumentation) <span class="co">// &quot;GET  /item/{string}&quot;</span></code></pre>
 </div>
-<div id="comparison-with-free-monads" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Comparison With Free Monads</h1></div><div id="free-monads-in-a-nutshell" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Free monads in a nutshell</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter" class="slide section level3 unnumbered">
+<div id="comparison-with-free-monads" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Comparison With Free Monads</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter" class="slide section level3 unnumbered">
 <h1>Free monads abstract over the monadic context of a DSL interpreter</h1>
 <ol style="list-style-type: decimal">
 <li>Define your language as a data type ;</li>
@@ -569,7 +570,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 </ul></li>
 <li>Implement an interpreter, which eventually is a monad.</li>
 </ol>
-</div><div id="object-algebras-vs-free-monads" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> Object Algebras vs Free Monads</h1></div><div id="object-algebras-vs-free-monads-1" class="slide section level3 unnumbered">
+</div><div id="object-algebras-vs-free-monads" class="slide section level3 unnumbered">
 <h1>Object algebras vs free monads</h1>
 <ul>
 <li>A key difference is that:
@@ -584,7 +585,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 </ul></li>
 </ul>
 </div>
-<div id="conclusion" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Conclusion</h1></div><div id="object-algebras-1" class="slide section level3 unnumbered">
+<div id="conclusion" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Conclusion</h1></div><div id="object-algebras-1" class="slide section level3 unnumbered">
 <h1>Object algebras</h1>
 <ul>
 <li>Way to define <strong>extensible</strong> embedded DSLs ;</li>
@@ -592,8 +593,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <li>More powerful while simpler (IMHO) than free monads!</li>
 </ul>
 </div>
-<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Questions?</h1></div>
-<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Bonus</h1></div><div id="practicality" class="titleslide slide section level2"><h1><span class="header-section-number">7.1</span> Practicality</h1></div><div id="alternative-way-of-using-an-algebra-interface" class="slide section level3 unnumbered">
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Questions?</h1></div>
+<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Bonus</h1></div><div id="practicality" class="titleslide slide section level2"><h1><span class="header-section-number">8.1</span> Practicality</h1></div><div id="alternative-way-of-using-an-algebra-interface" class="slide section level3 unnumbered">
 <h1>Alternative way of using an algebra interface</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">readItemRequest</span>(alg: EndpointAlg): alg.<span class="fu">Request</span>[String] = {
   <span class="kw">import</span> alg.<span class="fu">_</span>
@@ -616,7 +617,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 
 }</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> ItemClient <span class="kw">extends</span> ItemEndpoints <span class="kw">with</span> EndpointClient</code></pre>
-</div><div id="performances" class="titleslide slide section level2"><h1><span class="header-section-number">7.2</span> Performances</h1></div><div id="performance-overhead-of-library-level-abstractions" class="slide section level3 unnumbered">
+</div><div id="performances" class="titleslide slide section level2"><h1><span class="header-section-number">8.2</span> Performances</h1></div><div id="performance-overhead-of-library-level-abstractions" class="slide section level3 unnumbered">
 <h1>Performance overhead of library-level abstractions</h1>
 <ul>
 <li>Embedded DSLs may introduce some performance overhead, as they are just libraries ;</li>
@@ -642,7 +643,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <li>Explicit term representation hinders extensibility ;</li>
 <li>Some solutions exist, based on modular visitors, but they introduce a lot of complexity (see e.g. <a href="http://www.informatik.uni-marburg.de/~kos/papers/gpce62-hofer.pdf">[Hofer, 2010]</a>).</li>
 </ul>
-</div><div id="relation-with-fold-algebras" class="titleslide slide section level2"><h1><span class="header-section-number">7.3</span> Relation With Fold Algebras</h1></div><div id="fold-algebras" class="slide section level3 unnumbered">
+</div><div id="relation-with-fold-algebras" class="titleslide slide section level2"><h1><span class="header-section-number">8.3</span> Relation With Fold Algebras</h1></div><div id="fold-algebras" class="slide section level3 unnumbered">
 <h1><em>Fold algebras</em>?</h1>
 <ul>
 <li>First, what are <em>fold algebras</em>?</li>
@@ -720,7 +721,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <li>Church encodings.</li>
 </ul></li>
 </ul>
-</div><div id="deeper-comparison-with-free-monads" class="titleslide slide section level2"><h1><span class="header-section-number">7.4</span> (Deeper) comparison with free monads</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter-1" class="slide section level3 unnumbered">
+</div><div id="deeper-comparison-with-free-monads" class="titleslide slide section level2"><h1><span class="header-section-number">8.4</span> (Deeper) comparison with free monads</h1></div><div id="free-monads-abstract-over-the-monadic-context-of-a-dsl-interpreter-1" class="slide section level3 unnumbered">
 <h1>Free monads abstract over the monadic context of a DSL interpreter</h1>
 <ul>
 <li>Let’s first define our constructors as a data type:</li>
@@ -858,7 +859,7 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
 <li>but then, the nature of the interpreter (either monadic or applicative) would be fixed by the program definition (because constructors are lifted either to <code>Free</code> or <code>FreeApplicative</code>).</li>
 </ul></li>
 </ul>
-</div><div id="object-algebras-vs-free-monads-2" class="slide section level3 unnumbered">
+</div><div id="object-algebras-vs-free-monads-1" class="slide section level3 unnumbered">
 <h1>Object algebras vs free monads</h1>
 <h4 id="complexity" class="unnumbered">Complexity</h4>
 <ul>
@@ -870,7 +871,7 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
 <li>With free monads you have to lift your constructors into a <code>Free[F[_], _]</code> type,</li>
 <li>With object algebras you have to take an algebra as parameter (or extend it) to start using its constructors.</li>
 </ul>
-</div><div id="object-algebras-vs-free-monads-2-1" class="slide section level3 unnumbered">
+</div><div id="object-algebras-vs-free-monads-2" class="slide section level3 unnumbered">
 <h1>Object algebras vs free monads (2)</h1>
 <h4 id="extensibility-1" class="unnumbered">Extensibility</h4>
 <ul>
@@ -900,7 +901,7 @@ item.<span class="fu">foldMap</span>(Routing).<span class="fu">apply</span>(<spa
 <li>Recursive monadic calls are stack-safe with free monads,</li>
 <li>That’s not the case with object algebras (so you have to explicitly use trampolines to solve stack overflows).</li>
 </ul>
-</div><div id="embedded-dsls" class="titleslide slide section level2"><h1><span class="header-section-number">7.5</span> Embedded DSLs?</h1></div><div id="embedding-a-dsl" class="slide section level3 unnumbered">
+</div><div id="embedded-dsls" class="titleslide slide section level2"><h1><span class="header-section-number">8.5</span> Embedded DSLs?</h1></div><div id="embedding-a-dsl" class="slide section level3 unnumbered">
 <h1>Embedding a DSL</h1>
 <ul>
 <li>Define the DSL vocabulary by just reusing your programming language capabilities to <strong>name</strong> things ;</li>
