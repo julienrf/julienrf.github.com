@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien@richard-foy.fr" />
+  <meta name="author" content="" />
+  <meta name="author" content="EPFL – November 18th, 2016" />
+  <meta name="author" content="" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/2016/scala-rex" />
+  <title>My Experience With Scala</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">My Experience With Scala</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#46;&#102;&#114;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#32;&#x61;&#116;&#32;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#100;&#x6f;&#116;&#32;&#102;&#114;</noscript><br/><br/>EPFL – November 18th, 2016<br/><br/><br/><a href="http://julienrf.github.io/2016/scala-rex" class="uri">http://julienrf.github.io/2016/scala-rex</a>
+  </p>
+</div>
+<div id="outline" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ul>
+<li>Context</li>
+<li>Points of discussion
+<ul>
+<li>Object algebras encoding</li>
+<li>Trait constructor parameters</li>
+<li>Union types</li>
+<li>Arity-polymorphic functions</li>
+<li>Algebraic normalization</li>
+</ul></li>
+</ul>
+</div>
+<div id="context" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Context</h1></div><div id="julienrfendpoints" class="titleslide slide section level2"><h1><span class="header-section-number">1.1</span> julienrf/endpoints</h1></div><div id="microservices" class="slide section level3 unnumbered">
+<h1>Microservices</h1>
+<div class="figure">
+<img src="microservices.svg" />
+
+</div>
+</div><div id="http-based-microservices" class="slide section level3 unnumbered">
+<h1>(HTTP-based) microservices</h1>
+<div class="figure">
+<img src="http-based-microservices.svg" />
+
+</div>
+</div><div id="defining-http-based-communication-protocols" class="slide section level3 unnumbered">
+<h1>Defining HTTP-based communication protocols</h1>
+<div class="figure">
+<img src="algebra.svg" />
+
+</div>
+</div><div id="defining-http-based-communication-protocols-1" class="slide section level3 unnumbered">
+<h1>Defining HTTP-based communication protocols</h1>
+<ul>
+<li>Endpoint specification (shared):</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> inc = <span class="fu">endpoint</span>(<span class="fu">get</span>(path / <span class="st">&quot;inc&quot;</span> / segment[Int]), jsonResponse[Int])
+<span class="co">// inc: Endpoint[Int, Int]</span></code></pre></div>
+<ul>
+<li>Service implementation (server):</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">inc.<span class="fu">implementedBy</span>(x =&gt; x + <span class="dv">1</span>)</code></pre></div>
+<ul>
+<li>Usage (client):</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> three = <span class="fu">inc</span>(<span class="dv">2</span>) <span class="co">// Performs a `GET` HTTP request on resource `/inc/2`</span>
+<span class="co">// three: Future[Int]</span></code></pre></div>
+</div><div id="julienrfendpoints-1" class="slide section level3 unnumbered">
+<h1>julienrf/endpoints</h1>
+<ul>
+<li>Library for defining HTTP-based communication protocols</li>
+<li>Extensible
+<ul>
+<li>You can implement independent interpreters for your specifications (e.g. JVM server, JVM client, JS client, documentation, etc.)</li>
+<li>You can enrich the specification model to support application-specific concerns (e.g. authentication)</li>
+</ul></li>
+<li>Pure Scala
+<ul>
+<li>No external DSL (a la Play or Thrift)</li>
+<li>No macros</li>
+</ul></li>
+</ul>
+</div>
+<div id="points-of-discussion" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Points of discussion</h1></div><div id="object-algebras-encoding" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Object algebras encoding</h1></div><div id="requesta" class="slide section level3 unnumbered">
+<h1><code>Request[A]</code> </h1>
+<ul>
+<li>Let’s describe an HTTP request that uses the <code>GET</code> verb, and whose URL starts with <code>/foo/</code> followed by a segment containing an arbitrary text:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> getFoo = <span class="fu">get</span>(path / <span class="st">&quot;foo&quot;</span> / segment[String])
+<span class="co">// getFoo: Request[String]</span></code></pre></div>
+<ul class="incremental">
+<li>How is <code>Request[A]</code> internally defined?</li>
+</ul>
+</div><div id="constraint-1-being-interpreter-agnostic" class="slide section level3 unnumbered">
+<h1>Constraint #1: being interpreter agnostic</h1>
+<ul>
+<li>From a client point of view, <code>A</code> is the information <em>needed</em> to build a request:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> asClient[A](request: Request[A]): A =&gt; HttpRequest</code></pre></div>
+<ul>
+<li>From a server point of view, <code>A</code> is the information <em>extracted</em> from an incoming request:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> asServer[A](request: Request[A]): HttpRequest =&gt; Option[A]</code></pre></div>
+</div><div id="constraint-2-support-for-external-introduction-of-vocabulary" class="slide section level3 unnumbered">
+<h1>Constraint #2: support for external introduction of vocabulary</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> authenticated[A](request: Request[A]): AuthenticatedRequest[A] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> authenticatedGetFoo = <span class="fu">authenticated</span>(<span class="fu">get</span>(path / <span class="st">&quot;foo&quot;</span> / segment[String]))
+<span class="co">// authenticatedGetFoo: AuthenticatedRequest[A]</span></code></pre></div>
+</div><div id="expression-problem" class="slide section level3 unnumbered">
+<h1>Expression problem</h1>
+<blockquote>
+<p>The goal is to define a datatype by cases, where one can add new cases to the datatype and new functions over the datatype, without recompiling existing code, and while retaining static type safety (e.g., no casts).</p>
+</blockquote>
+<p>Philip Wadler, 12 November 1998 <a href="http://homepages.inf.ed.ac.uk/wadler/papers/expression/expression.txt">(source)</a></p>
+<ul>
+<li>In our case:
+<ul>
+<li>“new cases” are the introduction of vocabulary ;</li>
+<li>“functions over the datatype” are interpreters.</li>
+</ul></li>
+</ul>
+</div><div id="object-algebras" class="slide section level3 unnumbered">
+<h1>Object algebras</h1>
+<ul>
+<li>Solution to the expression problem based on a combination of <em>Church encodings</em> and <em>fold-algebras</em> ;</li>
+<li>See <a href="http://ropas.snu.ac.kr/~bruno/papers/ecoop2012.pdf">[Oliveira 2012]</a> and <a href="http://dl.acm.org/citation.cfm?id=2633637">[Oliveira 2014]</a>.</li>
+</ul>
+</div><div id="object-algebras-in-scala" class="slide section level3 unnumbered">
+<h1>Object algebras in Scala</h1>
+<ul>
+<li>Algebra interface:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAlg {
+  <span class="kw">type</span> Request[A]
+  <span class="kw">type</span> Path[A]
+
+  <span class="kw">def</span> get[A](path: Path[A]): Request[A]
+}</code></pre></div>
+</div><div id="object-algebras-in-scala-1" class="slide section level3 unnumbered">
+<h1>Object algebras in Scala</h1>
+<ul>
+<li>Interpreters fix the carrier types:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAlg {
+  <span class="kw">type</span> Request[A]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestServer <span class="kw">extends</span> RequestAlg {
+  <span class="kw">type</span> Request[A] = HttpRequest =&gt; Option[A]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestClient <span class="kw">extends</span> RequestAlg {
+  <span class="kw">type</span> Request[A] = A =&gt; HttpRequest
+}</code></pre></div>
+</div><div id="object-algebras-in-scala-2" class="slide section level3 unnumbered">
+<h1>Object algebras in Scala</h1>
+<ul>
+<li>Interpreters implement the smart constructors:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAlg {
+  <span class="kw">def</span> get[A](path: Path[A]): Request[A]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestServer <span class="kw">extends</span> RequestAlg {
+  <span class="kw">def</span> get[A](path: Path[A]) =
+    request =&gt;
+      <span class="kw">for</span> {
+        a &lt;- <span class="fu">path</span>(request.<span class="fu">url</span>)
+        <span class="kw">if</span> request.<span class="fu">verb</span> == <span class="st">&quot;GET&quot;</span>
+      } <span class="kw">yield</span> a
+}</code></pre></div>
+</div><div id="object-algebras-in-scala-3" class="slide section level3 unnumbered">
+<h1>Object algebras in Scala</h1>
+<ul>
+<li>Interpreters implement the smart constructors:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAlg {
+  <span class="kw">def</span> get[A](path: Path[A]): Request[A]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestClient <span class="kw">extends</span> RequestAlg {
+  <span class="kw">def</span> get[A](path: Path[A]) =
+    a =&gt; <span class="fu">HttpRequest</span>(<span class="st">&quot;GET&quot;</span>, <span class="fu">path</span>(a))
+}</code></pre></div>
+</div><div id="combining-dsls-with-object-algebras" class="slide section level3 unnumbered">
+<h1>Combining DSLs with object algebras</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAlg { … }
+
+<span class="kw">trait</span> LogAlg { … }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestAndLogAlg <span class="kw">extends</span> RequestAlg <span class="kw">with</span> LogAlg</code></pre></div>
+</div><div id="encoding-object-algebras-in-scala" class="slide section level3 unnumbered">
+<h1>Encoding object algebras in Scala</h1>
+<ul>
+<li>Object algebras are nicely encoded in Scala thanks to the combination of:
+<ol style="list-style-type: decimal">
+<li><strong>abstract type members</strong> and</li>
+<li><strong>traits</strong> as mixins</li>
+</ol></li>
+</ul>
+</div><div id="initialization-issues" class="slide section level3 unnumbered">
+<h1>Initialization issues</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathAlg {
+  <span class="kw">type</span> Path[A]
+
+  <span class="co">// Root path (`/`)</span>
+  <span class="kw">def</span> path: Path[Unit]
+
+  <span class="co">// …</span>
+}</code></pre></div>
+</div><div id="initialization-issues-1" class="slide section level3 unnumbered">
+<h1>Initialization issues</h1>
+<ul>
+<li>Client implementation:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathClient <span class="kw">extends</span> PathAlg {
+  <span class="kw">type</span> Path[A] = A =&gt; String
+
+  <span class="kw">val</span> path = _ =&gt; <span class="st">&quot;/&quot;</span>
+}</code></pre></div>
+</div><div id="initialization-issues-2" class="slide section level3 unnumbered">
+<h1>Initialization issues</h1>
+<ul>
+<li>Usage:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathUsage <span class="kw">extends</span> PathAlg {
+  path / <span class="st">&quot;foo&quot;</span>
+}</code></pre></div>
+<ul>
+<li>Making things concrete:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> somePathsClient = <span class="kw">new</span> PathUsage <span class="kw">with</span> PathClient</code></pre></div>
+<ul class="incremental">
+<li><code>UninitializedFieldError</code></li>
+<li>Solution: always use <code>lazy val</code>s instead of <code>val</code>s in interpreters?</li>
+</ul>
+</div><div id="trait-constructor-parameters" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Trait constructor parameters</h1></div><div id="alternative-solution-to-initialization-issues" class="slide section level3 unnumbered">
+<h1>Alternative solution to initialization issues</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">PathUsage</span>(<span class="kw">val</span> alg: PathAlg) {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+
+  path / <span class="st">&quot;foo&quot;</span>
+}</code></pre></div>
+</div><div id="narrowing-issue" class="slide section level3 unnumbered">
+<h1>Narrowing issue</h1>
+<ul>
+<li>Let’s say that somewhere in my application I require an instance of <code>PathUsage</code> that has been passed a <code>PathClient</code> interpreter:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> clientUsage: PathUsage { <span class="kw">val</span> alg: PathClient } = <span class="kw">new</span> <span class="fu">PathUsage</span>(<span class="kw">new</span> PathClient {})</code></pre></div>
+<pre><code>error: type mismatch:
+ found   : PathUsage
+ required: PathUsage { alg: PathClient }</code></pre>
+</div><div id="narrowing-issue-1" class="slide section level3 unnumbered">
+<h1>Narrowing issue</h1>
+<ul>
+<li>Alternatively, if I <code>PathUsage</code> was a trait rather than a class, it could be refined:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathUsage {
+  <span class="kw">val</span> alg: PathAlg
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+
+  path / <span class="st">&quot;foo&quot;</span>
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> clientUsage: PathUsage { <span class="kw">val</span> alg: PathClient } = <span class="kw">new</span> PathUsage { <span class="kw">val</span> alg = <span class="kw">new</span> PathClient {} }</code></pre></div>
+<ul>
+<li>But we come back to the <code>UninitializedFieldError</code>…</li>
+</ul>
+</div><div id="trait-constructor-parameters-1" class="slide section level3 unnumbered">
+<h1>Trait constructor parameters</h1>
+<ul>
+<li>However, traits can have parameters in Dotty!</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> <span class="fu">PathUsage</span>(<span class="kw">val</span> alg: PathAlg) {
+  <span class="kw">import</span> alg.<span class="fu">_</span>
+  
+  path / <span class="st">&quot;foo&quot;</span>
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> clientUsage: PathUsage { <span class="kw">val</span> alg: PathClient } =
+  <span class="kw">new</span> <span class="fu">PathUsage</span>(<span class="kw">new</span> PathClient {})</code></pre></div>
+<ul>
+<li>Unfortunately, I still get the same “type mismatch” error as with classes</li>
+</ul>
+</div><div id="trait-constructor-parameters-2" class="slide section level3 unnumbered">
+<h1>Trait constructor parameters</h1>
+<ul>
+<li>Alternative solution?</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> clientUsage: PathUsage { <span class="kw">val</span> alg: PathClient } =
+  <span class="kw">new</span> <span class="fu">PathUsage</span>(<span class="kw">override</span> <span class="kw">val</span> alg: PathClient = <span class="kw">new</span> PathClient {})</code></pre></div>
+<ul>
+<li>What if, in case of explicit <code>override</code> of a trait parameter constructor, the constructed type was refined accordingly?</li>
+</ul>
+</div><div id="union-types" class="titleslide slide section level2"><h1><span class="header-section-number">2.3</span> Union types</h1></div><div id="motivation" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<ul>
+<li>I want a nice syntax for my language:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">path / <span class="st">&quot;foo&quot;</span> / <span class="st">&quot;bar&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">path / <span class="st">&quot;foo&quot;</span> / segment[Int]</code></pre></div>
+</div><div id="motivation-1" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathSyntax[A] { <span class="kw">this</span>: Path[A] =&gt;
+
+  <span class="kw">def</span> / [B](other: Path[B]): Path[(A, B)] = …
+
+  <span class="kw">def</span> / (other: String): Path[A] = …
+
+}</code></pre></div>
+<ul class="incremental">
+<li>Would it be possible to avoid overloading?</li>
+</ul>
+</div><div id="view-bounds" class="slide section level3 unnumbered">
+<h1>View bounds?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathSyntax[A] { <span class="kw">this</span>: Path[A] =&gt;
+  <span class="kw">def</span> / [X, B](other: X)(<span class="kw">implicit</span> v: View[X, Path[B]]): Path[(A, B)] = …
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> View[X, Y](<span class="kw">val</span> apply: X =&gt; Y)
+
+<span class="kw">implicit</span> <span class="kw">def</span> id[A]: View[A, A] = <span class="kw">new</span> View(identity)
+
+<span class="kw">implicit</span> <span class="kw">val</span> static: View[String, Path[Unit]] = <span class="kw">new</span> View(s =&gt; <span class="fu">staticSegment</span>(s))</code></pre></div>
+<ul class="incremental">
+<li>As known as the <a href="http://spray.io/blog/2012-12-13-the-magnet-pattern/">magnet pattern</a>.</li>
+</ul>
+</div><div id="union-types-1" class="slide section level3 unnumbered">
+<h1>Union types?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathSyntax[A] { <span class="kw">this</span>: Path[A] =&gt;
+  <span class="kw">def</span> / [B](other: Path[B] | String): Path[(A, B)] = ???
+}</code></pre></div>
+<ul class="incremental">
+<li>How to return a <code>B</code> when we only get a <code>String</code> (how would <code>B</code> be instantiated?)</li>
+</ul>
+</div><div id="either-vs" class="slide section level3 unnumbered">
+<h1><code>Either</code> vs <code>|</code> </h1>
+<ul>
+<li>Let’s think of types as sets of possible values</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Either[Unit, Unit] ≡ Boolean
+<span class="co">// 1 + 1 == 2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Unit | Unit ≢ Boolean
+<span class="co">// 1 != 2</span></code></pre></div>
+</div><div id="unboxed-option" class="slide section level3 unnumbered">
+<h1>Unboxed <code>Option</code>?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">type</span> Opt[A] = A | Null</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> map[A](a: Opt[A])(f: A =&gt; B): Opt[B] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> maybeString: Opt[String] = …</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">map</span>(maybeString)(value =&gt; …)</code></pre></div>
+<ul class="incremental">
+<li>What’s the type of <code>value</code>?</li>
+<li><code>String</code> or <code>Opt[String]</code>?</li>
+</ul>
+</div><div id="unboxed-option-1" class="slide section level3 unnumbered">
+<h1>Unboxed <code>Option</code>?</h1>
+<ul>
+<li>More generally, we can not distinguish <code>Opt[Opt[A]]</code> from <code>Opt[A]</code></li>
+</ul>
+<ul class="incremental">
+<li><code>Opt[Opt[A]] = Opt[A] | Null</code></li>
+<li><code>Opt[Opt[A]] = A | Null | Null</code></li>
+<li><code>Opt[Opt[A]] = A | Null</code></li>
+<li><code>Opt[Opt[A]] = Opt[A]</code></li>
+</ul>
+<ul class="incremental">
+<li><code>Opt#map</code> would <em>break</em> parametricity!</li>
+</ul>
+</div><div id="arity-polymorphic-functions" class="titleslide slide section level2"><h1><span class="header-section-number">2.4</span> Arity-polymorphic functions</h1></div><div id="motivation-2" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<ul>
+<li>Remember the concrete representation of <code>Request[A]</code> in the “client” interpreter:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> RequestClient <span class="kw">extends</span> RequestAlg {
+  <span class="kw">type</span> Request[A] = A =&gt; HttpRequest
+}</code></pre></div>
+<ul class="incremental">
+<li>In practice, <code>A</code> often aggregates several types (in a tuple):</li>
+<li><div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// GET  /book/:title/:chapter</span>
+<span class="kw">val</span> chapter: Request[(String, Int)] =
+<span class="fu">get</span>(path / <span class="st">&quot;book&quot;</span> / segment[String] / segment[Int])</code></pre></div></li>
+<li><div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// GET  /book/:category/:title/:chapter</span>
+<span class="kw">val</span> chapter: Request[(String, (String, Int))] =
+<span class="fu">get</span>(path / <span class="st">&quot;book&quot;</span> / segment[String] / segment[String] / segment[Int])</code></pre></div></li>
+</ul>
+</div><div id="motivation-3" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<ul>
+<li>Consequently, at use site:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Books <span class="kw">extends</span> BooksRequest <span class="kw">with</span> RequestClient</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Books.<span class="fu">chapter</span>((<span class="st">&quot;geek&quot;</span>, (<span class="st">&quot;Play Framework Essentials&quot;</span>, <span class="dv">3</span>)))</code></pre></div>
+</div><div id="arity-polymorphic-functions-1" class="slide section level3 unnumbered">
+<h1>Arity-polymorphic functions</h1>
+<ul>
+<li>I would like to just write:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Books.<span class="fu">chapter</span>(<span class="st">&quot;geek&quot;</span>, <span class="st">&quot;Play Framework Essentials&quot;</span>, <span class="dv">3</span>)</code></pre></div>
+<ul class="incremental">
+<li><div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> chapter: Request[String :: String :: Int :: HNil] =
+<span class="fu">get</span>(path / <span class="st">&quot;book&quot;</span> / segment[String] / segment[String] / segment[Int])</code></pre></div></li>
+</ul>
+<ul class="incremental">
+<li>What if we extended the current <code>apply</code> syntactic sugar to support symmetric monoidal categories?</li>
+</ul>
+</div><div id="algebraic-normalization" class="titleslide slide section level2"><h1><span class="header-section-number">2.5</span> Algebraic normalization</h1></div><div id="motivation-4" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<ul>
+<li>The signature of the general method to combine two <code>Path[_]</code> is the following:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> product[A, B](pa: Path[A], pb: Path[B]): Path[(A, B)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> PathSyntax[A] { <span class="kw">this</span>: Path[A] =&gt;
+  <span class="kw">def</span> / [B](that: Path[B]): Path[(A, B)] = <span class="fu">product</span>(<span class="kw">this</span>, that)
+}</code></pre></div>
+</div><div id="motivation-5" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<ul>
+<li>Consider the following combinations:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> `unit × unit`(p1: Path[Unit], p2: Path[Unit]) = p1 / p2</code></pre></div>
+<ul class="incremental">
+<li>What is the return type of <code>unit × unit</code>?</li>
+<li><code>Path[(Unit, Unit)]</code></li>
+<li>How useful is it?</li>
+<li>.</li>
+</ul>
+</div><div id="motivation-6" class="slide section level3 unnumbered">
+<h1>Motivation</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> myRequest: Request[(String, (Unit, (Int, (Unit, Unit))))]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">myRequest</span>((<span class="st">&quot;foo&quot;</span>, ((), (<span class="dv">42</span>, ((), ())))))</code></pre></div>
+<ul>
+<li>Carrying extra <code>Unit</code>s is cumbersome:
+<ul>
+<li>Type signature are full of noise ;</li>
+<li>At use site, you have to fill them with extra <code>()</code> ;</li>
+<li>At implementation site, you have to discard them.</li>
+</ul></li>
+</ul>
+</div><div id="algebraic-products" class="slide section level3 unnumbered">
+<h1>Algebraic products</h1>
+<ul>
+<li>We all know that <code>1 × 1 = 1</code>, and, more generally, <code>a × 1 = a</code></li>
+<li>We want our types to follow the same rule:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> `unit × unit`(p1: Path[Unit], p2: Path[Unit]): Path[Unit] = <span class="fu">product</span>(p1, p2)</code></pre></div>
+</div><div id="tupler" class="slide section level3 unnumbered">
+<h1><code>Tupler</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Tupler[A, B] {
+  <span class="kw">type</span> Out
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> product[A, B](
+  p1: Path[A], p2: Path[B]
+)(<span class="kw">implicit</span>
+  tupler: Tupler[A, B]
+): tupler.<span class="fu">Out</span></code></pre></div>
+</div><div id="tupler-1" class="slide section level3 unnumbered">
+<h1><code>Tupler</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">def</span> `a × b = a × b`[A, B]: Tupler[A, B]    { <span class="kw">type</span> Out = (A, B) }
+<span class="kw">implicit</span> <span class="kw">def</span> `a × <span class="dv">1</span> = a`[A]:        Tupler[A, Unit] { <span class="kw">type</span> Out = A      }
+<span class="kw">implicit</span> <span class="kw">def</span> `<span class="dv">1</span> × a = a`[A]:        Tupler[Unit, A] { <span class="kw">type</span> Out = A      } </code></pre></div>
+<p>(Defined with increasing priority)</p>
+</div><div id="too-specific-use-case" class="slide section level3 unnumbered">
+<h1>Too specific use case?</h1>
+<ul>
+<li><a href="https://github.com/finagle/finch/blob/master/core/src/main/scala/io/finch/internal/PairJoin.scala">finch</a> and <a href="https://github.com/http4s/rho/blob/master/core/src/main/scala/org/http4s/rho/PathBuilder.scala#L71">rho</a> have it too (their implementation is always based on <a href="https://github.com/milessabin/shapeless/blob/master/core/src/main/scala/shapeless/ops/adjoin.scala">shapeless</a>, by the way).</li>
+</ul>
+</div>
+</body>
+</html>
