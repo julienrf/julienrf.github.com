@@ -495,7 +495,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   p1: Path[A], p2: Path[B]
 )(<span class="kw">implicit</span>
   tupler: Tupler[A, B]
-): tupler.<span class="fu">Out</span></code></pre></div>
+): Path[tupler.<span class="fu">Out</span>]</code></pre></div>
 </div><div id="tupler-1" class="slide section level3 unnumbered">
 <h1><code>Tupler</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">def</span> `a × b = a × b`[A, B]: Tupler[A, B]    { <span class="kw">type</span> Out = (A, B) }
