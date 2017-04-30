@@ -1,0 +1,304 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>derived - reactivemongo.bson.derived</title>
+          <meta name="description" content="derived - reactivemongo.bson.derived" />
+          <meta name="keywords" content="derived reactivemongo.bson.derived" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'reactivemongo.bson.derived.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../lib/package_big.png" />
+        <p id="owner"><a href="../../package.html" class="extype" name="reactivemongo">reactivemongo</a>.<a href="../package.html" class="extype" name="reactivemongo.bson">bson</a></p>
+        <h1>derived</h1><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">derived</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p></p><pre><span class="kw">import</span> reactivemongo.bson.{derived, BSONDocumentHandler}
+
+<span class="kw">sealed</span> <span class="kw">trait</span> Foo
+<span class="kw">case</span> <span class="kw">class</span> Bar(i: <span class="std">Int</span>, s: <span class="std">String</span>) <span class="kw">extends</span> Foo
+<span class="kw">case</span> <span class="kw">class</span> Baz(b: <span class="std">Boolean</span>) <span class="kw">extends</span> Foo
+
+<span class="kw">object</span> Foo {
+  <span class="kw">implicit</span> <span class="kw">val</span> codec: BSONDocumentHandler[Foo] = derived.codec
+}</pre></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/julienrf/reactivemongo-derived-codecs/tree/v3.0.0/src/main/scala/reactivemongo/bson/derived/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="reactivemongo.bson.derived"><span>derived</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="reactivemongo.bson.derived.DerivedDecoder" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="DerivedDecoder[A0,A]extendsBSONDocumentReader[A]"></a>
+      <a id="DerivedDecoder[A0,A]:DerivedDecoder[A0,A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedDecoder.html"><span class="name">DerivedDecoder</span></a><span class="tparams">[<span name="A0">A0</span>, <span name="A">A</span>]</span><span class="result"> extends <a href="http://reactivemongo.org/release/0.12/api/index.html#reactivemongo.bson.BSONDocumentReader" class="extype" target="_top">BSONDocumentReader</a>[<span class="extype" name="reactivemongo.bson.derived.DerivedDecoder.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedDecoder[A0,A]extendsBSONDocumentReader[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="tparam">A0</dt><dd class="cmt"><p>Phantom type keeping track of the original type to derive a decoder for</p></dd><dt class="tparam">A</dt><dd class="cmt"><p>Decoded type</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@implicitNotFound</span><span class="args">(<span>
+      
+      <span class="defval" name="&quot;Unable to derive a BSON decoder for type ${A}. If it is a case class, check that all its fields can be decoded.&quot;">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="reactivemongo.bson.derived.DerivedDecoderLowPriority" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="DerivedDecoderLowPriorityextendsAnyRef"></a>
+      <a id="DerivedDecoderLowPriority:DerivedDecoderLowPriority"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedDecoderLowPriority.html"><span class="name">DerivedDecoderLowPriority</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedDecoderLowPriorityextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="reactivemongo.bson.derived.DerivedEncoder" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="DerivedEncoder[A]extendsBSONDocumentWriter[A]"></a>
+      <a id="DerivedEncoder[A]:DerivedEncoder[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedEncoder.html"><span class="name">DerivedEncoder</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <a href="http://reactivemongo.org/release/0.12/api/index.html#reactivemongo.bson.BSONDocumentWriter" class="extype" target="_top">BSONDocumentWriter</a>[<span class="extype" name="reactivemongo.bson.derived.DerivedEncoder.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedEncoder[A]extendsBSONDocumentWriter[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@implicitNotFound</span><span class="args">(<span>
+      
+      <span class="defval" name="&quot;Unable to derive a BSON encoder for type ${A}. If it is a case class, check that all its fields can be encoded.&quot;">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="reactivemongo.bson.derived.DerivedEncoderLowPriority" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="DerivedEncoderLowPriorityextendsAnyRef"></a>
+      <a id="DerivedEncoderLowPriority:DerivedEncoderLowPriority"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedEncoderLowPriority.html"><span class="name">DerivedEncoderLowPriority</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedEncoderLowPriorityextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="reactivemongo.bson.derived.DerivedDecoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="DerivedDecoder"></a>
+      <a id="DerivedDecoder:DerivedDecoder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedDecoder$.html"><span class="name">DerivedDecoder</span></a><span class="result"> extends <a href="DerivedDecoderLowPriority.html" class="extype" name="reactivemongo.bson.derived.DerivedDecoderLowPriority">DerivedDecoderLowPriority</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedDecoder" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">As usual the derivation process is as follows:</p><div class="fullcomment"><div class="comment cmt"><p>As usual the derivation process is as follows:</p><ul><li>let shapeless represent our type A in terms of Coproduct (if it is a sealed trait) or HList (if it is a case class) ;</li><li>define how to decode Coproducts and HLists using implicit definitions
+</li></ul></div></div>
+    </li><li name="reactivemongo.bson.derived.DerivedEncoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="DerivedEncoder"></a>
+      <a id="DerivedEncoder:DerivedEncoder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="DerivedEncoder$.html"><span class="name">DerivedEncoder</span></a><span class="result"> extends <a href="DerivedEncoderLowPriority.html" class="extype" name="reactivemongo.bson.derived.DerivedEncoderLowPriority">DerivedEncoderLowPriority</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@DerivedEncoder" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="reactivemongo.bson.derived#codec" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="codec[A](implicitdecoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedDecoder[_,A]],implicitencoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedEncoder[A]]):reactivemongo.bson.BSONDocumentHandler[A]"></a>
+      <a id="codec[A](Lazy[DerivedDecoder[_,A]],Lazy[DerivedEncoder[A]]):BSONDocumentHandler[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">codec</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="decoder">decoder: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="DerivedDecoder.html" class="extype" name="reactivemongo.bson.derived.DerivedDecoder">DerivedDecoder</a>[_, <span class="extype" name="reactivemongo.bson.derived.codec.A">A</span>]]</span>, <span name="encoder">encoder: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="DerivedEncoder.html" class="extype" name="reactivemongo.bson.derived.DerivedEncoder">DerivedEncoder</a>[<span class="extype" name="reactivemongo.bson.derived.codec.A">A</span>]]</span>)</span><span class="result">: <a href="../package.html#BSONDocumentHandler[T]=reactivemongo.bson.BSONDocumentReader[T]withreactivemongo.bson.BSONDocumentWriter[T]withreactivemongo.bson.BSONHandler[reactivemongo.bson.BSONDocument,T]" class="extmbr" name="reactivemongo.bson.BSONDocumentHandler">BSONDocumentHandler</a>[<span class="extype" name="reactivemongo.bson.derived.codec.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@codec[A](implicitdecoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedDecoder[_,A]],implicitencoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedEncoder[A]]):reactivemongo.bson.BSONDocumentHandler[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="reactivemongo.bson.derived#decoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="decoder[A](implicitdecoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedDecoder[_,A]]):reactivemongo.bson.BSONDocumentReader[A]"></a>
+      <a id="decoder[A](Lazy[DerivedDecoder[_,A]]):BSONDocumentReader[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">decoder</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="decoder">decoder: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="DerivedDecoder.html" class="extype" name="reactivemongo.bson.derived.DerivedDecoder">DerivedDecoder</a>[_, <span class="extype" name="reactivemongo.bson.derived.decoder.A">A</span>]]</span>)</span><span class="result">: <a href="http://reactivemongo.org/release/0.12/api/index.html#reactivemongo.bson.BSONDocumentReader" class="extype" target="_top">BSONDocumentReader</a>[<span class="extype" name="reactivemongo.bson.derived.decoder.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@decoder[A](implicitdecoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedDecoder[_,A]]):reactivemongo.bson.BSONDocumentReader[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="reactivemongo.bson.derived#encoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="encoder[A](implicitencoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedEncoder[A]]):reactivemongo.bson.BSONDocumentWriter[A]"></a>
+      <a id="encoder[A](Lazy[DerivedEncoder[A]]):BSONDocumentWriter[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">encoder</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="encoder">encoder: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="DerivedEncoder.html" class="extype" name="reactivemongo.bson.derived.DerivedEncoder">DerivedEncoder</a>[<span class="extype" name="reactivemongo.bson.derived.encoder.A">A</span>]]</span>)</span><span class="result">: <a href="http://reactivemongo.org/release/0.12/api/index.html#reactivemongo.bson.BSONDocumentWriter" class="extype" target="_top">BSONDocumentWriter</a>[<span class="extype" name="reactivemongo.bson.derived.encoder.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#reactivemongo.bson.derived.package@encoder[A](implicitencoder:shapeless.Lazy[reactivemongo.bson.derived.DerivedEncoder[A]]):reactivemongo.bson.BSONDocumentWriter[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
