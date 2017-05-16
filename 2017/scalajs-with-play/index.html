@@ -933,14 +933,44 @@ Hello world
 <p>
 <img src="images/rx-merge.svg" />
 </p>
+</div><div id="sampling" class="slide section level3 unnumbered">
+<h1>Sampling</h1>
+<ul>
+<li>We can <em>sample</em> one <code>Rx</code> on every update of <em>another</em> <code>Rx</code> using <code>sampleOn</code></li>
+<li>Only values of the <em>first</em> <code>Rx</code> are seen as output, but only <em>when</em> there are updates on the <em>second</em> <code>Rx</code></li>
+</ul>
+</div><div id="sampling-2" class="slide section level3 unnumbered">
+<h1>Sampling (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Rx[Int] = ???
+<span class="kw">val</span> y: Rx[Int] = ???
+<span class="kw">val</span> z = x.<span class="fu">sampleOn</span>(y)</code></pre></div>
+<p>
+<img src="images/rx-sampleon.svg" />
+</p>
 </div><div id="other-operations" class="slide section level3 unnumbered">
 <h1>Other operations</h1>
 <p>There are several other operations <a href="https://github.com/OlivierBlanvillain/monadic-html#frp-ish-apis">documented here</a>:</p>
 <ul>
 <li><code>flatMap</code></li>
 <li><code>dropRepeats</code></li>
+<li><code>product</code></li>
 <li>etc.</li>
 </ul>
+</div><div id="custom-combinator-zipleft" class="slide section level3 unnumbered">
+<h1>Custom combinator: zipLeft</h1>
+<ul>
+<li>On every update of one <code>Rx</code>, combine it with the latest value of another <code>Rx</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> zipLeft[A, B](x: Rx[A], y: Rx[B]): Rx[(A, B)] =
+  x.<span class="fu">product</span>(y).<span class="fu">sampleOn</span>(x)</code></pre></div>
+</div><div id="custom-combinator-zipleft-2" class="slide section level3 unnumbered">
+<h1>Custom combinator: zipLeft (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Rx[Int] = ???
+<span class="kw">val</span> y: Rx[Int] = ???
+<span class="kw">val</span> z = <span class="fu">zipLeft</span>(x, y)</code></pre></div>
+<p>
+<img src="images/rx-zipleft.svg" />
+</p>
 </div><div id="the-source-of-rxes-vara" class="slide section level3">
 <h1><span class="header-section-number">4.4.1</span> The source of <code>Rx</code>es: <code class="unnumbered">Var[A]</code></h1>
 <ul>
@@ -1010,6 +1040,59 @@ x.<span class="fu">update</span>(prev =&gt; prev / <span class="dv">5</span>)
       &lt;/div&gt;
 
     <span class="fu">mount</span>(dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;main&quot;</span>), content)
+  }
+}</code></pre></div>
+</div><div id="more-idiomatic-monadic-html" class="slide section level3 unnumbered">
+<h1>More idiomatic monadic-html</h1>
+<ul>
+<li>Using (normal) mutable state, like a <code>var</code>, is typically bad</li>
+<li>monadic-html recommends to only use <code>Var</code>s to keep track of state</li>
+<li>Furthermore, they recommend the rule of thumb “1 <code>Var</code> for 1 <code>:=</code>/<code>update</code>”</li>
+<li>Our previous implementation clearly does not live to those expectations</li>
+</ul>
+</div><div id="event-signals-and-operations" class="slide section level3 unnumbered">
+<h1>Event signals and operations</h1>
+<ul>
+<li>Event <em>signals</em> are simple <code>Var</code>s updated on every relevant DOM event</li>
+<li><em>Operations</em> are transformations to apply to the visible state of the application</li>
+</ul>
+</div><div id="event-signals" class="slide section level3 unnumbered">
+<h1>Event signals</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> step = <span class="fu">Var</span>(<span class="dv">1</span>)
+<span class="kw">val</span> incrementClicks = <span class="fu">Var</span>(())
+<span class="kw">val</span> resetClicks = <span class="fu">Var</span>(())
+<span class="co">// ...</span>
+<span class="kw">val</span> content =
+  &lt;div&gt;
+    &lt;h1&gt;{ counter }&lt;/h1&gt;
+    &lt;p&gt;&lt;input <span class="kw">type</span>=<span class="st">&quot;number&quot;</span> value=<span class="st">&quot;1&quot;</span> onchange={ (e: dom.<span class="fu">Event</span>) =&gt;
+      step := e.<span class="fu">target</span>.<span class="fu">asInstanceOf</span>[html.<span class="fu">Input</span>].<span class="fu">value</span>.<span class="fu">toInt</span>
+    } /&gt;&lt;/p&gt;
+    &lt;div&gt;
+      &lt;button onclick={ () =&gt; incrementClicks := () }&gt;Increment&lt;/button&gt;
+      &lt;button onclick={ () =&gt; resetClicks := () }&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;</code></pre></div>
+</div><div id="operations" class="slide section level3 unnumbered">
+<h1>Operations</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">abstract</span> <span class="kw">class</span> Operation
+<span class="kw">final</span> <span class="kw">case</span> <span class="kw">class</span> <span class="fu">IncrementStep</span>(step: Int) <span class="kw">extends</span> Operation
+<span class="kw">case</span> <span class="kw">object</span> Reset <span class="kw">extends</span> Operation
+
+<span class="kw">val</span> incrementOps = <span class="fu">zipLeft</span>(incrementClicks, step).<span class="fu">map</span> {
+  <span class="kw">case</span> (click, step) =&gt; <span class="fu">IncrementStep</span>(step)
+}
+<span class="kw">val</span> resetOps = resetClicks.<span class="fu">map</span>(_ =&gt; Reset)
+<span class="kw">val</span> allOperations: Rx[Operation] = incrementOps.<span class="fu">merge</span>(resetOps)</code></pre></div>
+</div><div id="visible-state-as-a-fold-of-all-operations" class="slide section level3 unnumbered">
+<h1>Visible state as a <em>fold</em> of all operations</h1>
+<ul>
+<li><code>Rx.foldp</code> is similar to <code>List.foldLeft</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> counter = allOperations.<span class="fu">foldp</span>(<span class="dv">0</span>) { (prev, op) =&gt;
+  op <span class="kw">match</span> {
+    <span class="kw">case</span> <span class="fu">IncrementStep</span>(step) =&gt; prev + step
+    <span class="kw">case</span> Reset               =&gt; <span class="dv">0</span>
   }
 }</code></pre></div>
 </div><div id="scala.js-v-scalajvm-the-language" class="titleslide slide section level2"><h1><span class="header-section-number">4.5</span> Scala.js v Scala/JVM: the language</h1></div><div id="scala.js-v-scalajvm-the-language-1" class="slide section level3 unnumbered">
