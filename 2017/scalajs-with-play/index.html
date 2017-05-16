@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Sébastien Doeraene     sebastien.doeraene@epfl.ch" />
+  <meta name="author" content="Julien Richard-Foy     julien.richard-foy@epfl.ch" />
+  <meta name="author" content="" />
+  <meta name="author" content="HEIG-VD – 2017" />
+  <meta name="author" content="" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/2017/scalajs-with-play" />
+  <title>Scala.js with Play</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Scala.js with Play</h1>
+  <p class="author">
+Sébastien Doeraene     <script type="text/javascript">
+<!--
+h='&#x65;&#112;&#102;&#108;&#46;&#x63;&#104;';a='&#64;';n='&#x73;&#x65;&#98;&#x61;&#x73;&#116;&#x69;&#x65;&#110;&#46;&#100;&#x6f;&#x65;&#114;&#x61;&#x65;&#110;&#x65;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x73;&#x65;&#98;&#x61;&#x73;&#116;&#x69;&#x65;&#110;&#46;&#100;&#x6f;&#x65;&#114;&#x61;&#x65;&#110;&#x65;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/>Julien Richard-Foy     <script type="text/javascript">
+<!--
+h='&#x65;&#112;&#102;&#108;&#46;&#x63;&#104;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>HEIG-VD – 2017<br/><br/><br/><a href="http://julienrf.github.io/2017/scalajs-with-play" class="uri">http://julienrf.github.io/2017/scalajs-with-play</a>
+  </p>
+</div>
+<div id="outline" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ul>
+<li>Introduction</li>
+<li>Web applications</li>
+<li>Play</li>
+<li>Scala.js</li>
+<li>Play and Scala.js</li>
+</ul>
+</div>
+<div id="introduction" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Introduction</h1></div><div id="introductory-example" class="titleslide slide section level2"><h1><span class="header-section-number">1.1</span> Introductory Example</h1></div><div id="the-counter" class="slide section level3 unnumbered">
+<h1>The Counter</h1>
+<div class="figure">
+<img src="images/screenshot.png" />
+
+</div>
+</div>
+<div id="web-applications" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Web applications</h1></div><div id="what-is-a-web-application" class="slide section level3 unnumbered">
+<h1>What is a web application?</h1>
+<div class="figure">
+<img src="images/Web-app-1.svg" />
+
+</div>
+</div><div id="what-is-a-web-application-1" class="slide section level3 unnumbered">
+<h1>What is a web application?</h1>
+<div class="figure">
+<img src="images/Web-app-2.svg" />
+
+</div>
+</div><div id="http" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> HTTP</h1></div><div id="http-requests" class="slide section level3 unnumbered">
+<h1>HTTP requests</h1>
+<pre><code>GET https://google.com/maps?q=Yverdon&amp;lang=fr</code></pre>
+<ul>
+<li>Verb (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, …)</li>
+<li>URL
+<ul>
+<li>host (e.g. <code>google.com</code>)</li>
+<li>path (e.g. <code>/maps</code>)</li>
+<li>query string (e.g. <code>q=Yverdon&amp;lang=fr</code>)</li>
+</ul></li>
+<li>Headers (e.g. <code>Accept-Language: fr</code>)</li>
+<li>Entity (e.g. image, JSON document, etc.)</li>
+</ul>
+</div><div id="http-responses" class="slide section level3 unnumbered">
+<h1>HTTP responses</h1>
+<ul>
+<li>Status code
+<ul>
+<li>Success (2xx)</li>
+<li>Redirect (3xx)</li>
+<li>Client failure (4xx)</li>
+<li>Server failure (5xx)</li>
+</ul></li>
+<li>Headers (e.g. <code>ETag: 5d72cb4</code>)</li>
+<li>Entity</li>
+</ul>
+</div><div id="scaling-out" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Scaling out</h1></div><div id="the-problem" class="slide section level3 unnumbered">
+<h1>The problem</h1>
+<ul>
+<li>Your app is successful!</li>
+<li>Too many clients at the same time…</li>
+<li>Buy a more powerful machine to run the web server?
+<ul>
+<li>Works up to a certain scale only</li>
+<li>No resilience</li>
+</ul></li>
+</ul>
+</div><div id="scaling-out-http-server" class="slide section level3 unnumbered">
+<h1>Scaling out HTTP server</h1>
+<div class="figure">
+<img src="images/scale%20out%20http%20server%200.svg" />
+
+</div>
+</div><div id="scaling-out-http-server-1" class="slide section level3 unnumbered">
+<h1>Scaling out HTTP server</h1>
+<div class="figure">
+<img src="images/scale%20out%20http%20server.svg" />
+
+</div>
+</div>
+<div id="play-framework" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Play framework</h1></div><div id="setup" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> Setup</h1></div><div id="sbt-setup" class="slide section level3 unnumbered">
+<h1>Sbt setup</h1>
+<p><code>project/plugins.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.5.14&quot;</span>)</code></pre></div>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">enablePlugins</span>(PlayScala)</code></pre></div>
+</div><div id="hot-reload" class="slide section level3 unnumbered">
+<h1>Hot reload</h1>
+<ul>
+<li>Run your app:</li>
+</ul>
+<pre><code>$ sbt run</code></pre>
+<ul>
+<li><p>Go to <a href="http://localhost:9000" class="uri">http://localhost:9000</a></p></li>
+<li><p>Edit your code and reload the page in your browser</p></li>
+</ul>
+</div><div id="controllers-and-routes" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Controllers and routes</h1></div><div id="request-lifecycle" class="slide section level3 unnumbered">
+<h1>Request lifecycle</h1>
+<div class="figure">
+<img src="images/request-lifecycle.svg" />
+
+</div>
+</div><div id="routes" class="slide section level3 unnumbered">
+<h1>Routes</h1>
+<p><code>conf/routes</code>:</p>
+<pre><code>GET    /index.html       counter.Counter.index()</code></pre>
+</div><div id="controllers" class="slide section level3 unnumbered">
+<h1>Controllers</h1>
+<p><code>app/counter/Counter.scala</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> counter
+
+<span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">mvc</span>.{Action, Controller}
+
+<span class="kw">class</span> Counter <span class="kw">extends</span> Controller {
+
+  <span class="kw">def</span> index = Action { request =&gt;
+    <span class="fu">Ok</span>(<span class="st">&quot;Hello, world!&quot;</span>)
+  }
+
+}</code></pre></div>
+</div><div id="actions" class="slide section level3 unnumbered">
+<h1>Actions</h1>
+<ul>
+<li>Handle requests</li>
+<li>Built with the <code>Action</code> object
+<ul>
+<li>Defines how to parse the request entity</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action { request =&gt; Ok }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action(parse.<span class="fu">json</span>) { request =&gt; <span class="fu">Ok</span>((request.<span class="fu">body</span> \ <span class="st">&quot;message&quot;</span>).<span class="fu">get</span>) }</code></pre></div>
+</div><div id="requests" class="slide section level3 unnumbered">
+<h1>Requests</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action { request =&gt;
+
+  request.<span class="fu">method</span> <span class="co">// e.g. &quot;GET&quot;</span>
+  request.<span class="fu">uri</span> <span class="co">// e.g. &quot;/index.html&quot;</span>
+  request.<span class="fu">headers</span>
+  request.<span class="fu">acceptedTypes</span> <span class="co">// e.g. Seq(&quot;text/html&quot;)</span>
+  request.<span class="fu">body</span> <span class="co">// the request entity</span>
+
+  Ok
+
+}</code></pre></div>
+</div><div id="responses" class="slide section level3 unnumbered">
+<h1>Responses</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Ok <span class="co">// empty response with status code 200 (OK)</span>
+NotFound <span class="co">// empty response with status code 404 (Not Found)</span>
+<span class="co">// etc.</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">Ok</span>(<span class="st">&quot;Hello, world!&quot;</span>)
+<span class="fu">Created</span>(Json.<span class="fu">obj</span>(<span class="st">&quot;id&quot;</span> -&gt; <span class="dv">123</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="fu">Ok</span>(<span class="st">&quot;&lt;h1&gt;Hello, world!&lt;/h1&gt;&quot;</span>).<span class="fu">withHeader</span>(<span class="st">&quot;Content-Type&quot;</span> -&gt; <span class="st">&quot;application/json&quot;</span>)
+  <span class="fu">Ok</span>(<span class="st">&quot;Salut&quot;</span>).<span class="fu">withHeader</span>(<span class="st">&quot;Content-Language&quot;</span> -&gt; <span class="st">&quot;fr&quot;</span>)
+}</code></pre></div>
+</div><div id="concurrency-control" class="titleslide slide section level2"><h1><span class="header-section-number">3.3</span> Concurrency control</h1></div><div id="how-to-handle-multiple-concurrent-requests" class="slide section level3 unnumbered">
+<h1>How to handle multiple concurrent requests?</h1>
+<ul>
+<li>Two main kinds of strategies
+<ul>
+<li>Multithreaded model</li>
+<li>Evented model</li>
+</ul></li>
+</ul>
+</div><div id="multithreaded-model" class="slide section level3 unnumbered">
+<h1>Multithreaded model</h1>
+<ul>
+<li>The framework allocates a new thread for each incoming request</li>
+<li>The runtime environment (e.g. the JVM) manages the execution of each thread (with a preemptive scheduler)</li>
+</ul>
+</div><div id="evented-model" class="slide section level3 unnumbered">
+<h1>Evented model</h1>
+<ul>
+<li>Several requests are processed by a same thread</li>
+<li>Each time a request handler does IO it releases the execution thread</li>
+</ul>
+</div><div id="best-execution-model" class="slide section level3 unnumbered">
+<h1>Best execution model?</h1>
+</div><div id="concurrency-control-in-play" class="slide section level3 unnumbered">
+<h1>Concurrency control in Play</h1>
+<ul>
+<li>Evented first, but you can configure the execution context to be multithreaded</li>
+</ul>
+</div><div id="how-to-release-the-execution-context" class="slide section level3 unnumbered">
+<h1>How to release the execution context?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action { request =&gt;
+  <span class="kw">val</span> data = myDatabase.<span class="fu">requestSomething</span>()
+  <span class="fu">Ok</span>(Json.<span class="fu">toJson</span>(data))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MyDatabase {
+  <span class="kw">def</span> <span class="fu">requestSomething</span>(): Something
+}</code></pre></div>
+</div><div id="how-to-release-the-execution-context-1" class="slide section level3 unnumbered">
+<h1>How to release the execution context?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action.<span class="fu">async</span> { request =&gt;
+  <span class="kw">for</span> {
+    data &lt;- myDatabase.<span class="fu">requestSomething</span>()
+  } <span class="kw">yield</span> <span class="fu">Ok</span>(Json.<span class="fu">toJson</span>(data))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MyDatabase {
+  <span class="kw">def</span> <span class="fu">requestSomething</span>(): Future[Something]
+}</code></pre></div>
+</div><div id="asynchronous-boundaries" class="slide section level3 unnumbered">
+<h1>Asynchronous boundaries</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">Future</span>
+<span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">libs</span>.<span class="fu">concurrent</span>.<span class="fu">Execution</span>.<span class="fu">Implicits</span>.<span class="fu">defaultContext</span>
+
+Future {
+  <span class="dv">1</span> + <span class="dv">1</span>
+}.<span class="fu">map</span> { x =&gt;
+  x * <span class="dv">2</span>
+}.<span class="fu">flatMap</span> { x =&gt;
+  Future {
+    <span class="dv">0</span>
+  }.<span class="fu">zip</span>(Future {
+    <span class="dv">1</span>
+  }).<span class="fu">map</span> { <span class="kw">case</span> (y, z) =&gt;
+    x + y + z
+  }
+}</code></pre></div>
+</div><div id="quizz" class="slide section level3 unnumbered">
+<h1>Quizz</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Future {
+  <span class="fu">println</span>(<span class="st">&quot;foo&quot;</span>)
+}.<span class="fu">zip</span>(Future {
+  <span class="fu">println</span>(<span class="st">&quot;bar&quot;</span>)
+}).<span class="fu">map</span> { _ =&gt;
+  <span class="fu">println</span>(<span class="st">&quot;baz&quot;</span>)
+}
+<span class="fu">println</span>(<span class="st">&quot;quux&quot;</span>)</code></pre></div>
+<p>What does this program print?</p>
+</div><div id="user-session" class="titleslide slide section level2"><h1><span class="header-section-number">3.4</span> User session</h1></div><div id="stateless-server" class="slide section level3 unnumbered">
+<h1>Stateless server?</h1>
+<div class="figure">
+<img src="images/scale%20out%20http%20server.svg" />
+
+</div>
+</div><div id="cookies" class="slide section level3 unnumbered">
+<h1>Cookies</h1>
+<ul>
+<li>Stored on the client, sent by the client with every request</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Action { request =&gt;
+  Ok.<span class="fu">withCookies</span>(<span class="fu">Cookie</span>(<span class="st">&quot;preferred-color&quot;</span>, <span class="st">&quot;orange&quot;</span>))
+}</code></pre></div>
+</div><div id="lang" class="slide section level3 unnumbered">
+<h1>Lang</h1>
+<ul>
+<li>Based on cookies</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">selectLanguage</span>(lang: Lang) =
+  Action { request =&gt;
+    Ok.<span class="fu">withLang</span>(lang)
+  }</code></pre></div>
+</div><div id="session" class="slide section level3 unnumbered">
+<h1>Session</h1>
+<ul>
+<li>Based on cookies</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">authenticate</span>(name: String, password: String) =
+  Action { <span class="kw">implicit</span> request =&gt;
+    <span class="kw">if</span> (name == <span class="st">&quot;Julien&quot;</span> &amp;&amp; password == <span class="st">&quot;foo)</span>
+      <span class="fu">Redirect</span>(<span class="st">&quot;/index.html&quot;</span>).<span class="fu">addingToSession</span>(<span class="st">&quot;role&quot;</span> -&gt; <span class="st">&quot;admin&quot;</span>)
+    <span class="kw">else</span>
+      <span class="fu">BadRequest</span>(<span class="st">&quot;Unknown user&quot;</span>)
+  }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> authenticatedAction = Action { request =&gt;
+  <span class="kw">if</span> (request.<span class="fu">session</span>.<span class="fu">get</span>(<span class="st">&quot;role&quot;</span>).<span class="fu">contains</span>(<span class="st">&quot;admin&quot;</span>)) {
+    …
+  } <span class="kw">else</span> Unauthorized
+}</code></pre></div>
+</div><div id="forging-a-fake-session" class="slide section level3 unnumbered">
+<h1>Forging a fake session?</h1>
+<ul>
+<li><p>Can a client pretend to be an admin just by forging a fake session?</p></li>
+<li><p>No, because the content of the session is cryptographically signed with a private key</p></li>
+</ul>
+</div><div id="running-a-play-application-and-wiring-its-dependencies" class="titleslide slide section level2 unnumbered"><h1>Running a Play application (and wiring its dependencies)</h1></div><div id="where-is-my-main" class="slide section level3 unnumbered">
+<h1>Where is my “main”?</h1>
+<ul>
+<li>Play framework provides the application entry point</li>
+<li>Automatically handles the dev vs prod mode for you</li>
+</ul>
+</div><div id="how-are-the-components-of-the-application-loaded" class="slide section level3 unnumbered">
+<h1>How are the components of the application loaded?</h1>
+<p><code>conf/application.conf</code></p>
+<pre><code>play.application.loader = &quot;counter.Loader&quot;</code></pre>
+<p><code>app/counter/Loader.scala</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> counter
+
+<span class="kw">import</span> play.<span class="fu">api</span>.{Application, ApplicationLoader, BuiltInComponentsFromContext}
+<span class="kw">import</span> router.<span class="fu">Routes</span>
+
+<span class="kw">class</span> Loader <span class="kw">extends</span> ApplicationLoader {
+  <span class="kw">def</span> <span class="fu">load</span>(context: ApplicationLoader.<span class="fu">Context</span>): Application = {
+    <span class="kw">val</span> components = <span class="kw">new</span> <span class="fu">BuiltInComponentsFromContext</span>(context) {
+      <span class="kw">val</span> counterController = <span class="kw">new</span> Counter
+      <span class="kw">val</span> router = <span class="kw">new</span> <span class="fu">Routes</span>(httpErrorHandler, counterController)
+    }
+    components.<span class="fu">application</span>
+  }
+}</code></pre></div>
+</div><div id="testing" class="titleslide slide section level2"><h1><span class="header-section-number">3.5</span> Testing</h1></div><div id="scalatest-play" class="slide section level3 unnumbered">
+<h1>Scalatest + Play</h1>
+<p><code>build.sbt</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">libraryDependencies += <span class="st">&quot;org.scalatestplus.play&quot;</span> %% <span class="st">&quot;scalatestplus-play&quot;</span> % <span class="st">&quot;1.5.1&quot;</span> % Test</code></pre></div>
+<p><code>test/counter/CounterSpec.scala</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> counter
+
+<span class="kw">import</span> org.<span class="fu">scalatestplus</span>.<span class="fu">play</span>.{OneServerPerSuite, PlaySpec}
+<span class="kw">import</span> play.<span class="fu">api</span>.{Application, ApplicationLoader, Environment}
+
+<span class="kw">trait</span> CounterSpec <span class="kw">extends</span> PlaySpec <span class="kw">with</span> OneServerPerSuite {
+
+  <span class="kw">override</span> <span class="kw">lazy</span> <span class="kw">val</span> app: Application =
+    (<span class="kw">new</span> Loader).<span class="fu">load</span>(ApplicationLoader.<span class="fu">createContext</span>(Environment.<span class="fu">simple</span>()))
+
+}</code></pre></div>
+</div><div id="testing-an-http-api" class="slide section level3 unnumbered">
+<h1>Testing an HTTP API</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> counter
+
+<span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">test</span>.<span class="fu">FakeRequest</span>
+<span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">test</span>.<span class="fu">Helpers</span>.<span class="fu">_</span>
+
+<span class="kw">class</span> CounterCtlTest <span class="kw">extends</span> CounterSpec {
+
+  <span class="st">&quot;test index page&quot;</span> in {
+    <span class="kw">val</span> response = <span class="fu">route</span>(app, <span class="fu">FakeRequest</span>(<span class="st">&quot;GET&quot;</span>, <span class="st">&quot;/greet&quot;</span>)).<span class="fu">value</span>
+    <span class="fu">assert</span>(<span class="fu">status</span>(response) === OK)
+    <span class="fu">assert</span>(<span class="fu">contentAsString</span>(response) === <span class="st">&quot;Hello, world!&quot;</span>)
+  }
+
+}</code></pre></div>
+</div><div id="testing-with-a-web-browser" class="slide section level3 unnumbered">
+<h1>Testing with a web browser</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> counter
+
+<span class="kw">import</span> org.<span class="fu">scalatestplus</span>.<span class="fu">play</span>.{ChromeFactory, OneBrowserPerSuite}
+
+<span class="kw">class</span> CounterUiTest
+  <span class="kw">extends</span> CounterSpec
+    <span class="kw">with</span> OneBrowserPerSuite
+    <span class="kw">with</span> ChromeFactory {
+
+  System.<span class="fu">setProperty</span>(<span class="st">&quot;webdriver.chrome.driver&quot;</span>, <span class="st">&quot;/home/julien/chromedriver&quot;</span>)
+
+  <span class="co">// …</span>
+}</code></pre></div>
+</div><div id="testing-with-a-web-browser-1" class="slide section level3 unnumbered">
+<h1>Testing with a web browser</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="st">&quot;increment&quot;</span> in {
+  go to s<span class="st">&quot;http://localhost:$port${routes.CounterCtl.index().url}&quot;</span>
+  <span class="fu">eventually</span>(<span class="fu">id</span>(<span class="st">&quot;counter&quot;</span>).<span class="fu">element</span>)
+  <span class="kw">val</span> counterElem = <span class="fu">id</span>(<span class="st">&quot;counter&quot;</span>).<span class="fu">element</span>
+  <span class="fu">assert</span>(counterElem.<span class="fu">text</span> == <span class="st">&quot;0&quot;</span>)
+  click on <span class="fu">id</span>(<span class="st">&quot;inc&quot;</span>)
+  <span class="fu">eventually</span>(<span class="fu">assert</span>(counterElem.<span class="fu">text</span> == <span class="st">&quot;1&quot;</span>))
+}</code></pre></div>
+</div>
+<div id="scala.js" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Scala.js</h1></div><div id="introduction-1" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Introduction</h1></div><div id="scala-for-the-jvm" class="slide section level3 unnumbered">
+<h1>Scala for the JVM</h1>
+<div class="figure">
+<img src="images/jvm-big-picture-with-interpreters.png" />
+
+</div>
+</div><div id="scala-for-js-platforms" class="slide section level3 unnumbered">
+<h1>Scala for JS platforms</h1>
+<div class="figure">
+<img src="images/js-big-picture-with-interpreters.png" />
+
+</div>
+</div><div id="things-to-install" class="slide section level3 unnumbered">
+<h1>Things to install</h1>
+<ul>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+<li>Recommended: run <code>npm install source-map-support</code> in your project directory</li>
+</ul>
+</div><div id="hello-world" class="slide section level3 unnumbered">
+<h1>Hello world</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> hello
+
+<span class="kw">import</span> scala.<span class="fu">scalajs</span>.<span class="fu">js</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    <span class="fu">println</span>(<span class="st">&quot;Hello world&quot;</span>)
+  }
+}</code></pre></div>
+</div><div id="sbt-setup-1" class="slide section level3 unnumbered">
+<h1>sbt setup</h1>
+<p><code>project/plugins.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">addSbtPlugin</span>(<span class="st">&quot;org.scala-js&quot;</span> % <span class="st">&quot;sbt-scalajs&quot;</span> % <span class="st">&quot;0.6.16&quot;</span>)</code></pre></div>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">enablePlugins</span>(ScalaJSPlugin)
+
+<span class="co">// There is a main JSApp in this Scala.js project</span>
+scalaJSUseMainModuleInitializer := <span class="kw">true</span></code></pre></div>
+</div><div id="run-it-with-node.js" class="slide section level3 unnumbered">
+<h1>Run it with Node.js</h1>
+<pre><code>$ sbt
+...
+&gt; run
+[info] Compiling 1 Scala source to .../target/scala-2.11/classes...
+[info] Fast optimizing .../target/scala-2.11/standaloneclient-fastopt.js
+[info] Running hello.Main
+Hello world
+[success] Total time: 3 s, completed May 15, 2017 2:58:22 PM</code></pre>
+</div><div id="run-it-in-a-browser" class="slide section level3 unnumbered">
+<h1>Run it in a browser</h1>
+<pre><code>&gt; fastOptJS
+...</code></pre>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;title&gt;</span>Hello world<span class="kw">&lt;/title&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;./target/scala-2.11/standaloneclient-fastopt.js&quot;</span>
+<span class="ot">      type=</span><span class="st">&quot;text/javascript&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
+</div><div id="manipulate-the-web-page" class="slide section level3 unnumbered">
+<h1>Manipulate the web page</h1>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">libraryDependencies ++= Seq(
+  <span class="st">&quot;org.scala-js&quot;</span> %%% <span class="st">&quot;scalajs-dom&quot;</span> % <span class="st">&quot;0.9.2&quot;</span>
+)</code></pre></div>
+<p><code>Main.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">scalajs</span>.<span class="fu">js</span>
+<span class="kw">import</span> org.<span class="fu">scalajs</span>.<span class="fu">dom</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    <span class="kw">val</span> p = dom.<span class="fu">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;p&quot;</span>)
+    p.<span class="fu">innerHTML</span> = <span class="st">&quot;Hello world&quot;</span>
+    dom.<span class="fu">document</span>.<span class="fu">body</span>.<span class="fu">appendChild</span>(p)
+  }
+}</code></pre></div>
+</div><div id="a-client-only-counter-application" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> A client-only counter application</h1></div><div id="a-basic-html-view" class="slide section level3 unnumbered">
+<h1>A basic HTML view</h1>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;text-align: center&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;h1</span><span class="ot"> id=</span><span class="st">&quot;counter&quot;</span><span class="kw">&gt;</span>0<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;p&gt;&lt;input</span><span class="ot"> id=</span><span class="st">&quot;step&quot;</span><span class="ot"> type=</span><span class="st">&quot;number&quot;</span><span class="ot"> value=</span><span class="st">&quot;1&quot;</span> <span class="kw">/&gt;&lt;/p&gt;</span>
+  <span class="kw">&lt;div&gt;</span>
+    <span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">&quot;inc&quot;</span><span class="kw">&gt;</span>Increment<span class="kw">&lt;/button&gt;</span>
+    <span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">&quot;reset&quot;</span><span class="kw">&gt;</span>Reset<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre></div>
+</div><div id="bare-dom-manipulation" class="slide section level3 unnumbered">
+<h1>Bare DOM manipulation</h1>
+<ul>
+<li>Document Object Model (DOM)</li>
+<li>A set of JavaScript APIs, part of the browsers, allowing to manipulate the Web page</li>
+<li>Can manipulate the “static” structure of the page (the HTML)</li>
+<li>Can also add <em>event listeners</em> to respond to events happening on the page</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">Comprehensive documention on MDN</a> (<a href="https://developer.mozilla.org/fr/docs/DOM">French version</a> – not always as complete)</li>
+</ul>
+</div><div id="a-simple-event-listener" class="slide section level3 unnumbered">
+<h1>A simple event listener</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">scalajs</span>.<span class="fu">js</span>
+<span class="kw">import</span> org.<span class="fu">scalajs</span>.<span class="fu">dom</span>
+<span class="kw">import</span> org.<span class="fu">scalajs</span>.<span class="fu">dom</span>.<span class="fu">html</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;inc&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Button</span>]
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      dom.<span class="fu">window</span>.<span class="fu">alert</span>(<span class="st">&quot;The &#39;increment&#39; button was clicked&quot;</span>)
+    })
+  }
+}</code></pre></div>
+</div><div id="actually-increment-the-counter" class="slide section level3 unnumbered">
+<h1>Actually increment the counter</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> counterHeading =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;counter&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Heading</span>]
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;inc&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Button</span>]
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      counter += <span class="dv">1</span>
+      counterHeading.<span class="fu">textContent</span> = counter.<span class="fu">toString</span>()
+    })
+  }
+}</code></pre></div>
+</div><div id="take-the-step-into-account" class="slide section level3 unnumbered">
+<h1>Take the step into account</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> counterHeading =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;counter&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Heading</span>]
+  <span class="kw">lazy</span> <span class="kw">val</span> stepInput =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;step&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Input</span>]
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;inc&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Button</span>]
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      <span class="kw">val</span> step = stepInput.<span class="fu">value</span>.<span class="fu">toInt</span> <span class="co">// value is a String</span>
+      counter += step
+      counterHeading.<span class="fu">textContent</span> = counter.<span class="fu">toString</span>()
+    })
+  }
+}</code></pre></div>
+</div><div id="reset" class="slide section level3 unnumbered">
+<h1>Reset</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="co">// ...</span>
+  <span class="kw">lazy</span> <span class="kw">val</span> resetButton =
+    dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;reset&quot;</span>).<span class="fu">asInstanceOf</span>[html.<span class="fu">Button</span>]
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      <span class="kw">val</span> step = stepInput.<span class="fu">value</span>.<span class="fu">toInt</span> <span class="co">// value is a String</span>
+      counter += step
+      counterHeading.<span class="fu">textContent</span> = counter.<span class="fu">toString</span>()
+    })
+
+    resetButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      counter = <span class="dv">0</span>
+      counterHeading.<span class="fu">textContent</span> = counter.<span class="fu">toString</span>()
+      <span class="co">// ^ uh oh, this looks repetitive</span>
+    })
+  }
+}</code></pre></div>
+</div><div id="managing-the-state-sort-of" class="slide section level3 unnumbered">
+<h1>Managing the state (sort of)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="co">// ...</span>
+  <span class="kw">def</span> <span class="fu">updateCounter</span>(newCounter: Int): Unit = {
+    counter = newCounter
+    counterHeading.<span class="fu">textContent</span> = counter.<span class="fu">toString</span>()
+  }
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      <span class="kw">val</span> step = stepInput.<span class="fu">value</span>.<span class="fu">toInt</span> <span class="co">// value is a String</span>
+      <span class="fu">updateCounter</span>(counter + step)
+    })
+
+    resetButton.<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, { (e: dom.<span class="fu">MouseEvent</span>) =&gt;
+      <span class="fu">updateCounter</span>(<span class="dv">0</span>)
+    })
+  }
+}</code></pre></div>
+</div><div id="interoperability-with-javascript" class="titleslide slide section level2"><h1><span class="header-section-number">4.3</span> Interoperability with JavaScript</h1></div><div id="using-jquery" class="slide section level3 unnumbered">
+<h1>Using jQuery</h1>
+<ul>
+<li>What if we want to use jQuery instead of the DOM?</li>
+<li>Scala is good at interoperability with Java; likewise, Scala.js is good at interoperability with JavaScript</li>
+</ul>
+</div><div id="script-tag-for-jquery-3.x" class="slide section level3 unnumbered">
+<h1>Script tag for jQuery 3.x</h1>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;script</span>
+<span class="ot">  src=</span><span class="st">&quot;https://code.jquery.com/jquery-3.2.1.js&quot;</span>
+<span class="ot">  integrity=</span><span class="st">&quot;sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=&quot;</span>
+<span class="ot">  crossorigin=</span><span class="st">&quot;anonymous&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></code></pre></div>
+</div><div id="the-simple-event-again" class="slide section level3 unnumbered">
+<h1>The simple event again</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton = <span class="fu">jQuery</span>(<span class="st">&quot;#inc&quot;</span>)
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = <span class="co">// ...</span>
+}</code></pre></div>
+<pre><code>[info] Compiling 1 Scala source to .../target/scala-2.11/classes...
+[error] .../src/main/scala/hello/Main.scala:10: not found: value jQuery
+[error]   lazy val incButton = jQuery(&quot;#inc&quot;)
+[error]                        ^
+[error] one error found</code></pre>
+</div><div id="let-us-define-jquery" class="slide section level3 unnumbered">
+<h1>Let us define <code>jQuery</code>!</h1>
+<ul>
+<li><a href="http://api.jquery.com/jQuery/"><code>jQuery()</code></a></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> hello
+
+<span class="kw">import</span> scala.<span class="fu">scalajs</span>.<span class="fu">js</span>
+<span class="kw">import</span> scala.<span class="fu">scalajs</span>.<span class="fu">js</span>.<span class="fu">annotation</span>.<span class="fu">_</span>
+
+@js.<span class="fu">native</span>
+@JSGlobalScope
+<span class="kw">object</span> JQueryGlobal <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="kw">def</span> <span class="fu">jQuery</span>(selector: String): JQuery = js.<span class="fu">native</span>
+}
+
+@ScalaJSDefined <span class="co">// usually what you want for *traits*</span>
+<span class="kw">trait</span> JQuery <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="co">// TODO</span>
+}</code></pre></div>
+</div><div id="the-simple-event-again-2" class="slide section level3 unnumbered">
+<h1>The simple event again (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> JQueryGlobal.<span class="fu">jQuery</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton = <span class="fu">jQuery</span>(<span class="st">&quot;#inc&quot;</span>)
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = <span class="co">// ...</span>
+}</code></pre></div>
+</div><div id="the-simple-event-again-3" class="slide section level3 unnumbered">
+<h1>The simple event again (3)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> JQueryGlobal.<span class="fu">jQuery</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton = <span class="fu">jQuery</span>(<span class="st">&quot;#inc&quot;</span>)
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">click</span> { (e: JQueryEvent) =&gt;
+      dom.<span class="fu">window</span>.<span class="fu">alert</span>(<span class="st">&quot;The &#39;increment&#39; button was clicked&quot;</span>)
+    }
+  }
+}</code></pre></div>
+<pre><code>[error] .../src/main/scala/hello/Main.scala:15: value click is not a member of hello.JQuery
+[error]     incButton.click { (e: JQueryEvent) =&gt;
+[error]               ^
+[error] .../src/main/scala/hello/Main.scala:15: not found: type JQueryEvent
+[error]     incButton.click { (e: JQueryEvent) =&gt;
+[error]                           ^</code></pre>
+</div><div id="let-us-define-click-and-jqueryevent" class="slide section level3 unnumbered">
+<h1>Let us define <code>click</code> and <code>JQueryEvent</code>!</h1>
+<ul>
+<li><a href="http://api.jquery.com/click/"><code>.click()</code></a></li>
+<li><a href="http://api.jquery.com/category/events/event-object/"><code>jQuery.Event</code></a></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">@ScalaJSDefined
+<span class="kw">trait</span> JQuery <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="kw">def</span> <span class="fu">click</span>(handler: JQueryEvent =&gt; Any): Unit
+}
+
+@js.<span class="fu">native</span>
+@<span class="fu">JSGlobal</span>(<span class="st">&quot;jQuery.Event&quot;</span>)
+<span class="kw">class</span> <span class="fu">JQueryEvent</span>(name: String) <span class="kw">extends</span> js.<span class="fu">Object</span> {
+}</code></pre></div>
+</div><div id="the-simple-event-again-4" class="slide section level3 unnumbered">
+<h1>The simple event again (4)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> JQueryGlobal.<span class="fu">jQuery</span>
+
+<span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">var</span> counter: Int = <span class="dv">0</span>
+
+  <span class="kw">lazy</span> <span class="kw">val</span> incButton = <span class="fu">jQuery</span>(<span class="st">&quot;#inc&quot;</span>)
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">click</span> { (e: JQueryEvent) =&gt;
+      dom.<span class="fu">window</span>.<span class="fu">alert</span>(<span class="st">&quot;The &#39;increment&#39; button was clicked&quot;</span>)
+    }
+  }
+}</code></pre></div>
+<p>Now compiles, but at run-time …</p>
+<pre><code>TypeError: (intermediate value).apply is not a function</code></pre>
+</div><div id="scala-functions-v-javascript-functions" class="slide section level3 unnumbered">
+<h1>Scala functions v JavaScript functions</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">@ScalaJSDefined
+<span class="kw">trait</span> JQuery <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="kw">def</span> <span class="fu">click</span>(handler: JQueryEvent =&gt; Any): Unit
+}</code></pre></div>
+<ul>
+<li><code>JQueryEvent =&gt; Any</code> is a <em>Scala function</em>, and that is not compatible with <em>JavaScript functions</em>.</li>
+<li>Giving a Scala function to jQuery blows it up</li>
+</ul>
+</div><div id="scala-functions-v-javascript-functions-2" class="slide section level3 unnumbered">
+<h1>Scala functions v JavaScript functions (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">@ScalaJSDefined
+<span class="kw">trait</span> JQuery <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="kw">def</span> <span class="fu">click</span>(handler: js.<span class="fu">Function1</span>[JQueryEvent, Any]): Unit
+}</code></pre></div>
+<p>Yeah! It works again (finally …)</p>
+</div><div id="implicit-conversions" class="slide section level3 unnumbered">
+<h1>Implicit conversions</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">click</span> { (e: JQueryEvent) =&gt;
+      dom.<span class="fu">window</span>.<span class="fu">alert</span>(<span class="st">&quot;The &#39;increment&#39; button was clicked&quot;</span>)
+    }
+  }</code></pre></div>
+<ul>
+<li>We can still give a Scala function literal (aka lambda) to the <code>click</code> method</li>
+<li>That’s because there are <em>implicit conversions</em> from Scala functions to their corresponding JavaScript functions</li>
+<li>Still important to declare the <em>facade</em> with the proper type, though!</li>
+</ul>
+</div><div id="type-correspondence" class="slide section level3 unnumbered">
+<h1>Type correspondence</h1>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Scala types</th>
+<th align="left">JavaScript types</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>Boolean</code></td>
+<td align="left"><code>boolean</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>Int</code></td>
+<td align="left">whole <code>number</code> in [-2^31, 2^31)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Double</code></td>
+<td align="left"><code>number</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>String</code></td>
+<td align="left"><code>string</code> (or <code>null</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Unit</code></td>
+<td align="left"><code>undefined</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>Null</code></td>
+<td align="left"><code>null</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>js.FunctionN[-T1, ..., -TN, +R]</code></td>
+<td align="left">function values (similar to <code>(T1, ..., TN) =&gt; R</code>)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>js.Array[A]</code></td>
+<td align="left"><code>Array</code> with elements of type <code>A</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>js.Dictionary[A]</code></td>
+<td align="left"><code>object</code> acting as a map of <code>String</code>s to <code>A</code>s</td>
+</tr>
+<tr class="even">
+<td align="left"><code>js.UndefOr[+A]</code></td>
+<td align="left">a value of type <code>A</code> <em>or</em> <code>undefined</code> (similar to <code>Option[+A]</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Reference: <a href="https://www.scala-js.org/doc/interoperability/types.html">JavaScript types in Scala.js</a></p>
+</div><div id="more-on-writing-facade-types" class="slide section level3 unnumbered">
+<h1>More on writing facade types</h1>
+<ul>
+<li><code>var</code>, <code>val</code> and <code>def</code> without <code>()</code> model <em>fields</em> (aka <em>properties</em>)</li>
+<li><code>@JSGlobal object ...</code> for top-level, global objects (e.g., the <code>Math</code> object)
+<ul>
+<li>often used as a companion object to model “static” methods</li>
+</ul></li>
+<li><code>Int | String</code> can be used to model a value of type <code>Int</code> <em>or</em> <code>String</code> (or any other pair of types)
+<ul>
+<li>requires <code>import scala.scalajs.js.|</code></li>
+</ul></li>
+</ul>
+<p>Reference: <a href="https://www.scala-js.org/doc/interoperability/facade-types.html">Writing facade types in Scala.js</a></p>
+</div><div id="finishing-up-the-jquery-version" class="slide section level3 unnumbered">
+<h1>Finishing up the jQuery version</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">def</span> <span class="fu">updateCounter</span>(newCounter: Int): Unit = {
+    counter = newCounter
+    counterHeading.<span class="fu">html</span>(counter.<span class="fu">toString</span>())
+  }
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    incButton.<span class="fu">click</span> { (e: JQueryEvent) =&gt;
+      <span class="kw">val</span> step = stepInput.<span class="fu">value</span>().<span class="fu">toInt</span>
+      <span class="fu">updateCounter</span>(counter + step)
+    }
+
+    resetButton.<span class="fu">click</span> { (e: JQueryEvent) =&gt;
+      <span class="fu">updateCounter</span>(<span class="dv">0</span>)
+    }
+  }</code></pre></div>
+</div><div id="define-html-and-value" class="slide section level3 unnumbered">
+<h1>Define <code>html</code> and <code>value</code> </h1>
+<ul>
+<li><a href="http://api.jquery.com/html/"><code>.html()</code></a></li>
+<li><a href="http://api.jquery.com/val/"><code>.val()</code></a></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">@ScalaJSDefined
+<span class="kw">trait</span> JQuery <span class="kw">extends</span> js.<span class="fu">Object</span> {
+  <span class="kw">def</span> <span class="fu">click</span>(handler: js.<span class="fu">Function1</span>[JQueryEvent, Any]): Unit
+
+  <span class="kw">def</span> <span class="fu">html</span>(): String
+  <span class="kw">def</span> <span class="fu">html</span>(v: String): <span class="kw">this</span>.<span class="fu">type</span>
+
+  @<span class="fu">JSName</span>(<span class="st">&quot;val&quot;</span>) <span class="kw">def</span> <span class="fu">value</span>(): String
+  @<span class="fu">JSName</span>(<span class="st">&quot;val&quot;</span>) <span class="kw">def</span> <span class="fu">value</span>(v: String): <span class="kw">this</span>.<span class="fu">type</span>
+}</code></pre></div>
+</div><div id="do-we-have-to-write-these-things-all-the-time" class="slide section level3 unnumbered">
+<h1>Do we have to write these things all the time!?</h1>
+<p>No! A lot of Scala.js libraries are published, defining facades for you.</p>
+<p><a href="https://www.scala-js.org/libraries/facades.html">Check them out here</a></p>
+<p>(there are even 2 such libraries for jQuery)</p>
+</div><div id="using-monadic-html" class="titleslide slide section level2"><h1><span class="header-section-number">4.4</span> Using <code>monadic-html</code></h1></div><div id="monadic-html" class="slide section level3 unnumbered">
+<h1>monadic-html</h1>
+<ul>
+<li><a href="https://github.com/OlivierBlanvillain/monadic-html"><code>monadic-html</code></a></li>
+<li>A Scala.js library (written in Scala) for simple, precise data-binding</li>
+</ul>
+</div><div id="core-concept-rxa" class="slide section level3 unnumbered">
+<h1>Core concept: <code>Rx[A]</code> </h1>
+<ul>
+<li><code>Rx[A]</code> is a value of type <code>A</code> that can change over time</li>
+<li>It can be seen as a <em>stream</em> of values where new values come in as time passes</li>
+</ul>
+<p>
+<img src="images/rx-basic.svg" alt="rx-basic" />
+</p>
+</div><div id="transforming-rxa-using-map" class="slide section level3 unnumbered">
+<h1>Transforming <code>Rx[A]</code> using <code>map</code> </h1>
+<ul>
+<li>We can <em>transform</em> an <code>Rx[A]</code> into an <code>Rx[B]</code> using <code>map</code></li>
+<li>Similar to <code>List.map</code>, except we have to think about it in terms of time</li>
+</ul>
+</div><div id="transforming-rxa-using-map-2" class="slide section level3 unnumbered">
+<h1>Transforming <code>Rx[A]</code> using <code>map</code> (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Rx[Int] = ???
+<span class="kw">val</span> y = x.<span class="fu">map</span>(a =&gt; a * <span class="dv">2</span>)
+<span class="kw">val</span> z = y.<span class="fu">map</span>(a =&gt; a.<span class="fu">toString</span>)</code></pre></div>
+<p>
+<img src="images/rx-map.svg" />
+</p>
+</div><div id="dropping-values" class="slide section level3 unnumbered">
+<h1>Dropping values</h1>
+<ul>
+<li>We can <em>drop</em> (or filter out) values we are not interested in using <code>dropIf</code></li>
+<li>Similar to <code>List.filterNot</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Rx[Int] = ???
+<span class="kw">val</span> y = x.<span class="fu">dropIf</span>(a =&gt; a % <span class="dv">2</span> == <span class="dv">0</span>)(<span class="dv">1</span>) <span class="co">// 1 is the default value</span></code></pre></div>
+<p>
+<img src="images/rx-dropif.svg" />
+</p>
+</div><div id="keeping-values" class="slide section level3 unnumbered">
+<h1>Keeping values</h1>
+<ul>
+<li>While <code>dropIf</code> drops values satisfying a predicate, <code>keepIf</code> <em>keeps only</em> the values satisfying a predicate</li>
+<li>Similar to <code>List.filter</code></li>
+</ul>
+</div><div id="merging-two-rxes" class="slide section level3 unnumbered">
+<h1>Merging two <code>Rx</code>es</h1>
+<ul>
+<li>We can <em>merge</em> two <code>Rx</code>es into one using <code>merge</code></li>
+<li>Updates of both inputs are seen as updates of the output</li>
+</ul>
+</div><div id="merging-two-rxes-2" class="slide section level3 unnumbered">
+<h1>Merging two <code>Rx</code>es (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Rx[Int] = ???
+<span class="kw">val</span> y: Rx[Int] = ???
+<span class="kw">val</span> z = x.<span class="fu">merge</span>(y)</code></pre></div>
+<p>
+<img src="images/rx-merge.svg" />
+</p>
+</div><div id="other-operations" class="slide section level3 unnumbered">
+<h1>Other operations</h1>
+<p>There are several other operations <a href="https://github.com/OlivierBlanvillain/monadic-html#frp-ish-apis">documented here</a>:</p>
+<ul>
+<li><code>flatMap</code></li>
+<li><code>dropRepeats</code></li>
+<li>etc.</li>
+</ul>
+</div><div id="the-source-of-rxes-vara" class="slide section level3">
+<h1><span class="header-section-number">4.4.1</span> The source of <code>Rx</code>es: <code class="unnumbered">Var[A]</code></h1>
+<ul>
+<li>A <code>Var[A]</code> is an <code>Rx[A]</code> that we can directly mutate, creating a <em>source</em> stream</li>
+<li>Its API is defined as:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Var[A](initialValue: A) <span class="kw">extends</span> Rx[A] {
+  <span class="kw">def</span> :=(newValue: A): Unit
+  <span class="kw">def</span> <span class="fu">update</span>(f: A =&gt; A): Unit
+}</code></pre></div>
+<p><code>:=</code> does not really “destroy” the old value; it adds a new value to the timeline.</p>
+</div><div id="the-source-of-rxes-vara-2" class="slide section level3 unnumbered">
+<h1>The source of <code>Rx</code>es: <code>Var[A]</code> (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> x: Var[Int] = <span class="fu">Var</span>(<span class="dv">4</span>)
+<span class="co">// later</span>
+x := <span class="dv">10</span>
+<span class="co">// even later</span>
+x.<span class="fu">update</span>(prev =&gt; prev / <span class="dv">5</span>)
+...</code></pre></div>
+<p>creates the original <code>Rx</code></p>
+<p>
+<img src="images/rx-basic.svg" alt="rx-basic" />
+</p>
+</div><div id="rxes-vars-and-monadic-html" class="slide section level3 unnumbered">
+<h1><code>Rx</code>es, <code>Var</code>s and monadic-html</h1>
+<ul>
+<li>monadic-html allows you to write XML literals representing DOM elements</li>
+<li>Dynamic parts can be filled in with <code>Rx</code>es</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> mhtml.<span class="fu">_</span>
+<span class="kw">import</span> scala.<span class="fu">xml</span>.<span class="fu">Node</span>
+<span class="kw">import</span> org.<span class="fu">scalajs</span>.<span class="fu">dom</span>
+
+<span class="kw">val</span> count = <span class="fu">Var</span>(<span class="dv">0</span>)
+
+<span class="kw">val</span> component =
+  &lt;div&gt;
+    &lt;p&gt;{ count }&lt;/p&gt;
+    &lt;button onclick={ () =&gt;
+      count.<span class="fu">update</span>(prev =&gt; prev + <span class="dv">1</span>)
+    }&gt;Increment&lt;/button&gt;
+  &lt;/div&gt;
+
+<span class="kw">val</span> div = dom.<span class="fu">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;div&quot;</span>)
+<span class="fu">mount</span>(div, component)</code></pre></div>
+</div><div id="the-counter-app-with-monadic-html" class="slide section level3 unnumbered">
+<h1>The counter app with monadic-html</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Main <span class="kw">extends</span> js.<span class="fu">JSApp</span> {
+  <span class="kw">val</span> counter = <span class="fu">Var</span>(<span class="dv">0</span>)
+  <span class="kw">var</span> step: Int = <span class="dv">1</span>
+
+  <span class="kw">def</span> <span class="fu">main</span>(): Unit = {
+    <span class="kw">val</span> content =
+      &lt;div&gt;
+        &lt;h1&gt;{ counter } (twice is { counter.<span class="fu">map</span>(c =&gt; c * <span class="dv">2</span>) })&lt;/h1&gt;
+        &lt;p&gt;&lt;input <span class="kw">type</span>=<span class="st">&quot;number&quot;</span> value=<span class="st">&quot;1&quot;</span> onchange={ (e: dom.<span class="fu">Event</span>) =&gt;
+          step = e.<span class="fu">target</span>.<span class="fu">asInstanceOf</span>[html.<span class="fu">Input</span>].<span class="fu">value</span>.<span class="fu">toInt</span>
+        } /&gt;&lt;/p&gt;
+        &lt;div&gt;
+          &lt;button onclick={ () =&gt;
+            counter.<span class="fu">update</span>(prev =&gt; prev + step)
+          }&gt;Increment&lt;/button&gt;
+          &lt;button onclick={ () =&gt;
+            counter := <span class="dv">0</span>
+          }&gt;Reset&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+    <span class="fu">mount</span>(dom.<span class="fu">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;main&quot;</span>), content)
+  }
+}</code></pre></div>
+</div><div id="scala.js-v-scalajvm-the-language" class="titleslide slide section level2"><h1><span class="header-section-number">4.5</span> Scala.js v Scala/JVM: the language</h1></div><div id="scala.js-v-scalajvm-the-language-1" class="slide section level3 unnumbered">
+<h1>Scala.js v Scala/JVM: the language</h1>
+<ul>
+<li>Technically, Scala.js is a <em>dialect</em> of Scala
+<ul>
+<li>Not <em>everything</em> behaves the same in both languages</li>
+<li>Differences are rare, though</li>
+</ul></li>
+</ul>
+</div><div id="can-i-do-in-scala.js-everything-i-can-in-scala" class="slide section level3 unnumbered">
+<h1>Can I do in Scala.js everything I can in Scala?</h1>
+<p>Yes and no.</p>
+<ul>
+<li>At the <em>language</em> level, basically <em>yes</em>: any pure-Scala code will also compile and run in Scala.js</li>
+<li>At the <em>libraries</em> level, not always:
+<ul>
+<li>Some core Java APIs are supported, but in general Java libraries cannot be used (e.g., no <code>java.lang.Thread</code>, no <code>java.io.File</code>, etc.)</li>
+<li>Blocking APIs do not work (e.g., no <code>Await.result</code>)</li>
+<li>Only Scala libraries that are <em>cross-compiled</em> can be used (i.e., they must build with Scala.js, and you must depend on them with <code>%%%</code>)</li>
+</ul></li>
+</ul>
+</div><div id="futures-in-scala.js" class="slide section level3 unnumbered">
+<h1>Futures in Scala.js</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">_</span>
+<span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">ExecutionContext</span>.<span class="fu">Implicits</span>.<span class="fu">global</span>
+
+<span class="kw">val</span> f = Future { <span class="dv">42</span> }
+<span class="kw">val</span> g = f.<span class="fu">map</span>(x =&gt; x / <span class="dv">2</span>)
+<span class="kw">val</span> h = g.<span class="fu">map</span>(x =&gt; x + <span class="dv">6</span>)
+h.<span class="fu">onComplete</span>(println)</code></pre></div>
+<p>Basically just like in Scala/JVM, except …</p>
+</div><div id="no-await.result" class="slide section level3 unnumbered">
+<h1>No Await.result</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">_</span>
+<span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">ExecutionContext</span>.<span class="fu">Implicits</span>.<span class="fu">global</span>
+
+<span class="kw">val</span> f: Future[Int]
+<span class="kw">val</span> x = Await.<span class="fu">result</span>(f)</code></pre></div>
+<pre><code>...
+[error] Referring to non-existent method scala.concurrent.impl.Promise$CompletionLatch.releaseShared(scala.Int)scala.Boolean
+[error]   called from scala.concurrent.impl.Promise$CompletionLatch.apply(scala.util.Try)scala.Unit
+[error]   called from scala.concurrent.impl.Promise$CompletionLatch.apply(java.lang.Object)java.lang.Object
+[error]   called from scala.util.Success.$$anonfun$3(scala.Function1)java.lang.Object
+[error]   called from scala.util.Success.map(scala.Function1)scala.util.Try
+...</code></pre>
+<p>In general, blocking APIs do not exist at all in JavaScript environments.</p>
+</div><div id="what-exactly-are-the-differences-with-scalajvm" class="slide section level3 unnumbered">
+<h1>What exactly are the differences with Scala/JVM?</h1>
+<p>Reference: <a href="https://www.scala-js.org/doc/semantics.html">comprehensive listing of semantic differences</a></p>
+<ul>
+<li>Undefined behaviors: <code>ClassCastException</code>s, <code>ArrayIndexOutOfBoundsException</code>s, etc.</li>
+<li>Regular expressions</li>
+<li>Pattern matching on primitive numbers</li>
+<li>Run-time reflection is not supported</li>
+<li>and a few other minor things</li>
+</ul>
+</div><div id="undefined-behavior-example" class="slide section level3">
+<h1><span class="header-section-number">4.5.1</span> Undefined behavior: example</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> a = <span class="kw">new</span> Array[Int](<span class="dv">5</span>)
+<span class="fu">println</span>(<span class="fu">a</span>(<span class="dv">10</span>))</code></pre></div>
+<p>JVM:</p>
+<pre><code>java.lang.ArrayIndexOutOfBoundsException: 10</code></pre>
+<p>Scala.js:</p>
+<pre><code>scala.scalajs.runtime.UndefinedBehaviorError: An undefined behavior was detected: 10</code></pre>
+<p><a href="https://groups.google.com/forum/?hl=en#!msg/comp.std.c/ycpVKxTZkgw/S2hHdTbv4d8J">Demons could fly out of your nose</a> (although in “dev” mode aka <code>fastOptJS</code>, most UBs are checked and reported as <code>UndefinedBehaviorError</code>)</p>
+</div><div id="scala.js-summary" class="slide section level3 unnumbered">
+<h1>Scala.js: summary</h1>
+<ul>
+<li>The Scala language available on JS platforms</li>
+<li>Interoperability with JavaScript: write facades yourselves or use published libraries</li>
+<li>monadic-html</li>
+</ul>
+<p>Useful links</p>
+<ul>
+<li>The Scala.js website: <a href="https://www.scala-js.org/" class="uri">https://www.scala-js.org/</a> (with pointers to more documentation, tutorials, etc.)</li>
+<li><a href="http://stackoverflow.com/questions/tagged/scala.js">StackOverflow questions</a></li>
+<li>The <a href="https://gitter.im/scala-js/scala-js">Gitter chat room</a></li>
+</ul>
+</div>
+<div id="play-with-scala.js" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Play with Scala.js</h1></div><div id="setup-1" class="titleslide slide section level2"><h1><span class="header-section-number">5.1</span> Setup</h1></div><div id="sbt-setup-2" class="slide section level3 unnumbered">
+<h1>Sbt setup</h1>
+<div class="figure">
+<img src="images/sbt-setup-spa.svg" />
+
+</div>
+</div><div id="sbt-setup-plugins" class="slide section level3 unnumbered">
+<h1>Sbt setup (plugins)</h1>
+<p><code>project/plugins.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Play dependencies and hot reloading</span>
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.5.14&quot;</span>)
+
+<span class="co">// Scala.js</span>
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;org.scala-js&quot;</span> % <span class="st">&quot;sbt-scalajs&quot;</span> % <span class="st">&quot;0.6.16&quot;</span>)
+
+<span class="co">// Scala.js integration with Play</span>
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.vmunier&quot;</span> % <span class="st">&quot;sbt-web-scalajs&quot;</span> % <span class="st">&quot;1.0.4&quot;</span>)</code></pre></div>
+</div><div id="sbt-setup-shared-project" class="slide section level3 unnumbered">
+<h1>Sbt setup (shared project)</h1>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> shared =
+  crossProject
+    .<span class="fu">crossType</span>(CrossType.<span class="fu">Pure</span>)
+    .<span class="fu">settings</span>(…)
+
+<span class="kw">val</span> sharedJS = shared.<span class="fu">js</span>
+<span class="kw">val</span> sharedJVM = shared.<span class="fu">jvm</span></code></pre></div>
+</div><div id="sbt-setup-client-project" class="slide section level3 unnumbered">
+<h1>Sbt setup (client project)</h1>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client =
+  project
+    .<span class="fu">dependsOn</span>(sharedJS)
+    .<span class="fu">enablePlugins</span>(ScalaJSPlugin, ScalaJSWeb)
+    .<span class="fu">settings</span>(…)</code></pre></div>
+</div><div id="sbt-setup-server-project" class="slide section level3 unnumbered">
+<h1>Sbt setup (server project)</h1>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> server =
+  project
+    .<span class="fu">dependsOn</span>(sharedJVM)
+    .<span class="fu">enablePlugins</span>(PlayScala)
+    .<span class="fu">settings</span>(
+      scalaJSProjects := Seq(client),
+      pipelineStages in Assets := Seq(scalaJSPipeline),
+      …
+    )</code></pre></div>
+</div><div id="architecture-of-a-web-app" class="titleslide slide section level2"><h1><span class="header-section-number">5.2</span> Architecture of a web app</h1></div><div id="architecture-of-a-web-app-1" class="slide section level3 unnumbered">
+<h1>Architecture of a web app</h1>
+<div class="figure">
+<img src="images/spa-architecture.svg" />
+
+</div>
+</div><div id="remote-invocations" class="titleslide slide section level2"><h1><span class="header-section-number">5.3</span> Remote invocations</h1></div><div id="manual-way-server-side" class="slide section level3 unnumbered">
+<h1>Manual way (server-side)</h1>
+<p><code>conf/routes</code>:</p>
+<pre><code>POST   /inc           counter.CounterCtl.increment</code></pre>
+<p><code>app/counter/CounterCtl</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> increment = Action(parse.<span class="fu">json</span>) { request =&gt;
+  request.<span class="fu">body</span>.<span class="fu">validate</span>[Int]
+    .<span class="fu">fold</span>(
+      _ =&gt; BadRequest,
+      step =&gt; <span class="fu">Ok</span>(Json.<span class="fu">toJson</span>(Service.<span class="fu">increment</span>(step)))
+    )
+}</code></pre></div>
+</div><div id="manual-way-client-side" class="slide section level3 unnumbered">
+<h1>Manual way (client-side)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> counter = <span class="fu">Var</span>(<span class="dv">0</span>)
+
+<span class="kw">def</span> <span class="fu">onIncrement</span>(): Unit =
+  dom.<span class="fu">ext</span>.<span class="fu">Ajax</span>.<span class="fu">post</span>(
+    url = <span class="st">&quot;/inc&quot;</span>,
+    data = JSON.<span class="fu">stringify</span>(<span class="dv">1</span>),
+    headers = Map(<span class="st">&quot;Content-Type&quot;</span> -&gt; <span class="st">&quot;application/json&quot;</span>)
+  ).<span class="fu">foreach</span> { xhr =&gt;
+    <span class="kw">if</span> (xhr.<span class="fu">status</span> == <span class="dv">200</span>) {
+      <span class="kw">val</span> x = JSON.<span class="fu">parse</span>(xhr.<span class="fu">responseText</span>).<span class="fu">asInstanceOf</span>[Int]
+      counter := x
+    }
+  }
+
+&lt;div style=<span class="st">&quot;text-align: center&quot;</span>&gt;
+  &lt;h1&gt;{ counter }&lt;/h1&gt;
+  &lt;button id=<span class="st">&quot;inc&quot;</span> onclick={ onIncrement _ }&gt;Increment&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+</div><div id="manual-way-summary" class="slide section level3 unnumbered">
+<h1>Manual way: summary</h1>
+<ul>
+<li>On server side, we have to create an HTTP endpoint corresponding to each user action</li>
+<li>On client side, we have to forge the correct URL for each endpoint we want to invoke</li>
+<li>On both sides, we have to consistently serialize and deserialize data</li>
+</ul>
+</div><div id="autowire" class="slide section level3 unnumbered">
+<h1>Autowire</h1>
+<ul>
+<li>Remote invocation automation</li>
+<li>All client / server communications go through a single HTTP endpoint</li>
+<li>Autowire takes care of forging the URL corresponding to the service method to invoke</li>
+<li>Data marshalling is configurable</li>
+</ul>
+</div><div id="autowire-boopickle-architecture" class="slide section level3 unnumbered">
+<h1>Autowire + BooPickle architecture</h1>
+<div class="figure">
+<img src="images/sbt-setup-autowire.svg" />
+
+</div>
+</div><div id="sbt-setup-3" class="slide section level3 unnumbered">
+<h1>Sbt setup</h1>
+<p><code>build.sbt</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> shared =
+  crossProject
+    .<span class="fu">crossType</span>(CrossType.<span class="fu">Pure</span>)
+    .<span class="fu">settings</span>(
+      libraryDependencies ++= Seq(
+        <span class="st">&quot;com.lihaoyi&quot;</span> %%% <span class="st">&quot;autowire&quot;</span> % <span class="st">&quot;0.2.6&quot;</span>,
+        <span class="st">&quot;io.suzaku&quot;</span> %%% <span class="st">&quot;boopickle&quot;</span> % <span class="st">&quot;1.2.6&quot;</span>
+      )
+    )</code></pre></div>
+</div><div id="shared-service-interface" class="slide section level3 unnumbered">
+<h1>Shared service interface</h1>
+<p><code>counter/ServiceDef.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ServiceDef {
+
+  <span class="kw">def</span> <span class="fu">get</span>(): Int
+
+  <span class="kw">def</span> <span class="fu">increment</span>(step: Int): Int
+
+  <span class="kw">def</span> <span class="fu">reset</span>(): Int
+
+}</code></pre></div>
+</div><div id="service-implementation" class="slide section level3 unnumbered">
+<h1>Service implementation</h1>
+<p><code>app/counter/Service.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">concurrent</span>.<span class="fu">stm</span>.<span class="fu">Ref</span>
+
+<span class="kw">object</span> Service <span class="kw">extends</span> ServiceDef {
+
+  <span class="kw">private</span> <span class="kw">val</span> value = Ref(<span class="dv">0</span>)
+
+  <span class="kw">def</span> <span class="fu">get</span>(): Int = value.<span class="fu">single</span>.<span class="fu">get</span>
+
+  <span class="kw">def</span> <span class="fu">increment</span>(step: Int): Int = value.<span class="fu">single</span>.<span class="fu">transformAndGet</span>(_ + step)
+
+  <span class="kw">def</span> <span class="fu">reset</span>(): Int = value.<span class="fu">single</span>.<span class="fu">transformAndGet</span>(_ =&gt; <span class="dv">0</span>)
+
+}</code></pre></div>
+</div><div id="autowired-server" class="slide section level3 unnumbered">
+<h1>Autowired server</h1>
+<p><code>app/counter/Server.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> boopickle.<span class="fu">Default</span>.<span class="fu">_</span>
+
+<span class="kw">object</span> Server <span class="kw">extends</span> autowire.<span class="fu">Server</span>[ByteBuffer, Pickler, Pickler] {
+  <span class="kw">override</span> <span class="kw">def</span> read[R: Pickler](p: ByteBuffer) = Unpickle[R].<span class="fu">fromBytes</span>(p)
+  <span class="kw">override</span> <span class="kw">def</span> write[R: Pickler](r: R) = Pickle.<span class="fu">intoBytes</span>(r)
+
+  <span class="kw">val</span> routes: Server.<span class="fu">Router</span> = route[ServiceDef](Service)
+}</code></pre></div>
+</div><div id="http-endpoint-implementation" class="slide section level3 unnumbered">
+<h1>HTTP endpoint implementation</h1>
+<p><code>conf/routes</code>:</p>
+<pre><code>POST   /service/*path      counter.CounterCtl.service(path)</code></pre>
+<p><code>app/counter/CounterCtl.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">service</span>(path: String) = Action.<span class="fu">async</span>(parse.<span class="fu">raw</span>) { request =&gt;
+  <span class="co">// get the request body as ByteString</span>
+  <span class="kw">val</span> b = request.<span class="fu">body</span>.<span class="fu">asBytes</span>(parse.<span class="fu">UNLIMITED</span>).<span class="fu">get</span>
+
+  <span class="co">// call Autowire route</span>
+  Server.<span class="fu">routes</span>(
+    autowire.<span class="fu">Core</span>.<span class="fu">Request</span>(path.<span class="fu">split</span>(<span class="st">&quot;/&quot;</span>),
+      Unpickle[Map[String, ByteBuffer]].<span class="fu">fromBytes</span>(b.<span class="fu">asByteBuffer</span>))
+  ).<span class="fu">map</span> { buffer =&gt;
+    <span class="kw">val</span> data = Array.<span class="fu">ofDim</span>[Byte](buffer.<span class="fu">remaining</span>())
+    buffer.<span class="fu">get</span>(data)
+    <span class="fu">Ok</span>(data)
+  }
+}</code></pre></div>
+</div><div id="client" class="slide section level3 unnumbered">
+<h1>Client</h1>
+<p><code>counter/Client.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> boopickle.<span class="fu">Default</span>.<span class="fu">_</span>
+
+<span class="kw">object</span> Client <span class="kw">extends</span> autowire.<span class="fu">Client</span>[ByteBuffer, Pickler, Pickler] {
+
+  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">doCall</span>(req: Request): Future[ByteBuffer] = {
+    dom.<span class="fu">ext</span>.<span class="fu">Ajax</span>.<span class="fu">post</span>(
+      url = <span class="st">&quot;/service/&quot;</span> + req.<span class="fu">path</span>.<span class="fu">mkString</span>(<span class="st">&quot;/&quot;</span>),
+      data = Pickle.<span class="fu">intoBytes</span>(req.<span class="fu">args</span>),
+      responseType = <span class="st">&quot;arraybuffer&quot;</span>,
+      headers = Map(<span class="st">&quot;Content-Type&quot;</span> -&gt; <span class="st">&quot;application/octet-stream&quot;</span>)
+    ).<span class="fu">map</span> { r =&gt;
+      TypedArrayBuffer.<span class="fu">wrap</span>(r.<span class="fu">response</span>.<span class="fu">asInstanceOf</span>[ArrayBuffer])
+    }
+  }
+
+  <span class="kw">override</span> <span class="kw">def</span> read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].<span class="fu">fromBytes</span>(p)
+  <span class="kw">override</span> <span class="kw">def</span> write[Result: Pickler](r: Result) = Pickle.<span class="fu">intoBytes</span>(r)
+
+}</code></pre></div>
+</div><div id="client-usage" class="slide section level3 unnumbered">
+<h1>Client usage</h1>
+<p><code>counter/Main.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client = Client[ServiceDef]
+
+<span class="kw">val</span> eventuallyInitValue = client.<span class="fu">get</span>().<span class="fu">call</span>()</code></pre></div>
+</div><div id="client-usage-1" class="slide section level3 unnumbered">
+<h1>Client usage</h1>
+<p><code>counter/Main.scala</code>:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> client = Client[ServiceDef]
+
+<span class="kw">val</span> eventuallyInitValue: Future[Int] = client.<span class="fu">get</span>().<span class="fu">call</span>()</code></pre></div>
+</div><div id="almost-complete-client" class="slide section level3 unnumbered">
+<h1>(Almost) complete client</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> counter = <span class="fu">Var</span>(initValue)
+<span class="kw">var</span> step = <span class="dv">1</span>
+
+<span class="kw">def</span> <span class="fu">onIncrement</span>(): Unit =
+  client.<span class="fu">increment</span>(step).<span class="fu">call</span>().<span class="fu">foreach</span>(x =&gt; counter := x)
+
+<span class="kw">def</span> <span class="fu">onReset</span>(): Unit =
+  client.<span class="fu">reset</span>().<span class="fu">call</span>().<span class="fu">foreach</span>(x =&gt; counter := x)
+
+<span class="kw">def</span> <span class="fu">onChangeStep</span>(event: Event): Unit = {
+  step = event.<span class="fu">target</span>.<span class="fu">asInstanceOf</span>[Input].<span class="fu">value</span>.<span class="fu">toInt</span>
+}
+
+&lt;div style=<span class="st">&quot;text-align: center&quot;</span>&gt;
+  &lt;h1 id=<span class="st">&quot;counter&quot;</span>&gt;{ counter }&lt;/h1&gt;
+  &lt;h1&gt;&lt;input <span class="kw">type</span>=<span class="st">&quot;number&quot;</span> value={ step.<span class="fu">toString</span> } onchange={ onChangeStep _ } /&gt;&lt;/h1&gt;
+  &lt;div&gt;
+    &lt;button id=<span class="st">&quot;inc&quot;</span> onclick={ onIncrement _ }&gt;Increment&lt;/button&gt;
+    &lt;button id=<span class="st">&quot;reset&quot;</span> onclick={ onReset _ }&gt;Reset&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div><div id="summary" class="titleslide slide section level2"><h1><span class="header-section-number">5.4</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
+<h1>Summary</h1>
+<ul>
+<li>Play and Scala.js integration
+<ul>
+<li>build tool: <code>sbt-web-scalajs</code></li>
+<li>remote invocation: <code>autowire</code></li>
+<li>data marshalling: <code>boopickle</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="going-further" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Going further</h1></div><div id="npm-modules" class="slide section level3 unnumbered">
+<h1>NPM modules</h1>
+<ul>
+<li><p><a href="https://scalacenter.github.io/scalajs-bundler/">scalajs-bundler</a></p></li>
+<li><p>Add dependencies on NPM packages to your <code>build.sbt</code></p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">npmDependencies in Compile += <span class="st">&quot;react&quot;</span> -&gt; <span class="st">&quot;15.5.4&quot;</span></code></pre></div>
+<ul>
+<li>Bundle your project and its dependencies into a single file executable by a web browser</li>
+</ul>
+<pre><code>&gt; myProject/fullOptJS::webpack</code></pre>
+</div><div id="scala.js-react" class="slide section level3 unnumbered">
+<h1>Scala.js + React</h1>
+<ul>
+<li>scalajs-react</li>
+</ul>
+</div><div id="alternative-web-frameworks" class="slide section level3 unnumbered">
+<h1>Alternative Web frameworks</h1>
+<ul>
+<li>akka-http</li>
+<li>http4s</li>
+</ul>
+</div><div id="remote-communication" class="slide section level3 unnumbered">
+<h1>Remote communication</h1>
+<ul>
+<li><a href="http://julienrf.github.io/endpoints/">endpoints</a></li>
+</ul>
+</div>
+<div id="appendix" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Appendix</h1></div><div id="implicit-parameters" class="titleslide slide section level2"><h1><span class="header-section-number">7.1</span> Implicit parameters</h1></div><div id="ad-hoc-polymorphism" class="slide section level3 unnumbered">
+<h1><em>ad-hoc</em> polymorphism</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> max[A](a1: A, a2: A, ordering: Ordering[A]): A =
+  <span class="kw">if</span> (ordering.<span class="fu">compare</span>(a1, a2) &gt; <span class="dv">0</span>) a1 <span class="kw">else</span> a2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">max</span>(<span class="dv">1</span>, <span class="dv">2</span>, Ordering.<span class="fu">int</span>) <span class="co">// 2</span>
+<span class="fu">max</span>(<span class="st">&quot;aaa&quot;</span>, <span class="st">&quot;bbb&quot;</span>, Ordering.<span class="fu">string</span>) <span class="co">// &quot;bbb&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Ordering {
+  <span class="kw">object</span> <span class="dt">int</span> <span class="kw">extends</span> Ordering[Int] { … }
+  <span class="kw">object</span> string <span class="kw">extends</span> Ordering[String] { … }
+}</code></pre></div>
+</div><div id="ad-hoc-polymorphism-1" class="slide section level3 unnumbered">
+<h1><em>ad-hoc</em> polymorphism</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> max[A](a1: A, a2: A)(<span class="kw">implicit</span> ordering: Ordering[A]): A =
+  <span class="kw">if</span> (ordering.<span class="fu">compare</span>(a1, a2) &gt; <span class="dv">0</span>) a1 <span class="kw">else</span> a2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">max</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co">// 2</span>
+<span class="fu">max</span>(<span class="st">&quot;aaa&quot;</span>, <span class="st">&quot;bbb&quot;</span>) <span class="co">// &quot;bbb&quot;</span></code></pre></div>
+</div><div id="ad-hoc-polymorphism-2" class="slide section level3 unnumbered">
+<h1><em>ad-hoc</em> polymorphism</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> max[A](a1: A, a2: A)(<span class="kw">implicit</span> ordering: Ordering[A]): A =
+  <span class="kw">if</span> (ordering.<span class="fu">compare</span>(a1, a2) &gt; <span class="dv">0</span>) a1 <span class="kw">else</span> a2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">max</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co">// 2</span>
+<span class="fu">max</span>(<span class="st">&quot;aaa&quot;</span>, <span class="st">&quot;bbb&quot;</span>) <span class="co">// &quot;bbb&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Ordering {
+  <span class="kw">implicit</span> <span class="kw">object</span> <span class="dt">int</span> <span class="kw">extends</span> Ordering[Int] { … }
+  <span class="kw">implicit</span> <span class="kw">object</span> string <span class="kw">extends</span> Ordering[String] { … }
+}</code></pre></div>
+</div>
+</body>
+</html>
