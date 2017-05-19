@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien.richard-foy@epfl.ch" />
+  <meta name="author" content="" />
+  <meta name="author" content="Typelevel Summit Copenhagen – June 3, 2017" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/2017/arrows" />
+  <title>Do it with (Free?) arrows!</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Do it with (Free?) arrows!</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#x65;&#112;&#102;&#108;&#46;&#x63;&#104;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Typelevel Summit Copenhagen – June 3, 2017<br/><br/><a href="http://julienrf.github.io/2017/arrows" class="uri">http://julienrf.github.io/2017/arrows</a>
+  </p>
+</div>
+<div id="introduction" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Introduction</h1></div><div id="what-is-a-monad" class="slide section level3 unnumbered">
+<h1>What is a monad?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Monad[F[_]] {
+  <span class="kw">def</span> point[A](a: A): F[A]
+  <span class="kw">def</span> bind[A, B](fa: F[A])(f: A =&gt; F[B]): F[B]
+}</code></pre></div>
+</div><div id="what-is-an-arrow" class="slide section level3 unnumbered">
+<h1>What is an arrow?</h1>
+<p>For <span class="math inline"><em>C</em></span> any category, its <em>arrow category</em> <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is the category such that:</p>
+<ul>
+<li>an object <span class="math inline"><em>a</em></span> of <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is a morphism <span class="math inline"><em>a</em> : <em>a</em><sub>0</sub> → <em>a</em><sub>1</sub></span> of <span class="math inline"><em>C</em></span>;</li>
+<li>a morphism <span class="math inline"><em>f</em> : <em>a</em> → <em>b</em></span> of <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is a commutative square <br><img src="square.png" style="max-width: 25%"/> in <span class="math inline"><em>C</em></span>;</li>
+<li>composition in <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is given simply by placing commutative squares side by side to get a commutative oblong.</li>
+</ul>
+</div><div id="power-constraint" class="slide section level3 unnumbered">
+<h1>Power? Constraint?</h1>
+<blockquote>
+<p>Monads are more <em>powerful</em> than applicative functors</p>
+</blockquote>
+<ul>
+<li>What kind of <strong>power</strong> are we talking about?</li>
+<li>Benefits of <strong>constraining</strong> this power?</li>
+</ul>
+</div><div id="goals-of-this-talk" class="slide section level3 unnumbered">
+<h1>Goals of this talk</h1>
+<ul>
+<li>Make these things more <strong>intuitive</strong></li>
+<li>Have <strong>fun</strong></li>
+</ul>
+<h4 id="secondary-goals" class="unnumbered">Secondary goals</h4>
+<ul>
+<li>Make the world a <strong>better place</strong></li>
+</ul>
+</div><div id="non-goals-of-this-talk" class="slide section level3 unnumbered">
+<h1>Non-goals of this talk</h1>
+<ul>
+<li>Explain what a <em>free monad</em> is</li>
+</ul>
+</div><div id="agenda" class="slide section level3 unnumbered">
+<h1>Agenda</h1>
+<ul>
+<li>Context</li>
+<li>Applicative Functor</li>
+<li>Monad</li>
+<li>Arrow</li>
+</ul>
+</div>
+<div id="context" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Context</h1></div><div id="description-vs-interpretation" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Description vs interpretation</h1></div><div id="description-vs-interpretation-1" class="slide section level3 unnumbered">
+<h1>Description vs interpretation</h1>
+<div class="figure">
+<img src="magritte.png" />
+
+</div>
+</div><div id="description-html-document" class="slide section level3 unnumbered">
+<h1>Description: HTML document</h1>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
+  <span class="kw">&lt;head&gt;&lt;title&gt;</span>This is not a title<span class="kw">&lt;/title&gt;&lt;/head&gt;</span>
+  <span class="kw">&lt;body/&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
+</div><div id="description-arithmetic-expression" class="slide section level3 unnumbered">
+<h1>Description: arithmetic expression</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> + <span class="dv">1</span>   <span class="co">// This is not an addition</span></code></pre></div>
+</div><div id="the-essence-of-descriptions" class="slide section level3 unnumbered">
+<h1>The essence of descriptions</h1>
+<ul class="incremental">
+<li>“atoms” (<code>1</code>, <code>&quot;foo&quot;</code>, <code>point(1, 2)</code>)</li>
+<li>operators (<code>+</code>, <code>concat</code>, <code>move</code>)</li>
+</ul>
+</div><div id="interpretations" class="slide section level3 unnumbered">
+<h1>Interpretation<strong>s</strong></h1>
+<table style="width:71%;">
+<colgroup>
+<col width="26%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Description</th>
+<th align="left">Interpretations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HTML document</td>
+<td align="left">rendering</td>
+</tr>
+<tr class="even">
+<td align="left">arithmetic expression</td>
+<td align="left">evaluation, simplification, pretty print</td>
+</tr>
+<tr class="odd">
+<td align="left">image</td>
+<td align="left">draw on screen, generate a file</td>
+</tr>
+<tr class="even">
+<td align="left">API endpoint</td>
+<td align="left">client, server, documentation</td>
+</tr>
+</tbody>
+</table>
+</div><div id="interpretations-1" class="slide section level3 unnumbered">
+<h1>Interpretations</h1>
+<ul>
+<li>Transform (optimize)</li>
+<li>Evaluate</li>
+<li>Generate (code, assets)</li>
+</ul>
+</div><div id="domain-data" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Domain: data</h1></div><div id="data-description" class="slide section level3 unnumbered">
+<h1>Data description</h1>
+<ul>
+<li>Records with fields</li>
+<li>Sum types</li>
+</ul>
+<p><img src="data-user.svg" style="width: 30%" /></p>
+</div><div id="interpretations-of-data-descriptions" class="slide section level3 unnumbered">
+<h1>Interpretations of data descriptions</h1>
+<ul>
+<li>serialization</li>
+<li>deserialization</li>
+<li>schema documentation</li>
+<li>UI form</li>
+</ul>
+</div><div id="lets-design-a-data-description-language" class="slide section level3 unnumbered">
+<h1>Let’s design a <em>data description language</em></h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
+
+  <span class="co">/** A description of data of type `A` */</span>
+  <span class="kw">type</span> Data[A]
+
+  <span class="co">/** “axiom” describing a record with one</span>
+<span class="co">    * field of type `String`</span>
+<span class="co">    */</span>
+  <span class="kw">def</span> <span class="fu">field</span>(name: String): Data[String]
+
+}</code></pre></div>
+</div><div id="lets-try-our-datadescr-language" class="slide section level3 unnumbered">
+<h1>Let’s try our <code>DataDescr</code> language</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="co">/**</span>
+<span class="co">    * A record with one field named “x”</span>
+<span class="co">    * and containing a `String` value</span>
+<span class="co">    */</span>
+  <span class="kw">val</span> x: Data[String] = <span class="fu">field</span>(<span class="st">&quot;x&quot;</span>)
+
+}</code></pre></div>
+</div><div id="lets-describe-a-user-data-type-1" class="slide section level3 unnumbered">
+<h1>Let’s describe a <code>User</code> data type (1)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+
+
+
+
+
+
+}</code></pre></div>
+</div><div id="lets-describe-a-user-data-type-2" class="slide section level3 unnumbered">
+<h1>Let’s describe a <code>User</code> data type (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">val</span> user: Data[User] = {
+
+
+    ???
+  }
+
+}</code></pre></div>
+</div><div id="lets-describe-a-user-data-type-3" class="slide section level3 unnumbered">
+<h1>Let’s describe a <code>User</code> data type (3)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">val</span> user: Data[User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+
+    ???
+  }
+
+}</code></pre></div>
+</div><div id="lets-describe-a-user-data-type-4" class="slide section level3 unnumbered">
+<h1>Let’s describe a <code>User</code> data type (4)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">val</span> user: Data[User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+    <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
+    ???
+  }
+
+}</code></pre></div>
+</div>
+<div id="applicative-functor" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Applicative Functor</h1></div><div id="we-need-the-power-of-applicative-functors" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> We need the power of applicative functors!</h1></div><div id="lets-upgrade-our-language" class="slide section level3 unnumbered">
+<h1>Let’s upgrade our language</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">Applicative</span>
+
+<span class="kw">trait</span> DataDescr {
+
+  <span class="kw">type</span> Data[A]
+
+  <span class="kw">def</span> <span class="fu">field</span>(name: String): Data[String]
+
+  <span class="co">/** Pretend that `Data[_]` is an applicative functor */</span>
+  <span class="kw">implicit</span> <span class="kw">val</span> applicativeData: Applicative[Data]
+
+}</code></pre></div>
+</div><div id="feel-the-power-1" class="slide section level3 unnumbered">
+<h1>Feel the power! (1)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">syntax</span>.<span class="fu">_</span>
+
+<span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">val</span> user: Data[User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+    <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
+    (name tuple email) <span class="co">// Data[(String, String)]</span>
+  }
+
+}</code></pre></div>
+</div><div id="feel-the-power-2" class="slide section level3 unnumbered">
+<h1>Feel the power! (2)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">syntax</span>.<span class="fu">_</span>
+
+<span class="kw">trait</span> Program <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">val</span> user: Data[User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+    <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
+    (name tuple email).<span class="fu">map</span>(User.<span class="fu">tupled</span>)
+  }
+
+}</code></pre></div>
+</div><div id="intuition-of-an-applicative-functor" class="slide section level3 unnumbered">
+<h1>Intuition of an applicative functor</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> name: Data[String] = …
+<span class="kw">val</span> email: Data[String] = …
+<span class="kw">val</span> user: Data[User] = (name tuple email).<span class="fu">map</span>(User.<span class="fu">tupled</span>)</code></pre></div>
+<ul>
+<li>We can turn <strong>several</strong> records into a <strong>single</strong> record containing all of their fields</li>
+</ul>
+</div><div id="intuition-of-an-applicative-functor-1" class="slide section level3 unnumbered">
+<h1>Intuition of an <em>applicative functor</em></h1>
+<div class="figure">
+<img src="applicative-functors.svg" />
+
+</div>
+</div><div id="datauser" class="slide section level3 unnumbered">
+<h1><code>Data[User]</code>?</h1>
+<ul>
+<li>But what is a <code>Data[User]</code>?</li>
+<li>We don’t know yet! <code>Data</code> is still an abstract type</li>
+<li>Interpreters will give <code>Data</code> a concrete meaning</li>
+</ul>
+</div><div id="interpreters" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Interpreters</h1></div><div id="decoder" class="slide section level3 unnumbered">
+<h1><code>Decoder</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Decoder <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Map[String, String] =&gt; Option[A]
+
+  <span class="co">// … (implementation of `field` and `applicativeData`)</span>
+}</code></pre></div>
+</div><div id="documentation" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="co">// … (implementation of `field` and `applicativeData`)</span>
+}</code></pre></div>
+</div>
+<div id="monad" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Monad</h1></div><div id="sum-types-description" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Sum types description</h1></div><div id="is-our-language-powerful-enough-to-describe-this-data-type" class="slide section level3 unnumbered">
+<h1>Is our language powerful enough to describe this data type?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Circle</span>(radius: String) <span class="kw">extends</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> Rectangle(width: String, height: String) <span class="kw">extends</span> Shape</code></pre></div>
+<pre><code>val kvs =
+  Map(
+    &quot;type&quot; -&gt; &quot;Circle&quot;,
+    &quot;radius&quot; -&gt; &quot;42&quot;
+  )</code></pre>
+</div><div id="attempt" class="slide section level3 unnumbered">
+<h1>Attempt</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Circle</span>(radius: String) <span class="kw">extends</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> Rectangle(width: String, height: String) <span class="kw">extends</span> Shape</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> shape: Data[Shape] = {
+  <span class="kw">val</span> tpe = <span class="fu">field</span>(<span class="st">&quot;type&quot;</span>)
+  <span class="kw">val</span> circle = <span class="fu">field</span>(<span class="st">&quot;radius&quot;</span>).<span class="fu">map</span>(Circle)
+  <span class="kw">val</span> rectangle =
+    (<span class="fu">field</span>(<span class="st">&quot;width&quot;</span>) tuple <span class="fu">field</span>(<span class="st">&quot;height&quot;</span>)).<span class="fu">map</span>(Rectangle.<span class="fu">tupled</span>)
+  ???
+}</code></pre></div>
+</div><div id="monads-to-the-rescue" class="slide section level3 unnumbered">
+<h1>Monads to the rescue</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">Monad</span>
+
+<span class="kw">trait</span> DataDescr {
+
+  <span class="kw">type</span> Data[A]
+
+  <span class="kw">def</span> <span class="fu">field</span>(name: String): Data[String]
+
+  <span class="co">/** Pretend that `Data[_]` is a monad */</span>
+  <span class="kw">implicit</span> <span class="kw">val</span> monadData: Monad[Data]
+
+}</code></pre></div>
+</div><div id="feel-the-power-of-the-monad" class="slide section level3 unnumbered">
+<h1>Feel the power of the monad!</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> shapeData: Data[Shape] = {
+
+  <span class="kw">val</span> circle: Data[Shape] = <span class="fu">field</span>(<span class="st">&quot;radius&quot;</span>).<span class="fu">map</span>(Circle)
+  <span class="kw">val</span> rectangle: Data[Shape] =
+    (<span class="fu">field</span>(<span class="st">&quot;width&quot;</span>) tuple <span class="fu">field</span>(<span class="st">&quot;height&quot;</span>)).<span class="fu">map</span>(Rectangle.<span class="fu">tupled</span>)
+
+  <span class="kw">for</span> {
+    tpe   &lt;- <span class="fu">field</span>(<span class="st">&quot;type&quot;</span>)
+    shape &lt;- tpe <span class="kw">match</span> {
+      <span class="kw">case</span> <span class="st">&quot;Circle&quot;</span> =&gt; circle
+      <span class="kw">case</span> <span class="st">&quot;Rectangle&quot;</span> =&gt; rectangle
+    }
+  } <span class="kw">yield</span> shape
+}</code></pre></div>
+</div><div id="intuition-of-a-monad" class="slide section level3 unnumbered">
+<h1>Intuition of a <em>monad</em></h1>
+<ul>
+<li>Can do all the things an applicative functor can do</li>
+<li>Can define a record according to the <strong>actual value</strong> of another record’s field</li>
+</ul>
+</div><div id="intuition-of-a-monad-1" class="slide section level3 unnumbered">
+<h1>Intuition of a <em>monad</em></h1>
+<div class="figure">
+<img src="monads.svg" />
+
+</div>
+</div><div id="interpreters-1" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> Interpreters</h1></div><div id="decoder-1" class="slide section level3 unnumbered">
+<h1><code>Decoder</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Decoder <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Map[String, String] =&gt; Option[A]
+
+  <span class="co">// … (implementation of `monadData`)</span>
+
+}</code></pre></div>
+</div><div id="documentation-1" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="kw">val</span> monadData: Monad[Data] = ???
+
+
+
+
+
+}</code></pre></div>
+</div><div id="documentation-2" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="kw">val</span> monadData: Monad[Data] =
+    <span class="kw">new</span> Monad[Data] {
+      <span class="kw">def</span> point[A](x: A): Data[A] = ???
+      <span class="kw">def</span> bind[A, B](fa: Data[A])(f: A =&gt; Data[B]): Data[B] = ???
+    }
+
+}</code></pre></div>
+</div><div id="documentation-3" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="kw">val</span> monadData: Monad[Data] =
+    <span class="kw">new</span> Monad[Data] {
+      <span class="kw">def</span> point[A](x: A): Record = ???
+      <span class="kw">def</span> bind[A, B](fa: Record)(f: A =&gt; Record): Record = ???
+    }
+
+}</code></pre></div>
+</div><div id="documentation-4" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="kw">val</span> monadData: Monad[Data] =
+    <span class="kw">new</span> Monad[Data] {
+      <span class="kw">def</span> point[A](x: A): Record = <span class="fu">Record</span>(Nil)
+      <span class="kw">def</span> bind[A, B](fa: Record)(f: A =&gt; Record): Record = ???
+    }
+
+}</code></pre></div>
+</div><div id="documentation-5" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A] = Record
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+  <span class="kw">val</span> monadData: Monad[Data] =
+    <span class="kw">new</span> Monad[Data] {
+      <span class="kw">def</span> point[A](x: A): Record = <span class="fu">Record</span>(Nil)
+      <span class="kw">def</span> bind[A, B](fa: Record)(f: A =&gt; Record): Record = fa
+    }
+
+}</code></pre></div>
+</div><div id="documentation-6" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<ul>
+<li>We always get an empty <code>Record</code>…</li>
+</ul>
+</div><div id="monads-summary" class="slide section level3 unnumbered">
+<h1>Monads: summary</h1>
+<ul>
+<li>User point of view
+<ul>
+<li><strong>greater</strong> power: describe a data type based on the information contained in another data type’s instance</li>
+</ul></li>
+<li>Interpreter point of view
+<ul>
+<li><strong>too much</strong> power: we can not anymore give a useful <code>Documentation</code> implementation…</li>
+</ul></li>
+<li>Couldn’t we find a better <strong>compromise</strong>?</li>
+</ul>
+</div>
+<div id="arrow" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Arrow</h1></div><div id="lets-make-our-data-an-arrow" class="slide section level3 unnumbered">
+<h1>Let’s make our <code>Data</code> an arrow</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
+
+  <span class="co">/** Description of a data type */</span>
+  <span class="kw">type</span> Data[A, B]
+  <span class="co">/** Raw format of data */</span>
+  <span class="kw">type</span> Raw
+
+  <span class="co">/** Describes a record with one field */</span>
+  <span class="kw">def</span> <span class="fu">field</span>(name: String): Data[Raw, String]
+
+  <span class="co">/** Pretend that `Data[_, _]` is an arrow */</span>
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowData: Arrow[Data]
+
+}</code></pre></div>
+</div><div id="describing-data-types-with-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">5.1</span> Describing data types with arrows</h1></div><div id="record-types" class="slide section level3 unnumbered">
+<h1>Record types</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">syntax</span>.<span class="fu">all</span>.<span class="fu">_</span>
+
+<span class="kw">trait</span> Program exends DataDescr {
+  <span class="kw">import</span> arrowData.<span class="fu">_</span>
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">def</span> userData: Data[Raw, User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+    <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
+    (name &amp;&amp;&amp; email) &gt;&gt;&gt; <span class="fu">arr</span>(User.<span class="fu">tupled</span>)
+  }
+
+}</code></pre></div>
+</div><div id="record-types-1" class="slide section level3 unnumbered">
+<h1>Record types</h1>
+<div class="figure">
+<img src="user-arrows.svg" />
+
+</div>
+</div><div id="intuition-of-an-arrow" class="slide section level3 unnumbered">
+<h1>Intuition of an <em>arrow</em></h1>
+<ul>
+<li>combine processing steps, <strong>sequentially</strong> (<code>&gt;&gt;&gt;</code>) or <strong>in parallel</strong> (<code>&amp;&amp;&amp;</code>)</li>
+</ul>
+</div><div id="intuition-of-an-arrow-1" class="slide section level3 unnumbered">
+<h1>Intuition of an <em>arrow</em></h1>
+<div class="figure">
+<img src="arrows.svg" />
+
+</div>
+</div><div id="sum-types" class="slide section level3 unnumbered">
+<h1>Sum types</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Circle</span>(radius: String) <span class="kw">extends</span> Shape
+<span class="kw">case</span> <span class="kw">class</span> Rectangle(width: String, height: String) <span class="kw">extends</span> Shape
+
+<span class="kw">val</span> shapeDecoder: Data[Raw, Shape] = {
+
+  <span class="kw">val</span> circle: Data[Raw, Shape] = <span class="fu">field</span>(<span class="st">&quot;radius&quot;</span>) &gt;&gt;&gt; <span class="fu">arr</span>(Circle)
+
+  <span class="kw">val</span> rectangle: Data[Raw, Shape] =
+    (<span class="fu">field</span>(<span class="st">&quot;width&quot;</span>) &amp;&amp;&amp; <span class="fu">field</span>(<span class="st">&quot;height&quot;</span>)) &gt;&gt;&gt; <span class="fu">arr</span>(Rectangle.<span class="fu">tupled</span>)
+
+  <span class="kw">val</span> tpe = <span class="fu">field</span>(<span class="st">&quot;type&quot;</span>)
+  ???
+}</code></pre></div>
+</div><div id="sum-types-1" class="slide section level3 unnumbered">
+<h1>Sum types</h1>
+<ul>
+<li>We still miss some power…</li>
+</ul>
+</div>
+<div id="choice" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Choice</h1></div><div id="add-the-power-of-making-choices" class="slide section level3 unnumbered">
+<h1>Add the power of making choices</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
+
+  <span class="co">/** Pretend that `Data[_, _]` is an arrow with choice */</span>
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data]
+
+}</code></pre></div>
+</div><div id="can-we-now-describe-sum-types" class="slide section level3 unnumbered">
+<h1>Can we now describe sum types?</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> shapeDecoder: Data[Raw, Shape] = {
+  <span class="kw">import</span> arrowChoiceData.<span class="fu">_</span>
+
+  <span class="kw">val</span> circle: Data[Raw, Shape] = …
+  <span class="kw">val</span> rectangle: Data[Raw, Shape] = …
+
+  <span class="kw">val</span> tpe: Data[Raw, Unit \/ Unit] =
+    <span class="fu">field</span>(<span class="st">&quot;type&quot;</span>) &gt;&gt;&gt; <span class="fu">arr</span>((_: String) <span class="kw">match</span> {
+      <span class="kw">case</span> <span class="st">&quot;Circle&quot;</span>    =&gt; ().<span class="fu">left</span>
+      <span class="kw">case</span> <span class="st">&quot;Rectangle&quot;</span> =&gt; ().<span class="fu">right</span>
+    }
+
+  tpe.<span class="fu">withFst</span> &gt;&gt;&gt; (circle ||| rectangle)
+}</code></pre></div>
+</div><div id="shapedecoder" class="slide section level3 unnumbered">
+<h1><code>shapeDecoder</code> </h1>
+<div class="figure">
+<img src="shape-arrows.svg" />
+
+</div>
+</div><div id="intuition-of-choice" class="slide section level3 unnumbered">
+<h1>Intuition of <em>choice</em></h1>
+<ul>
+<li><strong>fan in</strong>: merge alternative branches</li>
+</ul>
+</div><div id="intuition-of-choice-1" class="slide section level3 unnumbered">
+<h1>Intuition of <em>choice</em></h1>
+<div class="figure">
+<img src="choice.svg" />
+
+</div>
+</div><div id="can-we-also-implement-a-useful-documentation-interpreter" class="titleslide slide section level2 unnumbered"><h1>Can we also implement a (useful) documentation interpreter?</h1></div><div id="documentation-7" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A, B] = ???
+  <span class="kw">type</span> Raw = ???
+
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] = ???
+
+}</code></pre></div>
+</div><div id="documentation-8" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A, B] = ???
+  <span class="kw">type</span> Raw = Nothing
+
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] = ???
+
+}</code></pre></div>
+</div><div id="documentation-9" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A, B] = ???
+  <span class="kw">type</span> Raw = Nothing
+
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String])
+
+
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] = ???
+
+}</code></pre></div>
+</div><div id="documentation-10" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A, B] = ???
+  <span class="kw">type</span> Raw = Nothing
+
+  <span class="kw">sealed</span> <span class="kw">trait</span> Adt
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] = ???
+
+}</code></pre></div>
+</div><div id="documentation-11" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
+
+  <span class="kw">type</span> Data[A, B] = Adt
+  <span class="kw">type</span> Raw = Nothing
+
+  <span class="kw">sealed</span> <span class="kw">trait</span> Adt
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+  <span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] = ???
+
+}</code></pre></div>
+</div><div id="documentation-12" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-13" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> compose[A, B, C](f: Data[B, C], g: Data[A, B]): Data[A, C] = ???
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-14" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> compose[A, B, C](f: Adt, g: Adt): Adt = ???
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-15" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> compose[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (<span class="fu">Record</span>(fs1), <span class="fu">Record</span>(fs2)) =&gt; <span class="fu">Record</span>(fs1 ++ fs2)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-16" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> compose[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (<span class="fu">Record</span>(fs1), <span class="fu">Record</span>(fs2)) =&gt; <span class="fu">Record</span>(fs1 ++ fs2)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as1 ++ as2)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-17" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> compose[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (<span class="fu">Record</span>(fs1), <span class="fu">Record</span>(fs2)) =&gt; <span class="fu">Record</span>(fs1 ++ fs2)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as1 ++ as2)
+        <span class="kw">case</span> (<span class="fu">Record</span>(fs1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as2.<span class="fu">map</span>(r =&gt; <span class="fu">Fields</span>(r.<span class="fu">fields</span> ++ fs1)))
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">Record</span>(fs2)) =&gt; <span class="fu">coProd</span>(as1.<span class="fu">map</span>(r =&gt; <span class="fu">Fields</span>(r.<span class="fu">fields</span> ++ fs2)))
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-18" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Data[A, C], g: Data[B, C]): Data[A \/ B, C] = ???
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-19" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Adt, g: Adt): Adt = ???
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-20" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (r1: Record,  r2: Record)  =&gt; <span class="fu">CoProd</span>(r1 :: r2 :: Nil)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-21" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (r1: Record,  r2: Record)  =&gt; <span class="fu">CoProd</span>(r1 :: r2 :: Nil)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as1 ++ as2)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-22" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (r1: Record,  r2: Record)  =&gt; <span class="fu">CoProd</span>(r1 :: r2 :: Nil)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as1 ++ as2)
+        <span class="kw">case</span> (r1: Record,  <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(r1 :: as2)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="documentation-23" class="slide section level3 unnumbered">
+<h1><code>Documentation</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Record</span>(fields: List[String]) <span class="kw">extends</span> Adt
+<span class="kw">case</span> <span class="kw">class</span> <span class="fu">CoProd</span>(alternatives: List[Record]) <span class="kw">extends</span> Adt
+
+<span class="kw">implicit</span> <span class="kw">val</span> arrowChoiceData: Arrow[Data] <span class="kw">with</span> Choice[Data] =
+  <span class="kw">new</span> Arrow[Data] <span class="kw">with</span> Choice[Data] {
+
+    <span class="kw">def</span> choice[A, B, C](f: Adt, g: Adt): Adt =
+      (f, g) <span class="kw">match</span> {
+        <span class="kw">case</span> (r1: Record,  r2: Record)  =&gt; <span class="fu">CoProd</span>(r1 :: r2 :: Nil)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(as1 ++ as2)
+        <span class="kw">case</span> (r1: Record,  <span class="fu">CoProd</span>(as2)) =&gt; <span class="fu">CoProd</span>(r1 :: as2)
+        <span class="kw">case</span> (<span class="fu">CoProd</span>(as1), r2: Record)  =&gt; <span class="fu">CoProd</span>(r2 :: as1)
+      }
+
+    <span class="co">// …</span>
+  }</code></pre></div>
+</div><div id="arrows-and-choice-summary" class="slide section level3 unnumbered">
+<h1>Arrows and choice: summary</h1>
+<ul>
+<li>Arrows (with choice), like monads, provide enough expressive power to describe record types and sum types</li>
+<li>They support a (useful) documentation interpreter</li>
+</ul>
+</div><div id="arrow-ish-things-worth-knowing" class="titleslide slide section level2"><h1><span class="header-section-number">6.1</span> Arrow-ish things worth knowing</h1></div><div id="arrows-are-relevant-for" class="slide section level3 unnumbered">
+<h1>Arrows are relevant for…</h1>
+<ul>
+<li>Business rules</li>
+<li>Pipelines of data transformations</li>
+<li>FRP (e.g. <a href="https://wiki.haskell.org/Yampa">yampa</a>)</li>
+</ul>
+</div>
+<div id="summary" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
+<h1>Summary</h1>
+<ul class="incremental">
+<li>We compared the <strong>expressive power</strong> of the operations provided by three <strong>notions of computation</strong> (applicative functors, arrows and monads)</li>
+<li>We observed that when we <strong>increase the expressive power</strong> for users, at the same time we <strong>decrease our ability to give useful meanings</strong> to their code
+<ul class="incremental">
+<li>See also “Constraints liberate, liberties constrain”, Rúnar Bjarnason, 2015 [<a href="https://www.youtube.com/watch?v=GqmsQeSzMdw">video</a>]</li>
+</ul></li>
+<li>Arrows (with choice) provide a <strong>compromise</strong> between applicative functors and monads
+<ul class="incremental">
+<li>Users benefit from <strong>more expressive power</strong> than with applicative functors</li>
+<li>Interpreters are <strong>less constrained</strong> than with monads</li>
+</ul></li>
+</ul>
+</div>
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Questions?</h1></div>
+<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Bonus</h1></div><div id="final-encoding" class="titleslide slide section level2"><h1><span class="header-section-number">9.1</span> Final encoding</h1></div><div id="final-encoding-1" class="slide section level3 unnumbered">
+<h1>Final encoding</h1>
+<ul>
+<li>[<a href="http://okmij.org/ftp/tagless-final/course/lecture.pdf">Kiselyov 2012</a>]</li>
+<li>[<a href="https://gist.github.com/OlivierBlanvillain/48bb5c66dbb0557da50465809564ee80">Blanvillain 2017</a>]</li>
+</ul>
+</div><div id="some-other-friends-of-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">9.2</span> Some other friends of arrows</h1></div><div id="biarrow" class="slide section level3 unnumbered">
+<h1>BiArrow</h1>
+<ul>
+<li>Similar to arrows, but <strong>invertible</strong> [<a href="http://ftp.sci.kun.nl/CSI/SoftwEng.FunctLang/papers/2005/alia2005-biarrowsHaskellWorkshop.pdf">Alimarine et al. 2005</a>]</li>
+<li>Examples of use cases
+<ul>
+<li>parser / pretty printer [<a href="http://camlunity.ru/swap/Library/Computer%20Science/Parsers/Invertible%20Syntax%20Descriptions.%20Unifying%20Parsing%20and%20Pretty-Printing.pdf">Rendel et al. 2010</a>]</li>
+<li>codecs</li>
+<li>lenses [<a href="https://arxiv.org/pdf/1703.10857">Pickering 2017</a>]</li>
+</ul></li>
+</ul>
+</div><div id="cartesian-closed-categories" class="slide section level3 unnumbered">
+<h1>Cartesian Closed Categories</h1>
+<ul>
+<li>Cartesian closed categories (CCCs) can model lambda calculus</li>
+<li>Examples of use cases
+<ul>
+<li>embedded DSLs</li>
+<li>meta-programming</li>
+</ul></li>
+<li>See also [<a href="http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf">Elliott 2017</a>]</li>
+</ul>
+</div>
+</body>
+</html>
