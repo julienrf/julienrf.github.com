@@ -11,7 +11,7 @@
   <meta name="author" content="Typelevel Summit Copenhagen – June 3, 2017" />
   <meta name="author" content="" />
   <meta name="author" content="http://julienrf.github.io/2017/arrows" />
-  <title>Do it with (Free?) arrows!</title>
+  <title>Do it with (free?) arrows!</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 div.sourceCode { overflow-x: auto; }
@@ -57,7 +57,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Do it with (Free?) arrows!</h1>
+  <h1 class="title">Do it with (<em>free</em>?) arrows!</h1>
   <p class="author">
 Julien Richard-Foy <script type="text/javascript">
 <!--
@@ -67,7 +67,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Typelevel Summit Copenhagen – June 3, 2017<br/><br/><a href="http://julienrf.github.io/2017/arrows" class="uri">http://julienrf.github.io/2017/arrows</a>
   </p>
 </div>
-<div id="introduction" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Introduction</h1></div><div id="what-is-a-monad" class="slide section level3 unnumbered">
+<div id="what-is-this-talk-about" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> What is this talk about?</h1></div><div id="what-is-a-monad" class="slide section level3 unnumbered">
 <h1>What is a monad?</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Monad[F[_]] {
   <span class="kw">def</span> point[A](a: A): F[A]
@@ -88,7 +88,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </blockquote>
 <ul>
 <li>What kind of <strong>power</strong> are we talking about?</li>
-<li>Benefits of <strong>constraining</strong> this power?</li>
+<li>Can this power be seen as a <strong>constraint</strong>?</li>
 </ul>
 </div><div id="goals-of-this-talk" class="slide section level3 unnumbered">
 <h1>Goals of this talk</h1>
@@ -318,12 +318,6 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <ul>
 <li>We can turn <strong>several</strong> records into a <strong>single</strong> record containing all of their fields</li>
 </ul>
-</div><div id="intuition-of-an-applicative-functor-1" class="slide section level3 unnumbered">
-<h1>Intuition of an <em>applicative functor</em></h1>
-<div class="figure">
-<img src="applicative-functors.svg" />
-
-</div>
 </div><div id="datauser" class="slide section level3 unnumbered">
 <h1><code>Data[User]</code>?</h1>
 <ul>
@@ -405,14 +399,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1>Intuition of a <em>monad</em></h1>
 <ul>
 <li>Can do all the things an applicative functor can do</li>
-<li>Can define a record according to the <strong>actual value</strong> of another record’s field</li>
+<li>Can describe a type according to the <strong>actual value</strong> of another type</li>
 </ul>
-</div><div id="intuition-of-a-monad-1" class="slide section level3 unnumbered">
-<h1>Intuition of a <em>monad</em></h1>
-<div class="figure">
-<img src="monads.svg" />
-
-</div>
 </div><div id="interpreters-1" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> Interpreters</h1></div><div id="decoder-1" class="slide section level3 unnumbered">
 <h1><code>Decoder</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Decoder <span class="kw">extends</span> DataDescr {
@@ -495,7 +483,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="documentation-6" class="slide section level3 unnumbered">
 <h1><code>Documentation</code> </h1>
 <ul>
-<li>We always get an empty <code>Record</code>…</li>
+<li>Where are the record fields???</li>
 </ul>
 </div><div id="monads-summary" class="slide section level3 unnumbered">
 <h1>Monads: summary</h1>
@@ -516,7 +504,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
 
   <span class="co">/** Description of a data type */</span>
-  <span class="kw">type</span> Data[A, B]
+  <span class="kw">type</span> Data[In, Out]
   <span class="co">/** Raw format of data */</span>
   <span class="kw">type</span> Raw
 
@@ -539,11 +527,27 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">def</span> userData: Data[Raw, User] = {
     <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
     <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
-    (name &amp;&amp;&amp; email) &gt;&gt;&gt; <span class="fu">arr</span>(User.<span class="fu">tupled</span>)
+    (name &amp;&amp;&amp; email) <span class="co">// Data[Raw, (String, String)]</span>
   }
 
 }</code></pre></div>
 </div><div id="record-types-1" class="slide section level3 unnumbered">
+<h1>Record types</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">syntax</span>.<span class="fu">all</span>.<span class="fu">_</span>
+
+<span class="kw">trait</span> Program exends DataDescr {
+  <span class="kw">import</span> arrowData.<span class="fu">_</span>
+
+  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, email: String)
+
+  <span class="kw">def</span> userData: Data[Raw, User] = {
+    <span class="kw">val</span> name  = <span class="fu">field</span>(<span class="st">&quot;name&quot;</span>)
+    <span class="kw">val</span> email = <span class="fu">field</span>(<span class="st">&quot;email&quot;</span>)
+    (name &amp;&amp;&amp; email) &gt;&gt;&gt; <span class="fu">arr</span>(User.<span class="fu">tupled</span>)
+  }
+
+}</code></pre></div>
+</div><div id="record-types-2" class="slide section level3 unnumbered">
 <h1>Record types</h1>
 <div class="figure">
 <img src="user-arrows.svg" />
@@ -554,12 +558,6 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <ul>
 <li>combine processing steps, <strong>sequentially</strong> (<code>&gt;&gt;&gt;</code>) or <strong>in parallel</strong> (<code>&amp;&amp;&amp;</code>)</li>
 </ul>
-</div><div id="intuition-of-an-arrow-1" class="slide section level3 unnumbered">
-<h1>Intuition of an <em>arrow</em></h1>
-<div class="figure">
-<img src="arrows.svg" />
-
-</div>
 </div><div id="sum-types" class="slide section level3 unnumbered">
 <h1>Sum types</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Shape
@@ -617,12 +615,6 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <ul>
 <li><strong>fan in</strong>: merge alternative branches</li>
 </ul>
-</div><div id="intuition-of-choice-1" class="slide section level3 unnumbered">
-<h1>Intuition of <em>choice</em></h1>
-<div class="figure">
-<img src="choice.svg" />
-
-</div>
 </div><div id="can-we-also-implement-a-useful-documentation-interpreter" class="titleslide slide section level2 unnumbered"><h1>Can we also implement a (useful) documentation interpreter?</h1></div><div id="documentation-7" class="slide section level3 unnumbered">
 <h1><code>Documentation</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Documentation <span class="kw">extends</span> DataDescr {
@@ -873,9 +865,9 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1>Arrows and choice: summary</h1>
 <ul>
 <li>Arrows (with choice), like monads, provide enough expressive power to describe record types and sum types</li>
-<li>They support a (useful) documentation interpreter</li>
+<li>Like applicative functors, they support a (useful) documentation interpreter</li>
 </ul>
-</div><div id="arrow-ish-things-worth-knowing" class="titleslide slide section level2"><h1><span class="header-section-number">6.1</span> Arrow-ish things worth knowing</h1></div><div id="arrows-are-relevant-for" class="slide section level3 unnumbered">
+</div><div id="arrows-are-relevant-for" class="slide section level3 unnumbered">
 <h1>Arrows are relevant for…</h1>
 <ul>
 <li>Business rules</li>
