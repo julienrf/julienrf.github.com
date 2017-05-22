@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="260px" preserveAspectRatio="none" style="width:222px;height:260px;" version="1.1" viewBox="0 0 222 260" width="222px" zoomAndPan="magnify"><defs><filter height="300%" id="f16q1ye4h58g8a" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--class Plot--><rect fill="#FEFECE" filter="url(#f16q1ye4h58g8a)" height="73.6094" id="Plot" style="stroke: #A80036; stroke-width: 1.5;" width="207" x="6" y="8"/><ellipse cx="93.75" cy="24" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M89.6719,19.7656 L89.6719,17.6094 L97.0625,17.6094 L97.0625,19.7656 L94.5938,19.7656 L94.5938,27.8438 L97.0625,27.8438 L97.0625,30 L89.6719,30 L89.6719,27.8438 L92.1406,27.8438 L92.1406,19.7656 L89.6719,19.7656 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="23" x="114.25" y="28.1543">Plot</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="212" y1="40" y2="40"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="212" y1="48" y2="48"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="122" x="12" y="62.2104">getDataset(): Dataset</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="195" x="12" y="75.0151">setDataset(dataset: Dataset): Unit</text><!--class Dataset--><rect fill="#FEFECE" filter="url(#f16q1ye4h58g8a)" height="48" id="Dataset" style="stroke: #A80036; stroke-width: 1.5;" width="81" x="69" y="203"/><ellipse cx="84" cy="219" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M79.9219,214.7656 L79.9219,212.6094 L87.3125,212.6094 L87.3125,214.7656 L84.8438,214.7656 L84.8438,222.8438 L87.3125,222.8438 L87.3125,225 L79.9219,225 L79.9219,222.8438 L82.3906,222.8438 L82.3906,214.7656 L79.9219,214.7656 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="49" x="98" y="223.1543">Dataset</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="70" x2="149" y1="235" y2="235"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="70" x2="149" y1="243" y2="243"/><!--link Plot to Dataset--><path d="M109.5,82.426 C109.5,116.414 109.5,166.43 109.5,197.566 " fill="none" id="Plot-Dataset" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="109.5,202.7735,113.5,193.7735,109.5,197.7735,105.5,193.7735,109.5,202.7735" style="stroke: #A80036; stroke-width: 1.0;"/><!--
+@startuml
+interface Plot {
+  getDataset(): Dataset
+  setDataset(dataset: Dataset): Unit
+}
+
+interface Dataset
+
+Plot -.-> Dataset
+@enduml
+
+PlantUML version 1.2017.12(Wed Apr 26 18:06:36 CEST 2017)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_131-8u131-b11-0ubuntu1.16.04.2-b11
+Operating System: Linux
+OS Version: 4.4.0-78-generic
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
