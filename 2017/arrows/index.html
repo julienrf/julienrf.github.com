@@ -67,54 +67,17 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Typelevel Summit Copenhagen – June 3, 2017<br/><br/><a href="http://julienrf.github.io/2017/arrows" class="uri">http://julienrf.github.io/2017/arrows</a>
   </p>
 </div>
-<div id="what-is-this-talk-about" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> What is this talk about?</h1></div><div id="what-is-a-monad" class="slide section level3 unnumbered">
-<h1>What is a monad?</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Monad[F[_]] {
-  <span class="kw">def</span> point[A](a: A): F[A]
-  <span class="kw">def</span> bind[A, B](fa: F[A])(f: A =&gt; F[B]): F[B]
-}</code></pre></div>
-</div><div id="what-is-an-arrow" class="slide section level3 unnumbered">
-<h1>What is an arrow?</h1>
-<p>For <span class="math inline"><em>C</em></span> any category, its <em>arrow category</em> <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is the category such that:</p>
-<ul>
-<li>an object <span class="math inline"><em>a</em></span> of <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is a morphism <span class="math inline"><em>a</em> : <em>a</em><sub>0</sub> → <em>a</em><sub>1</sub></span> of <span class="math inline"><em>C</em></span>;</li>
-<li>a morphism <span class="math inline"><em>f</em> : <em>a</em> → <em>b</em></span> of <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is a commutative square <br><img src="square.png" style="max-width: 25%"/> in <span class="math inline"><em>C</em></span>;</li>
-<li>composition in <span class="math inline"><em>A</em><em>r</em><em>r</em>(<em>C</em>)</span> is given simply by placing commutative squares side by side to get a commutative oblong.</li>
-</ul>
-</div><div id="power-constraint" class="slide section level3 unnumbered">
-<h1>Power? Constraint?</h1>
-<blockquote>
-<p>Monads are more <em>powerful</em> than applicative functors</p>
-</blockquote>
-<ul>
-<li>What kind of <strong>power</strong> are we talking about?</li>
-<li>Can this power be seen as a <strong>constraint</strong>?</li>
-</ul>
-</div><div id="goals-of-this-talk" class="slide section level3 unnumbered">
-<h1>Goals of this talk</h1>
-<ul>
-<li>Make these things more <strong>intuitive</strong></li>
-<li>Have <strong>fun</strong></li>
-</ul>
-<h4 id="secondary-goals" class="unnumbered">Secondary goals</h4>
-<ul>
-<li>Make the world a <strong>better place</strong></li>
-</ul>
-</div><div id="non-goals-of-this-talk" class="slide section level3 unnumbered">
-<h1>Non-goals of this talk</h1>
-<ul>
-<li>Explain what a <em>free monad</em> is</li>
-</ul>
-</div><div id="agenda" class="slide section level3 unnumbered">
-<h1>Agenda</h1>
+<div id="outline" class="slide section level3 unnumbered">
+<h1>Outline</h1>
 <ul>
 <li>Context</li>
 <li>Applicative Functor</li>
 <li>Monad</li>
 <li>Arrow</li>
+<li>Choice</li>
 </ul>
 </div>
-<div id="context" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Context</h1></div><div id="description-vs-interpretation" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Description vs interpretation</h1></div><div id="description-vs-interpretation-1" class="slide section level3 unnumbered">
+<div id="context" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Context</h1></div><div id="description-vs-interpretation" class="titleslide slide section level2"><h1><span class="header-section-number">1.1</span> Description vs interpretation</h1></div><div id="description-vs-interpretation-1" class="slide section level3 unnumbered">
 <h1>Description vs interpretation</h1>
 <div class="figure">
 <img src="magritte.png" />
@@ -129,14 +92,8 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="description-arithmetic-expression" class="slide section level3 unnumbered">
 <h1>Description: arithmetic expression</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="dv">1</span> + <span class="dv">1</span>   <span class="co">// This is not an addition</span></code></pre></div>
-</div><div id="the-essence-of-descriptions" class="slide section level3 unnumbered">
-<h1>The essence of descriptions</h1>
-<ul class="incremental">
-<li>“atoms” (<code>1</code>, <code>&quot;foo&quot;</code>, <code>point(1, 2)</code>)</li>
-<li>operators (<code>+</code>, <code>concat</code>, <code>move</code>)</li>
-</ul>
-</div><div id="interpretations" class="slide section level3 unnumbered">
-<h1>Interpretation<strong>s</strong></h1>
+</div><div id="interpretations-make-sense-out-of-descriptions" class="slide section level3 unnumbered">
+<h1>Interpretation<strong>s</strong> make sense out of descriptions</h1>
 <table style="width:71%;">
 <colgroup>
 <col width="26%" />
@@ -167,14 +124,20 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </tr>
 </tbody>
 </table>
-</div><div id="interpretations-1" class="slide section level3 unnumbered">
+</div><div id="interpretations" class="slide section level3 unnumbered">
 <h1>Interpretations</h1>
 <ul>
 <li>Transform (optimize)</li>
 <li>Evaluate</li>
 <li>Generate (code, assets)</li>
 </ul>
-</div><div id="domain-data" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Domain: data</h1></div><div id="data-description" class="slide section level3 unnumbered">
+</div><div id="the-essence-of-descriptions" class="slide section level3 unnumbered">
+<h1>The essence of descriptions</h1>
+<ul class="incremental">
+<li>“atoms” (<code>1</code>, <code>&quot;foo&quot;</code>, <code>point(1, 2)</code>)</li>
+<li>operators (<code>+</code>, <code>concat</code>, <code>move</code>)</li>
+</ul>
+</div><div id="domain-data" class="titleslide slide section level2"><h1><span class="header-section-number">1.2</span> Domain: data</h1></div><div id="data-description" class="slide section level3 unnumbered">
 <h1>Data description</h1>
 <ul>
 <li>Records with fields</li>
@@ -187,16 +150,18 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>serialization</li>
 <li>deserialization</li>
 <li>schema documentation</li>
+<li>lenses</li>
 <li>UI form</li>
+<li>…</li>
 </ul>
 </div><div id="lets-design-a-data-description-language" class="slide section level3 unnumbered">
-<h1>Let’s design a <em>data description language</em></h1>
+<h1>Let’s design a <em>data description</em> language</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
 
   <span class="co">/** A description of data of type `A` */</span>
   <span class="kw">type</span> Data[A]
 
-  <span class="co">/** “axiom” describing a record with one</span>
+  <span class="co">/** “atom” describing a record with one</span>
 <span class="co">    * field of type `String`</span>
 <span class="co">    */</span>
   <span class="kw">def</span> <span class="fu">field</span>(name: String): Data[String]
@@ -266,7 +231,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 
 }</code></pre></div>
 </div>
-<div id="applicative-functor" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Applicative Functor</h1></div><div id="we-need-the-power-of-applicative-functors" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> We need the power of applicative functors!</h1></div><div id="lets-upgrade-our-language" class="slide section level3 unnumbered">
+<div id="applicative-functor" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Applicative Functor</h1></div><div id="we-need-the-power-of-applicative-functors" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> We need the power of applicative functors!</h1></div><div id="lets-upgrade-our-language" class="slide section level3 unnumbered">
 <h1>Let’s upgrade our language</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">Applicative</span>
 
@@ -325,7 +290,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>We don’t know yet! <code>Data</code> is still an abstract type</li>
 <li>Interpreters will give <code>Data</code> a concrete meaning</li>
 </ul>
-</div><div id="interpreters" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Interpreters</h1></div><div id="decoder" class="slide section level3 unnumbered">
+</div><div id="interpreters" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Interpreters</h1></div><div id="decoder" class="slide section level3 unnumbered">
 <h1><code>Decoder</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Decoder <span class="kw">extends</span> DataDescr {
 
@@ -343,7 +308,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="co">// … (implementation of `field` and `applicativeData`)</span>
 }</code></pre></div>
 </div>
-<div id="monad" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Monad</h1></div><div id="sum-types-description" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Sum types description</h1></div><div id="is-our-language-powerful-enough-to-describe-this-data-type" class="slide section level3 unnumbered">
+<div id="monad" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Monad</h1></div><div id="sum-types-description" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> Sum types description</h1></div><div id="is-our-language-powerful-enough-to-describe-this-data-type" class="slide section level3 unnumbered">
 <h1>Is our language powerful enough to describe this data type?</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Shape
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Circle</span>(radius: String) <span class="kw">extends</span> Shape
@@ -401,7 +366,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>Can do all the things an applicative functor can do</li>
 <li>Can describe a type according to the <strong>actual value</strong> of another type</li>
 </ul>
-</div><div id="interpreters-1" class="titleslide slide section level2"><h1><span class="header-section-number">4.2</span> Interpreters</h1></div><div id="decoder-1" class="slide section level3 unnumbered">
+</div><div id="interpreters-1" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Interpreters</h1></div><div id="decoder-1" class="slide section level3 unnumbered">
 <h1><code>Decoder</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Decoder <span class="kw">extends</span> DataDescr {
 
@@ -496,10 +461,10 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <ul>
 <li><strong>too much</strong> power: we can not anymore give a useful <code>Documentation</code> implementation…</li>
 </ul></li>
-<li>Couldn’t we find a better <strong>compromise</strong>?</li>
+<li>Can we find a better <strong>compromise</strong>?</li>
 </ul>
 </div>
-<div id="arrow" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Arrow</h1></div><div id="lets-make-our-data-an-arrow" class="slide section level3 unnumbered">
+<div id="arrow" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Arrow</h1></div><div id="lets-make-our-data-an-arrow" class="slide section level3 unnumbered">
 <h1>Let’s make our <code>Data</code> an arrow</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
 
@@ -515,7 +480,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">implicit</span> <span class="kw">val</span> arrowData: Arrow[Data]
 
 }</code></pre></div>
-</div><div id="describing-data-types-with-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">5.1</span> Describing data types with arrows</h1></div><div id="record-types" class="slide section level3 unnumbered">
+</div><div id="describing-data-types-with-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Describing data types with arrows</h1></div><div id="record-types" class="slide section level3 unnumbered">
 <h1>Record types</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scalaz.<span class="fu">syntax</span>.<span class="fu">all</span>.<span class="fu">_</span>
 
@@ -580,7 +545,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>We still miss some power…</li>
 </ul>
 </div>
-<div id="choice" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Choice</h1></div><div id="add-the-power-of-making-choices" class="slide section level3 unnumbered">
+<div id="choice" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Choice</h1></div><div id="add-the-power-of-making-choices" class="slide section level3 unnumbered">
 <h1>Add the power of making choices</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> DataDescr {
 
@@ -875,7 +840,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>FRP (e.g. <a href="https://wiki.haskell.org/Yampa">yampa</a>)</li>
 </ul>
 </div>
-<div id="summary" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
+<div id="summary" class="titleslide slide section level1"><h1><span class="header-section-number">6</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
 <h1>Summary</h1>
 <ul class="incremental">
 <li>We compared the <strong>expressive power</strong> of the operations provided by three <strong>notions of computation</strong> (applicative functors, arrows and monads)</li>
@@ -890,14 +855,14 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </ul></li>
 </ul>
 </div>
-<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Questions?</h1></div>
-<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">9</span> Bonus</h1></div><div id="final-encoding" class="titleslide slide section level2"><h1><span class="header-section-number">9.1</span> Final encoding</h1></div><div id="final-encoding-1" class="slide section level3 unnumbered">
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">7</span> Questions?</h1></div>
+<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">8</span> Bonus</h1></div><div id="final-encoding" class="titleslide slide section level2"><h1><span class="header-section-number">8.1</span> Final encoding</h1></div><div id="final-encoding-1" class="slide section level3 unnumbered">
 <h1>Final encoding</h1>
 <ul>
 <li>[<a href="http://okmij.org/ftp/tagless-final/course/lecture.pdf">Kiselyov 2012</a>]</li>
 <li>[<a href="https://gist.github.com/OlivierBlanvillain/48bb5c66dbb0557da50465809564ee80">Blanvillain 2017</a>]</li>
 </ul>
-</div><div id="some-other-friends-of-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">9.2</span> Some other friends of arrows</h1></div><div id="biarrow" class="slide section level3 unnumbered">
+</div><div id="some-other-friends-of-arrows" class="titleslide slide section level2"><h1><span class="header-section-number">8.2</span> Some other friends of arrows</h1></div><div id="biarrow" class="slide section level3 unnumbered">
 <h1>BiArrow</h1>
 <ul>
 <li>Similar to arrows, but <strong>invertible</strong> [<a href="http://ftp.sci.kun.nl/CSI/SoftwEng.FunctLang/papers/2005/alia2005-biarrowsHaskellWorkshop.pdf">Alimarine et al. 2005</a>]</li>
