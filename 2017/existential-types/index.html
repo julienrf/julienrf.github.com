@@ -71,13 +71,12 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div id="outline" class="slide section level3 unnumbered">
 <h1>Outline</h1>
 <ul>
-<li><del>Existential types</del> Abstract type members in a nutshell</li>
+<li><del>Existential types</del> <em>Abstract type members</em> in a nutshell</li>
 <li>Use cases
 <ul>
 <li>Encapsulation</li>
 <li>Modularization</li>
 <li>Type families</li>
-<li>Embedded DSLs</li>
 </ul></li>
 <li>Summary</li>
 </ul>
@@ -111,9 +110,9 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> identity[A](a: A): A</code></pre></div>
 </div><div id="square-of-abstraction" class="titleslide slide section level2"><h1><span class="header-section-number">1.2</span> Square of abstraction</h1></div><div id="scala-square-of-abstraction-1" class="slide section level3 unnumbered">
 <h1>Scala square of abstraction (1)</h1>
-<table style="width:58%;">
+<table style="width:68%;">
 <colgroup>
-<col width="13%" />
+<col width="23%" />
 <col width="29%" />
 <col width="15%" />
 </colgroup>
@@ -131,7 +130,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">member</td>
+<td align="left">abstract member</td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
@@ -149,9 +148,9 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <span class="fu">printArea</span>(disc)</code></pre></div>
 </div><div id="scala-square-of-abstraction-2" class="slide section level3 unnumbered">
 <h1>Scala square of abstraction (2)</h1>
-<table style="width:58%;">
+<table style="width:67%;">
 <colgroup>
-<col width="13%" />
+<col width="22%" />
 <col width="29%" />
 <col width="15%" />
 </colgroup>
@@ -169,7 +168,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">member</td>
+<td align="left">abstract member</td>
 <td align="left"></td>
 <td align="left"></td>
 </tr>
@@ -189,9 +188,9 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <span class="fu">printArea</span>(disc)</code></pre></div>
 </div><div id="scala-square-of-abstraction-3" class="slide section level3 unnumbered">
 <h1>Scala square of abstraction (3)</h1>
-<table style="width:58%;">
+<table style="width:67%;">
 <colgroup>
-<col width="13%" />
+<col width="22%" />
 <col width="29%" />
 <col width="15%" />
 </colgroup>
@@ -209,7 +208,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">member</td>
+<td align="left">abstract member</td>
 <td align="left"><code>def x: Int</code> <code>def f(y: Int): Int</code></td>
 <td align="left"></td>
 </tr>
@@ -218,29 +217,26 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="parameters-vs-abstract-members" class="slide section level3 unnumbered">
 <h1>Parameters vs abstract members</h1>
 <ul>
-<li>Parameters and abstract members are equivalent means of abstraction</li>
+<li>Parameters and abstract members are <strong>equivalent</strong> means of abstraction</li>
+<li>Parameters come more from the <strong>functional programming</strong> paradigm</li>
+<li>Abstract members come more from the <strong>object oriented programming</strong> paradigm</li>
 </ul>
 </div><div id="type-parameters" class="slide section level3 unnumbered">
 <h1>Type parameters</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Ordering[A] {
-
-  <span class="kw">def</span> <span class="fu">compare</span>(a1: A, a2: A): Int
-
-  <span class="kw">def</span> <span class="fu">max</span>(a1: A, a2: A): A = <span class="kw">if</span> (<span class="fu">compare</span>(a1, a2) &gt; <span class="dv">0</span>) a1 <span class="kw">else</span> a2
-
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Invertible[A] {
+  <span class="kw">def</span> <span class="fu">invert</span>(a: A): A
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> printMax[T](t1: T, t2: T, ordering: Ordering[T]): Unit =
-  <span class="fu">println</span>(ordering.<span class="fu">max</span>(t1, t2))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> stringOrdering: Ordering[String] =
-  <span class="kw">new</span> Ordering[String] {
-    <span class="kw">def</span> <span class="fu">compare</span>(s1: String, s2: String): Int = …
-  }
-<span class="fu">printMax</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, stringOrdering)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> invertLaw[T](t: T)(<span class="kw">implicit</span> invertible: Invertible[T]): Unit =
+  <span class="fu">assert</span>(invertible.<span class="fu">invert</span>(invertible.<span class="fu">invert</span>(t)) == t)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> invertibleInt: Invertible[Int] =
+  <span class="kw">new</span> Invertible[Int] { <span class="kw">def</span> <span class="fu">invert</span>(n: Int) = -n }
+
+<span class="fu">invertLaw</span>(<span class="dv">42</span>)</code></pre></div>
 </div><div id="scala-square-of-abstraction-4" class="slide section level3 unnumbered">
 <h1>Scala square of abstraction (4)</h1>
-<table style="width:58%;">
+<table style="width:67%;">
 <colgroup>
-<col width="13%" />
+<col width="22%" />
 <col width="29%" />
 <col width="15%" />
 </colgroup>
@@ -258,7 +254,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <td align="left"><code>[A]</code> <code>[F[_]]</code></td>
 </tr>
 <tr class="even">
-<td align="left">member</td>
+<td align="left">abstract member</td>
 <td align="left"><code>def x: Int</code> <code>def f(y: Int): Int</code></td>
 <td align="left"></td>
 </tr>
@@ -266,28 +262,21 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </table>
 </div><div id="abstract-type-members" class="slide section level3 unnumbered">
 <h1>Abstract type members</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Ordering {
-
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Invertible {
   <span class="kw">type</span> A
-
-  <span class="kw">def</span> <span class="fu">compare</span>(a1: A, a2: A): Int
-
-  <span class="kw">def</span> <span class="fu">max</span>(a1: A, a2: A): A = <span class="kw">if</span> (<span class="fu">compare</span>(a1, a2) &gt; <span class="dv">0</span>) a1 <span class="kw">else</span> a2
-
+  <span class="kw">def</span> <span class="fu">invert</span>(a: A): A
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> printMax[T](t1: T, t2: T, ordering: Ordering { <span class="kw">type</span> A = T }): Unit =
-  <span class="fu">println</span>(ordering.<span class="fu">max</span>(t1, t2))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> stringOrdering: Ordering { <span class="kw">type</span> A = String } =
-  <span class="kw">new</span> Ordering {
-    <span class="kw">type</span> A = String
-    <span class="kw">def</span> <span class="fu">compare</span>(s1: String, s2: String): Int = …
-  }
-<span class="fu">printMax</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, stringOrdering)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> invertLaw[T](t: T)(<span class="kw">implicit</span> invertible: Invertible { <span class="kw">type</span> A = T }): Unit =
+  <span class="fu">assert</span>(invertible.<span class="fu">invert</span>(invertible.<span class="fu">invert</span>(t)) == t)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">val</span> invertibleInt: Invertible { <span class="kw">type</span> A = Int } =
+  <span class="kw">new</span> Invertible { <span class="kw">type</span> A = Int; <span class="kw">def</span> <span class="fu">invert</span>(n: Int) = -n }
+
+<span class="fu">invertLaw</span>(<span class="dv">42</span>)</code></pre></div>
 </div><div id="scala-square-of-abstraction-5" class="slide section level3 unnumbered">
 <h1>Scala square of abstraction (5)</h1>
-<table style="width:58%;">
+<table style="width:67%;">
 <colgroup>
-<col width="13%" />
+<col width="22%" />
 <col width="29%" />
 <col width="15%" />
 </colgroup>
@@ -305,7 +294,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <td align="left"><code>[A]</code> <code>[F[_]]</code></td>
 </tr>
 <tr class="even">
-<td align="left">member</td>
+<td align="left">abstract member</td>
 <td align="left"><code>def x: Int</code> <code>def f(y: Int): Int</code></td>
 <td align="left"><code>type A</code> <code>type F[_]</code></td>
 </tr>
@@ -368,39 +357,36 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>Casts everywhere</li>
 <li>Also “hidden” from the point of view of implementers!</li>
 </ul>
+</div><div id="encapsulation-summary" class="slide section level3 unnumbered">
+<h1>Encapsulation – summary</h1>
+<ul>
+<li>Abstract type members are an effective way to make a type opaque from the “outside”</li>
+</ul>
+<h4 id="when-to-use-this-technique" class="unnumbered">When to use this technique?</h4>
+<ul>
+<li>When you want to hide the actual implementation type of an abstraction</li>
+</ul>
 </div><div id="modularization" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Modularization</h1></div><div id="user-interface-component" class="slide section level3 unnumbered">
 <h1>User interface <code>Component</code> </h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Component[Model, Msg] {
-  <span class="kw">def</span> init: Model
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Component[State] {
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html
 }</code></pre></div>
 </div><div id="counter-component" class="slide section level3 unnumbered">
 <h1><code>Counter</code> component</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Counter <span class="kw">extends</span> Component[Int, CounterMsg] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Counter <span class="kw">extends</span> Component[Int] {
 
-  <span class="kw">def</span> <span class="fu">view</span>(model: Int): Html = &lt;span&gt;value = { model }&lt;/span&gt;
+  <span class="kw">def</span> <span class="fu">view</span>(state: Int): Html =
+    &lt;span&gt;value = { state }&lt;/span&gt;
 
-  <span class="kw">def</span> <span class="fu">update</span>(msg: CounterMsg, model: Int): model = msg <span class="kw">match</span> {
-    <span class="kw">case</span> Inc   =&gt; model + <span class="dv">1</span>
-    <span class="kw">case</span> Reset =&gt; <span class="dv">0</span>
-  }
+  <span class="co">// … other methods defining how to update the state</span>
 
-}
-
-<span class="kw">sealed</span> <span class="kw">trait</span> CounterMsg
-<span class="kw">case</span> <span class="kw">object</span> Inc <span class="kw">extends</span> CounterMsg
-<span class="kw">case</span> <span class="kw">object</span> Reset <span class="kw">extends</span> CounterMsg</code></pre></div>
+}</code></pre></div>
 </div><div id="container-component" class="slide section level3 unnumbered">
 <h1><code>Container</code> component</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Container[Model, Msg](child: Component[Model, Msg])
-  <span class="kw">extends</span> Component[Model, Msg] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Container[State](child: Component[State]) <span class="kw">extends</span> Component[State] {
   
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html =
-    &lt;div <span class="kw">class</span>=<span class="st">&quot;container&quot;</span>&gt;{ child.<span class="fu">view</span>(model) }&lt;/div&gt;
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model =
-    child.<span class="fu">update</span>(msg, model)
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html =
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;container&quot;</span>&gt;{ child.<span class="fu">view</span>(state) }&lt;/div&gt;
 
 }</code></pre></div>
 </div><div id="tabs-component" class="slide section level3 unnumbered">
@@ -410,55 +396,85 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </p>
 </div><div id="tabs-component-1" class="slide section level3 unnumbered">
 <h1><code>Tabs</code> component</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component[_, _]]))
-  <span class="kw">extends</span> Component[TabsModel[_], TabsMsg] {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component[_]]))
+  <span class="kw">extends</span> Component[Tabs.<span class="fu">State</span>[_]] {
 
-  <span class="kw">def</span> <span class="fu">view</span>(model: TabsModel[_]): Html = …
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: TabsMsg, model: TabsModel[_]): TabsModel[_] = …
+  <span class="kw">def</span> <span class="fu">view</span>(state: Tabs.<span class="fu">State</span>[_]): Html = …
 
 }
 
-<span class="kw">case</span> <span class="kw">class</span> TabsModel[Model](index: Int, childModel: Model)
+<span class="kw">object</span> Tabs {
 
-<span class="kw">sealed</span> <span class="kw">trait</span> TabsMsg
-<span class="kw">case</span> <span class="kw">class</span> <span class="fu">Select</span>(n: Int) <span class="kw">extends</span> TabsMsg
-<span class="kw">case</span> <span class="kw">class</span> ChildMsg[Msg](value: Msg) <span class="kw">extends</span> TabsMsg</code></pre></div>
+  <span class="kw">case</span> <span class="kw">class</span> State[S](child: Component[S], childState: S)
+
+}</code></pre></div>
 </div><div id="tabs-component-implementation" class="slide section level3 unnumbered">
 <h1><code>Tabs</code> component implementation</h1>
-<div class="figure">
-<img src="censored.jpg" />
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component[_]]))
+  <span class="kw">extends</span> Component[Tabs.<span class="fu">State</span>[_]] {
 
-</div>
+  <span class="kw">def</span> <span class="fu">view</span>(state: Tabs.<span class="fu">State</span>[_]): Html =
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;tabs&quot;</span>&gt;
+      &lt;ul&gt;{ <span class="kw">for</span> ((label, _) &lt;- children) <span class="kw">yield</span> &lt;li&gt;{ label }&lt;/li&gt; }&lt;/ul&gt;
+      &lt;div&gt;
+        { state.<span class="fu">child</span>.<span class="fu">view</span>(state.<span class="fu">childState</span>) }
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+}</code></pre></div>
+</div><div id="tabs-component-implementation-1" class="slide section level3 unnumbered">
+<h1><code>Tabs</code> component implementation</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component[_]]))
+  <span class="kw">extends</span> Component[Tabs.<span class="fu">State</span>[_]] {
+
+  <span class="kw">def</span> <span class="fu">view</span>(state: Tabs.<span class="fu">State</span>[_]): Html =
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;tabs&quot;</span>&gt;
+      &lt;ul&gt;{ <span class="kw">for</span> ((label, _) &lt;- children) <span class="kw">yield</span> &lt;li&gt;{ label }&lt;/li&gt; }&lt;/ul&gt;
+      &lt;div&gt;
+        { state.<span class="fu">child</span>.<span class="fu">view</span>(state.<span class="fu">childState</span>) }
+<span class="co">//                         ^^^^^^^^^^^^^^^^</span>
+<span class="co">// type mismatch;</span>
+<span class="co">//  found   : state.childState.type (with underlying type _$1)</span>
+<span class="co">//  required: _$1</span>
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+}</code></pre></div>
+</div><div id="tabs-component-implementation-2" class="slide section level3 unnumbered">
+<h1><code>Tabs</code> component implementation</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component[_]]))
+  <span class="kw">extends</span> Component[Tabs.<span class="fu">State</span>[_]] {
+
+  <span class="kw">def</span> <span class="fu">view</span>(state: Tabs.<span class="fu">State</span>[_]): Html = {
+
+    <span class="kw">def</span> helper[A](s: Tabs.<span class="fu">State</span>[A]): Html =
+      s.<span class="fu">child</span>.<span class="fu">view</span>(s.<span class="fu">childState</span>)
+
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;tabs&quot;</span>&gt;
+      &lt;ul&gt;{ <span class="kw">for</span> ((label, _) &lt;- children) <span class="kw">yield</span> &lt;li&gt;{ label }&lt;/li&gt; }&lt;/ul&gt;
+      &lt;div&gt;{ <span class="fu">helper</span>(state) }&lt;/div&gt;
+    &lt;/div&gt;
+  }
+
+}</code></pre></div>
 </div><div id="redesign-component-with-abstract-type-members" class="slide section level3 unnumbered">
 <h1>Redesign <code>Component</code> with abstract type members</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Component {
 
-  <span class="kw">type</span> Model
+  <span class="kw">type</span> State
 
-  <span class="kw">type</span> Msg
-
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html
 
 }</code></pre></div>
 </div><div id="counter-again" class="slide section level3 unnumbered">
 <h1><code>Counter</code> (again)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Counter <span class="kw">extends</span> Component {
 
-  <span class="kw">type</span> Model = Int
+  <span class="kw">type</span> State = Int
 
-  <span class="kw">sealed</span> <span class="kw">trait</span> Msg
-  <span class="kw">case</span> <span class="kw">object</span> Inc <span class="kw">extends</span> Msg
-  <span class="kw">case</span> <span class="kw">object</span> Reset <span class="kw">extends</span> Msg
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html = &lt;span&gt;value = { state }&lt;/span&gt;
 
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html = &lt;span&gt;value = { model }&lt;/span&gt;
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model = msg <span class="kw">match</span> {
-    <span class="kw">case</span> Inc   =&gt; model + <span class="dv">1</span>
-    <span class="kw">case</span> Reset =&gt; <span class="dv">0</span>
-  }
+  <span class="co">// … other methods defining how to update the state</span>
   
 }</code></pre></div>
 </div><div id="container-again" class="slide section level3 unnumbered">
@@ -467,45 +483,29 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 
   <span class="kw">val</span> child: Component
 
-  <span class="kw">type</span> Model = child.<span class="fu">Model</span>
+  <span class="kw">type</span> State = child.<span class="fu">State</span>
 
-  <span class="kw">type</span> Msg = child.<span class="fu">Msg</span>
-
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html =
-    &lt;div <span class="kw">class</span>=<span class="st">&quot;container&quot;</span>&gt;{ child.<span class="fu">view</span>(model) }&lt;/div&gt;
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model = child.<span class="fu">update</span>(msg, model)
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html =
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;container&quot;</span>&gt;{ child.<span class="fu">view</span>(state) }&lt;/div&gt;
 
 }</code></pre></div>
-</div><div id="tabs-again" class="slide section level3 unnumbered">
-<h1><code>Tabs</code> (again)</h1>
+</div><div id="tabs-state-1" class="slide section level3 unnumbered">
+<h1><code>Tabs</code> – state (1)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
 
-  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Model</span>(selected: Component)(childModel: selected.<span class="fu">Model</span>)
-
-  <span class="kw">sealed</span> <span class="kw">trait</span> Msg
-  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Select</span>(index: Int) <span class="kw">extends</span> Msg
-  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">ChildMsg</span>(selected: Component)(childMsg: selected.<span class="fu">Msg</span>) <span class="kw">extends</span> Msg
+  <span class="kw">case</span> <span class="kw">class</span> State(child: Component)(childState: child.<span class="fu">State</span>)
 
 }</code></pre></div>
 <ul>
-<li><a href="https://github.com/scala/bug/issues/5712">SI-5712</a></li>
+<li>We can not use a case class to model the <code>State</code> because of <a href="https://github.com/scala/bug/issues/5712">SI-5712</a></li>
 </ul>
-</div><div id="tabs-smart-constructors" class="slide section level3 unnumbered">
-<h1><code>Tabs</code> – smart constructors</h1>
+</div><div id="tabs-state-2" class="slide section level3 unnumbered">
+<h1><code>Tabs</code> – state (2)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
 
-  <span class="kw">trait</span> Model {
-    <span class="kw">val</span> selected: Component
-    <span class="kw">def</span> childModel: selected.<span class="fu">Model</span>
-  }
-
-  <span class="kw">object</span> Model {
-    <span class="kw">def</span> <span class="fu">apply</span>(_selected: Component)(_childModel: _selected.<span class="fu">Model</span>) =
-      <span class="kw">new</span> Model {
-        <span class="kw">val</span> selected: _selected.<span class="fu">type</span> = _selected
-        <span class="kw">val</span> childModel = _childModel
-      }
+  <span class="kw">trait</span> State {
+    <span class="kw">val</span> child: Component
+    <span class="kw">def</span> childState: child.<span class="fu">State</span>
   }
 
 }</code></pre></div>
@@ -513,77 +513,27 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1><code>Tabs</code> – <code>view</code> implementation</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
 
-  <span class="kw">def</span> <span class="fu">view</span>(model: Model): Html =
+  <span class="kw">def</span> <span class="fu">view</span>(state: State): Html =
     &lt;div <span class="kw">class</span>=<span class="st">&quot;tabs&quot;</span>&gt;
       &lt;ul&gt;{ <span class="kw">for</span> ((label, _) &lt;- children) <span class="kw">yield</span> &lt;li&gt;{ label }&lt;/li&gt; }&lt;/ul&gt;
       &lt;div&gt;
-        { model.<span class="fu">selected</span>.<span class="fu">view</span>(model.<span class="fu">childModel</span>) }
+        { state.<span class="fu">child</span>.<span class="fu">view</span>(state.<span class="fu">childState</span>) }
       &lt;/div&gt;
     &lt;/div&gt;
-
-}</code></pre></div>
-</div><div id="tabs-update-implementation" class="slide section level3 unnumbered">
-<h1><code>Tabs</code> – <code>update</code> implementation</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model =
-    msg <span class="kw">match</span> {
-      <span class="kw">case</span> <span class="fu">Select</span>(index) =&gt;
-        <span class="kw">val</span> selected = <span class="fu">children</span>(index)
-        <span class="fu">Model</span>(selected)(selected.<span class="fu">init</span>)
-      <span class="kw">case</span> msg: ChildMsg =&gt;
-        <span class="co">// …</span>
-    }
-
-}</code></pre></div>
-</div><div id="tabs-update-implementation-2" class="slide section level3 unnumbered">
-<h1><code>Tabs</code> – <code>update</code> implementation (2)</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model =
-    msg <span class="kw">match</span> {
-      <span class="kw">case</span> <span class="fu">Select</span>(index) =&gt;
-        <span class="co">// …</span>
-      <span class="kw">case</span> msg: ChildMsg =&gt;
-        <span class="kw">val</span> childModel =
-          model.<span class="fu">selected</span>.<span class="fu">update</span>(
-            msg.<span class="fu">childMsg</span>,
-            model.<span class="fu">childModel</span>
-          )
-        <span class="fu">Model</span>(model.<span class="fu">selected</span>)(childModel)
-    }
-
-}</code></pre></div>
-</div><div id="tabs-update-implementation-3" class="slide section level3 unnumbered">
-<h1><code>Tabs</code> – <code>update</code> implementation (3)</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Tabs</span>(children: List[(String, Component])) <span class="kw">extends</span> Component {
-
-  <span class="kw">def</span> <span class="fu">update</span>(msg: Msg, model: Model): Model =
-    msg <span class="kw">match</span> {
-      <span class="kw">case</span> <span class="fu">Select</span>(index) =&gt;
-        <span class="co">// …</span>
-      <span class="kw">case</span> msg: ChildMsg =&gt;
-        <span class="kw">if</span> (msg.<span class="fu">selected</span> eq model.<span class="fu">selected</span>) {
-          <span class="kw">val</span> childModel =
-            model.<span class="fu">selected</span>.<span class="fu">update</span>(
-              msg.<span class="fu">childMsg</span>.<span class="fu">asInstanceOf</span>[model.<span class="fu">selected</span>.<span class="fu">Msg</span>],
-              model.<span class="fu">childModel</span>
-            )
-          <span class="fu">Model</span>(model.<span class="fu">selected</span>)(childModel)
-        } <span class="kw">else</span> model
-    }
 
 }</code></pre></div>
 </div><div id="modularization-summary" class="slide section level3 unnumbered">
 <h1>Modularization – summary</h1>
 <ul>
 <li>Abstract members (both types and values) are useful to encapsulate module internals</li>
-<li><strong>Path-dependent types</strong> make it possible to nest modules</li>
-<li>Drawbacks
+<li><strong>Path-dependent types</strong> are used to nest modules
 <ul>
-<li>No <strong>smart constructors</strong> (<em>a la</em> case classes), see <a href="https://github.com/scala/bug/issues/5712">SI-5712</a></li>
-<li>No way to turn <code>a == b</code> into <code>a.type =:= b.type</code></li>
+<li>Don’t work with class constructors (see <a href="https://github.com/scala/bug/issues/5712">SI-5712</a>)</li>
 </ul></li>
+</ul>
+<h4 id="when-to-use-this-technique-1" class="unnumbered">When to use this technique?</h4>
+<ul>
+<li>When you see lots of wildcard type parameters</li>
 </ul>
 </div><div id="type-families" class="titleslide slide section level2"><h1><span class="header-section-number">2.3</span> Type families</h1></div><div id="type-families-1" class="slide section level3 unnumbered">
 <h1>Type families</h1>
@@ -633,7 +583,31 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">def</span> getDataset = _dataset
 
 }</code></pre></div>
-</div><div id="embedding-languages" class="titleslide slide section level2"><h1><span class="header-section-number">2.4</span> Embedding languages</h1></div><div id="defining-a-language-as-a-data-type" class="slide section level3 unnumbered">
+</div><div id="type-families-summary" class="slide section level3 unnumbered">
+<h1>Type families – summary</h1>
+<ul>
+<li>Abstract type members can be refined along with the specialization of a class</li>
+</ul>
+<h4 id="when-to-use-this-technique-2" class="unnumbered">When to use this technique?</h4>
+<ul>
+<li>When you want to consistently specialize several types</li>
+</ul>
+</div>
+<div id="summary" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
+<h1>Summary</h1>
+<ul>
+<li>Existential types are <strong>hidden polymorphic types</strong></li>
+<li>We can encode them in Scala using <strong>abstract type members</strong></li>
+<li>They can be useful in several situations
+<ul>
+<li>encapsulation</li>
+<li>modularization</li>
+<li>family polymorphism</li>
+</ul></li>
+</ul>
+</div>
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Questions?</h1></div>
+<div id="bonus" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Bonus</h1></div><div id="embedding-languages" class="titleslide slide section level2"><h1><span class="header-section-number">5.1</span> Embedding languages</h1></div><div id="defining-a-language-as-a-data-type" class="slide section level3 unnumbered">
 <h1>Defining a language as a data type</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">sealed</span> <span class="kw">trait</span> Expr
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Lit</span>(x: Double) <span class="kw">extends</span> Expr
@@ -699,8 +673,16 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="fu">println</span>(twoPlusThree) <span class="co">// &quot;2 + 3&quot;</span>
 }</code></pre></div>
 </div><div id="alternative-finally-tagless-encoding" class="slide section level3 unnumbered">
-<h1><del>Alternative</del> Finally tagless encoding</h1>
-<p>See also [<a href="http://dl.acm.org/citation.cfm?id=1449935">C. Hofer et al. 2008</a>] and [<a href="http://okmij.org/ftp/tagless-final/#tagless-final">J. Carette et al. 2009</a>]</p>
+<h1><del>Alternative</del> <em>Finally tagless</em> encoding</h1>
+<p>See also [<a href="http://dl.acm.org/citation.cfm?id=1449935">C. Hofer et al. 2008</a>], [<a href="http://okmij.org/ftp/tagless-final/#tagless-final">J. Carette et al. 2009</a>] and [<a href="???">B. Oliveira 2012</a>]</p>
+</div><div id="finally-tagless-encoding-extensibility" class="slide section level3 unnumbered">
+<h1>Finally tagless encoding – extensibility</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MulDsl <span class="kw">extends</span> ExprDsl {
+  <span class="kw">def</span> <span class="fu">mul</span>(lhs: Expr, rhs: Expr)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> MulEval <span class="kw">extends</span> Mul <span class="kw">with</span> Eval {
+  <span class="kw">def</span> <span class="fu">mul</span>(lhs: Double, rhs: Double) = lhs * rhs
+}</code></pre></div>
 </div><div id="type-parameters-vs-type-members-1" class="slide section level3 unnumbered">
 <h1>Type parameters vs type members (1)</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> HttpEndpoints[Req, Resp, Headers, Url] {
@@ -730,21 +712,19 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   …
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Program <span class="kw">extends</span> HttpEndpoints</code></pre></div>
-</div>
-<div id="summary" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Summary</h1></div><div id="summary-1" class="slide section level3 unnumbered">
-<h1>Summary</h1>
+</div><div id="finally-tagless-encoding-summary" class="slide section level3 unnumbered">
+<h1>Finally tagless encoding – summary</h1>
 <ul>
-<li>Existential types are <strong>hidden polymorphic types</strong></li>
-<li>We can encode them in Scala using <strong>abstract type members</strong></li>
-<li>They can be useful in several situations
+<li>Extensible way to define embedded languages</li>
+<li>Heavily relies on object-oriented features
 <ul>
-<li>encapsulation</li>
-<li>modularization</li>
-<li>family polymorphism</li>
-<li>embedded DSLs</li>
+<li>abstract methods and abstract type members</li>
 </ul></li>
 </ul>
+<h4 id="when-to-use-this-technique-3" class="unnumbered">When to use this technique?</h4>
+<ul>
+<li>When you want to separate description from (possibly multiple) interpretation(s)</li>
+</ul>
 </div>
-<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Questions?</h1></div>
 </body>
 </html>
