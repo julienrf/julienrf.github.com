@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Julien Richard-Foy julien.richard-foy@epfl.ch" />
+  <meta name="author" content="" />
+  <meta name="author" content="Scala Center http://scala.epfl.ch" />
+  <meta name="author" content="" />
+  <meta name="author" content="Scala.io – November 2, 2017" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/2017/collections" />
+  <title>The next() Collections</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">The <code>next()</code> Collections</h1>
+  <p class="author">
+Julien Richard-Foy <script type="text/javascript">
+<!--
+h='&#x65;&#112;&#102;&#108;&#46;&#x63;&#104;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Scala Center <a href="http://scala.epfl.ch" class="uri">http://scala.epfl.ch</a><br/><br/>Scala.io – November 2, 2017<br/><br/><a href="http://julienrf.github.io/2017/collections" class="uri">http://julienrf.github.io/2017/collections</a>
+  </p>
+</div>
+<div id="what" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> What?</h1></div><div id="collections-redesign" class="slide section level3 unnumbered">
+<h1>Collections Redesign</h1>
+<ul>
+<li><a href="https://github.com/scalacenter/advisoryboard/blob/master/proposals/007-collections.md">SCP-007</a> “collaborative redesign and implementation of Scala 2.13’s collections”
+<ul>
+<li>mostly source compatible with the current collections</li>
+<li>reduce complexity and sources of confusion</li>
+</ul></li>
+<li><a href="http://scala.epfl.ch">Scala Center</a> and <a href="http://lightbend.com">Lightbend</a>
+<ul>
+<li>And several external contributors!</li>
+</ul></li>
+<li><a href="https://github.com/scala/collection-strawman" class="uri">https://github.com/scala/collection-strawman</a></li>
+</ul>
+</div><div id="contributors" class="slide section level3 unnumbered">
+<h1>Contributors</h1>
+<div style="-moz-column-count: 4; font-size: smaller;">
+<div>
+<a href="https://github.com/EPronovost"> <img src="https://avatars0.githubusercontent.com/u/8582453?s=80&v=4" /> EPronovost </a>
+</div>
+<div>
+<a href="https://github.com/Ichoran"> <img src="https://avatars0.githubusercontent.com/u/2298644?s=80&v=4" /> Ichoran </a>
+</div>
+<div>
+<a href="https://github.com/LPTK"> <img src="https://avatars1.githubusercontent.com/u/2545083?s=80&v=4" width=80 /> LPTK </a>
+</div>
+<div>
+<a href="https://github.com/NthPortal"> <img src="https://avatars0.githubusercontent.com/u/7505383?s=80&v=4" /> NthPortal </a>
+</div>
+<div>
+<a href="https://github.com/SethTisue"> <img src="https://avatars3.githubusercontent.com/u/161079?s=80&v=4" /> SethTisue </a>
+</div>
+<div>
+<a href="https://github.com/allanrenucci"> <img src="https://avatars2.githubusercontent.com/u/4996324?s=80&v=4" /> allanrenucci </a>
+</div>
+<div>
+<a href="https://github.com/biboudis"> <img src="https://avatars1.githubusercontent.com/u/765983?s=80&v=4" /> biboudis </a>
+</div>
+<div>
+<a href="https://github.com/esarbe"> <img src="https://avatars3.githubusercontent.com/u/920687?s=80&v=4" width=80 /> esarbe </a>
+</div>
+<div>
+<a href="https://github.com/julienrf"> <img src="https://avatars1.githubusercontent.com/u/332812?s=80&v=4" /> julienrf </a>
+</div>
+<div>
+<a href="https://github.com/marcelocenerine"> <img src="https://avatars2.githubusercontent.com/u/1107367?s=80&v=4" /> marcelocenerine </a>
+</div>
+<div>
+<a href="https://github.com/nicolasstucki"> <img src="https://avatars2.githubusercontent.com/u/3648029?s=80&v=4" /> nicolasstucki </a>
+</div>
+<div>
+<a href="https://github.com/odd"> <img src="https://avatars2.githubusercontent.com/u/49301?s=80&v=4" /> odd </a>
+</div>
+<div>
+<a href="https://github.com/odersky"> <img src="https://avatars2.githubusercontent.com/u/795990?s=80&v=4" /> odersky </a>
+</div>
+<div>
+<a href="https://github.com/olafurpg"> <img src="https://avatars3.githubusercontent.com/u/1408093?s=80&v=4" /> olafurpg </a>
+</div>
+<div>
+<a href="https://github.com/pnf"> <img src="https://avatars2.githubusercontent.com/u/1265645?s=80&v=4" /> pnf </a>
+</div>
+<div>
+<a href="https://github.com/shawjef3"> <img src="https://avatars1.githubusercontent.com/u/1625822?s=80&v=4" width=80 /> shawjef3 </a>
+</div>
+<div>
+<a href="https://github.com/sjrd"> <img src="https://avatars0.githubusercontent.com/u/535934?s=80&v=4" /> sjrd </a>
+</div>
+<div>
+<a href="https://github.com/smarter"> <img src="https://avatars0.githubusercontent.com/u/63430?s=80&v=4" /> smarter </a>
+</div>
+<div>
+<a href="https://github.com/stephennancekivell"> <img src="https://avatars2.githubusercontent.com/u/727013?s=80&v=4" /> stephennancekivell </a>
+</div>
+<div>
+<a href="https://github.com/szeiger"> <img src="https://avatars1.githubusercontent.com/u/54262?s=80&v=4" /> szeiger </a>
+</div>
+<div>
+<a href="https://github.com/tpolecat"> <img src="https://avatars0.githubusercontent.com/u/1200131?s=80&v=4" /> tpolecat </a>
+</div>
+<div>
+<a href="https://github.com/xavier-fernandez"> <img src="https://avatars3.githubusercontent.com/u/10242025?s=80&v=4" /> xavier-fernandez </a>
+</div>
+</div>
+</div>
+<div id="hidden-complexity" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> (Hidden) Complexity</h1></div><div id="class-hierarchy" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Class Hierarchy</h1></div><div id="list-hierarchy" class="slide section level3 unnumbered">
+<h1><code>List</code> Hierarchy </h1>
+<p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="list-simply.svg" style="height: 100%; width: auto" />
+</p>
+</div><div id="list-actual-hierarchy" class="slide section level3 unnumbered">
+<h1><code>List</code> (Actual) Hierarchy </h1>
+<p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="actual-list.svg" style="height: 100%; width: auto" />
+</p>
+</div><div id="list-new-hierarchy" class="slide section level3 unnumbered">
+<h1><code>List</code> New Hierarchy </h1>
+<p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="new-list.svg" style="height: 100%; width: auto" />
+</p>
+</div><div id="ops-classes" class="slide section level3 unnumbered">
+<h1><code>Ops</code> classes</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
+
+  <span class="kw">def</span> <span class="fu">take</span>(n: Int): C = …
+
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = …
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> List[A] <span class="kw">extends</span> Iterable[A] <span class="kw">with</span> IterableOps[A, List, List[A]]</code></pre></div>
+</div><div id="ops-classes-1" class="slide section level3 unnumbered">
+<h1><code>Ops</code> classes</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
+
+  <span class="kw">def</span> <span class="fu">take</span>(n: Int): C = …
+
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = …
+
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> StringOps <span class="kw">extends</span> IterableOps[Char, IndexedSeq, String]</code></pre></div>
+</div><div id="laziness" class="titleslide slide section level2"><h1><span class="header-section-number">2.2</span> Laziness</h1></div><div id="current-map-implementation" class="slide section level3 unnumbered">
+<h1>Current <code>map</code> Implementation</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> TraversableLike[+A, +Repr] {
+  <span class="kw">def</span> map[B, That](f: A =&gt; B)(<span class="kw">implicit</span> bf: CanBuildFrom[Repr, B, That]): That = {
+    <span class="kw">val</span> b = <span class="fu">bf</span>(<span class="kw">this</span>)
+    <span class="kw">for</span> (x &lt;- <span class="kw">this</span>) b += <span class="fu">f</span>(x)
+    b.<span class="fu">result</span>
+  }
+}</code></pre></div>
+<ul>
+<li><strong>Builder</strong>-based: evaluates all the elements of <code>this</code> collection and of the resulting collection</li>
+<li>How does that work with <code>Stream</code> or views?</li>
+</ul>
+</div><div id="current-map-implementation-on-views" class="slide section level3 unnumbered">
+<h1>Current <code>map</code> Implementation on Views</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> TraversableViewLike[+A, +Repr] <span class="kw">extends</span> TraversableLike[A, Repr] {
+  <span class="kw">override</span> <span class="kw">def</span> map[B, That](f: A =&gt; B)(<span class="kw">implicit</span> bf: CanBuildFrom[This, B, That]): That = {
+    <span class="fu">newMapped</span>(f).<span class="fu">asInstanceOf</span>[That]
+  }
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> TraversableView {
+  <span class="kw">implicit</span> <span class="kw">def</span> canBuildFrom[A] =
+    <span class="kw">new</span> CanBuildFrom[TraversableView[_], A TraversableView[A]] {
+      <span class="kw">def</span> <span class="fu">apply</span>() = <span class="kw">new</span> Builder[A, Nothing] {
+        <span class="kw">def</span> +=(elem: A): <span class="kw">this</span>.<span class="fu">type</span> = <span class="kw">this</span>
+        <span class="kw">def</span> <span class="fu">result</span>() = <span class="kw">throw</span> <span class="kw">new</span> UnsupportedOperationException(<span class="st">&quot;TraversableView.Builder.result&quot;</span>)
+      }
+    }
+}</code></pre></div>
+</div><div id="current-views-operations" class="slide section level3 unnumbered">
+<h1>Current Views’ Operations</h1>
+<ul>
+<li>Have to <strong>carefully</strong> override default implementations to not evaluate elements</li>
+<li>Unusable <code>CanBuildFrom</code> instance</li>
+</ul>
+</div><div id="new-view-based-implementations" class="slide section level3 unnumbered">
+<h1>New View-Based Implementations </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(toIterable, f))
+}</code></pre></div>
+</div><div id="views" class="slide section level3 unnumbered">
+<h1><code>View</code>s</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> View {
+  <span class="kw">case</span> <span class="kw">class</span> Map[A, B](underlying: Iterable[A], f: A =&gt; B) <span class="kw">extends</span> View[B] {
+    <span class="kw">def</span> <span class="fu">iterator</span>() = underlying.<span class="fu">iterator</span>().<span class="fu">map</span>(f)
+  }
+}</code></pre></div>
+<ul>
+<li>Reify operations on <code>Iterator</code></li>
+<li>But <em>unlike</em> <code>Iterator</code>s, <code>View</code>s can be <strong>aliased</strong> without danger</li>
+</ul>
+</div><div id="new-view-based-implementations-1" class="slide section level3 unnumbered">
+<h1>New View-Based Implementations </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(toIterable, f))
+  <span class="kw">def</span> toIterable: Iterable[A]
+  <span class="kw">def</span> fromIterable[E](it: Iterable[E]): CC[E]
+}</code></pre></div>
+<ul>
+<li><code>fromIterable</code> implementation decides whether to evaluate the collection elements or not</li>
+</ul>
+</div><div id="fromiterable" class="slide section level3 unnumbered">
+<h1><code>fromIterable</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> List[+A] <span class="kw">extends</span> Iterable[A] <span class="kw">with</span> IterableOps[A, List, List[A]] {
+  <span class="kw">def</span> fromIterable[E](it: Iterable[E]): List[E] =
+    (List.<span class="fu">newBuilder</span>[E]() ++= it).<span class="fu">result</span>()
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> View[+A] <span class="kw">extends</span> Iterable[A] <span class="kw">with</span> IterableOps[A, View, View[A]] {
+  <span class="kw">def</span> fromIterable[E](it: Iterable[E]): View[E] =
+    <span class="kw">new</span> View[E] {
+      <span class="kw">def</span> <span class="fu">iterator</span>() = it.<span class="fu">iterator</span>()
+    }
+}</code></pre></div>
+</div><div id="new-view-based-implementations-2" class="slide section level3 unnumbered">
+<h1>New View-Based Implementations</h1>
+<ul>
+<li>Lazy friendliness</li>
+<li>Default operations work just as well with both strict and lazy collection types</li>
+</ul>
+</div>
+<div id="visible-complexity" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> (Visible) Complexity</h1></div><div id="canbuildfrom" class="titleslide slide section level2 unnumbered"><h1><code>CanBuildFrom</code> </h1></div><div id="map-operation-on-lista" class="slide section level3 unnumbered">
+<h1><code>map</code> Operation on <code>List[A]</code> </h1>
+<p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="list-map.png" style="height: auto; width: 80%" />
+</p>
+</div><div id="map-operation-on-treemapa-b" class="slide section level3 unnumbered">
+<h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
+<p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="treemap-map.png" style="height: auto; width: 80%" />
+</p>
+</div><div id="map-operation-on-treemapa-b-1" class="slide section level3 unnumbered">
+<h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
+<p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="treemap-map-full.png" style="height: auto; width: 80%" />
+</p>
+</div><div id="canbuildfrom-is-powerful" class="slide section level3 unnumbered">
+<h1><code>CanBuildFrom</code> is <strong>powerful</strong> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> GenTraversableLike[+A, +Repr] {
+  <span class="kw">def</span> map[B, That](f: A =&gt; B)(<span class="kw">implicit</span> bf: CanBuildFrom[Repr, B, That]): That
+}</code></pre></div>
+<p><strong>One</strong> definition.</p>
+<p>Works with <code>String</code>, <code>List[A]</code>, <code>TreeSet[A]</code>, <code>HashMap[K, V]</code>, <code>SortedMap[K, V]</code>.</p>
+</div><div id="new-map-operation-on-lista" class="slide section level3 unnumbered">
+<h1>(New) <code>map</code> Operation on <code>List[A]</code> </h1>
+<p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="new-list-map.png" style="height: auto; width: 80%" />
+</p>
+</div><div id="new-map-operation-on-treemapk-v" class="slide section level3 unnumbered">
+<h1>(New) <code>map</code> Operation on <code>TreeMap[K, V]</code> </h1>
+<p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="new-treemap-map.png" style="height: auto; width: 100%" />
+</p>
+</div><div id="but-canbuildfrom-was-more-than-that" class="slide section level3 unnumbered">
+<h1>But <code>CanBuildFrom</code> was more than that!</h1>
+<p><code>CanBuildFrom</code> was one of the basic building block for <strong>generic</strong> programming over collections:</p>
+<ul>
+<li>extension methods (cf <a href="https://github.com/cvogt/scala-extensions">scala-extensions</a>)</li>
+<li><code>Future.sequence</code></li>
+<li>type-driven builders</li>
+</ul>
+</div><div id="canbuildfrom-1" class="slide section level3 unnumbered">
+<h1><del><code>Can</code></del><code>BuildFrom</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> BuildFrom[From, A, C] {
+  <span class="kw">def</span> <span class="fu">fromSpecificIterable</span>(from: From)(it: Iterable[A]): C
+}</code></pre></div>
+<ul>
+<li><code>From</code> is the type of a source collection</li>
+<li>Basic building block for generically defining extension methods on collections</li>
+</ul>
+</div><div id="canbuildfrom-2" class="slide section level3 unnumbered">
+<h1><del><code>Can</code></del><code>BuildFrom</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> BuildFrom[From, A, C] {
+  <span class="kw">def</span> <span class="fu">fromSpecificIterable</span>(from: From)(it: Iterable[A]): C
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">class</span> HasDistinctBy[A, CC[X] &lt;: Iterable[X]](coll: CC[A]) {
+  <span class="kw">def</span> distinctBy[B, C](f: A =&gt; B)(<span class="kw">implicit</span> bf: BuildFrom[CC[A], A, C]): C =
+    bf.<span class="fu">fromSpecificIterable</span>(coll)(<span class="kw">new</span> View[A] {
+      <span class="kw">def</span> <span class="fu">iterator</span>() = …
+    })
+}</code></pre></div>
+</div><div id="type-driven-factories" class="slide section level3 unnumbered">
+<h1>Type-Driven Factories</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">libs</span>.<span class="fu">json</span>.<span class="fu">_</span>
+
+<span class="kw">implicit</span> <span class="kw">def</span> iterableReads[A, C &lt;: Iterable[A]](<span class="kw">implicit</span>
+  factory: Factory[A, C],
+  ra: Reads[A]
+): Reads[C] = Reads[C] {
+  <span class="kw">case</span> <span class="fu">JsArray</span>(elts) =&gt; JsResult.<span class="fu">traverse</span>(elts)(ra.<span class="fu">reads</span>)(factory)
+  <span class="kw">case</span> _             =&gt; <span class="fu">JsError</span>(<span class="st">&quot;error.expected.jsarray&quot;</span>)
+}
+
+<span class="kw">val</span> readsList = Reads.<span class="fu">of</span>[List[Int]]
+
+<span class="kw">val</span> readsSortedMap = Reads.<span class="fu">of</span>[SortedMap[Instant, BigDecimal]]</code></pre></div>
+</div><div id="some-other-minor-and-random-changes" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> Some Other (Minor and Random) Changes</h1></div><div id="no-traversable" class="slide section level3 unnumbered">
+<h1>No <code>Traversable</code> </h1>
+<ul>
+<li>Also, no <code>Stack</code>, <code>UnrolledBuffer</code>, <code>LinkedList</code> nor “paged” collection…</li>
+</ul>
+</div><div id="collection-conversion" class="slide section level3 unnumbered">
+<h1>Collection conversion</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = List(<span class="dv">1</span> -&gt; &#39;a&#39;, <span class="dv">2</span> -&gt; &#39;b&#39;, <span class="dv">3</span> -&gt; &#39;c&#39;)
+
+<span class="kw">val</span> vector = xs.<span class="fu">to</span>(Vector) <span class="co">// Before: xs.to[Vector]</span>
+<span class="kw">val</span> map = xs.<span class="fu">to</span>(Map)       <span class="co">// Before: xs.toMap</span></code></pre></div>
+<ul>
+<li><code>to</code> operation now takes a <strong>value</strong> as parameter</li>
+<li>works with collection type constructors of different arities</li>
+</ul>
+</div><div id="groupmap" class="slide section level3 unnumbered">
+<h1><code>groupMap</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">User</span>(name: String, age: Int)
+
+<span class="co">// Before:</span>
+<span class="kw">def</span> <span class="fu">namesByAge</span>(users: Seq[User]): Map[Int, Seq[String]] =
+  users.<span class="fu">groupBy</span>(_.<span class="fu">age</span>).<span class="fu">mapValues</span>(_.<span class="fu">map</span>(_.<span class="fu">name</span>))
+
+<span class="co">// With `groupMap`:</span>
+<span class="kw">def</span> <span class="fu">namesByAge</span>(users: Seq[User]): Map[Int, Seq[String]] =
+  users.<span class="fu">groupMap</span>(_.<span class="fu">age</span>)(_.<span class="fu">name</span>)</code></pre></div>
+<ul>
+<li>Simpler and more efficient (~35% faster)!</li>
+</ul>
+</div><div id="lazylist" class="slide section level3 unnumbered">
+<h1><code>LazyList</code> </h1>
+<ul>
+<li><code>Stream</code> has been remamed to <code>LazyList</code></li>
+<li>Lazy in both tail and head</li>
+</ul>
+</div><div id="in-place-transformation-operations" class="slide section level3 unnumbered">
+<h1>In Place Transformation Operations</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buffer = ArrayBuffer(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+buffer.<span class="fu">mapInPlace</span>(x =&gt; x + <span class="dv">1</span>)</code></pre></div>
+<ul>
+<li>Transformation operations suffixed by <code>InPlace</code> do not create a copy of the collection</li>
+</ul>
+</div>
+<div id="and-then" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> And Then?</h1></div><div id="next-steps" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Next Steps</h1></div><div id="move-to-scala-library" class="slide section level3 unnumbered">
+<h1>Move to scala-library</h1>
+<ul>
+<li>work in progress!</li>
+</ul>
+</div><div id="scala.seqa" class="slide section level3 unnumbered">
+<h1><code>scala.Seq[A] = ?</code> </h1>
+<ul>
+<li>Make <code>scala.Seq[A] = scala.collection.immutable.Seq[A]</code></li>
+<li>Requires an efficient data type for varargs: <code>ImmutableArray</code></li>
+</ul>
+</div><div id="scala-parallel-collections" class="slide section level3 unnumbered">
+<h1>scala-parallel-collections</h1>
+<ul>
+<li>Removed from core (separate artifact)</li>
+<li><a href="https://github.com/scala/scala-parallel-collections" class="uri">https://github.com/scala/scala-parallel-collections</a></li>
+<li>Have to be adapted to the new design</li>
+</ul>
+</div><div id="migration-tool" class="slide section level3 unnumbered">
+<h1>Migration tool</h1>
+<ul>
+<li>Make the migration as smooth as possible</li>
+<li>Automate as much as we can with <a href="https://scalacenter.github.io/scalafix/">scalafix</a></li>
+</ul>
+</div><div id="new-operations-and-collections" class="slide section level3 unnumbered">
+<h1>New Operations and Collections?</h1>
+<ul>
+<li>Opportunity to consider the addition of new operations and collection types
+<ul>
+<li><a href="https://github.com/scala/collection-strawman/pull/52"><code>ArraySeq</code></a>?</li>
+<li><a href="https://github.com/scala/collection-strawman/pull/225"><code>lazyFoldRight</code></a>?</li>
+<li>your next PR?</li>
+</ul></li>
+</ul>
+</div>
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Questions?</h1></div>
+</body>
+</html>
