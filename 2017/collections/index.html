@@ -379,6 +379,25 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li><code>Stream</code> has been remamed to <code>LazyList</code></li>
 <li>Lazy in both tail and head</li>
 </ul>
+</div><div id="tuple2zipped" class="slide section level3 unnumbered">
+<h1><code>Tuple2Zipped</code> </h1>
+<pre><code>scala&gt; val xs = 1 :: 2 :: 3 :: Nil
+xs: List[Int] = List(1, 2, 3)
+
+scala&gt; (xs, xs).zipped.map(_ + _)
+res0: List[Int] = List(2, 4, 6)</code></pre>
+</div><div id="tuple2zipped-1" class="slide section level3 unnumbered">
+<h1><code>Tuple2Zipped</code> </h1>
+<p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="tuple2-zipped.png" style="height: 100%; width: auto" />
+</p>
+</div><div id="tuple2zipped-2" class="slide section level3 unnumbered">
+<h1><code>Tuple2Zipped</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = <span class="dv">1</span> :: <span class="dv">2</span> :: <span class="dv">3</span> :: Nil
+(xs lazyZip xs).<span class="fu">map</span>(_ + _)</code></pre></div>
+<p style="position: absolute; top: 9em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="new-tuple2-zipped.png" style="height: 100%; width: auto" />
+</p>
 </div><div id="in-place-transformation-operations" class="slide section level3 unnumbered">
 <h1>In Place Transformation Operations</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> buffer = ArrayBuffer(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
