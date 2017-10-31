@@ -69,6 +69,15 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Scala Center <a href="http://scala.epfl.ch" class="uri">http://scala.epfl.ch</a><br/><br/>Scala.io – November 2, 2017<br/><br/><a href="http://julienrf.github.io/2017/collections" class="uri">http://julienrf.github.io/2017/collections</a>
   </p>
 </div>
+<div id="outline" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ol style="list-style-type: decimal">
+<li>What?</li>
+<li>Internal changes</li>
+<li>User-visible changes</li>
+<li>And then?</li>
+</ol>
+</div>
 <div id="what" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> What?</h1></div><div id="collections-redesign" class="slide section level3 unnumbered">
 <h1>Collections Redesign</h1>
 <ul>
@@ -85,7 +94,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </ul>
 </div><div id="contributors" class="slide section level3 unnumbered">
 <h1>Contributors</h1>
-<div style="-moz-column-count: 4; font-size: smaller;">
+<div style="-moz-column-count: 4; -webkit-column-count: 4; column-count: 4; font-size: smaller;">
 <div>
 <a href="https://github.com/EPronovost"> <img src="https://avatars0.githubusercontent.com/u/8582453?s=80&v=4" /> EPronovost </a>
 </div>
@@ -154,7 +163,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div>
 </div>
 </div>
-<div id="hidden-complexity" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> (Hidden) Complexity</h1></div><div id="class-hierarchy" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Class Hierarchy</h1></div><div id="list-hierarchy" class="slide section level3 unnumbered">
+<div id="internal-changes" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Internal Changes</h1></div><div id="class-hierarchy" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Class Hierarchy</h1></div><div id="list-hierarchy" class="slide section level3 unnumbered">
 <h1><code>List</code> Hierarchy </h1>
 <p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="list-simply.svg" style="height: 100%; width: auto" />
@@ -227,7 +236,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="new-view-based-implementations" class="slide section level3 unnumbered">
 <h1>New View-Based Implementations </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
-  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(toIterable, f))
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(<span class="kw">this</span>, f))
 }</code></pre></div>
 </div><div id="views" class="slide section level3 unnumbered">
 <h1><code>View</code>s</h1>
@@ -243,8 +252,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="new-view-based-implementations-1" class="slide section level3 unnumbered">
 <h1>New View-Based Implementations </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> IterableOps[A, CC[_], C] {
-  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(toIterable, f))
-  <span class="kw">def</span> toIterable: Iterable[A]
+  <span class="kw">def</span> map[B](f: A =&gt; B): CC[B] = <span class="fu">fromIterable</span>(View.<span class="fu">Map</span>(<span class="kw">this</span>, f))
   <span class="kw">def</span> fromIterable[E](it: Iterable[E]): CC[E]
 }</code></pre></div>
 <ul>
@@ -269,15 +277,15 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>Default operations work just as well with both strict and lazy collection types</li>
 </ul>
 </div>
-<div id="visible-complexity" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> (Visible) Complexity</h1></div><div id="canbuildfrom" class="titleslide slide section level2 unnumbered"><h1><code>CanBuildFrom</code> </h1></div><div id="map-operation-on-lista" class="slide section level3 unnumbered">
+<div id="user-visible-changes" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> User-Visible Changes</h1></div><div id="canbuildfrom" class="titleslide slide section level2 unnumbered"><h1><code>CanBuildFrom</code> </h1></div><div id="map-operation-on-lista" class="slide section level3 unnumbered">
 <h1><code>map</code> Operation on <code>List[A]</code> </h1>
 <p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
-<img src="list-map.png" style="height: auto; width: 80%" />
+<img src="list-map.png" style="height: auto; width: 80%" /> <img src="ij-list-map.png" style="height: auto; width: 100%; margin-top: 2em" />
 </p>
 </div><div id="map-operation-on-treemapa-b" class="slide section level3 unnumbered">
 <h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
 <p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
-<img src="treemap-map.png" style="height: auto; width: 80%" />
+<img src="treemap-map.png" style="height: auto; width: 80%" /> <img src="ij-treemap-map.png" style="height: auto; width: 100%; margin-top: 2em" />
 </p>
 </div><div id="map-operation-on-treemapa-b-1" class="slide section level3 unnumbered">
 <h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
@@ -294,12 +302,12 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div><div id="new-map-operation-on-lista" class="slide section level3 unnumbered">
 <h1>(New) <code>map</code> Operation on <code>List[A]</code> </h1>
 <p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
-<img src="new-list-map.png" style="height: auto; width: 80%" />
+<img src="new-list-map.png" style="height: auto; width: 80%" /> <img src="new-ij-list-map.png" style="height: auto; width: 80%; margin-top: 2em" />
 </p>
 </div><div id="new-map-operation-on-treemapk-v" class="slide section level3 unnumbered">
 <h1>(New) <code>map</code> Operation on <code>TreeMap[K, V]</code> </h1>
-<p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
-<img src="new-treemap-map.png" style="height: auto; width: 100%" />
+<p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
+<img src="new-treemap-map.png" style="height: auto; width: 100%" /> <img src="new-ij-treemap-map.png" style="height: auto; width: 100%; margin-top: 1em" />
 </p>
 </div><div id="but-canbuildfrom-was-more-than-that" class="slide section level3 unnumbered">
 <h1>But <code>CanBuildFrom</code> was more than that!</h1>
@@ -379,24 +387,28 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li><code>Stream</code> has been remamed to <code>LazyList</code></li>
 <li>Lazy in both tail and head</li>
 </ul>
-</div><div id="tuple2zipped" class="slide section level3 unnumbered">
-<h1><code>Tuple2Zipped</code> </h1>
-<pre><code>scala&gt; val xs = 1 :: 2 :: 3 :: Nil
-xs: List[Int] = List(1, 2, 3)
+</div><div id="current-tuple2zipped" class="slide section level3 unnumbered">
+<h1>Current <code>Tuple2Zipped</code> </h1>
+<pre><code>scala&gt; val xs = Vector(1, 2, 3)
+xs: Vector[Int] = Vector(1, 2, 3)
 
 scala&gt; (xs, xs).zipped.map(_ + _)
-res0: List[Int] = List(2, 4, 6)</code></pre>
-</div><div id="tuple2zipped-1" class="slide section level3 unnumbered">
-<h1><code>Tuple2Zipped</code> </h1>
+res0: Vector[Int] = Vector(2, 4, 6)</code></pre>
+<ul class="incremental">
+<li>No tupling and no intermediate zipped collection</li>
+<li>~2x faster than <code>(xs zip xs).map { case (x1, x2) =&gt; x1 + x2 }</code></li>
+</ul>
+</div><div id="current-tuple2zipped-1" class="slide section level3 unnumbered">
+<h1>Current <code>Tuple2Zipped</code> </h1>
 <p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="tuple2-zipped.png" style="height: 100%; width: auto" />
 </p>
-</div><div id="tuple2zipped-2" class="slide section level3 unnumbered">
-<h1><code>Tuple2Zipped</code> </h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = <span class="dv">1</span> :: <span class="dv">2</span> :: <span class="dv">3</span> :: Nil
+</div><div id="new-tuple2zippedlazyzip2" class="slide section level3 unnumbered">
+<h1>New <del><code>Tuple2Zipped</code></del><code>LazyZip2</code> </h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = Vector(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 (xs lazyZip xs).<span class="fu">map</span>(_ + _)</code></pre></div>
 <p style="position: absolute; top: 9em; bottom: 0; left: 0; right: 0; text-align: center">
-<img src="new-tuple2-zipped.png" style="height: 100%; width: auto" />
+<img src="new-tuple2-zipped.png" style="height: auto; width: 46%" /> <img src="ij-lazy-zip.png" style="height: auto; width: 44%; margin-bottom: 5em" />
 </p>
 </div><div id="in-place-transformation-operations" class="slide section level3 unnumbered">
 <h1>In Place Transformation Operations</h1>
@@ -422,7 +434,7 @@ buffer.<span class="fu">mapInPlace</span>(x =&gt; x + <span class="dv">1</span>)
 <ul>
 <li>Removed from core (separate artifact)</li>
 <li><a href="https://github.com/scala/scala-parallel-collections" class="uri">https://github.com/scala/scala-parallel-collections</a></li>
-<li>Have to be adapted to the new design</li>
+<li>Has to be adapted to the new design</li>
 </ul>
 </div><div id="migration-tool" class="slide section level3 unnumbered">
 <h1>Migration tool</h1>
