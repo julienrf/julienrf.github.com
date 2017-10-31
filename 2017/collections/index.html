@@ -321,6 +321,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1><del><code>Can</code></del><code>BuildFrom</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> BuildFrom[From, A, C] {
   <span class="kw">def</span> <span class="fu">fromSpecificIterable</span>(from: From)(it: Iterable[A]): C
+  <span class="kw">def</span> <span class="fu">newBuilder</span>(from: From): Builder[A, C]
 }</code></pre></div>
 <ul>
 <li><code>From</code> is the type of a source collection</li>
@@ -330,6 +331,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1><del><code>Can</code></del><code>BuildFrom</code> </h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> BuildFrom[From, A, C] {
   <span class="kw">def</span> <span class="fu">fromSpecificIterable</span>(from: From)(it: Iterable[A]): C
+  <span class="kw">def</span> <span class="fu">newBuilder</span>(from: From): Builder[A, C]
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">implicit</span> <span class="kw">class</span> HasDistinctBy[A, CC[X] &lt;: Iterable[X]](coll: CC[A]) {
   <span class="kw">def</span> distinctBy[B, C](f: A =&gt; B)(<span class="kw">implicit</span> bf: BuildFrom[CC[A], A, C]): C =
@@ -338,6 +340,16 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
     })
 }</code></pre></div>
 </div><div id="type-driven-factories" class="slide section level3 unnumbered">
+<h1>Type-Driven Factories</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Factory[-A, +C] <span class="kw">extends</span> Any {
+  <span class="kw">def</span> <span class="fu">fromSpecific</span>(it: IterableOnce[A]): C
+  <span class="kw">def</span> <span class="fu">newBuilder</span>(): Builder[A, C]
+}</code></pre></div>
+<ul>
+<li>Key difference with <code>BuildFrom</code>: the type <code>C</code> of the collection to build doesn’t depend on an existing inital collection</li>
+<li>Rule of thumb: if you need to <em>compute</em> <code>C</code>, use <code>BuildFrom</code> ; but if you already know <code>C</code>, use <code>Factory</code></li>
+</ul>
+</div><div id="type-driven-factories-1" class="slide section level3 unnumbered">
 <h1>Type-Driven Factories</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> play.<span class="fu">api</span>.<span class="fu">libs</span>.<span class="fu">json</span>.<span class="fu">_</span>
 
