@@ -6,9 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="Julien Richard-Foy julien.richard-foy@epfl.ch" />
-  <meta name="author" content="" />
-  <meta name="author" content="Scala Center http://scala.epfl.ch" />
+  <meta name="author" content="Julien Richard-Foy julien.richard-foy@epfl.ch, Scala Center" />
   <meta name="author" content="" />
   <meta name="author" content="Scala.io – November 2, 2017" />
   <meta name="author" content="" />
@@ -66,8 +64,14 @@ Julien Richard-Foy <script type="text/javascript">
 h='&#x65;&#112;&#102;&#108;&#46;&#x63;&#104;';a='&#64;';n='&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;';e=n+a+h;
 document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
 // -->
-</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript><br/><br/>Scala Center <a href="http://scala.epfl.ch" class="uri">http://scala.epfl.ch</a><br/><br/>Scala.io – November 2, 2017<br/><br/><a href="http://julienrf.github.io/2017/collections" class="uri">http://julienrf.github.io/2017/collections</a>
+</script><noscript>&#106;&#x75;&#108;&#x69;&#x65;&#110;&#46;&#114;&#x69;&#x63;&#104;&#x61;&#114;&#100;&#x2d;&#102;&#x6f;&#x79;&#32;&#x61;&#116;&#32;&#x65;&#112;&#102;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#104;</noscript>, <a href="http://scala.epfl.ch">Scala Center</a><br/><br/>Scala.io – November 2, 2017<br/><br/><a href="http://julienrf.github.io/2017/collections" class="uri">http://julienrf.github.io/2017/collections</a>
   </p>
+</div>
+<div id="scala-center" class="slide section level3 unnumbered">
+<h1>Scala Center?</h1>
+<p style="position: absolute; top: 5em; bottom: 1em; left: 1em; right: 1em; text-align: center">
+<a href="http://scala.epfl.ch"><img src="scala-center.png" style="height: 100%; width: auto" /></a>
+</p>
 </div>
 <div id="outline" class="slide section level3 unnumbered">
 <h1>Outline</h1>
@@ -163,7 +167,19 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 </div>
 </div>
 </div>
-<div id="internal-changes" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Internal Changes</h1></div><div id="class-hierarchy" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Class Hierarchy</h1></div><div id="list-hierarchy" class="slide section level3 unnumbered">
+<div id="internal-changes" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Internal Changes</h1></div><div id="outline-1" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ol style="list-style-type: decimal">
+<li>What?</li>
+<li><strong>Internal changes</strong>
+<ol style="list-style-type: decimal">
+<li>Class hierarchy</li>
+<li>Laziness</li>
+</ol></li>
+<li>User-visible changes</li>
+<li>And then?</li>
+</ol>
+</div><div id="class-hierarchy" class="titleslide slide section level2"><h1><span class="header-section-number">2.1</span> Class Hierarchy</h1></div><div id="list-hierarchy" class="slide section level3 unnumbered">
 <h1><code>List</code> Hierarchy </h1>
 <p style="position: absolute; top: 5em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="list-simply.svg" style="height: 100%; width: auto" />
@@ -277,18 +293,30 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <li>Default operations work just as well with both strict and lazy collection types</li>
 </ul>
 </div>
-<div id="user-visible-changes" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> User-Visible Changes</h1></div><div id="canbuildfrom" class="titleslide slide section level2 unnumbered"><h1><code>CanBuildFrom</code> </h1></div><div id="map-operation-on-lista" class="slide section level3 unnumbered">
-<h1><code>map</code> Operation on <code>List[A]</code> </h1>
+<div id="user-visible-changes" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> User-Visible Changes</h1></div><div id="outline-2" class="slide section level3 unnumbered">
+<h1>Outline</h1>
+<ol style="list-style-type: decimal">
+<li>What?</li>
+<li>Internal changes</li>
+<li><strong>User-visible changes</strong>
+<ol style="list-style-type: decimal">
+<li><code>CanBuildFrom</code></li>
+<li>(Some) other (minor and random) changes</li>
+</ol></li>
+<li>And then?</li>
+</ol>
+</div><div id="canbuildfrom" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> <code>CanBuildFrom</code></h1></div><div id="current-map-operation-on-lista" class="slide section level3 unnumbered">
+<h1>Current <code>map</code> Operation on <code>List[A]</code> </h1>
 <p style="position: absolute; top: 7em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="list-map.png" style="height: auto; width: 80%" /> <img src="ij-list-map.png" style="height: auto; width: 100%; margin-top: 2em" />
 </p>
-</div><div id="map-operation-on-treemapa-b" class="slide section level3 unnumbered">
-<h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
+</div><div id="current-map-operation-on-treemapa-b" class="slide section level3 unnumbered">
+<h1>Current <code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
 <p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="treemap-map.png" style="height: auto; width: 80%" /> <img src="ij-treemap-map.png" style="height: auto; width: 100%; margin-top: 2em" />
 </p>
-</div><div id="map-operation-on-treemapa-b-1" class="slide section level3 unnumbered">
-<h1><code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
+</div><div id="current-map-operation-on-treemapa-b-1" class="slide section level3 unnumbered">
+<h1>Current <code>map</code> Operation on <code>TreeMap[A, B]</code> </h1>
 <p style="position: absolute; top: 6em; bottom: 0; left: 0; right: 0; text-align: center">
 <img src="treemap-map-full.png" style="height: auto; width: 80%" />
 </p>
@@ -313,9 +341,16 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <h1>But <code>CanBuildFrom</code> was more than that!</h1>
 <p><code>CanBuildFrom</code> was one of the basic building block for <strong>generic</strong> programming over collections:</p>
 <ul>
-<li>extension methods (cf <a href="https://github.com/cvogt/scala-extensions">scala-extensions</a>)</li>
-<li><code>Future.sequence</code></li>
-<li>type-driven builders</li>
+<li>extension methods (cf <a href="https://github.com/cvogt/scala-extensions">scala-extensions</a>)
+<ul>
+<li>resulting collection type is <strong>computed</strong> according to an existing source collection type</li>
+<li>replaced with <code>BuildFrom</code></li>
+</ul></li>
+<li>type-driven builders
+<ul>
+<li>resulting collection type is <strong>provided</strong> by the user</li>
+<li>replaced with <code>Factory</code></li>
+</ul></li>
 </ul>
 </div><div id="canbuildfrom-1" class="slide section level3 unnumbered">
 <h1><del><code>Can</code></del><code>BuildFrom</code> </h1>
@@ -346,8 +381,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
   <span class="kw">def</span> <span class="fu">newBuilder</span>(): Builder[A, C]
 }</code></pre></div>
 <ul>
-<li>Key difference with <code>BuildFrom</code>: the type <code>C</code> of the collection to build doesn’t depend on an existing inital collection</li>
-<li>Rule of thumb: if you need to <em>compute</em> <code>C</code>, use <code>BuildFrom</code> ; but if you already know <code>C</code>, use <code>Factory</code></li>
+<li>Similar to <code>BuildFrom</code>, but without <code>From</code></li>
 </ul>
 </div><div id="type-driven-factories-1" class="slide section level3 unnumbered">
 <h1>Type-Driven Factories</h1>
@@ -364,13 +398,16 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <span class="kw">val</span> readsList = Reads.<span class="fu">of</span>[List[Int]]
 
 <span class="kw">val</span> readsSortedMap = Reads.<span class="fu">of</span>[SortedMap[Instant, BigDecimal]]</code></pre></div>
-</div><div id="some-other-minor-and-random-changes" class="titleslide slide section level2"><h1><span class="header-section-number">3.1</span> Some Other (Minor and Random) Changes</h1></div><div id="no-traversable" class="slide section level3 unnumbered">
+</div><div id="some-other-minor-and-random-changes" class="titleslide slide section level2"><h1><span class="header-section-number">3.2</span> Some Other (Minor and Random) Changes</h1></div><div id="no-traversable" class="slide section level3 unnumbered">
 <h1>No <code>Traversable</code> </h1>
+<p style="text-align: center">
+<img src="old-hierarchy.svg" style="height: 14em; width: auto" />
+</p>
 <ul>
 <li>Also, no <code>Stack</code>, <code>UnrolledBuffer</code>, <code>LinkedList</code> nor “paged” collection…</li>
 </ul>
 </div><div id="collection-conversion" class="slide section level3 unnumbered">
-<h1>Collection conversion</h1>
+<h1>Collection Conversion</h1>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> xs = List(<span class="dv">1</span> -&gt; &#39;a&#39;, <span class="dv">2</span> -&gt; &#39;b&#39;, <span class="dv">3</span> -&gt; &#39;c&#39;)
 
 <span class="kw">val</span> vector = xs.<span class="fu">to</span>(Vector) <span class="co">// Before: xs.to[Vector]</span>
@@ -430,7 +467,7 @@ buffer.<span class="fu">mapInPlace</span>(x =&gt; x + <span class="dv">1</span>)
 <li>Transformation operations suffixed by <code>InPlace</code> do not create a copy of the collection</li>
 </ul>
 </div>
-<div id="and-then" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> And Then?</h1></div><div id="next-steps" class="titleslide slide section level2"><h1><span class="header-section-number">4.1</span> Next Steps</h1></div><div id="move-to-scala-library" class="slide section level3 unnumbered">
+<div id="and-then" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> And Then?</h1></div><div id="move-to-scala-library" class="slide section level3 unnumbered">
 <h1>Move to scala-library</h1>
 <ul>
 <li>work in progress!</li>
@@ -440,13 +477,6 @@ buffer.<span class="fu">mapInPlace</span>(x =&gt; x + <span class="dv">1</span>)
 <ul>
 <li>Make <code>scala.Seq[A] = scala.collection.immutable.Seq[A]</code></li>
 <li>Requires an efficient data type for varargs: <code>ImmutableArray</code></li>
-</ul>
-</div><div id="scala-parallel-collections" class="slide section level3 unnumbered">
-<h1>scala-parallel-collections</h1>
-<ul>
-<li>Removed from core (separate artifact)</li>
-<li><a href="https://github.com/scala/scala-parallel-collections" class="uri">https://github.com/scala/scala-parallel-collections</a></li>
-<li>Has to be adapted to the new design</li>
 </ul>
 </div><div id="migration-tool" class="slide section level3 unnumbered">
 <h1>Migration tool</h1>
@@ -461,9 +491,12 @@ buffer.<span class="fu">mapInPlace</span>(x =&gt; x + <span class="dv">1</span>)
 <ul>
 <li><a href="https://github.com/scala/collection-strawman/pull/52"><code>ArraySeq</code></a>?</li>
 <li><a href="https://github.com/scala/collection-strawman/pull/225"><code>lazyFoldRight</code></a>?</li>
-<li>your next PR?</li>
+<li>Your next PR?</li>
 </ul></li>
 </ul>
+<p style="position: absolute; top: 12em; bottom: 0; left: 0; right: 0; text-align: center">
+<a href="https://github.com/scala/collection-strawman/"><img src="http://api.qrserver.com/v1/create-qr-code/?color=%23000000&bgcolor=%23ffffff&data=https%3A%2F%2Fgithub.com%2Fscala%2Fcollection-strawman%2F&qzone=1&margin=0&size=400x400&ecc=L" /></a>
+</p>
 </div>
 <div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">5</span> Questions?</h1></div>
 </body>
