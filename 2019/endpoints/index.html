@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="A Quest for the Right Level of Coupling" />
+  <meta name="author" content="" />
+  <meta name="author" content="http://julienrf.github.io/2019/endpoints" />
+  <title>Endpoints</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="slidy/styles/slidy.css" />
+  <script src="slidy/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Endpoints</h1>
+  <p class="author">
+A Quest for the Right Level of Coupling<br/><br/><a href="http://julienrf.github.io/2019/endpoints" class="uri">http://julienrf.github.io/2019/endpoints</a>
+  </p>
+</div>
+<div id="agenda" class="slide section level3 unnumbered">
+<h3>Agenda</h3>
+<ul>
+<li>Motivation</li>
+<li>Demo</li>
+<li>Design</li>
+</ul>
+</div>
+<div id="motivation" class="titleslide slide section level1"><h1><span class="header-section-number">1</span> Motivation</h1></div><div id="context" class="titleslide slide section level2"><h2><span class="header-section-number">1.1</span> Context</h2></div><div id="monolith" class="slide section level3 unnumbered">
+<h3>Monolith</h3>
+<div class="figure">
+<img src="monolith.svg" />
+
+</div>
+</div><div id="monolith-pros-cons" class="slide section level3 unnumbered">
+<h3>Monolith: Pros &amp; Cons</h3>
+<h4 id="pros" class="unnumbered">Pros</h4>
+<ul>
+<li>Simplicity</li>
+</ul>
+<h4 id="cons" class="unnumbered">Cons</h4>
+<ul>
+<li>Rigidity</li>
+<li>Scalability</li>
+</ul>
+</div><div id="distributed" class="slide section level3 unnumbered">
+<h3>Distributed</h3>
+<div class="figure">
+<img src="distributed.svg" />
+
+</div>
+</div><div id="distributed-pros" class="slide section level3 unnumbered">
+<h3>Distributed: Pros</h3>
+<ul>
+<li>Flexibility
+<ul>
+<li>Independent teams, tech stacks, deployments</li>
+</ul></li>
+<li>Scalability
+<ul>
+<li>Scale out just the critical nodes</li>
+</ul></li>
+</ul>
+</div><div id="distributed-cons" class="slide section level3 unnumbered">
+<h3>Distributed: Cons</h3>
+<ul>
+<li>Complexity
+<ul>
+<li>Communication across program boundaries</li>
+<li>Dependencies between nodes</li>
+</ul></li>
+</ul>
+</div><div id="crossing-program-boundaries" class="slide section level3 unnumbered">
+<h3>Crossing Program Boundaries</h3>
+<div style="text-align: center">
+<p><img src="microservices.png" style="height: 15em"></p>
+</div>
+</div><div id="how-do-we-cross-program-boundaries-in-practice" class="titleslide slide section level2"><h2><span class="header-section-number">1.2</span> How Do We Cross Program Boundaries in Practice?</h2></div><div id="java-rmi" class="slide section level3 unnumbered">
+<h3>Java RMI</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> b: B = service.<span class="fu">compute</span>(a)</code></pre></div>
+<ul class="incremental">
+<li>Remote invocation as an <code>A =&gt; B</code> function!</li>
+<li>Compile-time errors</li>
+</ul>
+</div><div id="java-rmi-cons" class="slide section level3 unnumbered">
+<h3>Java RMI: Cons</h3>
+<ul class="incremental">
+<li>Blocking, inefficient</li>
+<li>No streaming</li>
+<li>Network failures surface as runtime exceptions</li>
+</ul>
+</div><div id="illusion-of-transparency" class="slide section level3 unnumbered">
+<h3>Illusion of Transparency</h3>
+<blockquote>
+<p>“Distribution transparency is impossible to achieve in practice. Precisely because of that impossibility, it is <strong>dangerous</strong> to provide the <strong>illusion of transparency</strong>”. <a href="http://www.engr.sjsu.edu/fayad/column/CACM/ACMPub/p101-guerraoui.pdf">Rachid Guerraoui et al., 1999</a></p>
+</blockquote>
+</div><div id="akka" class="slide section level3 unnumbered">
+<h3>Akka</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> akka.<span class="fu">actor</span>.<span class="fu">typed</span>.<span class="fu">scaladsl</span>.<span class="fu">AskPattern</span>._
+
+<span class="kw">val</span> eventualB: Future[B] = serviceRef.<span class="fu">ask</span>(ref =&gt; <span class="fu">Compute</span>(a, ref))</code></pre></div>
+<ul>
+<li>Non-blocking, efficient</li>
+<li>Streaming (with Akka Streams)</li>
+<li>Same guarantees for local and remote invocations
+<ul>
+<li>Location transparency is not a lie!</li>
+</ul></li>
+</ul>
+</div><div id="akka-cons" class="slide section level3 unnumbered">
+<h3>Akka: Cons</h3>
+<ul class="incremental">
+<li>Remote invocation as an <code>(A, ActorRef[B]) =&gt; Unit</code> function
+<ul class="incremental">
+<li>Tedious plumbing</li>
+</ul></li>
+<li>All the nodes have to use the Akka communication protocol
+<ul class="incremental">
+<li>Not appropriate to expose a public API</li>
+</ul></li>
+</ul>
+</div><div id="http-services" class="slide section level3 unnumbered">
+<h3>HTTP Services</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eventualB: Future[B] =
+  httpClient.<span class="fu">post</span>(<span class="st">&quot;http://service/compute&quot;</span>, a.<span class="fu">toJson</span>)
+    .<span class="fu">filter</span>(_.<span class="fu">status</span> == <span class="dv">200</span>)
+    .<span class="fu">flatMap</span>(_.<span class="fu">entity</span>.<span class="fu">asJson</span>.<span class="fu">to</span>[B])</code></pre></div>
+<ul>
+<li>Clients and servers can have their own tech stack</li>
+</ul>
+</div><div id="http-services-cons" class="slide section level3 unnumbered">
+<h3>HTTP Services: Cons</h3>
+<ul class="incremental">
+<li>Building HTTP requests is tedious</li>
+<li>Documenting an HTTP API is tedious</li>
+<li>Untyped
+<ul class="incremental">
+<li>No compile-time guarantee that requests are well-formed</li>
+<li>No IDE assistance</li>
+</ul></li>
+</ul>
+</div><div id="wsdl" class="slide section level3 unnumbered">
+<h3>WSDL</h3>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> eventualB: Future[B] = service.<span class="fu">compute</span>(a)</code></pre></div>
+<p>(assuming that you have generated <code>service</code> implementation class with a tool like scalaxb)</p>
+<ul>
+<li>Brings back type-safety</li>
+<li>Makes invocation simple</li>
+</ul>
+</div><div id="wsdl-cons" class="slide section level3 unnumbered">
+<h3>WSDL: Cons</h3>
+<ul class="incremental">
+<li>No streaming</li>
+<li>XML service definitions are tedious to read or write</li>
+<li>Relies on code generation
+<ul class="incremental">
+<li>Requires extra step in build</li>
+<li>Generated code sometimes does not compile</li>
+<li>Generated code may impose constraints on the way it can be used</li>
+</ul></li>
+</ul>
+</div><div id="grpc" class="slide section level3 unnumbered">
+<h3>gRPC</h3>
+<ul class="incremental">
+<li>Service definitions written in a human-readable format</li>
+<li>Better performance (HTTP2, binary serialization)</li>
+<li>Streaming</li>
+<li>But still, relies on code generation!</li>
+</ul>
+</div><div id="meta-programming" class="slide section level3 unnumbered">
+<h3>Meta-Programming</h3>
+<p>Idea: mitigate code generation issues by synthesizing code with macros instead</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> Service {
+  <span class="kw">def</span> <span class="fu">compute</span>(a: A): B
+}
+
+<span class="kw">val</span> service = synthesized.<span class="fu">Client</span>[Service]
+<span class="kw">val</span> eventualB: Future[B] = service.<span class="fu">compute</span>(a)</code></pre></div>
+</div><div id="meta-programming-cons" class="slide section level3 unnumbered">
+<h3>Meta-Programming: Cons</h3>
+<ul class="incremental">
+<li>Poor tooling support</li>
+<li>Second-class citizen</li>
+</ul>
+</div><div id="summary" class="slide section level3 unnumbered">
+<h3>Summary</h3>
+<div class="figure">
+<img src="chart.svg" />
+
+</div>
+</div>
+<div id="demo" class="titleslide slide section level1"><h1><span class="header-section-number">2</span> Demo</h1></div>
+<div id="design" class="titleslide slide section level1"><h1><span class="header-section-number">3</span> Design</h1></div><div id="just-a-plain-old-library" class="slide section level3 unnumbered">
+<h3>Just a Plain Old Library</h3>
+</div><div id="first-class-scala-values" class="slide section level3 unnumbered">
+<h3>First-Class Scala Values</h3>
+<ul>
+<li>No code generation</li>
+<li>No new language</li>
+<li>Seamless integration in your project</li>
+</ul>
+</div><div id="no-macros" class="slide section level3 unnumbered">
+<h3>No Macros</h3>
+<ul>
+<li>No surprising semantics</li>
+<li>IDE friendly</li>
+</ul>
+</div><div id="modularity" class="slide section level3 unnumbered">
+<h3>Modularity</h3>
+<div class="figure">
+<img src="modularity.svg" />
+
+</div>
+</div><div id="modularity-1" class="slide section level3 unnumbered">
+<h3>Modularity²</h3>
+<div class="figure">
+<img src="modularity-bis.svg" />
+
+</div>
+</div><div id="extensibility" class="slide section level3 unnumbered">
+<h3>Extensibility</h3>
+<div class="figure">
+<img src="extensibility.svg" />
+
+</div>
+</div>
+<div id="questions" class="titleslide slide section level1"><h1><span class="header-section-number">4</span> Questions?</h1></div>
+</body>
+</html>
